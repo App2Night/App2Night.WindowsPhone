@@ -33,5 +33,37 @@ namespace App2Night.Views
             //this.DatePickerVeranstSuche.MaxYear = aktuellesJahrPlusEins;
 
         }
+
+        private void btnAbbrechen_wechselZuHauptansicht(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(FensterHauptansicht));
+        }
+
+        private void btnSuchen_wechselZuHauptansichtMitSuchergebnissen(object sender, RoutedEventArgs e)
+        {
+            // In der Anzeige müssen nun die Ergebnisse der Suche angezeigt werden
+            this.Frame.Navigate(typeof(FensterHauptansicht));
+        }
+
+        private void chkBoxGPSNutzenClick_GPSinOrtWandeln(object sender, RoutedEventArgs e)
+        {
+            // Wirklich Click oder Checked?
+            // Beispielhafter Aufruf?
+            // TODO: Absprechen
+
+            if (chkBoxSucheGPSNutzen.IsChecked == true)
+            {
+                // Keine Eingabe des Standortes zulassen
+                textBoxEingabePLZ.IsReadOnly = true;
+                textBoxEingabeOrt.IsReadOnly = true;
+                Controller.FensterSucheController.GPSinOrtUmwandeln(); 
+            }
+            else //if (chkBoxSucheGPSNutzen.IsChecked == false)
+            {
+                // Eingabe des Standortes zulassen
+                textBoxEingabePLZ.IsReadOnly = false;
+                textBoxEingabeOrt.IsReadOnly = false;
+            }
+        }
     }
 }

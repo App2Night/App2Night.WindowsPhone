@@ -1,4 +1,4 @@
-﻿<Page
+﻿<Page x:Name="Hauptansicht"
     x:Class="App2Night.Views.FensterHauptansicht"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,14 +9,16 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Pivot x:Name="registerHauptFenster" HorizontalAlignment="Left" Height="640" Margin="0,-4,0,0" Title="App2Night" VerticalAlignment="Top" Width="360">
-            <PivotItem x:Name="pItemNaehe" Header="In der Nähe" FontSize="18" Margin="12,0,12,90" HorizontalAlignment="Center" Width="340" Height="450">
-                <ListView x:Name="listViewNahe" HorizontalAlignment="Center" Height="450" Width="340"/>
+            <PivotItem x:Name="pItemSuchErgebnisse" Header="Suchergebnisse" FontSize="18" Margin="12,0,12,90" HorizontalAlignment="Center" Width="340" Height="450">
+                <ListView x:Name="listViewSuchErgebnis" HorizontalAlignment="Center" Height="450" Width="340">
+                    <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="ListeSuchErgebnisse"/>
+                </ListView>
             </PivotItem>
             <PivotItem x:Name="pItemVorgemerkt" Header="Vorgemerkt" Margin="12,0,12,90" Width="340" Height="450" HorizontalAlignment="Center">
                 <ListView x:Name="listViewVorgemerkt" Height="450" Margin="0" Width="340" HorizontalAlignment="Center"/>
             </PivotItem>
         </Pivot>
-        <Button x:Name="btnSuche" Content="Suche" HorizontalAlignment="Left" Height="50" Margin="10,554,0,0" VerticalAlignment="Top" Width="160" FontSize="20" Background="#FF9E9393"/>
+        <Button x:Name="btnSuche" Content="Suche" HorizontalAlignment="Left" Height="50" Margin="10,554,0,0" VerticalAlignment="Top" Width="160" FontSize="20" Background="#FF9E9393" Click="btnSuche_wechselZuVeranstSuchen"/>
         <Button x:Name="btnErstellen" Content="Neu" HorizontalAlignment="Left" Height="50" Margin="190,554,0,0" VerticalAlignment="Top" Width="160" FontSize="20" Background="#FF9E9393" Click="btnErstellen_wechselZuVeranstErstellen"/>
     </Grid>
 </Page>

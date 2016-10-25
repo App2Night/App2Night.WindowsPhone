@@ -32,5 +32,16 @@ namespace App2Night.Views
             //this.DatePickerVeranstSuche.MinYear = aktuellesJahr;
             //this.DatePickerVeranstSuche.MaxYear = aktuellesJahrPlusEins;
         }
+
+        private void btnVormerken_wechselZuHauptansicht(object sender, RoutedEventArgs e)
+        {
+            //Ansicht des Reigsters vorgemerkt?
+            this.Frame.Navigate(typeof(FensterHauptansicht));
+        }
+
+        private void btnZurueck_wechselZuHauptansicht(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(FensterHauptansicht));
+        }
     }
 }

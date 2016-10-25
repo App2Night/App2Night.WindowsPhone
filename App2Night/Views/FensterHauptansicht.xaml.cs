@@ -29,7 +29,12 @@ namespace App2Night.Views
 
         private void btnErstellen_wechselZuVeranstErstellen(object sender, RoutedEventArgs e)
         {
+            this.Frame.Navigate(typeof(FensterVeranstaltungErstellen));
+        }
 
+        private void btnSuche_wechselZuVeranstSuchen(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(FensterVeranstaltungSuchen));
         }
     }
 }

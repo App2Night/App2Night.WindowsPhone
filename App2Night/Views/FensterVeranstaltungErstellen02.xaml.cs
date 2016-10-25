@@ -30,5 +30,16 @@ namespace App2Night.Views
             this.InitializeComponent();
 
         }
+
+        private void btnZurueck_wechselZuErstellen01(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(FensterVeranstaltungErstellen));
+        }
+
+        private void btnErstellen_wechselZuAnzeige(object sender, RoutedEventArgs e)
+        {
+            //this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen));
+            // Neues Fenster um Eingabe zu Überprüfen bzw Senden an Server anzuzeigen?
+        }
     }
 }
