@@ -33,7 +33,7 @@ namespace App2Night.BackEndCommunication
         }
 
 
-        public static async Task<string> getRequest()
+        public static async Task<string> GetRequest()
         {
             string stringFromServer = "";
             bool internetVorhanden = IsInternet();

@@ -1,4 +1,5 @@
 ﻿using App2Night.BackEndCommunication;
+using App2Night.Views;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace App2Night.Controller
 
         }
 
-        public static void DataFromServerZumAnzeigenKompletteParty(out string veranstName)
+        public static async Task DataFromServerZumAnzeigenKompletteParty()
         {
             //var taskWartenAufDaten = BackEndComParty.getRequest();
             //taskWartenAufDaten.Wait(); // Blocks current thread until GetFooAsync task completes
@@ -26,14 +27,14 @@ namespace App2Night.Controller
 
 
 
-            string dataFromServer = BackEndComParty.getRequest().ToString();
+            string dataFromServer = await BackEndComParty.GetRequest();
             // Umwandeln 
             var jsonObject = JsonConvert.DeserializeObject<RootObject>(dataFromServer);
-            // Aufrufen der Daten aus dem Objekt
-            veranstName = jsonObject.partyName;
 
+                              
 
         }
+
 
     }
 }
