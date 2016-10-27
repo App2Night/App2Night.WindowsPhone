@@ -99,10 +99,11 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APIObjects\Party.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BackEndCommunication\BackEndCom.cs" />
+    <Compile Include="BackEndCommunication\BackEndComParty.cs" />
     <Compile Include="Controller\FensterSucheController.cs" />
     <Compile Include="Controller\FensterVeranstAnzeigenController.cs" />
     <Compile Include="Controller\GetGeoLocation.cs" />

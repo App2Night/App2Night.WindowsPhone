@@ -15,11 +15,16 @@ using Windows.Data.Json;
 
 namespace App2Night.BackEndCommunication
 {
-    class BackEndCom
+    public class BackEndComParty
     {
+        public BackEndComParty()
+        {
+
+        }
+
         HttpClient client = new HttpClient();
 
-        private HttpClient GetClient()
+        private static HttpClient GetClient()
         { 
             HttpClient client = new HttpClient { BaseAddress = new Uri("https://app2nightapi.azurewebsites.net/api/") }; 
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json")); 
@@ -28,7 +33,7 @@ namespace App2Night.BackEndCommunication
         }
 
 
-        public async Task<String> getRequest()
+        public static async Task<string> getRequest()
         {
             string stringFromServer = "";
             bool internetVorhanden = IsInternet();
@@ -36,17 +41,15 @@ namespace App2Night.BackEndCommunication
             if (internetVorhanden == true)
             {
                 HttpClient client = GetClient();
-
-                //Send the GET request asynchronously and retrieve the response as a string.
-                HttpResponseMessage httpResponse = new HttpResponseMessage();
+                HttpResponseMessage httpAntwort = new HttpResponseMessage();
 
                 try
                 {
                     // GET Request
-                    httpResponse = await client.GetAsync("https://app2nightapi.azurewebsites.net/api/Party"
-                        );
-                    httpResponse.EnsureSuccessStatusCode();
-                    stringFromServer = await httpResponse.Content.ReadAsStringAsync();
+                    httpAntwort = await client.GetAsync("http://app2nightapi.azurewebsites.net/api/Party");
+                   
+                    httpAntwort.EnsureSuccessStatusCode();
+                    stringFromServer = await httpAntwort.Content.ReadAsStringAsync();
                     return stringFromServer;
                 }
                 catch (Exception ex)
@@ -76,7 +79,7 @@ namespace App2Night.BackEndCommunication
         /// Checken, ob Intenet eingeschaltet ist.
         /// </summary>
         /// <returns>Boolwert über Internetstatus</returns>
-        public static bool IsInternet()
+        private static bool IsInternet()
         {
             ConnectionProfile connections = NetworkInformation.GetInternetConnectionProfile();
             bool internet = connections != null && connections.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess;
