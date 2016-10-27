@@ -211,6 +211,7 @@ namespace SwaggerCodeGen
             }
             else
             {
+
             }
     
             throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, null);
