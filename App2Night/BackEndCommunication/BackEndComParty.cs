@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Windows.Networking.Connectivity;
 using Windows.Data.Json;
+using Windows.UI.Popups;
 
 //https://github.com/App2Night/App2Night.Xamarin/blob/dev/PartyUp.Service/Service/ClientService.cs
 //http://app2nightapi.azurewebsites.net/swagger/ui/index.html
@@ -47,7 +48,6 @@ namespace App2Night.BackEndCommunication
                 {
                     // GET Request
                     httpAntwort = await client.GetAsync("http://app2nightapi.azurewebsites.net/api/Party");
-                   
                     httpAntwort.EnsureSuccessStatusCode();
                     stringFromServer = await httpAntwort.Content.ReadAsStringAsync();
                     return stringFromServer;
@@ -55,6 +55,8 @@ namespace App2Night.BackEndCommunication
                 catch (Exception ex)
                 {
                     stringFromServer = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+                    var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
+                    message.ShowAsync();
                     // Code 21 - Fehler bei Abrufen
                     return "21";
                 }
@@ -64,6 +66,8 @@ namespace App2Night.BackEndCommunication
             {
                 // Nachricht, dass Internet eingeschaltet werden soll
                 // Code 42 - Fehler: Keine Internetverbindung
+                var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
+                message.ShowAsync();
                 return "42";
             }
 

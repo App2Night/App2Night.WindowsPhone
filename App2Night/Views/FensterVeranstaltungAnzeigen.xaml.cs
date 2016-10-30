@@ -13,6 +13,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using App2Night.Controller;
+using Newtonsoft.Json;
+using static App2Night.APIObjects.Party;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -45,10 +47,10 @@ namespace App2Night.Views
 
         private void btnZurueck_wechselZuHauptansicht(object sender, RoutedEventArgs e)
         {
-            //this.Frame.Navigate(typeof(FensterHauptansicht));
-            string name;
-            FensterVeranstAnzeigenController.DataFromServerZumAnzeigenKompletteParty(out name);
-            name = txtBlVeranstAnzeigenNAME.Text;
+            this.Frame.Navigate(typeof(FensterHauptansicht));
+            
+            
         }
+
     }
 }
