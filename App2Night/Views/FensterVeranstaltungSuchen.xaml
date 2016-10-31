@@ -8,23 +8,22 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock x:Name="txtBlVeranstName" HorizontalAlignment="Left" Height="35" Margin="10,95,0,0" TextWrapping="Wrap" Text="Name der Veranstaltung " VerticalAlignment="Top" Width="340" FontSize="20" FontWeight="Bold"/>
-        <TextBox x:Name="textBoxEingabeVeranstName" HorizontalAlignment="Left" Height="40" Margin="10,130,0,0" TextWrapping="Wrap" Text="optional" VerticalAlignment="Top" Width="340" FontSize="20"/>
-        <TextBlock x:Name="txtBlVeranstOrt" HorizontalAlignment="Left" Height="40" Margin="10,180,0,0" TextWrapping="Wrap" Text="Ort" VerticalAlignment="Top" Width="130" FontSize="20" FontWeight="Bold"/>
-        <TextBox x:Name="textBoxEingabeOrt" HorizontalAlignment="Left" Height="40" Margin="145,220,0,0" TextWrapping="Wrap" Text="Ort (optional)" VerticalAlignment="Top" Width="205" FontSize="20" IsReadOnly="True"/>
-        <TextBox x:Name="textBoxEingabePLZ" HorizontalAlignment="Left" Height="40" Margin="10,220,0,0" TextWrapping="Wrap" Text="PLZ (optional)" VerticalAlignment="Top" Width="130" FontSize="20" IsReadOnly="True"/>
-        <TextBlock x:Name="textBlDatum" HorizontalAlignment="Left" Height="39" Margin="10,338,0,0" TextWrapping="Wrap" Text="Datum" VerticalAlignment="Top" Width="340" FontSize="20" FontWeight="Bold"/>
-        <DatePicker x:Name="DatePickerSucheEingabeDatum" HorizontalAlignment="Left" Height="50" Margin="10,377,0,0" VerticalAlignment="Top" Width="340" FontSize="20"/>
-        <Rectangle x:Name="recHintergrundVeranstSuche" Fill="#FF9E9393" HorizontalAlignment="Left" Height="80" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="340"/>
-        <TextBlock x:Name="txtBlVeranstSuche" Height="80" Margin="10,10,0,0" TextWrapping="Wrap" Text="Suche" VerticalAlignment="Top" Width="340" FontSize="55" HorizontalAlignment="Left" TextAlignment="Center" SelectionHighlightColor="White"/>
-        <TextBlock x:Name="textBlZeitraum" HorizontalAlignment="Left" Height="40" Margin="10,421,0,0" TextWrapping="Wrap" Text="Zeitraum (optional)" VerticalAlignment="Top" Width="340" FontSize="20" FontWeight="Bold"/>
-        <Slider x:Name="sliderSucheEingabeZeitraum" HorizontalAlignment="Left" Height="35" Margin="10,454,0,0" VerticalAlignment="Top" Width="340" Foreground="#FF9E9393" Maximum="14"/>
-        <TextBlock x:Name="textBlSucheRadius" HorizontalAlignment="Left" Height="40" Margin="10,265,0,0" TextWrapping="Wrap" Text="Umkreis (max 10 km)" VerticalAlignment="Top" Width="340" FontSize="20" FontWeight="Bold"/>
-        <Slider x:Name="sliderSucheEingabeUmkreis" HorizontalAlignment="Left" Height="35" Margin="10,298,0,0" VerticalAlignment="Top" Width="340" Maximum="10" Foreground="#FF9E9393"/>
-        <Button x:Name="btnVerantsSuchen" Content="Get App2Night!" HorizontalAlignment="Left" Height="40" Margin="190,590,0,0" VerticalAlignment="Top" Width="160" Background="#FF9E9393" FontSize="20" Click="btnSuchen_wechselZuHauptansichtMitSuchergebnissen"/>
-        <TextBlock x:Name="textBlMusikRichtung" HorizontalAlignment="Left" Height="40" Margin="10,494,0,0" TextWrapping="Wrap" Text="Musikrichtung (optional)" VerticalAlignment="Top" Width="340" FontSize="20" FontWeight="Bold"/>
-        <ComboBox x:Name="cmbBoxSucheEingabeMusikrichtung" HorizontalAlignment="Left" Height="40" Margin="10,534,0,0" VerticalAlignment="Top" Width="340" FontSize="20"/>
-        <Button x:Name="btnVerantsSuchenCanceln" Content="Abbrechen" HorizontalAlignment="Left" Height="40" Margin="12,590,0,0" VerticalAlignment="Top" Width="130" Background="#FF9E9393" FontSize="20" Click="btnAbbrechen_wechselZuHauptansicht"/>
-        <CheckBox x:Name="chkBoxSucheGPSNutzen" Content="GPS nutzen" HorizontalAlignment="Left" Height="40" Margin="145,180,0,0" VerticalAlignment="Top" Width="205" FontSize="20" IsChecked="True" Click="chkBoxGPSNutzenClick_GPSinOrtWandeln"/>
+        <TextBlock x:Name="txtBlVeranstName" HorizontalAlignment="Left" Height="35" Margin="10,40,0,0" TextWrapping="Wrap" Text="Name der Veranstaltung " VerticalAlignment="Top" Width="340" FontSize="20" FontWeight="Bold"/>
+        <TextBox x:Name="textBoxEingabeVeranstName" HorizontalAlignment="Left" Height="40" Margin="10,70,0,0" TextWrapping="Wrap" Text="optional" VerticalAlignment="Top" Width="340" FontSize="20"/>
+        <TextBlock x:Name="txtBlVeranstOrt" HorizontalAlignment="Left" Height="40" Margin="10,125,0,0" TextWrapping="Wrap" Text="Ort" VerticalAlignment="Top" Width="130" FontSize="20" FontWeight="Bold"/>
+        <TextBox x:Name="textBoxEingabeOrt" HorizontalAlignment="Left" Height="40" Margin="145,165,0,0" TextWrapping="Wrap" Text="Ort (optional)" VerticalAlignment="Top" Width="205" FontSize="20" IsReadOnly="True"/>
+        <TextBox x:Name="textBoxEingabePLZ" HorizontalAlignment="Left" Height="40" Margin="10,165,0,0" TextWrapping="Wrap" Text="PLZ (optional)" VerticalAlignment="Top" Width="130" FontSize="20" IsReadOnly="True"/>
+        <TextBlock x:Name="textBlDatum" HorizontalAlignment="Left" Height="39" Margin="10,283,0,0" TextWrapping="Wrap" Text="Datum" VerticalAlignment="Top" Width="340" FontSize="20" FontWeight="Bold"/>
+        <DatePicker x:Name="DatePickerSucheEingabeDatum" HorizontalAlignment="Left" Height="50" Margin="10,315,0,0" VerticalAlignment="Top" Width="340" FontSize="20"/>
+        <TextBlock x:Name="txtBlVeranstSuche" Height="55" Margin="10,-30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="340" FontSize="45" HorizontalAlignment="Left" TextAlignment="Center" SelectionHighlightColor="White" Text="Suche"/>
+        <TextBlock x:Name="textBlZeitraum" HorizontalAlignment="Left" Height="40" Margin="10,365,0,0" TextWrapping="Wrap" Text="Zeitraum (optional)" VerticalAlignment="Top" Width="340" FontSize="20" FontWeight="Bold"/>
+        <Slider x:Name="sliderSucheEingabeZeitraum" HorizontalAlignment="Left" Height="35" Margin="10,395,0,0" VerticalAlignment="Top" Width="340" Foreground="#FF9E9393" Maximum="14"/>
+        <TextBlock x:Name="textBlSucheRadius" HorizontalAlignment="Left" Height="40" Margin="10,215,0,0" TextWrapping="Wrap" Text="Umkreis (max 10 km)" VerticalAlignment="Top" Width="340" FontSize="20" FontWeight="Bold"/>
+        <Slider x:Name="sliderSucheEingabeUmkreis" HorizontalAlignment="Left" Height="35" Margin="10,245,0,0" VerticalAlignment="Top" Width="340" Maximum="10" Foreground="#FF9E9393"/>
+        <Button x:Name="btnVerantsSuchen" Content="Get App2Night!" HorizontalAlignment="Left" Height="40" Margin="190,515,0,0" VerticalAlignment="Top" Width="160" Background="#FF9E9393" FontSize="20" Click="btnSuchen_wechselZuHauptansichtMitSuchergebnissen"/>
+        <TextBlock x:Name="textBlMusikRichtung" HorizontalAlignment="Left" Height="40" Margin="10,434,0,0" TextWrapping="Wrap" Text="Musikrichtung (optional)" VerticalAlignment="Top" Width="340" FontSize="20" FontWeight="Bold"/>
+        <ComboBox x:Name="cmbBoxSucheEingabeMusikrichtung" HorizontalAlignment="Left" Height="40" Margin="10,465,0,0" VerticalAlignment="Top" Width="340" FontSize="20"/>
+        <Button x:Name="btnVerantsSuchenCanceln" Content="Abbrechen" HorizontalAlignment="Left" Height="40" Margin="12,515,0,0" VerticalAlignment="Top" Width="130" Background="#FF9E9393" FontSize="20" Click="btnAbbrechen_wechselZuHauptansicht"/>
+        <CheckBox x:Name="chkBoxSucheGPSNutzen" Content="GPS nutzen" HorizontalAlignment="Left" Height="40" Margin="145,125,0,0" VerticalAlignment="Top" Width="205" FontSize="20" IsChecked="True" Click="chkBoxGPSNutzenClick_GPSinOrtWandeln"/>
     </Grid>
 </Page>

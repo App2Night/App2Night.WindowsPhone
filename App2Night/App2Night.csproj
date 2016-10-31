@@ -89,9 +89,9 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <Content Include="ApplicationInsights.config">
+    <!--<Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </Content>-->
     <Content Include="Ressources\A2N_Logo01_Variante01.png" />
     <Content Include="Ressources\A2N_Logo01_Variante01_300x300.png" />
     <Content Include="Ressources\A2N_Logo01_Variante02.png" />
