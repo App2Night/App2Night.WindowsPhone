@@ -6,14 +6,21 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.Resources>
+        <ControlTemplate x:Key="ListViewPartyAnzeigen" TargetType="ListViewItem">
+            <Grid Height="70">
+                <TextBox x:Name="textBoxPARTYNAME" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBox" Width="227" FontSize="20"/>
+                <TextBox x:Name="textBoxUHRZEIT" HorizontalAlignment="Left" Height="35" Margin="227,0,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="113" TextAlignment="Center"/>
+                <TextBox x:Name="textBoxDATUM" HorizontalAlignment="Left" Height="35" Margin="227,35,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="113" TextAlignment="Center"/>
+            </Grid>
+        </ControlTemplate>
+    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <Pivot x:Name="registerHauptFenster" HorizontalAlignment="Left" Height="640" Margin="0,-4,0,0" Title="App2Night" VerticalAlignment="Top" Width="360">
             <PivotItem x:Name="pItemSuchErgebnisse" Header="Suchergebnisse" FontSize="18" Margin="10,0,10,200" HorizontalAlignment="Center" Width="340">
-                <ListView x:Name="listViewSuchErgebnis" HorizontalAlignment="Center" Height="347" Width="340" Margin="0,0,0,200">
-                    <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="ListeSuchErgebnisse"/>
-                </ListView>
+                <ListView x:Name="listViewSuchErgebnis" HorizontalAlignment="Center" Height="347" Width="340" Margin="0,0,0,200" ItemClick="listViewSuchErgebnisse_ItemClick" SelectionChanged="listView_ClickOnItem"/>
             </PivotItem>
             <PivotItem x:Name="pItemVorgemerkt" Header="Vorgemerkt" Margin="10,0" Width="340" HorizontalAlignment="Center" Height="350" VerticalAlignment="Top">
                 <ListView x:Name="listViewVorgemerkt" Height="350" Margin="0" Width="340" HorizontalAlignment="Center" VerticalAlignment="Top"/>

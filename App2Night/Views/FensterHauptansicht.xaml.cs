@@ -13,6 +13,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using App2Night.Controller;
+using Windows.Data.Json;
+using App2Night.APIObjects;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -26,6 +28,7 @@ namespace App2Night.Views
         public FensterHauptansicht()
         {
             this.InitializeComponent();
+            ListView listViewSuchErgebnis = new ListView();
         }
 
         private void btnErstellen_wechselZuVeranstErstellen(object sender, RoutedEventArgs e)
@@ -41,8 +44,29 @@ namespace App2Night.Views
         private async void btnVeranstInDerNaehe_GetPartys(object sender, RoutedEventArgs e)
         {
             //Anzeige der Partys, die vom Server geschickt werden
-            textBlock.Text = await FensterHauptansichtController.DataFromServerGET();
+            Party.RootObject partyRootObject = new Party.RootObject();
+
+            partyRootObject = await FensterHauptansichtController.DatenFromServerToParty();
+
+            listViewSuchErgebnis.Items.Add(partyRootObject.partyName);
 
         }
+
+        private void listViewSuchErgebnisse_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            //Daten von der Party mitnehmen
+            
+            this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen));
+        }
+
+        private void listView_ClickOnItem(object sender, SelectionChangedEventArgs e)
+        {
+            Party.RootObject partyAusListe = (Party.RootObject) listViewSuchErgebnis.SelectedItem;
+            this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen));
+            
+        }
+
+
+
     }
 }

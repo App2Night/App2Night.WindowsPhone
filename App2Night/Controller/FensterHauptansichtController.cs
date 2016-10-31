@@ -2,6 +2,7 @@
 using App2Night.BackEndCommunication;
 using Newtonsoft.Json;
 using Windows.Data.Json;
+using App2Night.APIObjects;
 
 namespace App2Night.Controller
 {
@@ -14,30 +15,26 @@ namespace App2Night.Controller
                 return dataFromServer;
             }
 
-        public static async Task<string> DatenFromServerToArray()
+        public static async Task<Party.RootObject> DatenFromServerToParty()
         {
             string data;
-            JsonArray partyArray;
-            //JsonObject eineParty;
-            
+            string[] partyArray;
+            string[] partyFertig = new string[15];
+
             //gibt x Partys aus
-            data = DataFromServerGET().Result;
-            // Partys in JsonArray 
-            partyArray = JsonConvert.DeserializeObject<JsonArray>(data);
+            data = await DataFromServerGET();
+            // Partys in JsonArray - Gibt Fehler
+            //partyArray = JsonConvert.DeserializeObject<JsonArray>(data);
+
+            // Array in Object, vom Object die Eigenschaft in einen String;
+
+            Party.RootObject partyEins = new Party.RootObject();
+            partyEins = Party.FromStringToParty(data);
+
             
-            // Array in Object, vom Object die Eigenschaft in einen String
-            //eineParty = partyArray.GetObjectAt(0);
-
-            int anzahlPartys = partyArray.Count;
-
-            for (int i = 0; i < anzahlPartys; i++)
-            {
-                   
-            }
 
 
-
-            return data;
+            return partyEins;
 
         }
 
