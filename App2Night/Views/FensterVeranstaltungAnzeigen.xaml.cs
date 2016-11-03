@@ -26,7 +26,7 @@ namespace App2Night.Views
     /// </summary>
     public sealed partial class FensterVeranstaltungAnzeigen : Page
     {
-        RootObject uebergebenderParameter = new RootObject();
+        public RootObject uebergebenderParameter = new RootObject();
 
         public FensterVeranstaltungAnzeigen()
         {
@@ -52,7 +52,7 @@ namespace App2Night.Views
             uebergebenderParameter = e.Parameter as RootObject;
 
             // null möglich!
-            txtBlVeranstAnzeigenNAME.Text = uebergebenderParameter.partyName;
+            txtBlVeranstAnzeigenNAME.Text = uebergebenderParameter.PartyName;
             //textBoxAnzeigenDATUM.Text = uebergebenderParameter.partyDate;
             //textBoxAnzeigenORT.Text = uebergebenderParameter.location.cityName;
         }

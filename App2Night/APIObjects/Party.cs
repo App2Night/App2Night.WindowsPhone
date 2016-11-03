@@ -1,9 +1,14 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.Data.Json;
+
 
 namespace App2Night.APIObjects
 {
@@ -20,7 +25,7 @@ namespace App2Night.APIObjects
             string[] partyArray;
             string[] partyFertig = new string[20];
             RootObject partyAusString = new RootObject { };
-
+            //TODO: Nach Änderungen in API eventuell anpassen!
 
             // ID aus Party
             partyArray = data.Split(',');
@@ -28,7 +33,6 @@ namespace App2Night.APIObjects
             // Das letzte Zeichen '\' abschneiden
             partyIdAusString = partyIdAusString.Remove((partyIdAusString.Length - 1));
             // Die ersten Zeichen abschneiden, nur für ID
-            //TODO: Nach Änderungen in API eventuell anpassen!
             partyIdAusString = partyIdAusString.Substring(12);
 
             if (partyIdAusString.Length < 36 || partyIdAusString.Length > 36)
@@ -36,7 +40,7 @@ namespace App2Night.APIObjects
                 //Fehler beim "Zuschneiden"
             }
 
-            partyAusString.partId = partyIdAusString;
+            partyAusString.PartId = partyIdAusString;
 
 
             // Name aus Party
@@ -51,7 +55,7 @@ namespace App2Night.APIObjects
                 //Fehler beim "Zuschneiden"
             }
 
-            partyAusString.partyName = partyNameAusString;
+            partyAusString.PartyName = partyNameAusString;
 
             // Datum aus Party
             string datumAusString = partyArray[3];
@@ -65,7 +69,7 @@ namespace App2Night.APIObjects
             //    //Fehler beim "Zuschneiden"
             //}
 
-            partyAusString.partyDate = datumAusString;
+            partyAusString.PartyDate = datumAusString;
 
 
 
@@ -76,29 +80,29 @@ namespace App2Night.APIObjects
         {
             string[] partyDaten = new string[20];
 
-            if (partyRootObject.partId != null)
+            if (partyRootObject.PartId != null)
             {
-                partyDaten[0] = partyRootObject.partId;
+                partyDaten[0] = partyRootObject.PartId;
             }
 
-            if (partyRootObject.price != -1)
+            if (partyRootObject.Price != -1)
             {
-                partyDaten[1] = partyRootObject.price.ToString();
+                partyDaten[1] = partyRootObject.Price.ToString();
             }
 
-            if (partyRootObject.partyName != null)
+            if (partyRootObject.PartyName != null)
             {
-                partyDaten[2] = partyRootObject.partyName;
+                partyDaten[2] = partyRootObject.PartyName;
             }
 
-            if (partyRootObject.partyDate != null)
+            if (partyRootObject.PartyDate != null)
             {
-                partyDaten[3] = partyRootObject.partyDate;
+                partyDaten[3] = partyRootObject.PartyDate;
             }
 
-            if (partyRootObject.musicGenre != -1)
+            if (partyRootObject.MusicGenre != -1)
             {
-                partyDaten[4] = partyRootObject.musicGenre.ToString();
+                partyDaten[4] = partyRootObject.MusicGenre.ToString();
             }
 
             //if (partyRootObject.location.countryName != null)
@@ -141,15 +145,15 @@ namespace App2Night.APIObjects
             //    partyDaten[12] = partyRootObject.location.longitude.ToString(); 
             //}
 
-            if (partyRootObject.partyType != -1)
-            {
-                partyDaten[13] = partyRootObject.partyType.ToString(); 
-            }
+            //if (partyRootObject.partyType != -1)
+            //{
+            //    partyDaten[13] = partyRootObject.partyType.ToString(); 
+            //}
 
-            if (partyRootObject.description != null)
-            {
-                partyDaten[14] = partyRootObject.description; 
-            }
+            //if (partyRootObject.description != null)
+            //{
+            //    partyDaten[14] = partyRootObject.description; 
+            //}
 
             //if (partyRootObject.host.userId != null)
             //{
@@ -164,46 +168,105 @@ namespace App2Night.APIObjects
             return partyDaten;
         }
 
- 
-        public class Host
-        {
-            public string userId { get; set; }
-            public string username { get; set; }
-            public string password { get; set; }
-            public object location { get; set; }
-        }
-
+        [DataContract]
         public class Location
         {
-            public string countryName { get; set; }
-            public string cityName { get; set; }
-            public string streetName { get; set; }
-            public int houseNumber { get; set; }
-            public string houseNumberAdditional { get; set; }
-            public int zipcode { get; set; }
-            public int latitude { get; set; }
-            public int longitude { get; set; }
+            [DataMember]
+            public string CountryName { get; set; }
+            [DataMember]
+            public string CityName { get; set; }
+            [DataMember]
+            public string StreetName { get; set; }
+            [DataMember]
+            public int HouseNumber { get; set; }
+            [DataMember]
+            public string HouseNumberAdditional { get; set; }
+            [DataMember]
+            public int Zipcode { get; set; }
+            [DataMember]
+            public int Latitude { get; set; }
+            [DataMember]
+            public int Longitude { get; set; }
         }
 
+        [DataContract]
+        public class Host
+        {
+            [DataMember]
+            public string HostId { get; set; }
+            [DataMember]
+            public string UserName { get; set; }
+        }
+
+        [DataContract]
         public class RootObject
         {
-            public string partId { get; set; }
-            public string date { get; set; }
-            public int price { get; set; }
-            public Host host { get; set; }
-            public string partyName { get; set; }
-            public string partyDate { get; set; }
-            public int musicGenre { get; set; }
-            public Location location { get; set; }
-            public int partyType { get; set; }
-            public string description { get; set; }
+            [DataMember]
+            public string PartId { get; set; }
+            [DataMember]
+            public int Price { get; set; }
+            [DataMember]
+            public string PartyName { get; set; }
+            [DataMember]
+            public string PartyDate { get; set; }
+            [DataMember]
+            public int MusicGenre { get; set; }
+            [DataMember]
+            public Location Location { get; set; }
+            [DataMember]
+            public int PartyType { get; set; }
+            [DataMember]
+            public string Description { get; set; }
+            [DataMember]
+            public Host Host { get; set; }
+
+            //public RootObject(string stringFromServer)
+            //{
+            //    JArray array = JArray.Parse(stringFromServer);
+
+            //    JObject jObject = (JObject)array[0];
+
+            //    if (stringFromServer != "" || stringFromServer != " ")
+            //    {
+            //        try
+            //        {
+            //            jObject = JObject.Parse(stringFromServer);
+            //        }
+            //        catch (Exception)
+            //        {
+
+            //            //throw;
+            //        }
+
+            //        JArray obj = JArray.Parse(stringFromServer);
+
+            //        JToken jParty = jObject["party"];
+
+            //        PartId = (string)jParty["PartId"];
+            //        Price = (int)jParty["Price"];
+            //        PartyName = (string)jParty["PartyName"];
+            //        MusicGenre = (int)jParty["MusicGenre"];
+            //        Location.CountryName = (string)jParty["CountryName"];
+            //        Location.CityName = (string)jParty["CountryName"];
+            //        Location.StreetName = (string)jParty["StreetName"];
+            //        Location.HouseNumber = (int)jParty["HouseNumber"];
+            //        Location.HouseNumberAdditional = (string)jParty["HouseNumberAdditional"];
+            //        Location.Zipcode = (int)jParty["Zipcode"];
+            //        Location.Latitude = (int)jParty["Latitude"];
+            //        Location.Longitude = (int)jParty["Longitude"];
+            //        PartyType = (int)jParty["PartyType"];
+            //        Description = (string)jParty["Description"];
+            //        Host.HostId = (string)jParty["HostId"];
+            //        Host.UserName = (string)jParty["UserName"];
+
+            //    }
+            //}
+
+            //public RootObject()
+            //{
+
+            //}
         }
-
-
-
-
-
-
 
 
     }

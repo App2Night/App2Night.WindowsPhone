@@ -18,15 +18,16 @@ namespace App2Night.Controller
         public static async Task<Party.RootObject> DatenFromServerToParty()
         {
             string data;
-            string[] partyArray;
+            JsonArray partyArray;
+            //var party;
             string[] partyFertig = new string[15];
 
             //gibt x Partys aus
             data = await DataFromServerGET();
-            // Partys in JsonArray - Gibt Fehler
-            //partyArray = JsonConvert.DeserializeObject<JsonArray>(data);
-
+            // Partys in JsonArray 
+            partyArray = JsonArray.Parse(data);
             // Array in Object, vom Object die Eigenschaft in einen String;
+            //party = partyArray[0];
 
             Party.RootObject partyEins = new Party.RootObject();
             partyEins = Party.FromStringToParty(data);

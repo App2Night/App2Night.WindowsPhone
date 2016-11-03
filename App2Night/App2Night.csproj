@@ -108,6 +108,7 @@
     <Compile Include="Controller\FensterSucheController.cs" />
     <Compile Include="Controller\FensterVeranstAnzeigenController.cs" />
     <Compile Include="Controller\GetGeoLocation.cs" />
+    <Compile Include="Controller\JsonHelper.cs" />
     <Compile Include="Controller\ZwischenController.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

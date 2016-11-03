@@ -49,7 +49,7 @@ namespace App2Night.Views
             
             partyRootObject = await FensterHauptansichtController.DatenFromServerToParty();
 
-            listViewSuchErgebnis.Items.Add(partyRootObject.partyName);
+            listViewSuchErgebnis.Items.Add(partyRootObject.PartyName);
 
         }
 
