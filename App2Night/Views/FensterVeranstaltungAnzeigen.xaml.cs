@@ -53,8 +53,8 @@ namespace App2Night.Views
 
             // null möglich!
             txtBlVeranstAnzeigenNAME.Text = uebergebenderParameter.partyName;
-            textBoxAnzeigenDATUM.Text = uebergebenderParameter.partyDate;
-            textBoxAnzeigenORT.Text = uebergebenderParameter.location.cityName;
+            //textBoxAnzeigenDATUM.Text = uebergebenderParameter.partyDate;
+            //textBoxAnzeigenORT.Text = uebergebenderParameter.location.cityName;
         }
 
 
