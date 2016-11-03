@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using App2Night.Controller;
 using Newtonsoft.Json;
 using static App2Night.APIObjects.Party;
+using App2Night.APIObjects;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -25,24 +26,18 @@ namespace App2Night.Views
     /// </summary>
     public sealed partial class FensterVeranstaltungAnzeigen : Page
     {
+        RootObject uebergebenderParameter = new RootObject();
+
         public FensterVeranstaltungAnzeigen()
         {
-            //DateTimeOffset aktuellesJahr = DateTime.Today.AddYears(0);
-            //DateTimeOffset aktuellesJahrPlusEins = DateTime.Today.AddYears(1);
-
             this.InitializeComponent();
-            //this.DatePickerVeranstSuche.Date = DateTime.Today;
-            //this.DatePickerVeranstSuche.MinYear = aktuellesJahr;
-            //this.DatePickerVeranstSuche.MaxYear = aktuellesJahrPlusEins;
-
-           
-
         }
 
         private void btnVormerken_wechselZuHauptansicht(object sender, RoutedEventArgs e)
         {
             //Ansicht des Reigsters vorgemerkt?
             this.Frame.Navigate(typeof(FensterHauptansicht));
+            
         }
 
         private void btnZurueck_wechselZuHauptansicht(object sender, RoutedEventArgs e)
@@ -51,6 +46,17 @@ namespace App2Night.Views
             
             
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            uebergebenderParameter = e.Parameter as RootObject;
+
+            // null möglich!
+            txtBlVeranstAnzeigenNAME.Text = uebergebenderParameter.partyName;
+            textBoxAnzeigenDATUM.Text = uebergebenderParameter.partyDate;
+            textBoxAnzeigenORT.Text = uebergebenderParameter.location.cityName;
+        }
+
 
     }
 }

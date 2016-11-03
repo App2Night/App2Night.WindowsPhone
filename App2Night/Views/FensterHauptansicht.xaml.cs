@@ -25,6 +25,8 @@ namespace App2Night.Views
     /// </summary>
     public sealed partial class FensterHauptansicht : Page
     {
+        public Party.RootObject partyRootObject = new Party.RootObject();
+
         public FensterHauptansicht()
         {
             this.InitializeComponent();
@@ -44,8 +46,7 @@ namespace App2Night.Views
         private async void btnVeranstInDerNaehe_GetPartys(object sender, RoutedEventArgs e)
         {
             //Anzeige der Partys, die vom Server geschickt werden
-            Party.RootObject partyRootObject = new Party.RootObject();
-
+            
             partyRootObject = await FensterHauptansichtController.DatenFromServerToParty();
 
             listViewSuchErgebnis.Items.Add(partyRootObject.partyName);
@@ -61,8 +62,8 @@ namespace App2Night.Views
 
         private void listView_ClickOnItem(object sender, SelectionChangedEventArgs e)
         {
-            Party.RootObject partyAusListe = (Party.RootObject) listViewSuchErgebnis.SelectedItem;
-            this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen));
+            // Seitenwechsel mit Übergabe der Daten aus der ausgewählten Party 
+            this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen), partyRootObject);
             
         }
 

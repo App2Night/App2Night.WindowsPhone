@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static App2Night.APIObjects.Party;
+using App2Night.APIObjects;
+using App2Night.Controller;
 using App2Night.Views;
+using Windows.UI.Xaml.Controls;
 
 namespace App2Night.Controller
 {
@@ -15,7 +17,7 @@ namespace App2Night.Controller
     {
         public FensterVeranstAnzeigenController()
         {
-            
+
         }
 
 
