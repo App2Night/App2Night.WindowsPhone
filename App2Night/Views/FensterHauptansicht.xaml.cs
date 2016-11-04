@@ -33,6 +33,7 @@ namespace App2Night.Views
             this.InitializeComponent();
             progressRingInDerNaehe.Visibility = Visibility.Collapsed;
             ListView listViewSuchErgebnis = new ListView();
+            
         }
 
         private void btnErstellen_wechselZuVeranstErstellen(object sender, RoutedEventArgs e)
@@ -75,7 +76,6 @@ namespace App2Night.Views
         private void listView_ClickOnItem(object sender, SelectionChangedEventArgs e)
         {
             // Seitenwechsel mit Übergabe der Daten aus der ausgewählten Party 
-            // TODO: Richtige Party auswaehlen!
             string partyName = ((ListView)sender).SelectedItem.ToString();
             bool partygefunden = false;
             int suchDurchLauf = 0;
