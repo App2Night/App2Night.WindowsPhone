@@ -25,11 +25,13 @@ namespace App2Night.Views
     /// </summary>
     public sealed partial class FensterHauptansicht : Page
     {
-        public Party.RootObject partyRootObject = new Party.RootObject();
+        public IEnumerable<Party> partyListe;
+        public Party party; 
 
         public FensterHauptansicht()
         {
             this.InitializeComponent();
+            progressRingInDerNaehe.Visibility = Visibility.Collapsed;
             ListView listViewSuchErgebnis = new ListView();
         }
 
@@ -46,10 +48,20 @@ namespace App2Night.Views
         private async void btnVeranstInDerNaehe_GetPartys(object sender, RoutedEventArgs e)
         {
             //Anzeige der Partys, die vom Server geschickt werden
-            
-            partyRootObject = await FensterHauptansichtController.DatenFromServerToParty();
 
-            listViewSuchErgebnis.Items.Add(partyRootObject.PartyName);
+            progressRingInDerNaehe.IsEnabled = true;
+            progressRingInDerNaehe.Visibility = Visibility.Visible;
+            partyListe = await FensterHauptansichtController.partyListeVonServerGET();
+            progressRingInDerNaehe.IsEnabled = false;
+            progressRingInDerNaehe.Visibility = Visibility.Collapsed;
+
+            int anzahl = partyListe.Count();
+
+            for (int i = 0; i < anzahl; i++)
+            {
+                party = partyListe.ElementAt(i);
+                listViewSuchErgebnis.Items.Add(party.PartyName); 
+            }
 
         }
 
@@ -63,7 +75,28 @@ namespace App2Night.Views
         private void listView_ClickOnItem(object sender, SelectionChangedEventArgs e)
         {
             // Seitenwechsel mit Übergabe der Daten aus der ausgewählten Party 
-            this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen), partyRootObject);
+            // TODO: Richtige Party auswaehlen!
+            string partyName = ((ListView)sender).SelectedItem.ToString();
+            bool partygefunden = false;
+            int suchDurchLauf = 0;
+
+            while (partygefunden == false)
+            {
+                party = partyListe.ElementAt(suchDurchLauf);
+
+                if (party.PartyName == partyName)
+                {
+                    partygefunden = true;
+                }
+                else
+                {
+                    suchDurchLauf++;
+                }
+            }
+
+            party = partyListe.ElementAt(suchDurchLauf);
+
+            this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen), party);
             
         }
 

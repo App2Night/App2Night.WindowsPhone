@@ -26,7 +26,7 @@ namespace App2Night.Views
     /// </summary>
     public sealed partial class FensterVeranstaltungAnzeigen : Page
     {
-        public RootObject uebergebenderParameter = new RootObject();
+        public Party uebergebenderParameter = new Party();
 
         public FensterVeranstaltungAnzeigen()
         {
@@ -49,12 +49,16 @@ namespace App2Night.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            uebergebenderParameter = e.Parameter as RootObject;
+            uebergebenderParameter = e.Parameter as Party;
 
             // null möglich!
             txtBlVeranstAnzeigenNAME.Text = uebergebenderParameter.PartyName;
-            //textBoxAnzeigenDATUM.Text = uebergebenderParameter.partyDate;
-            //textBoxAnzeigenORT.Text = uebergebenderParameter.location.cityName;
+            textBoxAnzeigenDATUM.Text = uebergebenderParameter.PartyDate;
+            textBoxAnzeigenORT.Text = uebergebenderParameter.Location.CityName;
+            //TODO: string von PartyDate in Uhrzeit und Datum aendern
+            //textBoxAnzeigenDATUM.Text = uebergebenderParameter.PartyDate;
+            //textBoxAnzeigenUHRZEIT.Text = uebergebenderParameter.PartyDate;
+            textBoxAnzeigenWeitereINFOS.Text = uebergebenderParameter.Description;
         }
 
 
