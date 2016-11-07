@@ -61,6 +61,9 @@ namespace App2Night.Views
             textBoxAnzeigenWeitereINFOS.Text = uebergebenderParameter.Description;
         }
 
-
+        private void btnAufKarteAnzeigen_wechselZuKartenAnzeige(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(FensterKartenansicht), uebergebenderParameter);
+        }
     }
 }

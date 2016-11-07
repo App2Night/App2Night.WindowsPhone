@@ -122,6 +122,9 @@
     <Compile Include="Views\FensterHauptansicht.xaml.cs">
       <DependentUpon>FensterHauptansicht.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FensterKartenansicht.xaml.cs">
+      <DependentUpon>FensterKartenansicht.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FensterNeuesPW.xaml.cs">
       <DependentUpon>FensterNeuesPW.xaml</DependentUpon>
     </Compile>
@@ -175,6 +178,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FensterHauptansicht.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FensterKartenansicht.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

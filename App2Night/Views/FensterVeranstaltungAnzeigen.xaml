@@ -15,11 +15,12 @@
         <TextBlock x:Name="textBlDatum" HorizontalAlignment="Left" Height="40" Margin="12,155,0,0" TextWrapping="Wrap" Text="Datum" VerticalAlignment="Top" Width="142" FontSize="20" FontWeight="Bold"/>
         <TextBlock x:Name="textBlUhrzeit" HorizontalAlignment="Left" Height="40" Margin="12,210,0,0" TextWrapping="Wrap" Text="Uhrzeit" VerticalAlignment="Top" Width="142" FontSize="20" FontWeight="Bold"/>
         <TextBlock x:Name="textBlMusikRichtung" HorizontalAlignment="Left" Height="40" Margin="10,265,0,0" TextWrapping="Wrap" Text="Musikrichtung" VerticalAlignment="Top" Width="141" FontWeight="Bold" FontSize="20"/>
-        <TextBlock x:Name="textBlWeitereInfos" HorizontalAlignment="Left" Height="40" Margin="14,340,0,0" TextWrapping="Wrap" Text="Weitere Infos" VerticalAlignment="Top" Width="143" FontSize="20" FontWeight="Bold"/>
-        <TextBox x:Name="textBoxAnzeigenWeitereINFOS" HorizontalAlignment="Left" Height="139" Margin="12,380,0,0" TextWrapping="Wrap" Text="-- keine weiteren Infos --" VerticalAlignment="Top" Width="340" IsReadOnly="True" FontSize="20"/>
+        <TextBlock x:Name="textBlWeitereInfos" HorizontalAlignment="Left" Height="40" Margin="12,310,0,0" TextWrapping="Wrap" Text="Weitere Infos" VerticalAlignment="Top" Width="143" FontSize="20" FontWeight="Bold"/>
+        <TextBox x:Name="textBoxAnzeigenWeitereINFOS" HorizontalAlignment="Left" Height="139" Margin="12,355,0,0" TextWrapping="Wrap" Text="-- keine weiteren Infos --" VerticalAlignment="Top" Width="340" IsReadOnly="True" FontSize="20"/>
         <TextBox x:Name="textBoxAnzeigenORT" HorizontalAlignment="Left" Height="40" Margin="87,100,0,0" TextWrapping="Wrap" Text="-- Ort --" VerticalAlignment="Top" Width="261" IsReadOnly="True" FontSize="20" TextAlignment="Right"/>
         <TextBox x:Name="textBoxAnzeigenMUSIKRICHTUNG" HorizontalAlignment="Left" Height="40" Margin="151,265,0,0" TextWrapping="Wrap" Text="-- Musikrichtung --" VerticalAlignment="Top" Width="199" IsReadOnly="True" FontSize="20" TextAlignment="Right"/>
         <TextBox x:Name="textBoxAnzeigenDATUM" HorizontalAlignment="Left" Height="40" Margin="151,155,0,0" TextWrapping="Wrap" Text="-- Datum --" VerticalAlignment="Top" Width="197" FontSize="20" IsReadOnly="True" TextAlignment="Right"/>
         <TextBox x:Name="textBoxAnzeigenUHRZEIT" HorizontalAlignment="Left" Height="40" Margin="151,210,0,0" TextWrapping="Wrap" Text="-- Uhrzeit --" VerticalAlignment="Top" Width="197" IsReadOnly="True" FontSize="20" TextAlignment="Right"/>
+        <Button x:Name="btnAufKarteAnzeigen" Content="Auf Karte anzeigen" HorizontalAlignment="Left" Margin="87,499,0,0" VerticalAlignment="Top" Width="193" Height="40" FontSize="20" Background="#FF9E9393" Click="btnAufKarteAnzeigen_wechselZuKartenAnzeige"/>
     </Grid>
 </Page>
