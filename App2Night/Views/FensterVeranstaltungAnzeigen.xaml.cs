@@ -51,13 +51,16 @@ namespace App2Night.Views
         {
             uebergebenderParameter = e.Parameter as Party;
 
+            DateTime partyDatumUhrzeit = uebergebenderParameter.PartyDate;
+            DateTime partyDatum = partyDatumUhrzeit.Date;
+            TimeSpan partyUhrzeit = partyDatumUhrzeit.TimeOfDay;
+            
             // null möglich!
             txtBlVeranstAnzeigenNAME.Text = uebergebenderParameter.PartyName;
-            textBoxAnzeigenDATUM.Text = uebergebenderParameter.PartyDate;
+            textBoxAnzeigenDATUM.Text = partyDatum.ToString("dd/MM/yyyy");
+            textBoxAnzeigenUHRZEIT.Text = partyDatumUhrzeit.ToString("HH:mm");
             textBoxAnzeigenORT.Text = uebergebenderParameter.Location.CityName;
-            //TODO: string von PartyDate in Uhrzeit und Datum aendern
-            //textBoxAnzeigenDATUM.Text = uebergebenderParameter.PartyDate;
-            //textBoxAnzeigenUHRZEIT.Text = uebergebenderParameter.PartyDate;
+            textBoxAnzeigenMUSIKRICHTUNG.Text = uebergebenderParameter.MusicGenre.ToString();
             textBoxAnzeigenWeitereINFOS.Text = uebergebenderParameter.Description;
         }
 

@@ -36,7 +36,7 @@ namespace App2Night.Views
             uebergebenderParameter = e.Parameter as Party;
 
             // Specify a known location.
-            BasicGeoposition cityPosition = new BasicGeoposition() { Latitude = 48.445432, Longitude = 8.696619 };
+            BasicGeoposition cityPosition = new BasicGeoposition() { Latitude = uebergebenderParameter.Location.Latitude, Longitude = uebergebenderParameter.Location.Longitude };
             Geopoint cityCenter = new Geopoint(cityPosition);
 
             // Set the map location.
