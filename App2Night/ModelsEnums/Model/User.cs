@@ -16,6 +16,6 @@ namespace App2Night.ModelsEnums.Model
          //public ObservableCollection<Party> Events { get; set; } 
          public Location Addresse { get; set; } 
          public Location LastGpsLocation { get; set; } 
-    } 
+    }
 
 }

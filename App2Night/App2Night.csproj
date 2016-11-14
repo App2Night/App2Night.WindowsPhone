@@ -99,11 +99,13 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackEndCommunication\BackEndComUser.cs" />
     <Compile Include="ModelsEnums\Enums\EventCommitmentState.cs" />
     <Compile Include="ModelsEnums\Enums\Gender.cs" />
     <Compile Include="ModelsEnums\Enums\Musicgenre.cs" />
     <Compile Include="ModelsEnums\Enums\PartyType.cs" />
     <Compile Include="ModelsEnums\Model\Location.cs" />
+    <Compile Include="ModelsEnums\Model\Login.cs" />
     <Compile Include="ModelsEnums\Model\Party.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -117,6 +119,8 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ModelsEnums\Model\ResultLogin.cs" />
+    <Compile Include="ModelsEnums\Model\Token.cs" />
     <Compile Include="ModelsEnums\Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\FensterAnmelden.xaml.cs">
@@ -216,7 +220,12 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SwaggerCodeGen\SwaggerCodeGen.csproj">
+      <Project>{bdca8ed5-2f12-42ce-a071-e6aad207377c}</Project>
+      <Name>SwaggerCodeGen</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

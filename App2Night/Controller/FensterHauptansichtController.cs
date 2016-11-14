@@ -14,7 +14,7 @@ namespace App2Night.Controller
             {
                 string dataFromServer;
                 dataFromServer = await BackEndComParty.GetRequest();
-            IEnumerable<Party> partyListe = JsonConvert.DeserializeObject<IEnumerable<Party>>(dataFromServer);
+                IEnumerable<Party> partyListe = JsonConvert.DeserializeObject<IEnumerable<Party>>(dataFromServer);
                 return partyListe;
             }
 

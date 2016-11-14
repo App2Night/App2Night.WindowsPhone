@@ -15,6 +15,9 @@ using Windows.UI.Xaml.Navigation;
 using App2Night.Controller;
 using Windows.Data.Json;
 using App2Night.APIObjects;
+using App2Night.ModelsEnums;
+using App2Night.ModelsEnums.Model;
+using System.Threading.Tasks;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -100,7 +103,32 @@ namespace App2Night.Views
             
         }
 
+        private async void btnTest_Click(object sender, RoutedEventArgs e)
+        {
+            Login login = new Login();
+            login.Username = "TestTestE";
+            login.Password = "testy";
+            login.Email = "testc@test.de";
+
+            // Task.Run(async () =>
+            //{
+            //    var ret = await BackEndCommunication.BackEndComUser.CreateUser(login);
+
+            //});
 
 
+
+            //string userID = await BackEndCommunication.BackEndComUser.CreateUser(login);
+
+            //userID = BackEndCommunication.BackEndComUser.stringBereinigen(userID);
+
+            //if (userID != "21" || userID != "42" || userID != "404")
+            //{
+            //        string status = await BackEndCommunication.BackEndComUser.DeleteUser(userID);
+            //}
+
+            
+
+        }
     }
 }
