@@ -10,12 +10,12 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Button x:Name="btnBestätigen" Content="Bestätigen" HorizontalAlignment="Left" Margin="10,514,0,0" VerticalAlignment="Top" Width="140" Height="40"/>
         <Button x:Name="btnAbbrechen" Content="Abbrechen" HorizontalAlignment="Left" Margin="210,514,0,0" VerticalAlignment="Top" Width="140" Height="40"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,60,0,0" TextWrapping="Wrap" Text="Altes Passwort eingeben:" VerticalAlignment="Top" Width="340" MinHeight="32" Height="40" FontSize="20" FontWeight="Bold"/>
-        <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="10,185,0,0" TextWrapping="Wrap" Text="Neues Passwort eingeben:" VerticalAlignment="Top" Width="340" MinHeight="32" Height="40" FontSize="20" FontWeight="Bold"/>
-        <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="10,270,0,0" TextWrapping="Wrap" Text="Passwort bestätigen" VerticalAlignment="Top" Width="340" MinHeight="32" Height="40" FontSize="20" FontWeight="Bold"/>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="10,105,0,0" TextWrapping="Wrap" Text="--Altes Passwort--" VerticalAlignment="Top" Width="340" Height="40"/>
-        <TextBox x:Name="textBox_Copy1" HorizontalAlignment="Left" Margin="10,310,0,0" TextWrapping="Wrap" Text="--Passwort bestätigen--" VerticalAlignment="Top" Width="340" Height="40"/>
-        <TextBox x:Name="textBox_Copy2" HorizontalAlignment="Left" Margin="10,225,0,0" TextWrapping="Wrap" Text="--Neues Passwort--" VerticalAlignment="Top" Width="340" Height="40"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Altes Passwort eingeben:" VerticalAlignment="Top" Width="340" MinHeight="32" Height="40" FontSize="20" FontWeight="Bold"/>
+        <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="10,130,0,0" TextWrapping="Wrap" Text="Neues Passwort eingeben:" VerticalAlignment="Top" Width="340" MinHeight="32" Height="40" FontSize="20" FontWeight="Bold"/>
+        <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="10,250,0,0" TextWrapping="Wrap" Text="Passwort bestätigen" VerticalAlignment="Top" Width="340" MinHeight="32" Height="40" FontSize="20" FontWeight="Bold"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="10,50,0,0" TextWrapping="Wrap" Text="--Altes Passwort--" VerticalAlignment="Top" Width="340" Height="40"/>
+        <TextBox x:Name="textBox_Copy1" HorizontalAlignment="Left" Margin="10,290,0,0" TextWrapping="Wrap" Text="--Passwort bestätigen--" VerticalAlignment="Top" Width="340" Height="40"/>
+        <TextBox x:Name="textBox_Copy2" HorizontalAlignment="Left" Margin="10,170,0,0" TextWrapping="Wrap" Text="--Neues Passwort--" VerticalAlignment="Top" Width="340" Height="40"/>
 
     </Grid>
 </Page>

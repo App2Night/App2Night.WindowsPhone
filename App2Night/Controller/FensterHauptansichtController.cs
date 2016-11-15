@@ -2,9 +2,9 @@
 using App2Night.BackEndCommunication;
 using Newtonsoft.Json;
 using Windows.Data.Json;
-using App2Night.APIObjects;
 using System.Collections.Generic;
 using System.Linq;
+using App2Night.ModelsEnums.Model;
 
 namespace App2Night.Controller
 {

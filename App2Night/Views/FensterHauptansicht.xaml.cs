@@ -14,7 +14,6 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using App2Night.Controller;
 using Windows.Data.Json;
-using App2Night.APIObjects;
 using App2Night.ModelsEnums;
 using App2Night.ModelsEnums.Model;
 using System.Threading.Tasks;

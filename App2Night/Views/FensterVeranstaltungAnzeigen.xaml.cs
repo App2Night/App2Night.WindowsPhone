@@ -14,8 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using App2Night.Controller;
 using Newtonsoft.Json;
-using static App2Night.APIObjects.Party;
-using App2Night.APIObjects;
+using App2Night.ModelsEnums.Model;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
