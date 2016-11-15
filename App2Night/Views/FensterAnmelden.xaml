@@ -7,5 +7,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Button x:Name="Anmelden" Content="Anmelden" HorizontalAlignment="Left" Margin="190,513,0,0" VerticalAlignment="Top" Height="45" Width="154"/>
+        <Button x:Name="Zurück" Content="Zurück" HorizontalAlignment="Left" Margin="12,515,0,0" VerticalAlignment="Top" Height="45" Width="146"/>
+        <TextBox x:Name="txtBlPasswort1" HorizontalAlignment="Center" Margin="10,257,18,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="25" Width="332" TextChanged="txtBlPasswort1_TextChanged"/>
+        <TextBox x:Name="txtBlNutzername" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="10,32,0,0" Width="334"/>
+        <TextBox x:Name="txtBlPasswort" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="10,145,0,0" Width="334" TextChanged="txtBlPasswort_TextChanged"/>
+        <TextBlock x:Name="txtBLPasswort" HorizontalAlignment="Left" Margin="12,225,0,0" TextWrapping="Wrap" Text="Passwort:" VerticalAlignment="Top" SelectionChanged="textBlock_SelectionChanged" Height="32" Width="334"/>
+        <TextBlock x:Name="txtBlE_Mail1" HorizontalAlignment="Left" Margin="12,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" SelectionChanged="textBlock_SelectionChanged" Height="32" Width="334">
+            <Run Text="E-Mail"/>
+            <Run Text=":"/>
+        </TextBlock>
+        <TextBlock x:Name="txtBlNutzername1" HorizontalAlignment="Left" Margin="12,0,0,0" TextWrapping="Wrap" Text="Nutzername:" VerticalAlignment="Top" SelectionChanged="textBlock_SelectionChanged" Height="32" Width="334"/>
+    </Grid>
 </Page>

@@ -8,19 +8,19 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock x:Name="txtBlVeranstAnzeigenNAME" Height="50" Margin="10,0,0,0" TextWrapping="Wrap" Text="-- Name --" VerticalAlignment="Top" Width="340" FontSize="20" HorizontalAlignment="Left" TextAlignment="Center" SelectionHighlightColor="White"/>
-        <Button x:Name="btnVerantsAnzeigenVormerken" Content="Vormerken!" HorizontalAlignment="Left" Height="40" Margin="190,550,0,0" VerticalAlignment="Top" Width="160" Background="#FF9E9393" FontSize="20" Click="btnVormerken_wechselZuHauptansicht"/>
-        <Button x:Name="btnVerantsAnzeigenZurueck" Content="&lt; Zurück" HorizontalAlignment="Left" Height="40" Margin="12,550,0,0" VerticalAlignment="Top" Width="140" Background="#FF9E9393" FontSize="20" Click="btnZurueck_wechselZuHauptansicht"/>
-        <TextBlock x:Name="textBlAnzeigenOrt" HorizontalAlignment="Left" Height="40" Margin="12,100,0,0" TextWrapping="Wrap" Text="Ort" VerticalAlignment="Top" Width="74" FontSize="20" FontWeight="Bold"/>
-        <TextBlock x:Name="textBlDatum" HorizontalAlignment="Left" Height="40" Margin="12,155,0,0" TextWrapping="Wrap" Text="Datum" VerticalAlignment="Top" Width="142" FontSize="20" FontWeight="Bold"/>
-        <TextBlock x:Name="textBlUhrzeit" HorizontalAlignment="Left" Height="40" Margin="12,210,0,0" TextWrapping="Wrap" Text="Uhrzeit" VerticalAlignment="Top" Width="142" FontSize="20" FontWeight="Bold"/>
-        <TextBlock x:Name="textBlMusikRichtung" HorizontalAlignment="Left" Height="40" Margin="10,265,0,0" TextWrapping="Wrap" Text="Musikrichtung" VerticalAlignment="Top" Width="141" FontWeight="Bold" FontSize="20"/>
-        <TextBlock x:Name="textBlWeitereInfos" HorizontalAlignment="Left" Height="40" Margin="12,310,0,0" TextWrapping="Wrap" Text="Weitere Infos" VerticalAlignment="Top" Width="143" FontSize="20" FontWeight="Bold"/>
-        <TextBox x:Name="textBoxAnzeigenWeitereINFOS" HorizontalAlignment="Left" Height="139" Margin="12,355,0,0" TextWrapping="Wrap" Text="-- keine weiteren Infos --" VerticalAlignment="Top" Width="340" IsReadOnly="True" FontSize="20"/>
-        <TextBox x:Name="textBoxAnzeigenORT" HorizontalAlignment="Left" Height="40" Margin="87,100,0,0" TextWrapping="Wrap" Text="-- Ort --" VerticalAlignment="Top" Width="261" IsReadOnly="True" FontSize="20" TextAlignment="Right"/>
-        <TextBox x:Name="textBoxAnzeigenMUSIKRICHTUNG" HorizontalAlignment="Left" Height="40" Margin="151,265,0,0" TextWrapping="Wrap" Text="-- Musikrichtung --" VerticalAlignment="Top" Width="199" IsReadOnly="True" FontSize="20" TextAlignment="Right"/>
-        <TextBox x:Name="textBoxAnzeigenDATUM" HorizontalAlignment="Left" Height="40" Margin="151,155,0,0" TextWrapping="Wrap" Text="-- Datum --" VerticalAlignment="Top" Width="197" FontSize="20" IsReadOnly="True" TextAlignment="Right"/>
-        <TextBox x:Name="textBoxAnzeigenUHRZEIT" HorizontalAlignment="Left" Height="40" Margin="151,210,0,0" TextWrapping="Wrap" Text="-- Uhrzeit --" VerticalAlignment="Top" Width="197" IsReadOnly="True" FontSize="20" TextAlignment="Right"/>
-        <Button x:Name="btnAufKarteAnzeigen" Content="Auf Karte anzeigen" HorizontalAlignment="Left" Margin="87,499,0,0" VerticalAlignment="Top" Width="193" Height="40" FontSize="20" Background="#FF9E9393" Click="btnAufKarteAnzeigen_wechselZuKartenAnzeige"/>
+        <TextBlock x:Name="txtBlVeranstAnzeigenNAME" Height="50" Margin="10,-22,0,0" TextWrapping="Wrap" Text="-- Name --" VerticalAlignment="Top" Width="340" FontSize="20" HorizontalAlignment="Left" TextAlignment="Center" SelectionHighlightColor="White"/>
+        <Button x:Name="btnVerantsAnzeigenVormerken" Content="Vormerken!" HorizontalAlignment="Left" Height="40" Margin="190,515,0,0" VerticalAlignment="Top" Width="160" Background="#FF9E9393" FontSize="20" Click="btnVormerken_wechselZuHauptansicht"/>
+        <Button x:Name="btnVerantsAnzeigenZurueck" Content="&lt; Zurück" HorizontalAlignment="Left" Height="40" Margin="12,515,0,0" VerticalAlignment="Top" Width="140" Background="#FF9E9393" FontSize="20" Click="btnZurueck_wechselZuHauptansicht"/>
+        <TextBlock x:Name="textBlAnzeigenOrt" HorizontalAlignment="Left" Height="40" Margin="10,78,0,0" TextWrapping="Wrap" Text="Ort" VerticalAlignment="Top" Width="74" FontSize="20" FontWeight="Bold" RenderTransformOrigin="0.568,-0.375"/>
+        <TextBlock x:Name="textBlDatum" HorizontalAlignment="Left" Height="40" Margin="12,133,0,0" TextWrapping="Wrap" Text="Datum" VerticalAlignment="Top" Width="142" FontSize="20" FontWeight="Bold"/>
+        <TextBlock x:Name="textBlUhrzeit" HorizontalAlignment="Left" Height="40" Margin="13,188,0,0" TextWrapping="Wrap" Text="Uhrzeit" VerticalAlignment="Top" Width="142" FontSize="20" FontWeight="Bold"/>
+        <TextBlock x:Name="textBlMusikRichtung" HorizontalAlignment="Left" Height="40" Margin="10,243,0,0" TextWrapping="Wrap" Text="Musikrichtung" VerticalAlignment="Top" Width="141" FontWeight="Bold" FontSize="20"/>
+        <TextBlock x:Name="textBlWeitereInfos" HorizontalAlignment="Left" Height="40" Margin="8,288,0,0" TextWrapping="Wrap" Text="Weitere Infos" VerticalAlignment="Top" Width="143" FontSize="20" FontWeight="Bold"/>
+        <TextBox x:Name="textBoxAnzeigenWeitereINFOS" HorizontalAlignment="Left" Height="122" Margin="12,333,0,0" TextWrapping="Wrap" Text="-- keine weiteren Infos --" VerticalAlignment="Top" Width="340" IsReadOnly="True" FontSize="20"/>
+        <TextBox x:Name="textBoxAnzeigenORT" HorizontalAlignment="Left" Height="40" Margin="87,78,0,0" TextWrapping="Wrap" Text="-- Ort --" VerticalAlignment="Top" Width="261" IsReadOnly="True" FontSize="20" TextAlignment="Right"/>
+        <TextBox x:Name="textBoxAnzeigenMUSIKRICHTUNG" HorizontalAlignment="Left" Height="40" Margin="151,243,0,0" TextWrapping="Wrap" Text="-- Musikrichtung --" VerticalAlignment="Top" Width="199" IsReadOnly="True" FontSize="20" TextAlignment="Right"/>
+        <TextBox x:Name="textBoxAnzeigenDATUM" HorizontalAlignment="Left" Height="40" Margin="151,133,0,0" TextWrapping="Wrap" Text="-- Datum --" VerticalAlignment="Top" Width="197" FontSize="20" IsReadOnly="True" TextAlignment="Right"/>
+        <TextBox x:Name="textBoxAnzeigenUHRZEIT" HorizontalAlignment="Left" Height="40" Margin="153,188,0,0" TextWrapping="Wrap" Text="-- Uhrzeit --" VerticalAlignment="Top" Width="197" IsReadOnly="True" FontSize="20" TextAlignment="Right"/>
+        <Button x:Name="btnAufKarteAnzeigen" Content="Auf Karte anzeigen" HorizontalAlignment="Left" Margin="87,460,0,0" VerticalAlignment="Top" Width="193" Height="40" FontSize="20" Background="#FF9E9393" Click="btnAufKarteAnzeigen_wechselZuKartenAnzeige"/>
     </Grid>
 </Page>

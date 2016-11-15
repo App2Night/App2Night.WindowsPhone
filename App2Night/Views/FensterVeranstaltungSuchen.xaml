@@ -15,7 +15,7 @@
         <TextBox x:Name="textBoxEingabePLZ" HorizontalAlignment="Left" Height="40" Margin="10,165,0,0" TextWrapping="Wrap" Text="PLZ (optional)" VerticalAlignment="Top" Width="130" FontSize="20" IsReadOnly="True"/>
         <TextBlock x:Name="textBlDatum" HorizontalAlignment="Left" Height="39" Margin="10,283,0,0" TextWrapping="Wrap" Text="Datum" VerticalAlignment="Top" Width="340" FontSize="20" FontWeight="Bold"/>
         <DatePicker x:Name="DatePickerSucheEingabeDatum" HorizontalAlignment="Left" Height="50" Margin="10,315,0,0" VerticalAlignment="Top" Width="340" FontSize="20"/>
-        <TextBlock x:Name="txtBlVeranstSuche" Height="55" Margin="10,-30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="340" FontSize="45" HorizontalAlignment="Left" TextAlignment="Center" SelectionHighlightColor="White" Text="Suche"/>
+        <TextBlock x:Name="txtBlVeranstSuche" Height="55" Margin="20,-20,0,605" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="340" FontSize="45" HorizontalAlignment="Left" TextAlignment="Center" SelectionHighlightColor="White" Text="Suche"/>
         <TextBlock x:Name="textBlZeitraum" HorizontalAlignment="Left" Height="40" Margin="10,365,0,0" TextWrapping="Wrap" Text="Zeitraum (optional)" VerticalAlignment="Top" Width="340" FontSize="20" FontWeight="Bold"/>
         <Slider x:Name="sliderSucheEingabeZeitraum" HorizontalAlignment="Left" Height="35" Margin="10,395,0,0" VerticalAlignment="Top" Width="340" Foreground="#FF9E9393" Maximum="14"/>
         <TextBlock x:Name="textBlSucheRadius" HorizontalAlignment="Left" Height="40" Margin="10,215,0,0" TextWrapping="Wrap" Text="Umkreis (max 10 km)" VerticalAlignment="Top" Width="340" FontSize="20" FontWeight="Bold"/>

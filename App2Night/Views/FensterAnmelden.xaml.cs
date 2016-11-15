@@ -26,5 +26,25 @@ namespace App2Night.Views
         {
             this.InitializeComponent();
         }
+
+        private void textBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void textBlock_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void txtBlPasswort_TextChanged(object sender, TextChangedEventArgs e)
+        {
+        
+        }
+
+        private void txtBlPasswort1_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

@@ -9,8 +9,8 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Image x:Name="iconA2N" HorizontalAlignment="Center" Height="200" Margin="80,40,78,0" VerticalAlignment="Top" Width="202" Source="ms-appx:///Ressources/A2N_Logo01_Variante02.png" Stretch="Fill" NineGrid="0"/>
-        <Button x:Name="btnAnmelden" Content="Anmelden" HorizontalAlignment="Center" Height="59" Margin="78,313,82,0" VerticalAlignment="Top" Width="200" FontSize="22"/>
-        <Button x:Name="button" Content="Registrieren" HorizontalAlignment="Center" Height="62" Margin="80,377,80,0" VerticalAlignment="Top" Width="200" FontSize="22"/>
+        <Button x:Name="btnAnmelden" Content="Anmelden" HorizontalAlignment="Center" Height="59" Margin="78,330,82,0" VerticalAlignment="Top" Width="200" FontSize="22"/>
+        <Button x:Name="button" Content="Registrieren" HorizontalAlignment="Center" Height="62" Margin="80,450,80,0" VerticalAlignment="Top" Width="200" FontSize="22"/>
         <TextBlock x:Name="txtBlockGetApp2Night" HorizontalAlignment="Center" Height="63" Margin="0,245,0,0" TextWrapping="Wrap" Text="Get App2Night!" VerticalAlignment="Top" Width="205" FontSize="20" TextAlignment="Center" Foreground="#FF463B3B" FontWeight="Bold"/>
 
     </Grid>
