@@ -8,7 +8,7 @@ namespace App2Night.ModelsEnums.Model
 {
     public class ResultLogin
     {
-
+        //TODO: fuellen /refresh und so...
 
 
 

@@ -9,11 +9,11 @@ namespace App2Night.ModelsEnums.Model
 {
     public class Login
     {
-        [JsonProperty("username")]
+        [JsonProperty("Username")]
         public string Username { get; set; }
-        [JsonProperty("password")]
+        [JsonProperty("Password")]
         public string Password { get; set; }
-        [JsonProperty("email")]
+        [JsonProperty("Email")]
         public string Email { get; set; }
     }
 }

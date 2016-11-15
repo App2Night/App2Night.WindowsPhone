@@ -20,6 +20,10 @@ namespace App2Night.BackEndCommunication
 
         HttpClient client = new HttpClient();
 
+        /// <summary>
+        /// Client fuer die Backend-Kommunikation mit app2nightuser.azurewebsites.net
+        /// </summary>
+        /// <returns>Client</returns>
         private static HttpClient GetClientUser()
         {
             HttpClient client = new HttpClient { BaseAddress = new Uri("http://app2nightuser.azurewebsites.net") };
@@ -28,6 +32,11 @@ namespace App2Night.BackEndCommunication
             return client;
         }
 
+        /// <summary>
+        /// Erstellt einen neuen User und gibt die dazugehörige Guid aus.
+        /// </summary>
+        /// <param name="login">Benutzername, Passwort und Emailadresse fuer neuen User.</param>
+        /// <returns>Guid</returns>
         public static async Task<string> CreateUser(Login login)
         {
             string userID = "";
@@ -45,7 +54,7 @@ namespace App2Night.BackEndCommunication
                     httpAntwort = await client.PostAsync("/api/User", content);
                     // 400 existiert bereits
                     // 201 erfolg
-                    httpAntwort.EnsureSuccessStatusCode();
+                    //httpAntwort.EnsureSuccessStatusCode();
                     userID = await httpAntwort.Content.ReadAsStringAsync();
 
                     if (userID.Length > 4) // Muss eine Guid sein
@@ -77,7 +86,11 @@ namespace App2Night.BackEndCommunication
             }
         }
 
-
+        /// <summary>
+        /// Loescht den durch die Guid angegebenen User.
+        /// </summary>
+        /// <param name="userID">Guid des Users.</param>
+        /// <returns>Status</returns>
         // Token fehlt und momentan ist im Server noch ein Problem -> geht nicht
         public static async Task<string> DeleteUser(string userID)
         {
@@ -86,7 +99,7 @@ namespace App2Night.BackEndCommunication
 
             if (internetVorhanden == true)
             {
-                HttpClient client = GetClientUser(); 
+                HttpClient client = GetClientUser();
                 //HttpResponseMessage httpAntwort = new HttpResponseMessage();
                 //HttpContent content = new StringContent(userID);
                 string url = $"/api/User/id={userID}";
@@ -94,7 +107,7 @@ namespace App2Night.BackEndCommunication
                 try
                 {
                     var httpAntwort = await client.DeleteAsync(url);
-                   
+
                     // 200 Erfolg
                     // 404 not found
                     httpAntwort.EnsureSuccessStatusCode();
@@ -128,7 +141,63 @@ namespace App2Night.BackEndCommunication
             }
         }
 
-        public static string stringBereinigen(string userID)
+        /// <summary>
+        /// Fordert Token fur User an, um dann Partys zu erstellen/aendern oder loeschen.
+        /// </summary>
+        /// <param name="login">Benoetigt Nutzername und Passwort des Users.</param>
+        /// <returns>Token mit weiteren Daten</returns>
+        // TODO: Token erweitern (refresh, haltbarkeit)
+        public static async Task<Token> GetToken(Login login)
+        {
+            Token token = new Token();
+
+            try
+            {
+                using (HttpClient client = GetClientUser())
+                {
+                    client.BaseAddress = new Uri("http://app2nightuser.azurewebsites.net/");
+                    client.DefaultRequestHeaders.Host = "app2nightuser.azurewebsites.net";
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    var query = "client_id=nativeApp&" +
+                                "client_secret=secret&" +
+                                "grant_type=password&" +
+                                $"username={login.Username}&" +
+                                $"password={login.Password}&" +
+                                "scope=App2NightAPI offline_access&" +
+                                "offline_access=true";
+                    var content = new StringContent(query, Encoding.UTF8, "application/x-www-form-urlencoded");
+                    var requestResult = await client.PostAsync("connect/token", content);
+
+                    if (requestResult.IsSuccessStatusCode)
+                    {
+                        string response = await requestResult.Content.ReadAsStringAsync();
+                        token = JsonConvert.DeserializeObject<Token>(response);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return token;
+        }
+
+        /// <summary>
+        /// Erneuert den Token.
+        /// </summary>
+        /// <returns>Token mit weiteren Daten</returns>
+        public static async Task<Token> RefreshToken()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Bereinigt String zu validem Guid.
+        /// </summary>
+        /// <param name="userID">Guid mit zusaetzlichen Zeichen.</param>
+        /// <returns>Validen Guid</returns>
+        private static string stringBereinigen(string userID)
         {
             string bereinigteUserID = "";
 

@@ -14,19 +14,29 @@ using App2Night.ModelsEnums.Model;
 using App2Night.ModelsEnums.Enums;
 
 
-namespace App2Night.APIObjects
+namespace App2Night.ModelsEnums.Model
 {
     public class Party
     {
+        [JsonProperty("PartyId")]
         public Guid PartyId { get; set; }
+        [JsonProperty("PartyName")]
         public string PartyName { get; set; }
+        [JsonProperty("CreationDate")]
         public DateTime CreationDate { get; set; }
+        [JsonProperty("Price")]
         public int Price { get; set; }
+        [JsonProperty("Host")]
         public User Host { get; set; }
+        [JsonProperty("PartyDate")]
         public DateTime PartyDate { get; set; }
+        [JsonProperty("MusicGenre")]
         public MusicGenre MusicGenre { get; set; }
+        [JsonProperty("PartyType")]
         public PartyType PartyType { get; set; }
+        [JsonProperty("Description")]
         public string Description { get; set; }
+        [JsonProperty("Location")]
         public Location Location { get; set; }
 
     }

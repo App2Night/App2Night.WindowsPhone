@@ -17,7 +17,7 @@ using App2Night.ModelsEnums.Model;
 
 namespace App2Night.BackEndCommunication
 {
-    public class BackEndComParty 
+    public class BackEndComParty
     {
         public BackEndComParty()
         {
@@ -26,16 +26,23 @@ namespace App2Night.BackEndCommunication
 
         HttpClient client = new HttpClient();
 
+        /// <summary>
+        /// Client fuer die Backend-Kommunikation mit app2nightapi.azurewebsites.net
+        /// </summary>
+        /// <returns>Client</returns>
         private static HttpClient GetClientParty()
-        { 
-            HttpClient client = new HttpClient { BaseAddress = new Uri("https://app2nightapi.azurewebsites.net/api/") }; 
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json")); 
-            client.DefaultRequestHeaders.Host = "app2nightapi.azurewebsites.net"; 
-            return client; 
+        {
+            HttpClient client = new HttpClient { BaseAddress = new Uri("https://app2nightapi.azurewebsites.net/api/") };
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Host = "app2nightapi.azurewebsites.net";
+            return client;
         }
 
-
-        public static async Task<string> GetRequest()
+        /// <summary>
+        /// Gibt Partys zurueck.
+        /// </summary>
+        /// <returns>Partys</returns>
+        public static async Task<string> GetParties()
         {
             string stringFromServer = "";
             bool internetVorhanden = IsInternet();
@@ -47,9 +54,9 @@ namespace App2Night.BackEndCommunication
 
                 try
                 {
-                    // GET Request
-                    httpAntwort = await client.GetAsync("http://app2nightapi.azurewebsites.net/api/Party");
-                    httpAntwort.EnsureSuccessStatusCode();
+                    // TODO: Geht das noch ohne rest der url?
+                    httpAntwort = await client.GetAsync("Party");
+                    //httpAntwort.EnsureSuccessStatusCode();
                     stringFromServer = await httpAntwort.Content.ReadAsStringAsync();
                     return stringFromServer;
                 }
@@ -71,55 +78,162 @@ namespace App2Night.BackEndCommunication
                 message.ShowAsync();
                 return "42";
             }
-
-
-
-
         }
 
-
-
-
-        public static async Task<Token> GetToken(string username, string password)
+        /// <summary>
+        /// Gibt die Daten einer bestimmten Party (ID) zurueck.
+        /// </summary>
+        /// <param name="id">ID der Daten</param>
+        /// <returns>Party als String</returns>
+        public static async Task<string> GetPartyByID(string id)
         {
-            Token token = new Token();
+            string stringFromServer = "";
+            bool internetVorhanden = IsInternet();
 
-            try
+            if (internetVorhanden == true)
             {
-                using (HttpClient client = GetClientParty())
-                {
-                    client.BaseAddress = new Uri("http://app2nightuser.azurewebsites.net/");
-                    client.DefaultRequestHeaders.Host = "app2nightuser.azurewebsites.net";
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    var query = "client_id=nativeApp&" +
-                                "client_secret=secret&" +
-                                "grant_type=password&" +
-                                $"username={username}&" +
-                                $"password={password}&" +
-                                "scope=App2NightAPI offline_access&" +
-                                "offline_access=true";
-                    var content = new StringContent(query, Encoding.UTF8, "application/x-www-form-urlencoded");
-                    var requestResult = await client.PostAsync("connect/token", content);
+                HttpClient client = GetClientParty();
+                HttpResponseMessage httpAntwort = new HttpResponseMessage();
 
-                    if (requestResult.IsSuccessStatusCode)
-                    {
-                        string response = await requestResult.Content.ReadAsStringAsync();
-                        token = JsonConvert.DeserializeObject<Token>(response);
-                    }
+                try
+                {
+                    // GET Request
+                    httpAntwort = await client.GetAsync($"Party/id={id}");
+                    //httpAntwort.EnsureSuccessStatusCode();
+                    stringFromServer = await httpAntwort.Content.ReadAsStringAsync();
+                    return stringFromServer;
+                }
+                catch (Exception ex)
+                {
+                    stringFromServer = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+                    var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
+                    message.ShowAsync();
+                    // Code 21 - Fehler bei Abrufen
+                    return "21";
+                }
+
+            }
+            else
+            {
+                // Nachricht, dass Internet eingeschaltet werden soll
+                // Code 42 - Fehler: Keine Internetverbindung
+                var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
+                message.ShowAsync();
+                return "42";
+            }
+        }
+
+        /// <summary>
+        /// Erstellt eine Party mit allen wichtigen Informationen und schickt sie zur Sicherung an den Server.
+        /// </summary>
+        /// <param name="party">Zu erstellende Party mit allen Informationen</param>
+        /// <returns>ID</returns>
+        public static async Task<string> CreateParty(Party party)
+        {
+            bool internetVorhanden = IsInternet();
+            string status = "";
+
+            if (internetVorhanden == true)
+            {
+                HttpClient client = GetClientParty();
+                HttpResponseMessage httpAntwort = new HttpResponseMessage();
+                HttpContent content = new StringContent(JsonConvert.SerializeObject(party), Encoding.UTF8, "application/json");
+
+                try
+                {
+                    httpAntwort = await client.PostAsync("Party", content);
+                    //httpAntwort.EnsureSuccessStatusCode();
+                    status = await httpAntwort.Content.ReadAsStringAsync();
+                    return status;
+                }
+
+                catch (Exception ex)
+                {
+                    status = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+                    var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
+                    message.ShowAsync();
+                    // Code 21 - Fehler bei Abrufen
+                    return "21";
                 }
             }
-            catch (Exception)
+            else
             {
-
-                throw;
+                // Nachricht, dass Internet eingeschaltet werden soll
+                // Code 42 - Fehler: Keine Internetverbindung
+                var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
+                message.ShowAsync();
+                return "42";
             }
-            return token;
+        }
+    
+
+        /// <summary>
+        /// Loescht eine bestimmte Party (ID) vom Server.
+        /// </summary>
+        /// <param name="id">Zu loeschende Party</param>
+        /// <returns>Status</returns>
+        public static async Task<string> DeletePartyByID(string id)
+        {
+            // TODO: Implementieren
+            throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Schickt die neuen Informationen einer bereits erstellten Party an den Server.
+        /// </summary>
+        /// <param name="id">ID der zu aktualisierenden Party</param>
+        /// <param name="party">Party mit neuen Werten</param>
+        /// <returns>Status</returns>
+        public static async Task<string> UpdatePartyByID(string id, Party party)
+        {
+            // TODO: Implementieren
+            throw new NotImplementedException();
+        }
 
+        /// <summary>
+        /// Validiert die eingegebene Adresse und gibt die Adresse laut Google zurueck.
+        /// </summary>
+        /// <param name="location">Zu pruefende Adresse</param>
+        /// <returns>Location laut Google</returns>
+        public static async Task<string> ValidateLocation(Location location)
+        {
+            bool internetVorhanden = IsInternet();
+            // TODO: eventuell Locations statt string
+            string adresseLautGoogle = "";
 
+            if (internetVorhanden == true)
+            {
+                HttpClient client = GetClientParty();
+                HttpResponseMessage httpAntwort = new HttpResponseMessage();
+                HttpContent content = new StringContent(JsonConvert.SerializeObject(location), Encoding.UTF8, "application/json");
 
+                try
+                {
+                    httpAntwort = await client.PostAsync("/api/Party/validate", content);
+                    //httpAntwort.EnsureSuccessStatusCode();
+                    // 200 Erfolg
+                    adresseLautGoogle = await httpAntwort.Content.ReadAsStringAsync();
+                    return adresseLautGoogle;
+                }
 
+                catch (Exception ex)
+                {
+                    adresseLautGoogle = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+                    var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
+                    message.ShowAsync();
+                    // Code 21 - Fehler bei Abrufen
+                    return "21";
+                }
+            }
+            else
+            {
+                // Nachricht, dass Internet eingeschaltet werden soll
+                // Code 42 - Fehler: Keine Internetverbindung
+                var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
+                message.ShowAsync();
+                return "42";
+            }
+        }
 
         /// <summary>
         /// Checken, ob Intenet eingeschaltet ist.
@@ -133,5 +247,4 @@ namespace App2Night.BackEndCommunication
         }
     }
     
-
 }

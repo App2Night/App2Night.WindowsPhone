@@ -13,16 +13,9 @@ namespace App2Night.Controller
         public static async Task<IEnumerable<Party>> partyListeVonServerGET()
             {
                 string dataFromServer;
-                dataFromServer = await BackEndComParty.GetRequest();
+                dataFromServer = await BackEndComParty.GetParties();
                 IEnumerable<Party> partyListe = JsonConvert.DeserializeObject<IEnumerable<Party>>(dataFromServer);
                 return partyListe;
             }
-
-        public static async Task<Party> einePartyVonServer()
-        {
-            IEnumerable<Party> res = await partyListeVonServerGET();           
-            return res.FirstOrDefault();
-
-        }
     }
 }
