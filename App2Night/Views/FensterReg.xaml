@@ -8,14 +8,18 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="10,515,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="button_Copy" Content="Button" HorizontalAlignment="Left" Margin="224,515,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="button" Content="Zurück" HorizontalAlignment="Left" Margin="10,515,0,0" VerticalAlignment="Top" Width="146" Height="45" FontSize="20"/>
+        <Button x:Name="button_Copy" Content="Bestätigen" HorizontalAlignment="Left" Margin="204,515,0,0" VerticalAlignment="Top" Width="146" Height="45" FontSize="20"/>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Nutzername:" VerticalAlignment="Top" Height="40" Width="340" FontSize="20" FontWeight="Bold"/>
-        <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="10,428,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="40" Width="340"/>
-        <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="10,130,0,0" TextWrapping="Wrap" Text="Passwort" VerticalAlignment="Top" Height="40" Width="340" FontSize="20" FontWeight="Bold"/>
+        <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="10,240,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" Width="340">
+            <Run FontWeight="Bold" FontSize="20" Text="Passwort bestätigen"/>
+            <LineBreak/>
+            <Run/>
+        </TextBlock>
+        <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="10,120,0,0" TextWrapping="Wrap" Text="Passwort" VerticalAlignment="Top" Height="40" Width="340" FontSize="20" FontWeight="Bold"/>
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="10,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="40" Width="340"/>
-        <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Margin="10,170,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="40" Width="340"/>
-        <TextBox x:Name="textBox_Copy1" HorizontalAlignment="Left" Margin="0,338,0,0" TextWrapping="Wrap" Text="Passwort bestätigen" VerticalAlignment="Top" Height="40" Width="340"/>
+        <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Margin="10,160,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="40" Width="340"/>
+        <TextBox x:Name="textBox_Copy1" HorizontalAlignment="Left" Margin="10,280,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="40" Width="340" FontSize="20" FontWeight="Bold"/>
 
     </Grid>
 </Page>

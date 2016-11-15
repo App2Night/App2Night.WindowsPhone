@@ -8,8 +8,8 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button x:Name="Anmelden" Content="Anmelden" HorizontalAlignment="Left" Margin="190,513,0,0" VerticalAlignment="Top" Height="45" Width="154"/>
-        <Button x:Name="Zurück" Content="Zurück" HorizontalAlignment="Left" Margin="12,515,0,0" VerticalAlignment="Top" Height="45" Width="146"/>
+        <Button x:Name="Anmelden" Content="Anmelden" HorizontalAlignment="Left" Margin="190,513,0,0" VerticalAlignment="Top" Height="45" Width="154" FontSize="20"/>
+        <Button x:Name="Zurück" Content="Zurück" HorizontalAlignment="Left" Margin="12,515,0,0" VerticalAlignment="Top" Height="45" Width="146" FontSize="20"/>
         <TextBox x:Name="txtBlPasswort1" HorizontalAlignment="Center" Margin="10,280,18,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="40" Width="332" TextChanged="txtBlPasswort1_TextChanged"/>
         <TextBox x:Name="txtBlNutzername" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="10,40,0,0" Width="334" Height="40"/>
         <TextBox x:Name="txtBlPasswort" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="10,160,0,0" Width="334" TextChanged="txtBlPasswort_TextChanged" Height="40"/>
