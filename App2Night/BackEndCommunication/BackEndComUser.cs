@@ -26,7 +26,7 @@ namespace App2Night.BackEndCommunication
         /// <returns>Client</returns>
         private static HttpClient GetClientUser()
         {
-            HttpClient client = new HttpClient { BaseAddress = new Uri("http://app2nightuser.azurewebsites.net") };
+            HttpClient client = new HttpClient { BaseAddress = new Uri("http://app2nightuser.azurewebsites.net/api/") };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Host = "app2nightuser.azurewebsites.net";
             return client;
@@ -51,7 +51,7 @@ namespace App2Night.BackEndCommunication
 
                 try
                 {
-                    httpAntwort = await client.PostAsync("/api/User", content);
+                    httpAntwort = await client.PostAsync("User", content);
                     // 400 existiert bereits
                     // 201 erfolg
                     //httpAntwort.EnsureSuccessStatusCode();
@@ -102,7 +102,7 @@ namespace App2Night.BackEndCommunication
                 HttpClient client = GetClientUser();
                 //HttpResponseMessage httpAntwort = new HttpResponseMessage();
                 //HttpContent content = new StringContent(userID);
-                string url = $"/api/User/id={userID}";
+                string url = $"User/id={userID}";
 
                 try
                 {
@@ -146,39 +146,50 @@ namespace App2Night.BackEndCommunication
         /// </summary>
         /// <param name="login">Benoetigt Nutzername und Passwort des Users.</param>
         /// <returns>Token mit weiteren Daten</returns>
-        // TODO: Token erweitern (refresh, haltbarkeit)
         public static async Task<Token> GetToken(Login login)
         {
             Token token = new Token();
+            bool internetVorhanden = BackEndComParty.IsInternet();
 
-            try
+            if (internetVorhanden == true)
             {
-                using (HttpClient client = GetClientUser())
+                try
                 {
-                    client.BaseAddress = new Uri("http://app2nightuser.azurewebsites.net/");
-                    client.DefaultRequestHeaders.Host = "app2nightuser.azurewebsites.net";
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    var query = "client_id=nativeApp&" +
-                                "client_secret=secret&" +
-                                "grant_type=password&" +
-                                $"username={login.Username}&" +
-                                $"password={login.Password}&" +
-                                "scope=App2NightAPI offline_access&" +
-                                "offline_access=true";
-                    var content = new StringContent(query, Encoding.UTF8, "application/x-www-form-urlencoded");
-                    var requestResult = await client.PostAsync("connect/token", content);
-
-                    if (requestResult.IsSuccessStatusCode)
+                    using (HttpClient client = GetClientUser())
                     {
-                        string response = await requestResult.Content.ReadAsStringAsync();
-                        token = JsonConvert.DeserializeObject<Token>(response);
+                        client.BaseAddress = new Uri("http://app2nightuser.azurewebsites.net/");
+                        client.DefaultRequestHeaders.Host = "app2nightuser.azurewebsites.net";
+                        //client.DefaultRequestHeaders.Accept.Clear();
+                        var query =     "client_id=nativeApp&" +
+                                              "client_secret=secret&" +
+                                              "grant_type=password&" +
+                                              $"username={login.Username}&" +
+                                              $"password={login.Password}&" +
+                                              "scope=App2NightAPI offline_access&" +
+                                              "openid email";
+                        var content = new StringContent(query, Encoding.UTF8, "application/x-www-form-urlencoded");
+                        var requestResult = await client.PostAsync("connect/token", content);
+
+                        if (requestResult.IsSuccessStatusCode)
+                        {
+                            string response = await requestResult.Content.ReadAsStringAsync();
+                            token = JsonConvert.DeserializeObject<Token>(response);
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    string error = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+                    var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
+                    message.ShowAsync();
+                } 
             }
-            catch (Exception)
+            else
             {
-
-                throw;
+                // Nachricht, dass Internet eingeschaltet werden soll
+                // Code 42 - Fehler: Keine Internetverbindung
+                var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
+                message.ShowAsync();
             }
             return token;
         }
@@ -187,9 +198,49 @@ namespace App2Night.BackEndCommunication
         /// Erneuert den Token.
         /// </summary>
         /// <returns>Token mit weiteren Daten</returns>
-        public static async Task<Token> RefreshToken()
+        public static async Task<Token> RefreshToken(Token token)
         {
-            throw new NotImplementedException();
+            bool internetVorhanden = BackEndComParty.IsInternet();
+
+            if (internetVorhanden == true)
+            {
+                try
+                {
+                    using (HttpClient client = GetClientUser())
+                    {
+                        client.BaseAddress = new Uri("http://app2nightuser.azurewebsites.net/");
+                        client.DefaultRequestHeaders.Host = "app2nightuser.azurewebsites.net";
+                        client.DefaultRequestHeaders.Add("Authorization", "Baerer " + token.AccessToken);
+                        //client.DefaultRequestHeaders.Accept.Clear();
+                        var query =     "client_id=nativeApp&" +
+                                              "client_secret=secret" +
+                                              $"token={token.RefreshToken}&" +
+                                              "token_type_hint=refresh_token";
+                        var content = new StringContent(query, Encoding.UTF8, "application/x-www-form-urlencoded");
+                        var requestResult = await client.PostAsync("connect/token", content);
+
+                        if (requestResult.IsSuccessStatusCode)
+                        {
+                            string response = await requestResult.Content.ReadAsStringAsync();
+                            token = JsonConvert.DeserializeObject<Token>(response);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string error = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+                    var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
+                    message.ShowAsync();
+                }
+            }
+            else
+            {
+                // Nachricht, dass Internet eingeschaltet werden soll
+                // Code 42 - Fehler: Keine Internetverbindung
+                var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
+                message.ShowAsync();
+            }
+            return token;
         }
 
         /// <summary>

@@ -47,10 +47,6 @@ namespace App2Night.Views
 
         private void chkBoxGPSNutzenClick_GPSinOrtWandeln(object sender, RoutedEventArgs e)
         {
-            // Wirklich Click oder Checked?
-            // Beispielhafter Aufruf?
-            // TODO: Absprechen
-
             if (chkBoxSucheGPSNutzen.IsChecked == true)
             {
                 // Keine Eingabe des Standortes zulassen
@@ -64,6 +60,20 @@ namespace App2Night.Views
                 textBoxEingabePLZ.IsReadOnly = false;
                 textBoxEingabeOrt.IsReadOnly = false;
             }
+
+            //if (chkBoxErstellenGPS.IsChecked == true)
+            //{
+            //    var pos = GetGeoLocation.GetLocation().Result;
+            //    party.Location.Latitude = pos.Coordinate.Latitude;
+            //    party.Location.Longitude = pos.Coordinate.Longitude;
+            //}
+            //else
+            //{
+            //    party.Location.CityName = textBoxErstellenORT.Text;
+            //    party.Location.StreetName = textBoxErstellenADRESSE.Text;
+            //    party.Location.HouseNumber = textBoxErstellenHAUSNUMMER.Text;
+            //}
+
         }
     }
 }

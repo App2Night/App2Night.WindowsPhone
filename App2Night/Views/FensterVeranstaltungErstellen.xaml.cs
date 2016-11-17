@@ -12,6 +12,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using App2Night.ModelsEnums.Model;
+using Windows.Devices.Geolocation;
+using App2Night.Controller;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -22,15 +25,11 @@ namespace App2Night.Views
     /// </summary>
     public sealed partial class FensterVeranstaltungErstellen : Page
     {
+        public Party party = new Party();
+
         public FensterVeranstaltungErstellen()
         {
-            //DateTimeOffset aktuellesJahr = DateTime.Today.AddYears(0);
-            //DateTimeOffset aktuellesJahrPlusEins = DateTime.Today.AddYears(1);
-
             this.InitializeComponent();
-            //this.DatePickerVeranstSuche.Date = DateTime.Today;
-            //this.DatePickerVeranstSuche.MinYear = aktuellesJahr;
-            //this.DatePickerVeranstSuche.MaxYear = aktuellesJahrPlusEins;
 
         }
 
@@ -39,9 +38,18 @@ namespace App2Night.Views
             this.Frame.Navigate(typeof(FensterHauptansicht));
         }
 
-        private void btnWeiter_wechselZuErstellen02(object sender, RoutedEventArgs e)
+        private async void  btnWeiter_wechselZuErstellen02(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(FensterVeranstaltungErstellen02));
+            party.PartyName = textBoxErstellenNAME.Text;
+            party.Location.CityName = textBoxErstellenORT.Text;
+            party.Location.HouseNumber = textBoxErstellenHAUSNUMMER.Text;
+            party.Location.StreetName = textBoxErstellenADRESSE.Text;
+            party.Location.Zipcode = textBoxErstellenPLZ.Text;
+            party.PartyDate.Date = DatePickerErstellenDATUM.Date;
+            party.PartyDate.TimeOfDay = TimePickerErstellenUHRZEIT.Time; 
+
+
+            this.Frame.Navigate(typeof(FensterVeranstaltungErstellen02), party);
         }
     }
 }

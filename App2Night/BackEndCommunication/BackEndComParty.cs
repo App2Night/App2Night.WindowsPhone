@@ -129,7 +129,7 @@ namespace App2Night.BackEndCommunication
         /// </summary>
         /// <param name="party">Zu erstellende Party mit allen Informationen</param>
         /// <returns>ID</returns>
-        public static async Task<string> CreateParty(Party party)
+        public static async Task<string> CreateParty(Party party, Token token)
         {
             bool internetVorhanden = IsInternet();
             string status = "";
@@ -138,7 +138,8 @@ namespace App2Night.BackEndCommunication
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
-                HttpContent content = new StringContent(JsonConvert.SerializeObject(party), Encoding.UTF8, "application/json");
+                client.DefaultRequestHeaders.Add("Authorization", "Baerer " + token.AccessToken);
+                HttpContent content = new StringContent(JsonConvert.SerializeObject(party), Encoding.UTF8, "application/json");              
 
                 try
                 {
@@ -167,16 +168,48 @@ namespace App2Night.BackEndCommunication
             }
         }
     
-
         /// <summary>
         /// Loescht eine bestimmte Party (ID) vom Server.
         /// </summary>
         /// <param name="id">Zu loeschende Party</param>
         /// <returns>Status</returns>
-        public static async Task<string> DeletePartyByID(string id)
+        public static async Task<string> DeletePartyByID(Party party, Token token)
         {
-            // TODO: Implementieren
-            throw new NotImplementedException();
+            bool internetVorhanden = IsInternet();
+            string status = "";
+
+            if (internetVorhanden == true)
+            {
+                HttpClient client = GetClientParty();
+                HttpResponseMessage httpAntwort = new HttpResponseMessage();
+                client.DefaultRequestHeaders.Add("Authorization", "Baerer " + token.AccessToken);
+                //HttpContent content = new StringContent(JsonConvert.SerializeObject(party), Encoding.UTF8, "application/json");
+
+                try
+                {
+                    httpAntwort = await client.DeleteAsync($"Party/id={party.PartyId}");
+                    //httpAntwort.EnsureSuccessStatusCode();
+                    status = await httpAntwort.Content.ReadAsStringAsync();
+                    return status;
+                }
+
+                catch (Exception ex)
+                {
+                    status = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+                    var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
+                    message.ShowAsync();
+                    // Code 21 - Fehler bei Abrufen
+                    return "21";
+                }
+            }
+            else
+            {
+                // Nachricht, dass Internet eingeschaltet werden soll
+                // Code 42 - Fehler: Keine Internetverbindung
+                var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
+                message.ShowAsync();
+                return "42";
+            }
         }
 
         /// <summary>
@@ -185,10 +218,43 @@ namespace App2Night.BackEndCommunication
         /// <param name="id">ID der zu aktualisierenden Party</param>
         /// <param name="party">Party mit neuen Werten</param>
         /// <returns>Status</returns>
-        public static async Task<string> UpdatePartyByID(string id, Party party)
+        public static async Task<string> UpdatePartyByID(string id, Party party, Token token)
         {
-            // TODO: Implementieren
-            throw new NotImplementedException();
+            bool internetVorhanden = IsInternet();
+            string status = "";
+
+            if (internetVorhanden == true)
+            {
+                HttpClient client = GetClientParty();
+                HttpResponseMessage httpAntwort = new HttpResponseMessage();
+                client.DefaultRequestHeaders.Add("Authorization", "Baerer " + token.AccessToken);
+                HttpContent content = new StringContent(JsonConvert.SerializeObject(party), Encoding.UTF8, "application/json");
+
+                try
+                {
+                    httpAntwort = await client.PutAsync($"Party/id ={party.PartyId}", content);
+                    //httpAntwort.EnsureSuccessStatusCode();
+                    status = await httpAntwort.Content.ReadAsStringAsync();
+                    return status;
+                }
+
+                catch (Exception ex)
+                {
+                    status = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+                    var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
+                    message.ShowAsync();
+                    // Code 21 - Fehler bei Abrufen
+                    return "21";
+                }
+            }
+            else
+            {
+                // Nachricht, dass Internet eingeschaltet werden soll
+                // Code 42 - Fehler: Keine Internetverbindung
+                var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
+                message.ShowAsync();
+                return "42";
+            }
         }
 
         /// <summary>
@@ -210,7 +276,7 @@ namespace App2Night.BackEndCommunication
 
                 try
                 {
-                    httpAntwort = await client.PostAsync("/api/Party/validate", content);
+                    httpAntwort = await client.PostAsync("Party/validate", content);
                     //httpAntwort.EnsureSuccessStatusCode();
                     // 200 Erfolg
                     adresseLautGoogle = await httpAntwort.Content.ReadAsStringAsync();
