@@ -26,5 +26,15 @@ namespace App2Night.Views
         {
             this.InitializeComponent();
         }
+
+        private void btnAnmelden_wechselZuFensterAnmelden(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(FensterAnmelden));
+        }
+
+        private void btnRegistrieren_wechselZuFensterReg(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(FensterReg));
+        }
     }
 }

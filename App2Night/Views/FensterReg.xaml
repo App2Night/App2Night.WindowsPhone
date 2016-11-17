@@ -1,4 +1,4 @@
-﻿<Page
+﻿<Page x:Name="FensterRegistrieren"
     x:Class="App2Night.Views.FensterReg"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,18 +8,16 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button x:Name="button" Content="Zurück" HorizontalAlignment="Left" Margin="10,515,0,0" VerticalAlignment="Top" Width="146" Height="45" FontSize="20"/>
-        <Button x:Name="button_Copy" Content="Bestätigen" HorizontalAlignment="Left" Margin="204,515,0,0" VerticalAlignment="Top" Width="146" Height="45" FontSize="20"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Nutzername:" VerticalAlignment="Top" Height="40" Width="340" FontSize="20" FontWeight="Bold"/>
-        <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="10,240,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" Width="340">
-            <Run FontWeight="Bold" FontSize="20" Text="Passwort bestätigen"/>
-            <LineBreak/>
-            <Run/>
-        </TextBlock>
-        <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="10,120,0,0" TextWrapping="Wrap" Text="Passwort" VerticalAlignment="Top" Height="40" Width="340" FontSize="20" FontWeight="Bold"/>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="10,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="40" Width="340"/>
-        <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Margin="10,160,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="40" Width="340"/>
-        <TextBox x:Name="textBox_Copy1" HorizontalAlignment="Left" Margin="10,280,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="40" Width="340" FontSize="20" FontWeight="Bold"/>
+        <Button x:Name="btnRegZurueck" Content="Zurück" HorizontalAlignment="Left" Margin="10,515,0,0" VerticalAlignment="Top" Width="146" Height="45" FontSize="20" Click="btnZurueck_wechselZuAnmOderReg"/>
+        <Button x:Name="btnNutzerAnlegen" Content="Bestätigen" HorizontalAlignment="Left" Margin="204,515,0,0" VerticalAlignment="Top" Width="146" Height="45" FontSize="20" Click="btnNutzerAnlegen_wechselZuHauptansicht"/>
+        <TextBlock x:Name="textBlNutzername" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Nutzername:" VerticalAlignment="Top" Height="40" Width="340" FontSize="20" FontWeight="Bold"/>
+        <TextBlock x:Name="textBlPasswortBestaetigen" HorizontalAlignment="Left" Margin="10,288,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" Width="340" Text="Passwort bestätigen" FontWeight="Bold" FontSize="20"/>
+        <TextBlock x:Name="textBlPasswort" HorizontalAlignment="Left" Margin="10,192,0,0" TextWrapping="Wrap" Text="Passwort" VerticalAlignment="Top" Height="40" Width="340" FontSize="20" FontWeight="Bold"/>
+        <TextBox x:Name="textBoxRegNUTZERNAME" HorizontalAlignment="Left" Margin="10,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="40" Width="340"/>
+        <PasswordBox x:Name="pwBoxPASSWORTBEST" HorizontalAlignment="Left" Height="40" Margin="10,328,0,0" VerticalAlignment="Top" Width="340"/>
+        <PasswordBox x:Name="pwBoxPASSWORT" HorizontalAlignment="Left" Height="40" Margin="10,232,0,0" VerticalAlignment="Top" Width="340"/>
+        <TextBlock x:Name="textBlEmailadresse" HorizontalAlignment="Left" Margin="10,101,0,0" TextWrapping="Wrap" Text="Email - Adresse" VerticalAlignment="Top" Height="40" Width="340" FontSize="20" FontWeight="Bold"/>
+        <TextBox x:Name="textBoxRegEMAIL" HorizontalAlignment="Left" Margin="10,140,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="40" Width="340"/>
 
     </Grid>
 </Page>

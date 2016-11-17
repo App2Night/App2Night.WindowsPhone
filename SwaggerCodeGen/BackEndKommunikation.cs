@@ -547,12 +547,12 @@
 
 //    throw new SwaggerException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", status_, responseData_, null);
 //}
-    
-    
-    
-    
 
-//    [JsonObject(MemberSerialization.OptIn)]
+
+
+
+
+//[JsonObject(MemberSerialization.OptIn)]
 //[GeneratedCode("NJsonSchema", "5.12.6149.949")]
 //public partial class CreateParty : INotifyPropertyChanged
 //{

@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using App2Night.ModelsEnums.Model;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -22,29 +23,31 @@ namespace App2Night.Views
     /// </summary>
     public sealed partial class FensterAnmelden : Page
     {
+        public Login anmelden = new Login();
+
         public FensterAnmelden()
         {
             this.InitializeComponent();
         }
 
-        private void textBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void btnZurueck_wechselZuAnmOderReg(object sender, RoutedEventArgs e)
         {
-
+            this.Frame.Navigate(typeof(FensterAnmOdReg));
         }
 
-        private void textBlock_SelectionChanged(object sender, RoutedEventArgs e)
+        private void btnAnmelden_AnmeldenWechselZuHauptansicht(object sender, RoutedEventArgs e)
         {
-
+            anmelden.Username = txtBlAnmNutzername.Text;
+            anmelden.Email = txtBlAnmEMAIL.Text;
+            anmelden.Password = pwBoxPASSWORT.Password;
+            // TODO: Nutzereingaben ueberpruefen
+            //wenn es stimmt 
+            this.Frame.Navigate(typeof(FensterHauptansicht), anmelden);
         }
 
-        private void txtBlPasswort_TextChanged(object sender, TextChangedEventArgs e)
+        private void btnPwVergessen_wechselZuNeuesPW(object sender, RoutedEventArgs e)
         {
-        
-        }
-
-        private void txtBlPasswort1_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
+            this.Frame.Navigate(typeof(FensterNeuesPW));
         }
     }
 }
