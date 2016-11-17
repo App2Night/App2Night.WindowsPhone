@@ -100,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackEndCommunication\BackEndComUser.cs" />
+    <Compile Include="Controller\SpeichereNutzerdaten.cs" />
     <Compile Include="ModelsEnums\Enums\EventCommitmentState.cs" />
     <Compile Include="ModelsEnums\Enums\Gender.cs" />
     <Compile Include="ModelsEnums\Enums\Musicgenre.cs" />

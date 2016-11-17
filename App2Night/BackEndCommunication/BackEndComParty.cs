@@ -42,6 +42,7 @@ namespace App2Night.BackEndCommunication
         /// Gibt Partys zurueck.
         /// </summary>
         /// <returns>Partys</returns>
+        //TODO: GPS und Radius mitschicken
         public static async Task<string> GetParties()
         {
             string stringFromServer = "";
