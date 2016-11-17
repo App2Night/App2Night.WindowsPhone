@@ -1,4 +1,4 @@
-﻿<Page x:Name="Erstellen02"
+﻿<Page x:Name="FensterErstellen02"
     x:Class="App2Night.Views.FensterVeranstaltungErstellen02"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
