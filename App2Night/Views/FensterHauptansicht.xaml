@@ -33,6 +33,5 @@
         <Button x:Name="btnErstellen" Content="Neu" HorizontalAlignment="Left" Height="50" Margin="190,504,0,0" VerticalAlignment="Top" Width="160" FontSize="20" Background="#FF9E9393" Click="btnErstellen_wechselZuVeranstErstellen"/>
         <Button x:Name="btnVeranstInDerNaehe" Content="In der Nähe" HorizontalAlignment="Left" Height="49" Margin="10,450,0,0" VerticalAlignment="Top" Width="160" Background="#FF9E9393" FontSize="20" Click="btnVeranstInDerNaehe_GetPartys"/>
         <ProgressRing x:Name="progressRingInDerNaehe" HorizontalAlignment="Center" Height="71" Margin="0,300,0,0" VerticalAlignment="Top" Width="70" IsActive="True"/>
-        <Button x:Name="btnTest" Content="Button" HorizontalAlignment="Left" Height="49" Margin="190,450,0,0" VerticalAlignment="Top" Width="160" Click="btnTest_Click"/>
     </Grid>
 </Page>

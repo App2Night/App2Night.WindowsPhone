@@ -103,7 +103,7 @@
     <Compile Include="Controller\SpeichereNutzerdaten.cs" />
     <Compile Include="ModelsEnums\Enums\EventCommitmentState.cs" />
     <Compile Include="ModelsEnums\Enums\Gender.cs" />
-    <Compile Include="ModelsEnums\Enums\Musicgenre.cs" />
+    <Compile Include="ModelsEnums\Enums\MusicGenre.cs" />
     <Compile Include="ModelsEnums\Enums\PartyType.cs" />
     <Compile Include="ModelsEnums\Model\Location.cs" />
     <Compile Include="ModelsEnums\Model\Login.cs" />
