@@ -17,6 +17,7 @@ using Windows.Data.Json;
 using App2Night.ModelsEnums;
 using App2Night.ModelsEnums.Model;
 using System.Threading.Tasks;
+using Windows.UI.Popups;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -51,19 +52,27 @@ namespace App2Night.Views
         private async void btnVeranstInDerNaehe_GetPartys(object sender, RoutedEventArgs e)
         {
             //Anzeige der Partys, die vom Server geschickt werden
-
             progressRingInDerNaehe.IsEnabled = true;
             progressRingInDerNaehe.Visibility = Visibility.Visible;
             partyListe = await FensterHauptansichtController.partyListeVonServerGET();
             progressRingInDerNaehe.IsEnabled = false;
             progressRingInDerNaehe.Visibility = Visibility.Collapsed;
 
-            int anzahl = partyListe.Count();
 
-            for (int i = 0; i < anzahl; i++)
+            if (partyListe.Count<Party>() != 0)
             {
-                party = partyListe.ElementAt(i);
-                listViewSuchErgebnis.Items.Add(party.PartyName); 
+                int anzahl = partyListe.Count();
+
+                for (int i = 0; i < anzahl; i++)
+                {
+                    party = partyListe.ElementAt(i);
+                    listViewSuchErgebnis.Items.Add(party.PartyName);
+                } 
+            }
+            else
+            {
+                var message = new MessageDialog("Leider keine Partys in deiner Nähe.");
+                message.ShowAsync();
             }
 
         }
@@ -102,22 +111,5 @@ namespace App2Night.Views
             
         }
 
-        //private async void btnTest_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Login login = new Login();
-        //    login.Username = "TestTestE";
-        //    login.Password = "testy";
-        //    login.Email = "testc@test.de";
-
-        //    //string userID = await BackEndCommunication.BackEndComUser.CreateUser(login);
-
-        //    //userID = BackEndCommunication.BackEndComUser.stringBereinigen(userID);
-
-        //    //if (userID != "21" || userID != "42" || userID != "404")
-        //    //{
-        //    //        string status = await BackEndCommunication.BackEndComUser.DeleteUser(userID);
-        //    //}
-
-        //}
     }
 }

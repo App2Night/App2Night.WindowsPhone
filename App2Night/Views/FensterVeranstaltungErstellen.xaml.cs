@@ -31,7 +31,22 @@ namespace App2Night.Views
         public FensterVeranstaltungErstellen()
         {
             this.InitializeComponent();
+        }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            partyZuErstellen = e.Parameter as Party;
+
+            // Erst anzeigen, wenn bereits Werte vorhanden sind (man kommt von Erstellen02)
+            if (partyZuErstellen != null)
+            {
+                textBoxErstellenNAME.Text = partyZuErstellen.PartyName;
+                textBoxErstellenORT.Text = partyZuErstellen.Location.CityName;
+                textBoxErstellenHAUSNUMMER.Text = partyZuErstellen.Location.HouseNumber;
+                textBoxErstellenADRESSE.Text = partyZuErstellen.Location.StreetName;
+                textBoxErstellenPLZ.Text = partyZuErstellen.Location.Zipcode;
+                DatePickerErstellenDATUM.Date = new DateTime(partyZuErstellen.PartyDate.Date.Day, partyZuErstellen.PartyDate.Month, partyZuErstellen.PartyDate.Year); 
+            }
         }
 
         private void btnAbbrechen_wechselZuHauptansicht(object sender, RoutedEventArgs e)
@@ -41,6 +56,7 @@ namespace App2Night.Views
 
         private void  btnWeiter_wechselZuErstellen02(object sender, RoutedEventArgs e)
         {
+            Party partyZuErstellen = new Party();
             //TODO: Nullwerte abfangen
             //TODO: Auf falsche Eingabe reagieren 
             //TODO: bei Zurueckkommen auf Erstellen02 müssen die Werte noch da sein

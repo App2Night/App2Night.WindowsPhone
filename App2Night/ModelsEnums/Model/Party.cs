@@ -21,6 +21,7 @@ namespace App2Night.ModelsEnums.Model
         [JsonProperty("PartyId")]
         public Guid PartyId { get; set; }
         [JsonProperty("PartyName")]
+        [MaxLength(32)]
         public string PartyName { get; set; }
         [JsonProperty("CreationDate")]
         public DateTime CreationDate { get; set; }
@@ -35,9 +36,12 @@ namespace App2Night.ModelsEnums.Model
         [JsonProperty("PartyType")]
         public PartyType PartyType { get; set; }
         [JsonProperty("Description")]
+        [MaxLength(256)]
         public string Description { get; set; }
         [JsonProperty("Location")]
         public Location Location { get; set; }
-
+        [JsonProperty("HostedByUser")]
+        public bool HostedByUser { get; set; }
+        public EventCommitmentState CommitmentState { get; set; }
     }
 }

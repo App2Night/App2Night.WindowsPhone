@@ -11,6 +11,7 @@ using Windows.Networking.Connectivity;
 using Windows.Data.Json;
 using Windows.UI.Popups;
 using App2Night.ModelsEnums.Model;
+using Windows.Devices.Geolocation;
 
 //https://github.com/App2Night/App2Night.Xamarin/blob/dev/PartyUp.Service/Service/ClientService.cs
 //http://app2nightapi.azurewebsites.net/swagger/ui/index.html
@@ -43,7 +44,7 @@ namespace App2Night.BackEndCommunication
         /// </summary>
         /// <returns>Partys</returns>
         //TODO: GPS und Radius mitschicken
-        public static async Task<string> GetParties()
+        public static async Task<string> GetParties(Geoposition aktuellePosition, float radius)
         {
             string stringFromServer = "";
             bool internetVorhanden = IsInternet();
@@ -52,12 +53,15 @@ namespace App2Night.BackEndCommunication
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
+                //double latitude = aktuellePosition.Position.Latitude;
+                //double longitude = aktuellePosition.Position.Longitude;
+                double latitude = aktuellePosition.Coordinate.Latitude;
+                double longitude = aktuellePosition.Coordinate.Longitude;
 
                 try
                 {
                     // TODO: Geht das noch ohne rest der url?
-                    httpAntwort = await client.GetAsync("Party");
-                    //httpAntwort.EnsureSuccessStatusCode();
+                    httpAntwort = await client.GetAsync($"Party?lat={latitude}&lon={longitude}&radius={radius}");                   
                     stringFromServer = await httpAntwort.Content.ReadAsStringAsync();
                     return stringFromServer;
                 }

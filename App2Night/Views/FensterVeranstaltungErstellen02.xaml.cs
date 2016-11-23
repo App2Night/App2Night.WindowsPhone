@@ -25,6 +25,7 @@ namespace App2Night.Views
     public sealed partial class FensterVeranstaltungErstellen02 : Page
     {
         Party partyZuErstellen = new Party();
+        Token tok = new Token();
 
         public FensterVeranstaltungErstellen02()
         {
@@ -48,13 +49,23 @@ namespace App2Night.Views
             this.Frame.Navigate(typeof(FensterVeranstaltungErstellen));
         }
 
-        private void btnErstellen_wechselZuAnzeige(object sender, RoutedEventArgs e)
+        private async void btnErstellen_wechselZuAnzeige(object sender, RoutedEventArgs e)
         {
+           
+
             partyZuErstellen.MusicGenre = (MusicGenre)comboBoxErstellenMUSIKRICHTUNG.SelectedItem;
+            partyZuErstellen.Price = Convert.ToInt32(textBoxErstellenPREIS.Text);
             // TODO: Maximale Zeichenzahl beachten
             partyZuErstellen.Description = textBoxErstellenWEITEREINFOS.Text;
 
-            this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen));
+            tok.AccessToken = "dc2f9fcb-c3df-4b02-6007-08d40f0986a3";
+
+            string status = await BackEndCommunication.BackEndComParty.CreateParty(partyZuErstellen, tok); 
+
+            if (status == "")
+            {
+                this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen));
+            }     
         }
 
         

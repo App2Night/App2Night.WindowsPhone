@@ -38,7 +38,6 @@ namespace App2Night.Views
 
         private async void btnNutzerAnlegen_wechselZuHauptansicht(object sender, RoutedEventArgs e)
         {
-            //TODO: CreateUser, wenn Passwoerter gleich
             //"dc2f9fcb-c3df-4b02-6007-08d40f0986a3"
             neuerNutzer.Username = textBoxRegNUTZERNAME.Text;
             neuerNutzer.Email = textBoxRegEMAIL.Text;

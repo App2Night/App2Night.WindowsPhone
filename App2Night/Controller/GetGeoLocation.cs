@@ -16,10 +16,10 @@ namespace App2Night.Controller
         /// <returns>Aktuellen Standort des Nutzers</returns>
         public static async Task<Geoposition> GetLocation()
         {
+            // TODO: Geoposition scheinbar veraltet
             Geolocator geolocator = new Geolocator();
             Geoposition pos = null;
-            //pos.Coordinate.Latitude = 48.445247;
-            //pos.Coordinate.Longitude = 8.696542;
+
             var accessStatus = await Geolocator.RequestAccessAsync();
 
             if (GeolocationAccessStatus.Allowed == accessStatus)
@@ -31,6 +31,7 @@ namespace App2Night.Controller
                 var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
                 message.ShowAsync();
             }
+
             return pos;
         }
     }

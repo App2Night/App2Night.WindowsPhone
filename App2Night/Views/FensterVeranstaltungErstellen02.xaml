@@ -11,9 +11,11 @@
         <TextBlock x:Name="txtBlVeranstErstellenZwei" Height="80" Margin="10,-30,0,0" TextWrapping="Wrap" Text="Erstellen" VerticalAlignment="Top" Width="340" FontSize="45" HorizontalAlignment="Left" TextAlignment="Center" SelectionHighlightColor="White"/>
         <Button x:Name="btnVerantsErstellen" Content="Erstellen!" HorizontalAlignment="Left" Height="40" Margin="190,515,0,0" VerticalAlignment="Top" Width="160" Background="#FF9E9393" FontSize="20" Click="btnErstellen_wechselZuAnzeige"/>
         <Button x:Name="btnVerantsErstellenZurueck" Content="&lt; Zurück" HorizontalAlignment="Left" Height="40" Margin="12,515,0,0" VerticalAlignment="Top" Width="140" Background="#FF9E9393" FontSize="20" Click="btnZurueck_wechselZuErstellen01"/>
-        <TextBlock x:Name="textBlMusikRichtung" HorizontalAlignment="Left" Height="40" Margin="10,130,0,0" TextWrapping="Wrap" Text="Musikrichtung (optional)" VerticalAlignment="Top" Width="340" FontSize="20" FontWeight="Bold"/>
-        <ComboBox x:Name="comboBoxErstellenMUSIKRICHTUNG" HorizontalAlignment="Left" Height="40" Margin="10,170,0,0" VerticalAlignment="Top" Width="342" FontSize="20"/>
+        <TextBlock x:Name="textBlMusikRichtung" HorizontalAlignment="Left" Height="40" Margin="10,70,0,0" TextWrapping="Wrap" Text="Musikrichtung (optional)" VerticalAlignment="Top" Width="340" FontSize="20" FontWeight="Bold"/>
+        <ComboBox x:Name="comboBoxErstellenMUSIKRICHTUNG" HorizontalAlignment="Left" Height="40" Margin="10,106,0,0" VerticalAlignment="Top" Width="342" FontSize="20"/>
         <TextBlock x:Name="textBlErstellenWeitereInfos" HorizontalAlignment="Left" Height="40" Margin="10,240,0,0" TextWrapping="Wrap" Text="Weitere Informationen (optional)" VerticalAlignment="Top" Width="340" FontSize="20" FontWeight="Bold"/>
         <TextBox x:Name="textBoxErstellenWEITEREINFOS" HorizontalAlignment="Left" Height="150" Margin="10,280,0,0" TextWrapping="Wrap" Text="Hier können Sie weitere Informationen zu ihrer Veranstaltung eintragen wie z.B. besondere Angebote oder Auftritte." VerticalAlignment="Top" Width="340" FontSize="20"/>
+        <TextBlock x:Name="textBlErstellenPreis" HorizontalAlignment="Left" Height="41" Margin="12,163,0,0" TextWrapping="Wrap" Text="Eintrittspreis" VerticalAlignment="Top" Width="338" FontSize="20" FontWeight="Bold"/>
+        <TextBox x:Name="textBoxErstellenPREIS" HorizontalAlignment="Left" Height="43" Margin="190,160,0,0" TextWrapping="Wrap" Text="Preis" VerticalAlignment="Top" Width="160" FontSize="20"/>
     </Grid>
 </Page>
