@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Plugin.Geolocator;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -15,22 +16,26 @@ namespace App2Night.Controller
         /// Gibt den aktuellen Standort als Latitude und Longitude oder CivicAddress zurueck.
         /// </summary>
         /// <returns>Aktuellen Standort des Nutzers</returns>
-        public static async Task<Geopoint> GetLocation()
+        public static async Task<Plugin.Geolocator.Abstractions.Position> GetLocation()
         {
             Geolocator geolocator = new Geolocator();
-            Geoposition pos = null;
+            //Geoposition pos = null;
+            Plugin.Geolocator.Abstractions.Position pos = null;
+            var locator = CrossGeolocator.Current;
+            locator.DesiredAccuracy = 50;
 
-           var accessStatus = await Geolocator.RequestAccessAsync();
+            var accessStatus = await Geolocator.RequestAccessAsync();
             //var accessStatus = GeolocationAccessStatus.Allowed;
 
-            TimeSpan timeOutMax = new TimeSpan(0, 0, 20);
-            TimeSpan timeout = new TimeSpan(0,0,10);
+            //TimeSpan timeOutMax = new TimeSpan(0, 0, 20);
+            TimeSpan timeout = new TimeSpan(0, 0, 10);
 
             try
             {
                 if (GeolocationAccessStatus.Allowed == accessStatus)
                 {
-                    pos = await geolocator.GetGeopositionAsync(TimeSpan.FromMinutes(30), timeout);
+                    //pos = await geolocator.GetGeopositionAsync(TimeSpan.FromMinutes(30), timeout);
+                    pos = await locator.GetPositionAsync(1000);
                 }
                 else
                 {
@@ -44,10 +49,10 @@ namespace App2Night.Controller
                 Debug.WriteLine(ex);
             }
 
-            BasicGeoposition basePosition = new BasicGeoposition() { Latitude = pos.Coordinate.Point.Position.Latitude, Longitude = pos.Coordinate.Point.Position.Longitude };
-            Geopoint point = new Geopoint(basePosition);
+            //BasicGeoposition basePosition = new BasicGeoposition() { Latitude = pos.Coordinate.Point.Position.Latitude, Longitude = pos.Coordinate.Point.Position.Longitude };
+            //Geopoint point = new Geopoint(basePosition);
 
-            return point;
+            return pos;
         }
     }
 }

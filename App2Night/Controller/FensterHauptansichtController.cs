@@ -14,12 +14,13 @@ namespace App2Night.Controller
         public static async Task<IEnumerable<Party>> partyListeVonServerGET()
         {
             string dataFromServer;
+            Plugin.Geolocator.Abstractions.Position pos;
 
             //Geopoint po = new Geopoint(baspo);
-            Geopoint geopoint = GetGeoLocation.GetLocation().Result;
+            pos = GetGeoLocation.GetLocation().Result;
             float radius = 30;
 
-            dataFromServer = await BackEndComParty.GetParties(geopoint, radius);
+            dataFromServer = await BackEndComParty.GetParties(pos, radius);
             IEnumerable<Party> partyListe = JsonConvert.DeserializeObject<IEnumerable<Party>>(dataFromServer);
             return partyListe;
         }

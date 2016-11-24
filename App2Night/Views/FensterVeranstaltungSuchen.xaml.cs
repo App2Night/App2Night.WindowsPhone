@@ -24,14 +24,7 @@ namespace App2Night.Views
     {
         public FensterVeranstaltungSuchen()
         {
-            //DateTimeOffset aktuellesJahr = DateTime.Today.AddYears(0);
-            //DateTimeOffset aktuellesJahrPlusEins = DateTime.Today.AddYears(1);
-
             this.InitializeComponent();
-            //this.DatePickerVeranstSuche.Date = DateTime.Today;
-            //this.DatePickerVeranstSuche.MinYear = aktuellesJahr;
-            //this.DatePickerVeranstSuche.MaxYear = aktuellesJahrPlusEins;
-
         }
 
         private void btnAbbrechen_wechselZuHauptansicht(object sender, RoutedEventArgs e)
