@@ -19,7 +19,8 @@ namespace App2Night.Controller
             Geolocator geolocator = new Geolocator();
             Geoposition pos = null;
 
-            var accessStatus = await Geolocator.RequestAccessAsync();
+            //var accessStatus = await Geolocator.RequestAccessAsync();
+            var accessStatus = GeolocationAccessStatus.Allowed;
 
             if (GeolocationAccessStatus.Allowed == accessStatus)
             {
@@ -31,7 +32,7 @@ namespace App2Night.Controller
                 message.ShowAsync();
             }
 
-            BasicGeoposition basePosition = new BasicGeoposition() { Latitude = pos.Coordinate.Point.Position.Latitude, Longitude = pos.Coordinate.Point.Position..Longitude };
+            BasicGeoposition basePosition = new BasicGeoposition() { Latitude = pos.Coordinate.Point.Position.Latitude, Longitude = pos.Coordinate.Point.Position.Longitude };
             Geopoint point = new Geopoint(basePosition);
 
             return point;
