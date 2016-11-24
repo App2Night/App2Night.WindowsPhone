@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using App2Night.ModelsEnums.Model;
 using App2Night.ModelsEnums.Enums;
+using Windows.UI.Popups;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -24,14 +25,11 @@ namespace App2Night.Views
     /// </summary>
     public sealed partial class FensterVeranstaltungErstellen02 : Page
     {
-        Party partyZuErstellen = new Party();
+        Party partyZuErstellen;
         Token tok = new Token();
 
         public FensterVeranstaltungErstellen02()
         {
-            //DateTimeOffset aktuellesJahr = DateTime.Today.AddYears(0);
-            //DateTimeOffset aktuellesJahrPlusEins = DateTime.Today.AddYears(1);
-
             this.InitializeComponent();
 
             // MusicGenres in ComboBox anzeigen
@@ -39,7 +37,7 @@ namespace App2Night.Views
 
         }
 
-        new public  async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             partyZuErstellen = e.Parameter as Party;
         }
@@ -51,20 +49,28 @@ namespace App2Night.Views
 
         private async void btnErstellen_wechselZuAnzeige(object sender, RoutedEventArgs e)
         {
-           
-
             partyZuErstellen.MusicGenre = (MusicGenre)comboBoxErstellenMUSIKRICHTUNG.SelectedItem;
             partyZuErstellen.Price = Convert.ToInt32(textBoxErstellenPREIS.Text);
             // TODO: Maximale Zeichenzahl beachten
             partyZuErstellen.Description = textBoxErstellenWEITEREINFOS.Text;
 
-            tok.AccessToken = "dc2f9fcb-c3df-4b02-6007-08d40f0986a3";
+            Login temp = new Login();
+            temp.Email = "testY@test.de";
+            temp.Password = "hallo1234";
+            temp.Username = "YvetteLa";
+
+            string id = await BackEndCommunication.BackEndComUser.CreateUser(temp);
+            tok = await BackEndCommunication.BackEndComUser.GetToken(temp);
+
+            //tok = await BackEndCommunication.BackEndComUser.RefreshToken(tok);
 
             string status = await BackEndCommunication.BackEndComParty.CreateParty(partyZuErstellen, tok); 
 
             if (status == "")
             {
-                this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen));
+                var message = new MessageDialog("Party nicht erstellt");
+                message.ShowAsync();
+                this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen), partyZuErstellen);
             }     
         }
 

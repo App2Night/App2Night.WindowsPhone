@@ -26,7 +26,7 @@ namespace App2Night.Views
     /// </summary>
     public sealed partial class FensterVeranstaltungErstellen : Page
     {
-        public Party partyZuErstellen = new Party();
+        public Party partyZuErstellen;
 
         public FensterVeranstaltungErstellen()
         {
@@ -63,12 +63,19 @@ namespace App2Night.Views
             try
             {
                 partyZuErstellen.PartyName = textBoxErstellenNAME.Text;
-                partyZuErstellen.Location.CityName = textBoxErstellenORT.Text;
-                partyZuErstellen.Location.HouseNumber = textBoxErstellenHAUSNUMMER.Text;
-                partyZuErstellen.Location.StreetName = textBoxErstellenADRESSE.Text;
-                partyZuErstellen.Location.Zipcode = textBoxErstellenPLZ.Text;
-                DateTime zwischenSpeicherDate = new DateTime(DatePickerErstellenDATUM.Date.Day, DatePickerErstellenDATUM.Date.Month, DatePickerErstellenDATUM.Date.Year,
+
+                Location loc = new Location();
+                loc.CityName = textBoxErstellenORT.Text;
+                loc.StreetName = textBoxErstellenADRESSE.Text; 
+                loc.HouseNumber = textBoxErstellenHAUSNUMMER.Text;
+                loc.Zipcode = textBoxErstellenPLZ.Text;
+
+                partyZuErstellen.Location = loc;
+
+                DateTime zwischenSpeicherDate = new DateTime(DatePickerErstellenDATUM.Date.Year, DatePickerErstellenDATUM.Date.Month, DatePickerErstellenDATUM.Date.Day,
                                                                                         TimePickerErstellenUHRZEIT.Time.Hours, TimePickerErstellenUHRZEIT.Time.Minutes, TimePickerErstellenUHRZEIT.Time.Seconds);
+
+
                 partyZuErstellen.PartyDate = zwischenSpeicherDate;
             }
             catch (Exception)

@@ -142,6 +142,7 @@ namespace App2Night.BackEndCommunication
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
+                //client.DefaultRequestHeaders.Add("Content-Type", "application/json");
                 client.DefaultRequestHeaders.Add("Authorization", "Baerer " + token.AccessToken);
                 HttpContent content = new StringContent(JsonConvert.SerializeObject(party), Encoding.UTF8, "application/json");              
 

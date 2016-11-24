@@ -18,6 +18,8 @@ using App2Night.ModelsEnums;
 using App2Night.ModelsEnums.Model;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
+using Newtonsoft.Json;
+using App2Night.BackEndCommunication;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -49,12 +51,24 @@ namespace App2Night.Views
             this.Frame.Navigate(typeof(FensterVeranstaltungSuchen));
         }
 
-        private async void btnVeranstInDerNaehe_GetPartys(object sender, RoutedEventArgs e)
+        public async void btnVeranstInDerNaehe_GetPartys(object sender, RoutedEventArgs e)
         { 
             //Anzeige der Partys, die vom Server geschickt werden
             progressRingInDerNaehe.IsEnabled = true;
             progressRingInDerNaehe.Visibility = Visibility.Visible;
-            partyListe = await FensterHauptansichtController.partyListeVonServerGET();
+
+            //partyListe = await FensterHauptansichtController.partyListeVonServerGET();
+
+            string dataFromServer;
+            Plugin.Geolocator.Abstractions.Position pos;
+
+            //Geopoint po = new Geopoint(baspo);
+            pos = GetGeoLocation.GetLocation().Result;
+            float radius = 30;
+
+            dataFromServer = await BackEndComParty.GetParties(pos, radius);
+            IEnumerable<Party> partyListe = JsonConvert.DeserializeObject<IEnumerable<Party>>(dataFromServer);
+
             progressRingInDerNaehe.IsEnabled = false;
             progressRingInDerNaehe.Visibility = Visibility.Collapsed;
 
