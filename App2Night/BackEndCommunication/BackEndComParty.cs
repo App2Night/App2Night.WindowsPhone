@@ -44,7 +44,7 @@ namespace App2Night.BackEndCommunication
         /// </summary>
         /// <returns>Partys</returns>
         //TODO: GPS und Radius mitschicken
-        public static async Task<string> GetParties(Geoposition aktuellePosition, float radius)
+        public static async Task<string> GetParties(Geopoint aktuellePosition, float radius)
         {
             string stringFromServer = "";
             bool internetVorhanden = IsInternet();
@@ -55,8 +55,8 @@ namespace App2Night.BackEndCommunication
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
                 //double latitude = aktuellePosition.Position.Latitude;
                 //double longitude = aktuellePosition.Position.Longitude;
-                double latitude = aktuellePosition.Coordinate.Latitude;
-                double longitude = aktuellePosition.Coordinate.Longitude;
+                double latitude = aktuellePosition.Position.Latitude;
+                double longitude = aktuellePosition.Position.Longitude;
 
                 try
                 {

@@ -14,9 +14,8 @@ namespace App2Night.Controller
         /// Gibt den aktuellen Standort als Latitude und Longitude oder CivicAddress zurueck.
         /// </summary>
         /// <returns>Aktuellen Standort des Nutzers</returns>
-        public static async Task<Geoposition> GetLocation()
+        public static async Task<Geopoint> GetLocation()
         {
-            // TODO: Geoposition scheinbar veraltet
             Geolocator geolocator = new Geolocator();
             Geoposition pos = null;
 
@@ -32,7 +31,10 @@ namespace App2Night.Controller
                 message.ShowAsync();
             }
 
-            return pos;
+            BasicGeoposition basePosition = new BasicGeoposition() { Latitude = pos.Coordinate.Point.Position.Latitude, Longitude = pos.Coordinate.Point.Position..Longitude };
+            Geopoint point = new Geopoint(basePosition);
+
+            return point;
         }
     }
 }

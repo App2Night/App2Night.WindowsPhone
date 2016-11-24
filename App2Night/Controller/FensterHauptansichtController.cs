@@ -15,13 +15,11 @@ namespace App2Night.Controller
         {
             string dataFromServer;
 
-            BasicGeoposition baspo = new BasicGeoposition() { Latitude = 48.443167, Longitude = 8.694906 };
             //Geopoint po = new Geopoint(baspo);
-            Geoposition po = GetGeoLocation.GetLocation().Result;
-            Geopoint geopoint = new Geopoint(new BasicGeoposition() { Latitude = po.Coordinate.Latitude, Longitude = po.Coordinate.Longitude });
+            Geopoint geopoint = GetGeoLocation.GetLocation().Result;
             float radius = 30;
 
-            dataFromServer = await BackEndComParty.GetParties(po, radius);
+            dataFromServer = await BackEndComParty.GetParties(geopoint, radius);
             IEnumerable<Party> partyListe = JsonConvert.DeserializeObject<IEnumerable<Party>>(dataFromServer);
             return partyListe;
         }
