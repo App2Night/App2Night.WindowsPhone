@@ -50,7 +50,7 @@ namespace App2Night.Views
         }
 
         private async void btnVeranstInDerNaehe_GetPartys(object sender, RoutedEventArgs e)
-        {
+        { 
             //Anzeige der Partys, die vom Server geschickt werden
             progressRingInDerNaehe.IsEnabled = true;
             progressRingInDerNaehe.Visibility = Visibility.Visible;

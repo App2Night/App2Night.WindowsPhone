@@ -39,7 +39,7 @@ namespace App2Night.Views
 
         }
 
-        protected async void OnNavigatedTo(NavigationEventArgs e)
+        new public  async void OnNavigatedTo(NavigationEventArgs e)
         {
             partyZuErstellen = e.Parameter as Party;
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,17 +20,28 @@ namespace App2Night.Controller
             Geolocator geolocator = new Geolocator();
             Geoposition pos = null;
 
-            //var accessStatus = await Geolocator.RequestAccessAsync();
-            var accessStatus = GeolocationAccessStatus.Allowed;
+           var accessStatus = await Geolocator.RequestAccessAsync();
+            //var accessStatus = GeolocationAccessStatus.Allowed;
 
-            if (GeolocationAccessStatus.Allowed == accessStatus)
+            TimeSpan timeOutMax = new TimeSpan(0, 0, 20);
+            TimeSpan timeout = new TimeSpan(0,0,10);
+
+            try
             {
-                pos = await geolocator.GetGeopositionAsync();
+                if (GeolocationAccessStatus.Allowed == accessStatus)
+                {
+                    pos = await geolocator.GetGeopositionAsync(TimeSpan.FromMinutes(30), timeout);
+                }
+                else
+                {
+                    var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
+                    message.ShowAsync();
+                }
             }
-            else
+            catch(Exception ex)
+
             {
-                var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
-                message.ShowAsync();
+                Debug.WriteLine(ex);
             }
 
             BasicGeoposition basePosition = new BasicGeoposition() { Latitude = pos.Coordinate.Point.Position.Latitude, Longitude = pos.Coordinate.Point.Position.Longitude };
