@@ -20,7 +20,7 @@ namespace App2NightTestKomponente
             temp.Password = "hallo1234";
             temp.Username = "YvetteLa";
 
-            return await BackEndComUser.GetToken(temp);
+            return await BackEndComUserLogik.GetToken(temp);
         }
 
         [TestMethod]
@@ -42,9 +42,9 @@ namespace App2NightTestKomponente
 
             var token = await GetToken();
 
-            token = await BackEndComUser.RefreshToken(token);
+            token = await BackEndComUserLogik.RefreshToken(token);
 
-            var erg = await BackEndComParty.CreateParty(testParty, token);
+            var erg = await BackEndComPartyLogik.CreateParty(testParty, token);
 
             Assert.IsTrue(erg);
         }
@@ -58,7 +58,7 @@ namespace App2NightTestKomponente
 
             float radius = 30;
 
-            IEnumerable<Party> partyListe = await BackEndComParty.GetParties(position, radius);
+            IEnumerable<Party> partyListe = await BackEndComPartyLogik.GetParties(position, radius);
 
             Assert.IsNotNull(partyListe);
         }

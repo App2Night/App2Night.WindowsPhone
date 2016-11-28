@@ -17,11 +17,11 @@ using Plugin.Geolocator.Abstractions;
 //https://github.com/App2Night/App2Night.Xamarin/blob/dev/PartyUp.Service/Service/ClientService.cs
 //http://app2nightapi.azurewebsites.net/swagger/ui/index.html
 
-namespace App2Night.BackEndCommunication
+namespace App2Night.Logik
 {
-    public class BackEndComParty
+    public class BackEndComPartyLogik
     {
-        public BackEndComParty()
+        public BackEndComPartyLogik()
         {
 
         }
@@ -69,7 +69,7 @@ namespace App2Night.BackEndCommunication
                 {
                     stringFromServer = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
-                    message.ShowAsync();
+                    await message.ShowAsync();
                 }
 
             }
@@ -78,7 +78,7 @@ namespace App2Night.BackEndCommunication
                 // Nachricht, dass Internet eingeschaltet werden soll
                 // Code 42 - Fehler: Keine Internetverbindung
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
-                message.ShowAsync();
+                await message.ShowAsync();
             }
 
             return partyListe;
@@ -111,7 +111,7 @@ namespace App2Night.BackEndCommunication
                 {
                     stringFromServer = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
-                    message.ShowAsync();
+                    await message.ShowAsync();
                     // Code 21 - Fehler bei Abrufen
                     return "21";
                 }
@@ -122,7 +122,7 @@ namespace App2Night.BackEndCommunication
                 // Nachricht, dass Internet eingeschaltet werden soll
                 // Code 42 - Fehler: Keine Internetverbindung
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
-                message.ShowAsync();
+                await message.ShowAsync();
                 return "42";
             }
         }
@@ -160,7 +160,7 @@ namespace App2Night.BackEndCommunication
                 {
                     status = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
-                    message.ShowAsync();
+                    await message.ShowAsync();
                     // Code 21 - Fehler bei Abrufen
                     return false;
                 }
@@ -170,7 +170,7 @@ namespace App2Night.BackEndCommunication
                 // Nachricht, dass Internet eingeschaltet werden soll
                 // Code 42 - Fehler: Keine Internetverbindung
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
-                message.ShowAsync();
+                await message.ShowAsync();
                 return false;
             }
         }
@@ -204,7 +204,7 @@ namespace App2Night.BackEndCommunication
                 {
                     status = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
-                    message.ShowAsync();
+                    await message.ShowAsync();
                     // Code 21 - Fehler bei Abrufen
                     return "21";
                 }
@@ -214,7 +214,7 @@ namespace App2Night.BackEndCommunication
                 // Nachricht, dass Internet eingeschaltet werden soll
                 // Code 42 - Fehler: Keine Internetverbindung
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
-                message.ShowAsync();
+                await message.ShowAsync();
                 return "42";
             }
         }
@@ -249,7 +249,7 @@ namespace App2Night.BackEndCommunication
                 {
                     status = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
-                    message.ShowAsync();
+                    await message.ShowAsync();
                     // Code 21 - Fehler bei Abrufen
                     return "21";
                 }
@@ -259,7 +259,7 @@ namespace App2Night.BackEndCommunication
                 // Nachricht, dass Internet eingeschaltet werden soll
                 // Code 42 - Fehler: Keine Internetverbindung
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
-                message.ShowAsync();
+                await message.ShowAsync();
                 return "42";
             }
         }
@@ -294,7 +294,7 @@ namespace App2Night.BackEndCommunication
                 {
                     adresseLautGoogle = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
-                    message.ShowAsync();
+                    await message.ShowAsync();
                     // Code 21 - Fehler bei Abrufen
                     return "21";
                 }
@@ -304,7 +304,7 @@ namespace App2Night.BackEndCommunication
                 // Nachricht, dass Internet eingeschaltet werden soll
                 // Code 42 - Fehler: Keine Internetverbindung
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
-                message.ShowAsync();
+                await message.ShowAsync();
                 return "42";
             }
         }

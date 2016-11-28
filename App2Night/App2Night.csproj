@@ -99,7 +99,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BackEndCommunication\BackEndComUser.cs" />
+    <Compile Include="Logik\BackEndComUser.cs" />
     <Compile Include="Controller\SpeichereNutzerdaten.cs" />
     <Compile Include="ModelsEnums\Enums\EventCommitmentState.cs" />
     <Compile Include="ModelsEnums\Enums\Gender.cs" />
@@ -112,11 +112,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BackEndCommunication\BackEndComParty.cs" />
+    <Compile Include="Logik\BackEndComPartyLogik.cs" />
     <Compile Include="Controller\FensterHauptansichtController.cs" />
     <Compile Include="Controller\FensterSucheController.cs" />
     <Compile Include="Controller\FensterVeranstAnzeigenController.cs" />
-    <Compile Include="Controller\GetGeoLocation.cs" />
+    <Compile Include="Logik\GetGeoLocation.cs" />
     <Compile Include="Controller\ZwischenController.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -228,6 +228,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BackEndCommunication\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

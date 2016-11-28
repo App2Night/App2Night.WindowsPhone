@@ -21,6 +21,7 @@ using Windows.UI.Popups;
 using Newtonsoft.Json;
 using App2Night.BackEndCommunication;
 using Plugin.Geolocator.Abstractions;
+using App2Night.Logik;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -65,12 +66,14 @@ namespace App2Night.Views
             progressRingInDerNaehe.Visibility = Visibility.Visible;
 
             IEnumerable<Party> dataFromServer;
-            Position pos;
+            Location pos;
 
-            pos = GetGeoLocation.GetLocation().Result;
+            var geoLocation = new GeolocationLogik();
+
+            pos = await geoLocation.GetLocation();
             float radius = 30;
 
-            dataFromServer = await BackEndComParty.GetParties(pos, radius);
+            //dataFromServer = await BackEndComParty.GetParties(pos, radius);
 
             progressRingInDerNaehe.IsEnabled = false;
             progressRingInDerNaehe.Visibility = Visibility.Collapsed;

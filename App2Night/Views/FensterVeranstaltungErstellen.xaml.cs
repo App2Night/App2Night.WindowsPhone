@@ -54,7 +54,7 @@ namespace App2Night.Views
             this.Frame.Navigate(typeof(FensterHauptansicht));
         }
 
-        private void  btnWeiter_wechselZuErstellen02(object sender, RoutedEventArgs e)
+        private async void  btnWeiter_wechselZuErstellen02(object sender, RoutedEventArgs e)
         {
             CreatePartyModel partyZuErstellen = new CreatePartyModel();
             //TODO: Nullwerte abfangen
@@ -82,7 +82,7 @@ namespace App2Night.Views
             catch (Exception)
             {
                 var message = new MessageDialog("Fehler! Ein oder mehrere Eingaben sind ungültig!");
-                message.ShowAsync();
+                await message.ShowAsync();
             }
 
             this.Frame.Navigate(typeof(FensterVeranstaltungErstellen02), partyZuErstellen);

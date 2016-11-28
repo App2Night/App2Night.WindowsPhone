@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using App2Night.ModelsEnums.Model;
 using Windows.UI.Popups;
+using App2Night.Logik;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -39,12 +40,11 @@ namespace App2Night.Views
         private async void btnNutzerAnlegen_wechselZuHauptansicht(object sender, RoutedEventArgs e)
         {
             neuerNutzer.Username = textBoxRegNUTZERNAME.Text;
-            neuerNutzer.Email = textBoxRegEMAIL.Text;
-
+            neuerNutzer.Email = textBoxRegEMAIL.Text; 
             if (pwBoxPASSWORT.Password == pwBoxPASSWORTBEST.Password)
             {
                 neuerNutzer.Password = pwBoxPASSWORTBEST.Password;
-                bool status = await BackEndCommunication.BackEndComUser.CreateUser(neuerNutzer);
+                bool status = await BackEndComUserLogik.CreateUser(neuerNutzer);
 
                 if (status == true)
                 {

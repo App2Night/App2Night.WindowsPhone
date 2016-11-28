@@ -34,7 +34,7 @@ namespace App2Night.Views
         public FensterHauptansichtKopieren()
         {
             this.InitializeComponent();
-            progressRingInDerNaehe.Visibility = Visibility.Collapsed;
+            //progressRingInDerNaehe.Visibility = Visibility.Collapsed;
             ListView listViewSuchErgebnis = new ListView();
             
         }

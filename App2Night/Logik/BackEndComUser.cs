@@ -9,11 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 
-namespace App2Night.BackEndCommunication
+namespace App2Night.Logik
 {
-    public class BackEndComUser
+    public class BackEndComUserLogik
     {
-        public BackEndComUser()
+        public BackEndComUserLogik()
         {
 
         }
@@ -41,7 +41,7 @@ namespace App2Night.BackEndCommunication
         {
             //string userID = "";
             //string iD = "";
-            bool internetVorhanden = BackEndComParty.IsInternet();
+            bool internetVorhanden = BackEndComPartyLogik.IsInternet();
 
             if (internetVorhanden == true)
             {
@@ -69,7 +69,7 @@ namespace App2Night.BackEndCommunication
                 {
                     var fehler = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
-                    message.ShowAsync();
+                    await message.ShowAsync();
                     // Code 21 - Fehler bei Abrufen
                     return false;
                 }
@@ -79,7 +79,7 @@ namespace App2Night.BackEndCommunication
                 // Nachricht, dass Internet eingeschaltet werden soll
                 // Code 42 - Fehler: Keine Internetverbindung
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
-                message.ShowAsync();
+                await message.ShowAsync();
                 return false;
             }
         }
@@ -93,7 +93,7 @@ namespace App2Night.BackEndCommunication
         public static async Task<string> DeleteUser(string userID)
         {
             string status = "";
-            bool internetVorhanden = BackEndComParty.IsInternet();
+            bool internetVorhanden = BackEndComPartyLogik.IsInternet();
 
             if (internetVorhanden == true)
             {
@@ -114,7 +114,7 @@ namespace App2Night.BackEndCommunication
                     if (status == "200")
                     {
                         var message = new MessageDialog("Benutzer gelöscht!");
-                        message.ShowAsync();
+                        await message.ShowAsync();
                     }
 
                     return status;
@@ -124,7 +124,7 @@ namespace App2Night.BackEndCommunication
                 {
                     status = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
-                    message.ShowAsync();
+                    await message.ShowAsync();
                     // Code 21 - Fehler bei Abrufen
                     return "21";
                 }
@@ -134,7 +134,7 @@ namespace App2Night.BackEndCommunication
                 // Nachricht, dass Internet eingeschaltet werden soll
                 // Code 42 - Fehler: Keine Internetverbindung
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
-                message.ShowAsync();
+                await message.ShowAsync();
                 return "42";
             }
         }
@@ -147,7 +147,7 @@ namespace App2Night.BackEndCommunication
         public static async Task<Token> GetToken(Login login)
         {
             Token token = new Token();
-            bool internetVorhanden = BackEndComParty.IsInternet();
+            bool internetVorhanden = BackEndComPartyLogik.IsInternet();
 
             if (internetVorhanden == true)
             {
@@ -179,7 +179,7 @@ namespace App2Night.BackEndCommunication
                 {
                     string error = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
-                    message.ShowAsync();
+                    await message.ShowAsync();
                 } 
             }
             else
@@ -187,7 +187,7 @@ namespace App2Night.BackEndCommunication
                 // Nachricht, dass Internet eingeschaltet werden soll
                 // Code 42 - Fehler: Keine Internetverbindung
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
-                message.ShowAsync();
+                await message.ShowAsync();
             }
             return token;
         }
@@ -198,7 +198,7 @@ namespace App2Night.BackEndCommunication
         /// <returns>Token mit weiteren Daten</returns>
         public static async Task<Token> RefreshToken(Token token)
         {
-            bool internetVorhanden = BackEndComParty.IsInternet();
+            bool internetVorhanden = BackEndComPartyLogik.IsInternet();
 
             if (internetVorhanden == true)
             {
@@ -228,7 +228,7 @@ namespace App2Night.BackEndCommunication
                 {
                     string error = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
-                    message.ShowAsync();
+                    await message.ShowAsync();
                 }
             }
             else
@@ -236,7 +236,7 @@ namespace App2Night.BackEndCommunication
                 // Nachricht, dass Internet eingeschaltet werden soll
                 // Code 42 - Fehler: Keine Internetverbindung
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
-                message.ShowAsync();
+                await message.ShowAsync();
             }
             return token;
         }

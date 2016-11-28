@@ -58,9 +58,9 @@ namespace App2Night.Views
             temp.Password = "hallo1234";
             temp.Username = "YvetteLa";
 
-            tok = await BackEndCommunication.BackEndComUser.GetToken(temp);
+            tok = await BackEndCommunication.BackEndComUserLogik.GetToken(temp);
 
-            bool status = await BackEndCommunication.BackEndComParty.CreateParty(partyZuErstellen, tok); 
+            bool status = await BackEndCommunication.BackEndComPartyLogik.CreateParty(partyZuErstellen, tok); 
 
             if (status == true)
             {
