@@ -38,16 +38,23 @@ namespace App2Night.Views
 
         private async void btnNutzerAnlegen_wechselZuHauptansicht(object sender, RoutedEventArgs e)
         {
-            //"dc2f9fcb-c3df-4b02-6007-08d40f0986a3"
             neuerNutzer.Username = textBoxRegNUTZERNAME.Text;
             neuerNutzer.Email = textBoxRegEMAIL.Text;
 
             if (pwBoxPASSWORT.Password == pwBoxPASSWORTBEST.Password)
             {
                 neuerNutzer.Password = pwBoxPASSWORTBEST.Password;
-                string userID = await BackEndCommunication.BackEndComUser.CreateUser(neuerNutzer);
+                bool status = await BackEndCommunication.BackEndComUser.CreateUser(neuerNutzer);
 
-                this.Frame.Navigate(typeof(FensterHauptansicht));
+                if (status == true)
+                {
+                    this.Frame.Navigate(typeof(FensterHauptansicht)); 
+                }
+                else
+                {
+                    var message = new MessageDialog("Fehler bei Erstellen des Nutzers!");
+                    message.ShowAsync();
+                }
             }
             else
             {

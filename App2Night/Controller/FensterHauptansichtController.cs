@@ -6,23 +6,23 @@ using System.Collections.Generic;
 using System.Linq;
 using App2Night.ModelsEnums.Model;
 using Windows.Devices.Geolocation;
+using Plugin.Geolocator.Abstractions;
 
 namespace App2Night.Controller
 {
     class FensterHauptansichtController
     {
-        public static async Task<IEnumerable<Party>> partyListeVonServerGET()
-        {
-            string dataFromServer;
-            Plugin.Geolocator.Abstractions.Position pos;
 
-            //Geopoint po = new Geopoint(baspo);
-            pos = GetGeoLocation.GetLocation().Result;
-            float radius = 30;
+        //public static async Task<IEnumerable<Party>> GetPartiesListe(Position pos, float radius)
+        //{
+        //    IEnumerable<Party> dataFromServer;
 
-            dataFromServer = await BackEndComParty.GetParties(pos, radius);
-            IEnumerable<Party> partyListe = JsonConvert.DeserializeObject<IEnumerable<Party>>(dataFromServer);
-            return partyListe;
-        }
+        //    pos = GetGeoLocation.GetLocation().Result;
+
+        //    dataFromServer = await BackEndComParty.GetParties(pos, radius);
+
+        //    return dataFromServer;
+        //}
+
     }
 }

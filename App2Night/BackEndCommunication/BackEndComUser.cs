@@ -37,10 +37,10 @@ namespace App2Night.BackEndCommunication
         /// </summary>
         /// <param name="login">Benutzername, Passwort und Emailadresse fuer neuen User.</param>
         /// <returns>Guid</returns>
-        public static async Task<string> CreateUser(Login login)
+        public static async Task<bool> CreateUser(Login login)
         {
-            string userID = "";
-            string iD = "";
+            //string userID = "";
+            //string iD = "";
             bool internetVorhanden = BackEndComParty.IsInternet();
 
             if (internetVorhanden == true)
@@ -52,28 +52,26 @@ namespace App2Night.BackEndCommunication
                 try
                 {
                     httpAntwort = await client.PostAsync("User", content);
-                    // 400 existiert bereits
-                    // 201 erfolg
-                    //httpAntwort.EnsureSuccessStatusCode();
-                    userID = await httpAntwort.Content.ReadAsStringAsync();
+                    bool erfolgreich = httpAntwort.IsSuccessStatusCode;
+                    //userID = await httpAntwort.Content.ReadAsStringAsync();
 
-                    if (userID.Length > 4) // Muss eine Guid sein
-                    {
-                        var message = new MessageDialog("Benutzer angelegt!");
-                        message.ShowAsync();
-                        iD = stringBereinigen(userID);
-                    }
+                    //if (userID.Length > 4) // Muss eine Guid sein
+                    //{
+                    //    var message = new MessageDialog("Benutzer angelegt!");
+                    //    message.ShowAsync();
+                    //    iD = stringBereinigen(userID);
+                    //}
 
-                    return iD;
+                    return erfolgreich;
                 }
 
                 catch (Exception ex)
                 {
-                    userID = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+                    var fehler = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
                     message.ShowAsync();
                     // Code 21 - Fehler bei Abrufen
-                    return "21";
+                    return false;
                 }
             }
             else
@@ -82,7 +80,7 @@ namespace App2Night.BackEndCommunication
                 // Code 42 - Fehler: Keine Internetverbindung
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
                 message.ShowAsync();
-                return "42";
+                return false;
             }
         }
 

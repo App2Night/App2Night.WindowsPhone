@@ -12,6 +12,7 @@ using Windows.Data.Json;
 using Windows.UI.Popups;
 using App2Night.ModelsEnums.Model;
 using Windows.Devices.Geolocation;
+using Plugin.Geolocator.Abstractions;
 
 //https://github.com/App2Night/App2Night.Xamarin/blob/dev/PartyUp.Service/Service/ClientService.cs
 //http://app2nightapi.azurewebsites.net/swagger/ui/index.html
@@ -44,17 +45,16 @@ namespace App2Night.BackEndCommunication
         /// </summary>
         /// <returns>Partys</returns>
         //TODO: GPS und Radius mitschicken
-        public static async Task<string> GetParties(Plugin.Geolocator.Abstractions.Position aktuellePosition, float radius)
+        public static async Task<IEnumerable<Party>> GetParties(Position aktuellePosition, float radius)
         {
             string stringFromServer = "";
             bool internetVorhanden = IsInternet();
+            IEnumerable<Party> partyListe = null;
 
             if (internetVorhanden == true)
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
-                //double latitude = aktuellePosition.Position.Latitude;
-                //double longitude = aktuellePosition.Position.Longitude;
                 double latitude = aktuellePosition.Latitude;
                 double longitude = aktuellePosition.Longitude;
 
@@ -63,15 +63,13 @@ namespace App2Night.BackEndCommunication
                     // TODO: Geht das noch ohne rest der url?
                     httpAntwort = await client.GetAsync($"Party?lat={latitude}&lon={longitude}&radius={radius}");                   
                     stringFromServer = await httpAntwort.Content.ReadAsStringAsync();
-                    return stringFromServer;
+                    partyListe = JsonConvert.DeserializeObject<IEnumerable<Party>>(stringFromServer);
                 }
                 catch (Exception ex)
                 {
                     stringFromServer = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
                     message.ShowAsync();
-                    // Code 21 - Fehler bei Abrufen
-                    return "21";
                 }
 
             }
@@ -81,8 +79,9 @@ namespace App2Night.BackEndCommunication
                 // Code 42 - Fehler: Keine Internetverbindung
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
                 message.ShowAsync();
-                return "42";
             }
+
+            return partyListe;
         }
 
         /// <summary>
@@ -133,25 +132,28 @@ namespace App2Night.BackEndCommunication
         /// </summary>
         /// <param name="party">Zu erstellende Party mit allen Informationen</param>
         /// <returns>ID</returns>
-        public static async Task<string> CreateParty(Party party, Token token)
+        public static async Task<bool> CreateParty(CreatePartyModel party, Token token)
         {
             bool internetVorhanden = IsInternet();
             string status = "";
+            party.CountryName = "Deutschland";
 
             if (internetVorhanden == true)
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
                 //client.DefaultRequestHeaders.Add("Content-Type", "application/json");
-                client.DefaultRequestHeaders.Add("Authorization", "Baerer " + token.AccessToken);
-                HttpContent content = new StringContent(JsonConvert.SerializeObject(party), Encoding.UTF8, "application/json");              
+                var json = JsonConvert.SerializeObject(party);
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token.AccessToken);
+                HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");              
 
                 try
                 {
                     httpAntwort = await client.PostAsync("Party", content);
-                    //httpAntwort.EnsureSuccessStatusCode();
-                    status = await httpAntwort.Content.ReadAsStringAsync();
-                    return status;
+                    bool erfolgreich = httpAntwort.IsSuccessStatusCode;
+                    //status = await httpAntwort.Content.ReadAsStringAsync();
+                    //return status;
+                    return erfolgreich;
                 }
 
                 catch (Exception ex)
@@ -160,7 +162,7 @@ namespace App2Night.BackEndCommunication
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
                     message.ShowAsync();
                     // Code 21 - Fehler bei Abrufen
-                    return "21";
+                    return false;
                 }
             }
             else
@@ -169,7 +171,7 @@ namespace App2Night.BackEndCommunication
                 // Code 42 - Fehler: Keine Internetverbindung
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
                 message.ShowAsync();
-                return "42";
+                return false;
             }
         }
     
@@ -187,7 +189,7 @@ namespace App2Night.BackEndCommunication
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
-                client.DefaultRequestHeaders.Add("Authorization", "Baerer " + token.AccessToken);
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token.AccessToken);
                 //HttpContent content = new StringContent(JsonConvert.SerializeObject(party), Encoding.UTF8, "application/json");
 
                 try
@@ -232,7 +234,7 @@ namespace App2Night.BackEndCommunication
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
-                client.DefaultRequestHeaders.Add("Authorization", "Baerer " + token.AccessToken);
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token.AccessToken);
                 HttpContent content = new StringContent(JsonConvert.SerializeObject(party), Encoding.UTF8, "application/json");
 
                 try

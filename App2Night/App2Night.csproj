@@ -105,6 +105,7 @@
     <Compile Include="ModelsEnums\Enums\Gender.cs" />
     <Compile Include="ModelsEnums\Enums\MusicGenre.cs" />
     <Compile Include="ModelsEnums\Enums\PartyType.cs" />
+    <Compile Include="ModelsEnums\Model\CreatePartyModel.cs" />
     <Compile Include="ModelsEnums\Model\Location.cs" />
     <Compile Include="ModelsEnums\Model\Login.cs" />
     <Compile Include="ModelsEnums\Model\Party.cs" />

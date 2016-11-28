@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using Windows.UI.Popups;
 using Newtonsoft.Json;
 using App2Night.BackEndCommunication;
+using Plugin.Geolocator.Abstractions;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -31,6 +32,7 @@ namespace App2Night.Views
     public sealed partial class FensterHauptansicht : Page
     {
         public IEnumerable<Party> partyListe;
+        public Login anmeldung;
         public Party party; 
 
         public FensterHauptansicht()
@@ -39,6 +41,11 @@ namespace App2Night.Views
             progressRingInDerNaehe.Visibility = Visibility.Collapsed;
             ListView listViewSuchErgebnis = new ListView();
             
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            anmeldung = e.Parameter as Login;
         }
 
         private void btnErstellen_wechselZuVeranstErstellen(object sender, RoutedEventArgs e)
@@ -57,17 +64,13 @@ namespace App2Night.Views
             progressRingInDerNaehe.IsEnabled = true;
             progressRingInDerNaehe.Visibility = Visibility.Visible;
 
-            //partyListe = await FensterHauptansichtController.partyListeVonServerGET();
+            IEnumerable<Party> dataFromServer;
+            Position pos;
 
-            string dataFromServer;
-            Plugin.Geolocator.Abstractions.Position pos;
-
-            //Geopoint po = new Geopoint(baspo);
             pos = GetGeoLocation.GetLocation().Result;
             float radius = 30;
 
             dataFromServer = await BackEndComParty.GetParties(pos, radius);
-            IEnumerable<Party> partyListe = JsonConvert.DeserializeObject<IEnumerable<Party>>(dataFromServer);
 
             progressRingInDerNaehe.IsEnabled = false;
             progressRingInDerNaehe.Visibility = Visibility.Collapsed;

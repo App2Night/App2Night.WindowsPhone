@@ -23,7 +23,7 @@ namespace App2Night.Views
     /// </summary>
     public sealed partial class FensterAnmelden : Page
     {
-        public Login anmelden = new Login();
+        public Login anmeldung = new Login();
 
         public FensterAnmelden()
         {
@@ -37,12 +37,12 @@ namespace App2Night.Views
 
         private void btnAnmelden_AnmeldenWechselZuHauptansicht(object sender, RoutedEventArgs e)
         {
-            anmelden.Username = txtBlAnmNutzername.Text;
-            anmelden.Email = txtBlAnmEMAIL.Text;
-            anmelden.Password = pwBoxPASSWORT.Password;
+            anmeldung.Username = txtBlAnmNutzername.Text;
+            anmeldung.Email = txtBlAnmEMAIL.Text;
+            anmeldung.Password = pwBoxPASSWORT.Password;
             // TODO: Nutzereingaben ueberpruefen
             //wenn es stimmt 
-            this.Frame.Navigate(typeof(FensterHauptansicht), anmelden);
+            this.Frame.Navigate(typeof(FensterHauptansicht), anmeldung);
         }
 
         private void btnPwVergessen_wechselZuNeuesPW(object sender, RoutedEventArgs e)

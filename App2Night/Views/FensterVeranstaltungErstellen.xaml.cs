@@ -26,7 +26,7 @@ namespace App2Night.Views
     /// </summary>
     public sealed partial class FensterVeranstaltungErstellen : Page
     {
-        public Party partyZuErstellen;
+        public CreatePartyModel partyZuErstellen;
 
         public FensterVeranstaltungErstellen()
         {
@@ -35,16 +35,16 @@ namespace App2Night.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            partyZuErstellen = e.Parameter as Party;
+            partyZuErstellen = e.Parameter as CreatePartyModel;
 
             // Erst anzeigen, wenn bereits Werte vorhanden sind (man kommt von Erstellen02)
             if (partyZuErstellen != null)
             {
                 textBoxErstellenNAME.Text = partyZuErstellen.PartyName;
-                textBoxErstellenORT.Text = partyZuErstellen.Location.CityName;
-                textBoxErstellenHAUSNUMMER.Text = partyZuErstellen.Location.HouseNumber;
-                textBoxErstellenADRESSE.Text = partyZuErstellen.Location.StreetName;
-                textBoxErstellenPLZ.Text = partyZuErstellen.Location.Zipcode;
+                textBoxErstellenORT.Text = partyZuErstellen.CityName;
+                textBoxErstellenHAUSNUMMER.Text = partyZuErstellen.HouseNumber;
+                textBoxErstellenADRESSE.Text = partyZuErstellen.StreetName;
+                textBoxErstellenPLZ.Text = partyZuErstellen.ZipCode;
                 DatePickerErstellenDATUM.Date = new DateTime(partyZuErstellen.PartyDate.Date.Day, partyZuErstellen.PartyDate.Month, partyZuErstellen.PartyDate.Year); 
             }
         }
@@ -56,21 +56,22 @@ namespace App2Night.Views
 
         private void  btnWeiter_wechselZuErstellen02(object sender, RoutedEventArgs e)
         {
-            Party partyZuErstellen = new Party();
+            CreatePartyModel partyZuErstellen = new CreatePartyModel();
             //TODO: Nullwerte abfangen
             //TODO: Auf falsche Eingabe reagieren 
             //TODO: bei Zurueckkommen auf Erstellen02 müssen die Werte noch da sein
             try
             {
                 partyZuErstellen.PartyName = textBoxErstellenNAME.Text;
+                 
+                partyZuErstellen.CityName = textBoxErstellenORT.Text;
+                partyZuErstellen.StreetName = textBoxErstellenADRESSE.Text;
+                partyZuErstellen.HouseNumber = textBoxErstellenHAUSNUMMER.Text;
+                partyZuErstellen.ZipCode = textBoxErstellenPLZ.Text;
 
-                Location loc = new Location();
-                loc.CityName = textBoxErstellenORT.Text;
-                loc.StreetName = textBoxErstellenADRESSE.Text; 
-                loc.HouseNumber = textBoxErstellenHAUSNUMMER.Text;
-                loc.Zipcode = textBoxErstellenPLZ.Text;
+                //partyZuErstellen.Location = loc;
 
-                partyZuErstellen.Location = loc;
+
 
                 DateTime zwischenSpeicherDate = new DateTime(DatePickerErstellenDATUM.Date.Year, DatePickerErstellenDATUM.Date.Month, DatePickerErstellenDATUM.Date.Day,
                                                                                         TimePickerErstellenUHRZEIT.Time.Hours, TimePickerErstellenUHRZEIT.Time.Minutes, TimePickerErstellenUHRZEIT.Time.Seconds);

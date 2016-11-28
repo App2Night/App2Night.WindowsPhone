@@ -25,7 +25,7 @@ namespace App2Night.Views
     /// </summary>
     public sealed partial class FensterVeranstaltungErstellen02 : Page
     {
-        Party partyZuErstellen;
+        CreatePartyModel partyZuErstellen;
         Token tok = new Token();
 
         public FensterVeranstaltungErstellen02()
@@ -39,7 +39,7 @@ namespace App2Night.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            partyZuErstellen = e.Parameter as Party;
+            partyZuErstellen = e.Parameter as CreatePartyModel;
         }
 
         private void btnZurueck_wechselZuErstellen01(object sender, RoutedEventArgs e)
@@ -50,8 +50,7 @@ namespace App2Night.Views
         private async void btnErstellen_wechselZuAnzeige(object sender, RoutedEventArgs e)
         {
             partyZuErstellen.MusicGenre = (MusicGenre)comboBoxErstellenMUSIKRICHTUNG.SelectedItem;
-            partyZuErstellen.Price = Convert.ToInt32(textBoxErstellenPREIS.Text);
-            // TODO: Maximale Zeichenzahl beachten
+            // TODO: Typ fehlt
             partyZuErstellen.Description = textBoxErstellenWEITEREINFOS.Text;
 
             Login temp = new Login();
@@ -59,22 +58,17 @@ namespace App2Night.Views
             temp.Password = "hallo1234";
             temp.Username = "YvetteLa";
 
-            string id = await BackEndCommunication.BackEndComUser.CreateUser(temp);
             tok = await BackEndCommunication.BackEndComUser.GetToken(temp);
 
-            //tok = await BackEndCommunication.BackEndComUser.RefreshToken(tok);
+            bool status = await BackEndCommunication.BackEndComParty.CreateParty(partyZuErstellen, tok); 
 
-            string status = await BackEndCommunication.BackEndComParty.CreateParty(partyZuErstellen, tok); 
-
-            if (status == "")
+            if (status == true)
             {
-                var message = new MessageDialog("Party nicht erstellt");
+                var message = new MessageDialog("Party erfolgreich erstellt!");
                 message.ShowAsync();
                 this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen), partyZuErstellen);
             }     
-        }
-
-        
+        }     
 
     }
 }
