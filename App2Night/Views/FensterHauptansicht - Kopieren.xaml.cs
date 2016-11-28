@@ -28,46 +28,9 @@ namespace App2Night.Views
     /// </summary>
     public sealed partial class FensterHauptansichtKopieren : Page
     {
-        public IEnumerable<Party> partyListe;
-        public Party party; 
-
         public FensterHauptansichtKopieren()
         {
-            this.InitializeComponent();
-            //progressRingInDerNaehe.Visibility = Visibility.Collapsed;
-            ListView listViewSuchErgebnis = new ListView();
-            
+            this.InitializeComponent();            
         }
-
-        private void btnErstellen_wechselZuVeranstErstellen(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void btnSuche_wechselZuVeranstSuchen(object sender, RoutedEventArgs e)
-        {
-           
-        }
-
-        private async void btnVeranstInDerNaehe_GetPartys(object sender, RoutedEventArgs e)
-        { 
-           
-
-
-
-        }
-
-        private void listViewSuchErgebnisse_ItemClick(object sender, ItemClickEventArgs e)
-        {
-           
-        }
-
-        private void listView_ClickOnItem(object sender, SelectionChangedEventArgs e)
-        {
-            
-           
-            
-        }
-
     }
 }

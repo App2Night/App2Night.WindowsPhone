@@ -41,6 +41,7 @@ namespace App2Night.Views
         {
             neuerNutzer.Username = textBoxRegNUTZERNAME.Text;
             neuerNutzer.Email = textBoxRegEMAIL.Text; 
+
             if (pwBoxPASSWORT.Password == pwBoxPASSWORTBEST.Password)
             {
                 neuerNutzer.Password = pwBoxPASSWORTBEST.Password;
@@ -48,18 +49,25 @@ namespace App2Night.Views
 
                 if (status == true)
                 {
+                    var message = new MessageDialog("Nutzer erfolgreich registriert!");
+                    await message.ShowAsync();
+
+                    // Speichert Login und Token in Textdatei
+                    await DatenVerarbeitung.DatenInDateiSchreibenLogin(neuerNutzer);
+                    await DatenVerarbeitung.DatenInDateiSchreibenToken(neuerNutzer);
+
                     this.Frame.Navigate(typeof(FensterHauptansicht)); 
                 }
                 else
                 {
                     var message = new MessageDialog("Fehler bei Erstellen des Nutzers!");
-                    message.ShowAsync();
+                    await message.ShowAsync();
                 }
             }
             else
             {
                 var message = new MessageDialog("Fehler! Die Passwörter stimmen nicht überein!");
-                message.ShowAsync();
+                await message.ShowAsync();
             }
         }
     }

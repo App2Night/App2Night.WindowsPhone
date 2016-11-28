@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks; 
+﻿using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Windows.Data.Json;
 using System.Collections.Generic;
@@ -6,22 +6,39 @@ using System.Linq;
 using App2Night.ModelsEnums.Model;
 using Windows.Devices.Geolocation;
 using Plugin.Geolocator.Abstractions;
+using App2Night.Logik;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Popups;
+using System;
+using App2Night.Views;
 
 namespace App2Night.Controller
 {
-    class FensterHauptansichtController
+    public class FensterHauptansichtController 
     {
+        FensterHauptansicht fha = new FensterHauptansicht();
 
-        //public static async Task<IEnumerable<Party>> GetPartiesListe(Position pos, float radius)
-        //{
-        //    IEnumerable<Party> dataFromServer;
+        public FensterHauptansichtController()
+        {
 
-        //    pos = GetGeoLocation.GetLocation().Result;
+        }
 
-        //    dataFromServer = await BackEndComParty.GetParties(pos, radius);
+        public static async Task<IEnumerable<Party>> btnInDerNaehePartysAbrufen()
+        {
+            IEnumerable<Party> partyListe = null;
+            Location pos;
 
-        //    return dataFromServer;
-        //}
+            var geoLocation = new GeolocationLogik();
 
+            pos = await geoLocation.GetLocation();
+            float radius = 50;
+
+            partyListe = await BackEndComPartyLogik.GetParties(pos, radius);
+
+            return partyListe;
+
+        }
     }
 }
+
+

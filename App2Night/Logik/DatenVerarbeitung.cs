@@ -1,0 +1,133 @@
+﻿using App2Night.ModelsEnums.Model;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.UI.Popups;
+
+namespace App2Night.Logik
+{
+    class DatenVerarbeitung
+    {
+        private static string DateiLogin = "Login.txt";
+        private static string DateiToken = "Token.txt";
+
+        public static async Task<bool> DatenInDateiSchreibenLogin(Login neuerNutzer)
+        {
+            bool erfolg = false;
+            StorageFolder speicherOrdner = ApplicationData.Current.LocalFolder;
+            StorageFile speicherDatei = await speicherOrdner.CreateFileAsync(DateiLogin, Windows.Storage.CreationCollisionOption.ReplaceExisting);
+
+            // Kontrolle
+            if (speicherOrdner == null)
+            {
+                var message = new MessageDialog("Es ist ein Problem aufgetreten. Bitte versuche es später erneut.");
+                await message.ShowAsync();
+                return erfolg;
+            }
+
+            try
+            {
+                // Datei anlegen, falls vorhanden neu erstellen
+                var stream = await speicherDatei.OpenAsync(Windows.Storage.FileAccessMode.ReadWrite);
+
+                using (var outputStream = stream.GetOutputStreamAt(0))
+                {
+                    using (var dataWriter = new Windows.Storage.Streams.DataWriter(outputStream))
+                    {
+                        string loginJsonAlsString = JsonConvert.SerializeObject(neuerNutzer);
+
+                        // speichern 
+                        await dataWriter.StoreAsync();
+                        await outputStream.FlushAsync();
+                    }
+                }
+                // Stream zum Schreiben beenden
+                stream.Dispose();
+                erfolg = true;
+            }
+
+            catch (Exception ex)
+            {
+                var message = new MessageDialog("Es ist ein Problem aufgetreten. Bitte versuche es später erneut.");
+                await message.ShowAsync();
+                return erfolg;
+            }
+            return erfolg;
+        }
+
+        public static async Task<Login> DatenAusDateiLesenLogin()
+        {
+            Login ausDatei = new Login();
+            StorageFolder speicherOrdner = Windows.Storage.ApplicationData.Current.LocalFolder;
+            StorageFile speicherDatei = await speicherOrdner.GetFileAsync(DateiToken);
+
+            string text = await Windows.Storage.FileIO.ReadTextAsync(speicherDatei);
+
+            ausDatei = JsonConvert.DeserializeObject<Login>(text);
+
+            return ausDatei;
+        }
+
+        public static async Task<bool> DatenInDateiSchreibenToken(Login neuerNutzer)
+        {
+            bool erfolg = false;
+            StorageFolder speicherOrdner = ApplicationData.Current.LocalFolder;
+            StorageFile speicherDatei = await speicherOrdner.CreateFileAsync(DateiLogin, Windows.Storage.CreationCollisionOption.ReplaceExisting);
+
+            // Kontrolle
+            if (speicherOrdner == null)
+            {
+                var message = new MessageDialog("Es ist ein Problem aufgetreten. Bitte versuche es später erneut.");
+                await message.ShowAsync();
+                return erfolg;
+            }
+
+            try
+            {
+                // Datei anlegen, falls vorhanden neu erstellen
+                var stream = await speicherDatei.OpenAsync(Windows.Storage.FileAccessMode.ReadWrite);
+
+                using (var outputStream = stream.GetOutputStreamAt(0))
+                {
+                    using (var dataWriter = new Windows.Storage.Streams.DataWriter(outputStream))
+                    {
+                        string loginJsonAlsString = JsonConvert.SerializeObject(neuerNutzer);
+
+                        // speichern 
+                        await dataWriter.StoreAsync();
+                        await outputStream.FlushAsync();
+                    }
+                }
+                // Stream zum Schreiben beenden
+                stream.Dispose();
+                erfolg = true;
+            }
+
+            catch (Exception ex)
+            {
+                var message = new MessageDialog("Es ist ein Problem aufgetreten. Bitte versuche es später erneut.");
+                await message.ShowAsync();
+                return erfolg;
+            }
+            return erfolg;
+        }
+
+        public static async Task<Token> DatenAusDateiLesenToken()
+        {
+            Token ausDatei = new Token();
+            StorageFolder speicherOrdner = Windows.Storage.ApplicationData.Current.LocalFolder;
+            StorageFile speicherDatei = await speicherOrdner.GetFileAsync(DateiLogin);
+
+            string text = await Windows.Storage.FileIO.ReadTextAsync(speicherDatei);
+
+            ausDatei = JsonConvert.DeserializeObject<Token>(text);
+
+            return ausDatei;
+        }
+
+    }
+}

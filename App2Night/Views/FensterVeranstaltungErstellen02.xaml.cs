@@ -51,23 +51,29 @@ namespace App2Night.Views
         private async void btnErstellen_wechselZuAnzeige(object sender, RoutedEventArgs e)
         {
             partyZuErstellen.MusicGenre = (MusicGenre)comboBoxErstellenMUSIKRICHTUNG.SelectedItem;
-            // TODO: Typ fehlt
+            // TODO: Typ fehlt, Preis weg
             partyZuErstellen.Description = textBoxErstellenWEITEREINFOS.Text;
 
-            Login temp = new Login();
-            temp.Email = "testY@test.de";
-            temp.Password = "hallo1234";
-            temp.Username = "YvetteLa";
+            //Login temp = new Login();
+            //temp.Email = "testY@test.de";
+            //temp.Password = "hallo1234";
+            //temp.Username = "YvetteLa";
 
-            tok = await BackEndComUserLogik.GetToken(temp);
+            //tok = await BackEndComUserLogik.GetToken(temp);
+
+            // TODO: File not found
+            Login aktuellerNutzer = await DatenVerarbeitung.DatenAusDateiLesenLogin();
+            Token aktuellerToken = await DatenVerarbeitung.DatenAusDateiLesenToken();
+
+            aktuellerToken = await BackEndComUserLogik.RefreshToken(aktuellerToken);
 
             bool status = await BackEndComPartyLogik.CreateParty(partyZuErstellen, tok); 
 
             if (status == true)
             {
                 var message = new MessageDialog("Party erfolgreich erstellt!");
-                message.ShowAsync();
-                this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen), partyZuErstellen);
+                await message.ShowAsync();
+                this.Frame.Navigate(typeof(FensterHauptansicht));
             }     
         }     
 

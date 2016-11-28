@@ -45,7 +45,7 @@ namespace App2Night.Logik
         /// </summary>
         /// <returns>Partys</returns>
         //TODO: GPS und Radius mitschicken
-        public static async Task<IEnumerable<Party>> GetParties(Position aktuellePosition, float radius)
+        public static async Task<IEnumerable<Party>> GetParties(Location aktuellePosition, float radius)
         {
             string stringFromServer = "";
             bool internetVorhanden = IsInternet();

@@ -31,21 +31,13 @@ namespace App2Night.Views
     /// </summary>
     public sealed partial class FensterHauptansicht : Page
     {
+        public Party party;
         public IEnumerable<Party> partyListe;
-        public Login anmeldung;
-        public Party party; 
 
         public FensterHauptansicht()
         {
             this.InitializeComponent();
-            progressRingInDerNaehe.Visibility = Visibility.Collapsed;
-            ListView listViewSuchErgebnis = new ListView();
-            
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            anmeldung = e.Parameter as Login;
+            progressRingInDerNaehe.Visibility = Visibility.Collapsed;          
         }
 
         private void btnErstellen_wechselZuVeranstErstellen(object sender, RoutedEventArgs e)
@@ -63,20 +55,9 @@ namespace App2Night.Views
             this.IsEnabled = false;
             //Anzeige der Partys, die vom Server geschickt werden
             progressRingInDerNaehe.IsEnabled = true;
-            progressRingInDerNaehe.Visibility = Visibility.Visible; 
-            IEnumerable<Party> dataFromServer;
-            Location pos;
+            progressRingInDerNaehe.Visibility = Visibility.Visible;
 
-            var geoLocation = new GeolocationLogik();
-
-            pos = await geoLocation.GetLocation();
-            float radius = 30;
-
-            //dataFromServer = await BackEndComParty.GetParties(pos, radius);
-
-            progressRingInDerNaehe.IsEnabled = false;
-            progressRingInDerNaehe.Visibility = Visibility.Collapsed;
-
+            partyListe =  await FensterHauptansichtController.btnInDerNaehePartysAbrufen();
 
             if (partyListe.Any())
             {
@@ -86,15 +67,18 @@ namespace App2Night.Views
                 {
                     party = partyListe.ElementAt(i);
                     listViewSuchErgebnis.Items.Add(party.PartyName);
-                } 
+                }
             }
             else
             {
                 var message = new MessageDialog("Leider keine Partys in deiner Nähe.");
-               await message.ShowAsync();
+                await message.ShowAsync();
             }
-            this.IsEnabled = true;
 
+            progressRingInDerNaehe.IsEnabled = false;
+            progressRingInDerNaehe.Visibility = Visibility.Collapsed;
+
+            this.IsEnabled = true;
 
         }
 
@@ -112,6 +96,8 @@ namespace App2Night.Views
             bool partygefunden = false;
             int suchDurchLauf = 0;
 
+
+            // TODO: geht da wirklich so?
             while (partygefunden == false)
             {
                 party = partyListe.ElementAt(suchDurchLauf);

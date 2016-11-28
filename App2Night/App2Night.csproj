@@ -99,8 +99,10 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Logik\BackEndComUser.cs" />
+    <Compile Include="Controller\FensterRegistrierenController.cs" />
+    <Compile Include="Logik\BackEndComUserLogik.cs" />
     <Compile Include="Controller\SpeichereNutzerdaten.cs" />
+    <Compile Include="Logik\DatenVerarbeitung.cs" />
     <Compile Include="ModelsEnums\Enums\EventCommitmentState.cs" />
     <Compile Include="ModelsEnums\Enums\Gender.cs" />
     <Compile Include="ModelsEnums\Enums\MusicGenre.cs" />
