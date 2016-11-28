@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using App2Night.ModelsEnums.Model;
 using App2Night.ModelsEnums.Enums;
 using Windows.UI.Popups;
+using App2Night.Logik;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -58,9 +59,9 @@ namespace App2Night.Views
             temp.Password = "hallo1234";
             temp.Username = "YvetteLa";
 
-            tok = await BackEndCommunication.BackEndComUserLogik.GetToken(temp);
+            tok = await BackEndComUserLogik.GetToken(temp);
 
-            bool status = await BackEndCommunication.BackEndComPartyLogik.CreateParty(partyZuErstellen, tok); 
+            bool status = await BackEndComPartyLogik.CreateParty(partyZuErstellen, tok); 
 
             if (status == true)
             {

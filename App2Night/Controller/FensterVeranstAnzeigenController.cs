@@ -1,5 +1,4 @@
-﻿using App2Night.BackEndCommunication;
-using App2Night.Views;
+﻿using App2Night.Views;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

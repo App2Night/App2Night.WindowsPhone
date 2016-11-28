@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using App2Night.BackEndCommunication;
+﻿using System.Threading.Tasks; 
 using Newtonsoft.Json;
 using Windows.Data.Json;
 using System.Collections.Generic;

@@ -19,7 +19,6 @@ using App2Night.ModelsEnums.Model;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 using Newtonsoft.Json;
-using App2Night.BackEndCommunication;
 using Plugin.Geolocator.Abstractions;
 using App2Night.Logik;
 
@@ -60,11 +59,11 @@ namespace App2Night.Views
         }
 
         public async void btnVeranstInDerNaehe_GetPartys(object sender, RoutedEventArgs e)
-        { 
+        {
+            this.IsEnabled = false;
             //Anzeige der Partys, die vom Server geschickt werden
             progressRingInDerNaehe.IsEnabled = true;
-            progressRingInDerNaehe.Visibility = Visibility.Visible;
-
+            progressRingInDerNaehe.Visibility = Visibility.Visible; 
             IEnumerable<Party> dataFromServer;
             Location pos;
 
@@ -79,7 +78,7 @@ namespace App2Night.Views
             progressRingInDerNaehe.Visibility = Visibility.Collapsed;
 
 
-            if (partyListe.Count<Party>() != 0)
+            if (partyListe.Any())
             {
                 int anzahl = partyListe.Count();
 
@@ -92,8 +91,10 @@ namespace App2Night.Views
             else
             {
                 var message = new MessageDialog("Leider keine Partys in deiner Nähe.");
-                message.ShowAsync();
+               await message.ShowAsync();
             }
+            this.IsEnabled = true;
+
 
         }
 
