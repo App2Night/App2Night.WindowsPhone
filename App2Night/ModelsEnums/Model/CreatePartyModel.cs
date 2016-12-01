@@ -19,6 +19,7 @@ namespace App2Night.ModelsEnums.Model
         public DateTime PartyDate { get; set; }
         public PartyType PartyType { get; set; }
         public MusicGenre MusicGenre { get; set; }
+        public double Price { get; set; }
 
     }
 }

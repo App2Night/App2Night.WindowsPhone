@@ -54,6 +54,7 @@ namespace App2Night.Views
             partyZuErstellen.MusicGenre = (MusicGenre)comboBoxErstellenMUSIKRICHTUNG.SelectedItem;
             partyZuErstellen.PartyType = (PartyType)comboBoxErstellenTYP.SelectedItem;
             partyZuErstellen.Description = textBoxErstellenWEITEREINFOS.Text;
+            partyZuErstellen.Price = textBoxErstellenPREIS.Text;
 
             // TODO: File not found
             Login aktuellerNutzer = await DatenVerarbeitung.DatenAusDateiLesenLogin();
