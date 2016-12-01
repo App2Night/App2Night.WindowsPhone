@@ -5,6 +5,7 @@
     "Microsoft.ApplicationInsights.WindowsApps": "1.1.1",
     "Microsoft.Net.Http": "2.2.29",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
+    "Microsoft.Toolkit.Uwp.UI.Controls": "1.2.0",
     "Newtonsoft.Json": "9.0.1",
     "Xam.Plugin.Geolocator": "3.0.4"
   },
