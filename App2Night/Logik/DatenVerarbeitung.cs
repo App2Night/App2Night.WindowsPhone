@@ -12,14 +12,15 @@ namespace App2Night.Logik
 {
     class DatenVerarbeitung
     {
+        private static StorageFolder speicherOrdner = ApplicationData.Current.LocalFolder;
+        private static StorageFile speicherDatei;
         private static string DateiLogin = "Login.txt";
         private static string DateiToken = "Token.txt";
 
         public static async Task<bool> DatenInDateiSchreibenLogin(Login neuerNutzer)
         {
             bool erfolg = false;
-            StorageFolder speicherOrdner = ApplicationData.Current.LocalFolder;
-            StorageFile speicherDatei = await speicherOrdner.CreateFileAsync(DateiLogin, Windows.Storage.CreationCollisionOption.ReplaceExisting);
+            speicherDatei = await speicherOrdner.CreateFileAsync(DateiLogin, Windows.Storage.CreationCollisionOption.ReplaceExisting);
 
             // Kontrolle
             if (speicherOrdner == null)
@@ -31,22 +32,9 @@ namespace App2Night.Logik
 
             try
             {
-                // Datei anlegen, falls vorhanden neu erstellen
-                var stream = await speicherDatei.OpenAsync(Windows.Storage.FileAccessMode.ReadWrite);
+                string loginJsonAlsString = JsonConvert.SerializeObject(neuerNutzer);
+                await FileIO.WriteTextAsync(speicherDatei, loginJsonAlsString);
 
-                using (var outputStream = stream.GetOutputStreamAt(0))
-                {
-                    using (var dataWriter = new Windows.Storage.Streams.DataWriter(outputStream))
-                    {
-                        string loginJsonAlsString = JsonConvert.SerializeObject(neuerNutzer);
-
-                        // speichern 
-                        await dataWriter.StoreAsync();
-                        await outputStream.FlushAsync();
-                    }
-                }
-                // Stream zum Schreiben beenden
-                stream.Dispose();
                 erfolg = true;
             }
 
@@ -62,10 +50,9 @@ namespace App2Night.Logik
         public static async Task<Login> DatenAusDateiLesenLogin()
         {
             Login ausDatei = new Login();
-            StorageFolder speicherOrdner = Windows.Storage.ApplicationData.Current.LocalFolder;
-            StorageFile speicherDatei = await speicherOrdner.GetFileAsync(DateiToken);
+            speicherDatei = await speicherOrdner.GetFileAsync(DateiLogin);
 
-            string text = await Windows.Storage.FileIO.ReadTextAsync(speicherDatei);
+            string text = await FileIO.ReadTextAsync(speicherDatei);
 
             ausDatei = JsonConvert.DeserializeObject<Login>(text);
 
@@ -75,8 +62,7 @@ namespace App2Night.Logik
         public static async Task<bool> DatenInDateiSchreibenToken(Login neuerNutzer)
         {
             bool erfolg = false;
-            StorageFolder speicherOrdner = ApplicationData.Current.LocalFolder;
-            StorageFile speicherDatei = await speicherOrdner.CreateFileAsync(DateiLogin, Windows.Storage.CreationCollisionOption.ReplaceExisting);
+            speicherDatei = await speicherOrdner.CreateFileAsync(DateiToken, Windows.Storage.CreationCollisionOption.ReplaceExisting);
 
             // Kontrolle
             if (speicherOrdner == null)
@@ -88,22 +74,9 @@ namespace App2Night.Logik
 
             try
             {
-                // Datei anlegen, falls vorhanden neu erstellen
-                var stream = await speicherDatei.OpenAsync(Windows.Storage.FileAccessMode.ReadWrite);
+                string loginJsonAlsString = JsonConvert.SerializeObject(neuerNutzer);
+                await FileIO.WriteTextAsync(speicherDatei, loginJsonAlsString);
 
-                using (var outputStream = stream.GetOutputStreamAt(0))
-                {
-                    using (var dataWriter = new Windows.Storage.Streams.DataWriter(outputStream))
-                    {
-                        string loginJsonAlsString = JsonConvert.SerializeObject(neuerNutzer);
-
-                        // speichern 
-                        await dataWriter.StoreAsync();
-                        await outputStream.FlushAsync();
-                    }
-                }
-                // Stream zum Schreiben beenden
-                stream.Dispose();
                 erfolg = true;
             }
 
@@ -119,10 +92,9 @@ namespace App2Night.Logik
         public static async Task<Token> DatenAusDateiLesenToken()
         {
             Token ausDatei = new Token();
-            StorageFolder speicherOrdner = Windows.Storage.ApplicationData.Current.LocalFolder;
-            StorageFile speicherDatei = await speicherOrdner.GetFileAsync(DateiLogin);
+            speicherDatei = await speicherOrdner.GetFileAsync(DateiToken);
 
-            string text = await Windows.Storage.FileIO.ReadTextAsync(speicherDatei);
+            string text = await FileIO.ReadTextAsync(speicherDatei);
 
             ausDatei = JsonConvert.DeserializeObject<Token>(text);
 
@@ -139,7 +111,6 @@ namespace App2Night.Logik
             {
                 korrekterLogin = true;
             }
-
 
             return korrekterLogin;
         }

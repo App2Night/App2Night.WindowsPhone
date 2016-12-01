@@ -39,7 +39,7 @@ namespace App2Night.Views
 
         private async void btnAnmelden_AnmeldenWechselZuHauptansicht(object sender, RoutedEventArgs e)
         {
-            anmeldung.Username = txtBlAnmNutzername.Text;
+            anmeldung.Username = txtBoxAnmNUTZERNAME.Text;
             anmeldung.Email = txtBlAnmEMAIL.Text;
             anmeldung.Password = pwBoxPASSWORT.Password;
 
