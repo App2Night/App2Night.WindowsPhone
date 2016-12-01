@@ -58,10 +58,13 @@ namespace App2Night.Logik
                 double latitude = aktuellePosition.Latitude;
                 double longitude = aktuellePosition.Longitude;
 
+                string anfrage = $"Party?lat={latitude}&lon={longitude}&radius={radius}";
+                anfrage = anfrage.Replace(',', '.'); // durch das Speichern in den String wird aus einem Punkt ein Komma, deshalb muss das danach ausgebessert werden
+
                 try
                 {
                     // TODO: Geht das noch ohne rest der url?
-                    httpAntwort = await client.GetAsync($"Party?lat={latitude}&lon={longitude}&radius={radius}");                   
+                    httpAntwort = await client.GetAsync(anfrage);                   
                     stringFromServer = await httpAntwort.Content.ReadAsStringAsync();
                     partyListe = JsonConvert.DeserializeObject<IEnumerable<Party>>(stringFromServer);
                 }

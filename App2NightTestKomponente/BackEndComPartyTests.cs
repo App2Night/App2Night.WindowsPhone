@@ -1,11 +1,11 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using App2Night.BackEndCommunication;
 using System.Threading.Tasks;
 using App2Night.ModelsEnums.Model;
 using Plugin.Geolocator.Abstractions;
 using System.Collections.Generic;
 using App2Night.ModelsEnums.Enums;
+using App2Night.Logik;
 
 namespace App2NightTestKomponente
 {
@@ -52,7 +52,7 @@ namespace App2NightTestKomponente
         [TestMethod]
         public async Task GetParties()
         {
-            Position position = new Position();
+            Location position = new Location();
             position.Latitude = 48.445031;
             position.Longitude = 8.696494;
 

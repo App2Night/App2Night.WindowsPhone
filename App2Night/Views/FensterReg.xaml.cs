@@ -40,7 +40,9 @@ namespace App2Night.Views
         private async void btnNutzerAnlegen_wechselZuHauptansicht(object sender, RoutedEventArgs e)
         {
             neuerNutzer.Username = textBoxRegNUTZERNAME.Text;
-            neuerNutzer.Email = textBoxRegEMAIL.Text; 
+            neuerNutzer.Email = textBoxRegEMAIL.Text;
+
+            this.IsEnabled = false;
 
             if (pwBoxPASSWORT.Password == pwBoxPASSWORTBEST.Password)
             {
@@ -69,6 +71,8 @@ namespace App2Night.Views
                 var message = new MessageDialog("Fehler! Die Passwörter stimmen nicht überein!");
                 await message.ShowAsync();
             }
+
+            this.IsEnabled = true;
         }
     }
 }

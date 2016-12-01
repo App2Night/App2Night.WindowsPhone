@@ -129,5 +129,20 @@ namespace App2Night.Logik
             return ausDatei;
         }
 
+        public static async Task<bool> LoginUeberpruefen(Login loginZuPruefen)
+        {
+            bool korrekterLogin = false;
+
+            Login ausDatei = await DatenAusDateiLesenLogin();
+
+            if (ausDatei.Email == loginZuPruefen.Email && ausDatei.Password == loginZuPruefen.Password && ausDatei.Username == loginZuPruefen.Username)
+            {
+                korrekterLogin = true;
+            }
+
+            return korrekterLogin;
+        }
+
+
     }
 }

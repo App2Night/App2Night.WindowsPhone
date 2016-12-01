@@ -22,16 +22,16 @@
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout/>
             </FlyoutBase.AttachedFlyout>
-            <PivotItem x:Name="pItemSuchErgebnisse" Header="Suchergebnisse" FontSize="18" Margin="10,0,10,200" HorizontalAlignment="Center" Width="340">
+            <PivotItem x:Name="pItemSuchErgebnisse" Header="Suchergebnisse" FontSize="18" Margin="10,0,0,200" HorizontalAlignment="Left" Width="340" Height="345" VerticalAlignment="Bottom">
                 <ListView x:Name="listViewSuchErgebnis" HorizontalAlignment="Center" Height="347" Width="340" Margin="0,0,0,200" ItemClick="listViewSuchErgebnisse_ItemClick" SelectionChanged="listView_ClickOnItem"/>
             </PivotItem>
-            <PivotItem x:Name="pItemVorgemerkt" Header="Vorgemerkt" Margin="10,0" Width="340" HorizontalAlignment="Center" Height="350" VerticalAlignment="Top">
+            <PivotItem x:Name="pItemVorgemerkt" Header="Vorgemerkt" Margin="10,0,0,195" Width="340" HorizontalAlignment="Left">
                 <ListView x:Name="listViewVorgemerkt" Height="350" Margin="0" Width="340" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             </PivotItem>
         </Pivot>
         <Button x:Name="btnSuche" Content="Suche" HorizontalAlignment="Left" Height="50" Margin="10,504,0,0" VerticalAlignment="Top" Width="160" FontSize="20" Background="#FF9E9393" Click="btnSuche_wechselZuVeranstSuchen"/>
         <Button x:Name="btnErstellen" Content="Neu" HorizontalAlignment="Left" Height="50" Margin="190,504,0,0" VerticalAlignment="Top" Width="160" FontSize="20" Background="#FF9E9393" Click="btnErstellen_wechselZuVeranstErstellen"/>
         <Button x:Name="btnVeranstInDerNaehe" Content="In der Nähe" HorizontalAlignment="Left" Height="49" Margin="10,450,0,0" VerticalAlignment="Top" Width="160" Background="#FF9E9393" FontSize="20" Click="btnVeranstInDerNaehe_GetPartys"/>
-        <ProgressRing x:Name="progressRingInDerNaehe" HorizontalAlignment="Center" Height="71" Margin="0,300,0,0" VerticalAlignment="Top" Width="70" IsActive="True"/>
+        <ProgressRing x:Name="progressRingInDerNaehe" HorizontalAlignment="Center" Height="70" Margin="170,465,170,0" VerticalAlignment="Top" Width="70" IsActive="True"/>
     </Grid>
 </Page>
