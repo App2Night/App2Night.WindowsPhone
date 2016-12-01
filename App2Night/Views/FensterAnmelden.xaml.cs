@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using App2Night.ModelsEnums.Model;
 using App2Night.Logik;
+using Windows.UI.Popups;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -41,12 +42,18 @@ namespace App2Night.Views
             anmeldung.Username = txtBlAnmNutzername.Text;
             anmeldung.Email = txtBlAnmEMAIL.Text;
             anmeldung.Password = pwBoxPASSWORT.Password;
-            // TODO: Nutzereingaben ueberpruefen
 
             bool korrekteEingabe = await DatenVerarbeitung.LoginUeberpruefen(anmeldung);
-
-            //wenn es stimmt 
-            this.Frame.Navigate(typeof(FensterHauptansicht), anmeldung);
+ 
+            if (korrekteEingabe == true)
+            {
+                this.Frame.Navigate(typeof(FensterHauptansicht)); 
+            }
+            else
+            {
+                var message = new MessageDialog("Keine korrekten Nutzerdaten!");
+                await message.ShowAsync();
+            }
         }
 
         private void btnPwVergessen_wechselZuNeuesPW(object sender, RoutedEventArgs e)

@@ -35,6 +35,7 @@ namespace App2Night.Views
 
             // MusicGenres in ComboBox anzeigen
             comboBoxErstellenMUSIKRICHTUNG.ItemsSource = Enum.GetValues(typeof(MusicGenre));
+            comboBoxErstellenTYP.ItemsSource = Enum.GetValues(typeof(PartyType));
 
         }
 
@@ -51,15 +52,8 @@ namespace App2Night.Views
         private async void btnErstellen_wechselZuAnzeige(object sender, RoutedEventArgs e)
         {
             partyZuErstellen.MusicGenre = (MusicGenre)comboBoxErstellenMUSIKRICHTUNG.SelectedItem;
-            // TODO: Typ fehlt, Preis weg
+            partyZuErstellen.PartyType = (PartyType)comboBoxErstellenTYP.SelectedItem;
             partyZuErstellen.Description = textBoxErstellenWEITEREINFOS.Text;
-
-            //Login temp = new Login();
-            //temp.Email = "testY@test.de";
-            //temp.Password = "hallo1234";
-            //temp.Username = "YvetteLa";
-
-            //tok = await BackEndComUserLogik.GetToken(temp);
 
             // TODO: File not found
             Login aktuellerNutzer = await DatenVerarbeitung.DatenAusDateiLesenLogin();
