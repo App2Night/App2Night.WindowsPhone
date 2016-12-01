@@ -130,7 +130,7 @@
     <Compile Include="Views\FensterAnmelden.xaml.cs">
       <DependentUpon>FensterAnmelden.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FensterAnmOdReg.xaml.cs">
+    <Compile Include="FensterAnmOdReg.xaml.cs">
       <DependentUpon>FensterAnmOdReg.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FensterHauptansicht - Kopieren.xaml.cs">
@@ -190,7 +190,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\FensterAnmOdReg.xaml">
+    <Page Include="FensterAnmOdReg.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
