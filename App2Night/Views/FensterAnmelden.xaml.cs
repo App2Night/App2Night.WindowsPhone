@@ -43,8 +43,10 @@ namespace App2Night.Views
             anmeldung.Email = txtBlAnmEMAIL.Text;
             anmeldung.Password = pwBoxPASSWORT.Password;
 
+            this.IsEnabled = false;
+
             bool korrekteEingabe = await DatenVerarbeitung.LoginUeberpruefen(anmeldung);
- 
+
             if (korrekteEingabe == true)
             {
                 this.Frame.Navigate(typeof(FensterHauptansicht)); 
@@ -54,6 +56,9 @@ namespace App2Night.Views
                 var message = new MessageDialog("Keine korrekten Nutzerdaten!");
                 await message.ShowAsync();
             }
+
+            this.IsEnabled = true;
+
         }
 
         private void btnPwVergessen_wechselZuNeuesPW(object sender, RoutedEventArgs e)
