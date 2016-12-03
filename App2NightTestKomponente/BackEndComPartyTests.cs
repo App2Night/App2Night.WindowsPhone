@@ -12,19 +12,20 @@ namespace App2NightTestKomponente
     [TestClass]
     public class BackEndComPartyTests
     {
-   
+
         public async Task<Token> GetToken()
         {
             Login temp = new Login();
-            temp.Email = "testY@test.de";
-            temp.Password = "hallo1234";
-            temp.Username = "YvetteLa";
+            // TODO: gültige Daten!
+            //temp.Email = "testY@test.de";
+            //temp.Password = "hallo1234";
+            //temp.Username = "YvetteLa";
 
             return await BackEndComUserLogik.GetToken(temp);
         }
 
         [TestMethod]
-        public async Task  PostTest()
+        public async void PostCreatePartyTest()
         {
             var testParty = new CreatePartyModel()
             {
@@ -50,17 +51,36 @@ namespace App2NightTestKomponente
         }
 
         [TestMethod]
-        public async Task GetParties()
+        public async void GetParties()
         {
             Location position = new Location();
             position.Latitude = 48.445031;
             position.Longitude = 8.696494;
-
             float radius = 30;
 
             IEnumerable<Party> partyListe = await BackEndComPartyLogik.GetParties(position, radius);
 
             Assert.IsNotNull(partyListe);
         }
+
+        [TestMethod]
+        public async void ValidateLoc(Location loc)
+        {
+            Location position = new Location();
+            position.CityName = "Horb am Neckar";
+            position.CountryName = "Deutschland";
+            position.HouseNumber = "15";
+            position.StreetName = "Florianstraße";
+            position.Zipcode = "72160";
+            position.Latitude = 48.445031;
+            position.Longitude = 8.696494;
+
+            string erg = await BackEndComPartyLogik.ValidateLocation(position);
+
+            Assert.Equals("200", erg);
+        }
+
+
+
     }
 }
