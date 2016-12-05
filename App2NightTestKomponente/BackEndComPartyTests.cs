@@ -71,7 +71,7 @@ namespace App2NightTestKomponente
             position.CountryName = "Deutschland";
             position.HouseNumber = "15";
             position.StreetName = "Florianstraße";
-            position.Zipcode = "72160";
+            position.ZipCode = "72160";
             position.Latitude = 48.445031;
             position.Longitude = 8.696494;
 

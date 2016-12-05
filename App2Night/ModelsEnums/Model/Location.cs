@@ -20,7 +20,7 @@ namespace App2Night.ModelsEnums.Model
         [JsonProperty("HouseNumber")]
         public string HouseNumber { get; set; }
         [JsonProperty("Zipcode")]
-        public string Zipcode { get; set; }
+        public string ZipCode { get; set; }
         [JsonProperty("Latitude")]
         public double Latitude { get; set; }
         [JsonProperty("Longitude")]

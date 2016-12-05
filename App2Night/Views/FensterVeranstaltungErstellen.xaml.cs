@@ -16,6 +16,7 @@ using App2Night.ModelsEnums.Model;
 using Windows.Devices.Geolocation;
 using App2Night.Controller;
 using Windows.UI.Popups;
+using App2Night.Logik;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -57,6 +58,19 @@ namespace App2Night.Views
         private async void  btnWeiter_wechselZuErstellen02(object sender, RoutedEventArgs e)
         {
             CreatePartyModel partyZuErstellen = new CreatePartyModel();
+
+            // Validieren der Ortsangabe
+            Location zuValidieren = new Location();
+            zuValidieren.CityName = textBoxErstellenORT.Text;
+            zuValidieren.StreetName = textBoxErstellenADRESSE.Text;
+            zuValidieren.HouseNumber = textBoxErstellenHAUSNUMMER.Text;
+            zuValidieren.ZipCode = textBoxErstellenPLZ.Text;
+
+            Token tok = await DatenVerarbeitung.aktuellerTokenFuerPost();
+
+            // TODO: Prüfen, ob das geht
+            string erfolg = await BackEndComPartyLogik.ValidateLocation(zuValidieren, tok);
+
             //TODO: Nullwerte abfangen
             //TODO: Auf falsche Eingabe reagieren 
             //TODO: bei Zurueckkommen auf Erstellen02 müssen die Werte noch da sein
@@ -69,13 +83,8 @@ namespace App2Night.Views
                 partyZuErstellen.HouseNumber = textBoxErstellenHAUSNUMMER.Text;
                 partyZuErstellen.ZipCode = textBoxErstellenPLZ.Text;
 
-                //partyZuErstellen.Location = loc;
-
-
-
                 DateTime zwischenSpeicherDate = new DateTime(DatePickerErstellenDATUM.Date.Year, DatePickerErstellenDATUM.Date.Month, DatePickerErstellenDATUM.Date.Day,
                                                                                         TimePickerErstellenUHRZEIT.Time.Hours, TimePickerErstellenUHRZEIT.Time.Minutes, TimePickerErstellenUHRZEIT.Time.Seconds);
-
 
                 partyZuErstellen.PartyDate = zwischenSpeicherDate;
             }

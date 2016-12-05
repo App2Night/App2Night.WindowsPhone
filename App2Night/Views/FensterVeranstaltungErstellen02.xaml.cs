@@ -57,11 +57,7 @@ namespace App2Night.Views
             string preis = textBoxErstellenPREIS.Text;
             partyZuErstellen.Price = Double.Parse(preis);
 
-            // TODO: File not found
-            Login aktuellerNutzer = await DatenVerarbeitung.DatenAusDateiLesenLogin();
-            Token aktuellerToken = await DatenVerarbeitung.DatenAusDateiLesenToken();
-
-            aktuellerToken = await BackEndComUserLogik.RefreshToken(aktuellerToken);
+            Token tok = await DatenVerarbeitung.aktuellerTokenFuerPost();
 
             bool status = await BackEndComPartyLogik.CreateParty(partyZuErstellen, tok); 
 

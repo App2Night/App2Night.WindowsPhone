@@ -1,4 +1,5 @@
-﻿using App2Night.ModelsEnums.Model;
+﻿
+using App2Night.ModelsEnums.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -113,6 +114,15 @@ namespace App2Night.Logik
             }
 
             return korrekterLogin;
+        }
+
+        public static async Task<Token> aktuellerTokenFuerPost()
+        {
+            // TODO: File not found
+            Login aktuellerNutzer = await DatenVerarbeitung.DatenAusDateiLesenLogin();
+            Token aktuellerToken = await DatenVerarbeitung.DatenAusDateiLesenToken();
+
+            return aktuellerToken = await BackEndComUserLogik.RefreshToken(aktuellerToken);
         }
 
 

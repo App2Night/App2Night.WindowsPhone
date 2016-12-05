@@ -272,7 +272,7 @@ namespace App2Night.Logik
         /// </summary>
         /// <param name="location">Zu pruefende Adresse</param>
         /// <returns>Location laut Google</returns>
-        public static async Task<string> ValidateLocation(Location location)
+        public static async Task<string> ValidateLocation(Location location, Token token)
         {
             bool internetVorhanden = IsInternet();
             // TODO: eventuell Locations statt string
@@ -282,12 +282,12 @@ namespace App2Night.Logik
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token.AccessToken);
                 HttpContent content = new StringContent(JsonConvert.SerializeObject(location), Encoding.UTF8, "application/json");
 
                 try
                 {
                     httpAntwort = await client.PostAsync("Party/validate", content);
-                    //httpAntwort.EnsureSuccessStatusCode();
                     // 200 Erfolg
                     adresseLautGoogle = await httpAntwort.Content.ReadAsStringAsync();
                     return adresseLautGoogle;

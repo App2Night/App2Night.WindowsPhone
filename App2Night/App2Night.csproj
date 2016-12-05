@@ -133,6 +133,7 @@
     <Compile Include="FensterAnmOdReg.xaml.cs">
       <DependentUpon>FensterAnmOdReg.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FensterAnmOdReg.xaml.cs" />
     <Compile Include="Views\FensterHauptansicht.xaml.cs">
       <DependentUpon>FensterHauptansicht.xaml</DependentUpon>
     </Compile>
@@ -190,6 +191,10 @@
     <Page Include="FensterAnmOdReg.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FensterAnmOdReg.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\FensterHauptansicht.xaml">
       <SubType>Designer</SubType>
