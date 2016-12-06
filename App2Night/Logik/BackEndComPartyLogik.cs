@@ -13,6 +13,7 @@ using Windows.UI.Popups;
 using App2Night.ModelsEnums.Model;
 using Windows.Devices.Geolocation;
 using Plugin.Geolocator.Abstractions;
+using App2Night.Logik;
 
 //https://github.com/App2Night/App2Night.Xamarin/blob/dev/PartyUp.Service/Service/ClientService.cs
 //http://app2nightapi.azurewebsites.net/swagger/ui/index.html
@@ -135,11 +136,13 @@ namespace App2Night.Logik
         /// </summary>
         /// <param name="party">Zu erstellende Party mit allen Informationen</param>
         /// <returns>ID</returns>
-        public static async Task<bool> CreateParty(CreatePartyModel party, Token token)
+        public static async Task<bool> CreateParty(CreatePartyModel party)
         {
             bool internetVorhanden = IsInternet();
             string status = "";
             party.CountryName = "Deutschland";
+
+            Token tok = await DatenVerarbeitung.aktuellerTokenFuerPost();
 
             if (internetVorhanden == true)
             {
@@ -147,7 +150,7 @@ namespace App2Night.Logik
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
                 //client.DefaultRequestHeaders.Add("Content-Type", "application/json");
                 var json = JsonConvert.SerializeObject(party);
-                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token.AccessToken);
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + tok.AccessToken);
                 HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");              
 
                 try

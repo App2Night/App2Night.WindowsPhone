@@ -39,8 +39,6 @@ namespace App2Night.Logik
         /// <returns>Guid</returns>
         public static async Task<bool> CreateUser(Login login)
         {
-            //string userID = "";
-            //string iD = "";
             bool internetVorhanden = BackEndComPartyLogik.IsInternet();
 
             if (internetVorhanden == true)
@@ -53,15 +51,6 @@ namespace App2Night.Logik
                 {
                     httpAntwort = await client.PostAsync("User", content);
                     bool erfolgreich = httpAntwort.IsSuccessStatusCode;
-                    //userID = await httpAntwort.Content.ReadAsStringAsync();
-
-                    //if (userID.Length > 4) // Muss eine Guid sein
-                    //{
-                    //    var message = new MessageDialog("Benutzer angelegt!");
-                    //    message.ShowAsync();
-                    //    iD = stringBereinigen(userID);
-                    //}
-
                     return erfolgreich;
                 }
 
@@ -70,14 +59,48 @@ namespace App2Night.Logik
                     var fehler = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
                     await message.ShowAsync();
-                    // Code 21 - Fehler bei Abrufen
                     return false;
                 }
             }
             else
             {
                 // Nachricht, dass Internet eingeschaltet werden soll
-                // Code 42 - Fehler: Keine Internetverbindung
+                var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
+                await message.ShowAsync();
+                return false;
+            }
+        }
+
+
+        public static async Task<bool> ResetPasswort(Login login)
+        {
+            bool internetVorhanden = BackEndComPartyLogik.IsInternet();
+            string emailadresse = login.Email;
+
+            if (internetVorhanden == true)
+            {
+                HttpClient client = GetClientUser();
+                HttpResponseMessage httpAntwort = new HttpResponseMessage();
+                HttpContent content = new StringContent(JsonConvert.SerializeObject(emailadresse), Encoding.UTF8, "application/json");
+
+                try
+                {
+                    httpAntwort = await client.PostAsync("User/ResetPassword", content);
+                    bool erfolgreich = httpAntwort.IsSuccessStatusCode;
+                    return erfolgreich;
+                }
+
+                catch (Exception ex)
+                {
+                    var fehler = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+                    var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
+                    await message.ShowAsync();
+                    return false;
+                }
+            }
+            else
+            {
+                // Nachricht, dass Internet eingeschaltet werden soll
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
                 await message.ShowAsync();
                 return false;

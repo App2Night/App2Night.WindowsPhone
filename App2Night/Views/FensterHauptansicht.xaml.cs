@@ -122,7 +122,7 @@ namespace App2Night.Views
 
         private void Hinzufuegen_wechselZuErstellen(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(FensterVeranstaltungErstellen));
+            this.Frame.Navigate(typeof(FensterErstellen));
         }
 
         public async void Suchen_abrufenPartys(object sender, RoutedEventArgs e)
@@ -159,7 +159,12 @@ namespace App2Night.Views
 
         private void Einstellungen_wechselZuMenu(object sender, RoutedEventArgs e)
         {
+            // TODO: Fenster mit Menü und Einstellungsmöglichkeiten (Radius)
+        }
 
+        private void listeEigeneVeranstFokus_zeigeVeranstaltungen(object sender, RoutedEventArgs e)
+        {
+            // TODO: BackEndKommunikation eigenePartysAnzeigen
         }
     }
 }

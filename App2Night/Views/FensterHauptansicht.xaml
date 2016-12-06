@@ -20,9 +20,9 @@
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
-            <AppBarButton x:Name="AppBarHinzufuegen" Icon="Add" Label="appbarbutton" Click="Hinzufuegen_wechselZuErstellen"/>
-            <AppBarButton x:Name="AppBarInDerNaehe" Icon="Zoom" Label="appbarbutton" Click="Suchen_abrufenPartys"/>
-            <AppBarButton x:Name="AppBarEinstelllungen" Icon="Setting" Label="appbarbutton" Click="Einstellungen_wechselZuMenu"/>
+            <AppBarButton x:Name="AppBarButtonHinzufuegen" Icon="Add" Label="Erstellen" Click="Hinzufuegen_wechselZuErstellen" Width="90"/>
+            <AppBarButton x:Name="AppBarButtonInDerNaehe" Icon="Zoom" Label="In der Nähe" Click="Suchen_abrufenPartys" Width="150"/>
+            <AppBarButton x:Name="AppBarButtonEinstelllungen" Icon="Setting" Label="Einstellungen" Click="Einstellungen_wechselZuMenu" Width="70"/>
 
         </CommandBar>
     </Page.BottomAppBar>
@@ -38,11 +38,6 @@
             </PivotItem>
             <PivotItem x:Name="pItemVorgemerkt" Header="Vorgemerkt" Margin="10,0,0,195" Width="340" HorizontalAlignment="Left">
                 <ListView x:Name="listViewVorgemerkt" Height="350" Margin="0" Width="340" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            </PivotItem>
-            <PivotItem x:Name="pItemEigeneVeranstaltungen" Header="Eigene Veranstaltungen" Margin="12,0,12,191">
-                <ListView x:Name="listViewEigeneVeranstaltungen" Margin="0,0,118,222" Height="353" Width="335">
-                    <Grid Height="545" Width="336"/>
-                </ListView>
             </PivotItem>
         </Pivot>
         <ProgressRing x:Name="progressRingInDerNaehe" HorizontalAlignment="Center" Height="70" Margin="170,465,170,0" VerticalAlignment="Top" Width="70" IsActive="True"/>

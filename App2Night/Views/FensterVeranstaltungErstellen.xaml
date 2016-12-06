@@ -9,10 +9,10 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <TextBlock x:Name="txtBlVeranstErstellenName" HorizontalAlignment="Left" Height="35" Margin="10,70,0,0" TextWrapping="Wrap" Text="Name der Veranstaltung " VerticalAlignment="Top" Width="340" FontSize="20" FontWeight="Bold"/>
-        <TextBox x:Name="textBoxErstellenNAME" HorizontalAlignment="Left" Height="40" Margin="10,105,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="340" FontSize="20"/>
+        <TextBox x:Name="textBoxErstellenNAME" HorizontalAlignment="Left" Height="40" Margin="10,105,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="340" FontSize="20" PlaceholderText="Name"/>
         <TextBlock x:Name="txtBlErstellenVeranstOrt" HorizontalAlignment="Left" Height="40" Margin="10,170,0,0" TextWrapping="Wrap" Text="Ort" VerticalAlignment="Top" Width="130" FontSize="20" FontWeight="Bold"/>
-        <TextBox x:Name="textBoxErstellenORT" HorizontalAlignment="Left" Height="40" Margin="145,205,0,0" TextWrapping="Wrap" Text="Ort " VerticalAlignment="Top" Width="205" FontSize="20"/>
-        <TextBox x:Name="textBoxErstellenPLZ" HorizontalAlignment="Left" Height="40" Margin="10,205,0,0" TextWrapping="Wrap" Text="PLZ " VerticalAlignment="Top" Width="130" FontSize="20"/>
+        <TextBox x:Name="textBoxErstellenORT" HorizontalAlignment="Left" Height="40" Margin="145,205,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="205" FontSize="20" PlaceholderText="Ort"/>
+        <TextBox x:Name="textBoxErstellenPLZ" HorizontalAlignment="Left" Height="40" Margin="10,205,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="130" FontSize="20" PlaceholderText="PLZ"/>
         <TextBlock x:Name="textBlErstellenDatum" HorizontalAlignment="Left" Height="39" Margin="10,310,0,0" TextWrapping="Wrap" Text="Datum" VerticalAlignment="Top" Width="340" FontSize="20" FontWeight="Bold"/>
         <DatePicker x:Name="DatePickerErstellenDATUM" HorizontalAlignment="Left" Height="50" Margin="10,348,0,0" VerticalAlignment="Top" Width="340" FontSize="20"/>
         <TextBlock x:Name="txtBlVeranstErstellen" Height="80" Margin="10,-30,0,0" TextWrapping="Wrap" Text="Erstellen" VerticalAlignment="Top" Width="340" FontSize="45" HorizontalAlignment="Left" TextAlignment="Center" SelectionHighlightColor="White"/>
@@ -20,7 +20,7 @@
         <Button x:Name="btnVerantsErstellenCanceln" Content="Abbrechen" HorizontalAlignment="Left" Height="40" Margin="12,515,0,0" VerticalAlignment="Top" Width="140" Background="#FF9E9393" FontSize="20" Click="btnAbbrechen_wechselZuHauptansicht"/>
         <TextBlock x:Name="textBlErstellenUhrzeit" HorizontalAlignment="Left" Height="40" Margin="10,396,0,0" TextWrapping="Wrap" Text="Uhrzeit" VerticalAlignment="Top" Width="337" FontSize="20" FontWeight="Bold"/>
         <TimePicker x:Name="TimePickerErstellenUHRZEIT" HorizontalAlignment="Left" Height="40" Margin="10,434,0,0" VerticalAlignment="Top" Width="340" FontSize="20" MaxWidth="455"/>
-        <TextBox x:Name="textBoxErstellenADRESSE" Height="40" Margin="10,249,110,0" TextWrapping="Wrap" Text="Adresse" VerticalAlignment="Top" FontSize="20" HorizontalAlignment="Left" Width="240"/>
-        <TextBox x:Name="textBoxErstellenHAUSNUMMER" HorizontalAlignment="Left" Height="40" Margin="258,249,0,0" TextWrapping="Wrap" Text="HausNr" VerticalAlignment="Top" Width="90" FontSize="20"/>
+        <TextBox x:Name="textBoxErstellenADRESSE" Height="40" Margin="10,249,110,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="20" HorizontalAlignment="Left" Width="240" PlaceholderText="Adresse"/>
+        <TextBox x:Name="textBoxErstellenHAUSNUMMER" HorizontalAlignment="Left" Height="40" Margin="258,249,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90" FontSize="20" PlaceholderText="HausNr"/>
     </Grid>
 </Page>

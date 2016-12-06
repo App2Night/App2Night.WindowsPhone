@@ -51,12 +51,13 @@ namespace App2Night.Views
 
                 if (status == true)
                 {
-                    var message = new MessageDialog("Nutzer erfolgreich registriert!");
+                    var message = new MessageDialog($"Eine E-Mail mit Aktivierungslink wurde an die angegebene E-Mailadresse({neuerNutzer.Email}) geschickt.", "Nutzer erfolgreich registriert!");
                     await message.ShowAsync();
 
                     // Speichert Login und Token in Textdatei
                     await DatenVerarbeitung.DatenInDateiSchreibenLogin(neuerNutzer);
-                    await DatenVerarbeitung.DatenInDateiSchreibenToken(neuerNutzer);
+                    Token tok = await BackEndComUserLogik.GetToken(neuerNutzer);
+                    await DatenVerarbeitung.DatenInDateiSchreibenToken(tok);
 
                     this.Frame.Navigate(typeof(FensterHauptansicht)); 
                 }

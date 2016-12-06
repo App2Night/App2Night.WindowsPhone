@@ -1,0 +1,17 @@
+﻿<Page x:Name="FensterAnmeldenOderRegistrieren"
+    x:Class="App2Night.Views.FensterAnmOdReg"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:App2Night.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Image x:Name="LogoApp2Night" HorizontalAlignment="Center" Height="200" Margin="80,40,78,0" VerticalAlignment="Top" Width="202" Source="ms-appx:///Ressources/A2N_Logo01_Variante02.png" Stretch="Fill" NineGrid="0"/>
+        <Button x:Name="btnStartAnmelden" Content="Anmelden" HorizontalAlignment="Center" Height="59" Margin="78,330,82,0" VerticalAlignment="Top" Width="200" FontSize="22" Click="btnAnmelden_wechselZuFensterAnmelden"/>
+        <Button x:Name="btnStartRegistrieren" Content="Registrieren" HorizontalAlignment="Center" Height="62" Margin="80,450,80,0" VerticalAlignment="Top" Width="200" FontSize="22" Click="btnRegistrieren_wechselZuFensterReg"/>
+        <TextBlock x:Name="txtBlStartGetApp2Night" HorizontalAlignment="Center" Height="63" Margin="0,245,0,0" TextWrapping="Wrap" Text="Get App2Night!" VerticalAlignment="Top" Width="205" FontSize="20" TextAlignment="Center" Foreground="#FF463B3B" FontWeight="Bold"/>
+
+    </Grid>
+</Page>

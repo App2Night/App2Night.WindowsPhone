@@ -9,6 +9,7 @@ namespace App2Night.ModelsEnums.Model
 {
     public class Login
     {
+        public string userID { get; set; }
         [JsonProperty("username")]
         public string Username { get; set; }
         [JsonProperty("password")]

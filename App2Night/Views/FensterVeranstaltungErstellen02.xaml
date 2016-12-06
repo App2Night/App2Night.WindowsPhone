@@ -14,10 +14,11 @@
         <TextBlock x:Name="textBlMusikRichtung" HorizontalAlignment="Left" Height="40" Margin="10,70,0,0" TextWrapping="Wrap" Text="Musikrichtung (optional)" VerticalAlignment="Top" Width="340" FontSize="20" FontWeight="Bold"/>
         <ComboBox x:Name="comboBoxErstellenMUSIKRICHTUNG" HorizontalAlignment="Left" Height="40" Margin="10,106,0,0" VerticalAlignment="Top" Width="342" FontSize="20"/>
         <TextBlock x:Name="textBlErstellenWeitereInfos" HorizontalAlignment="Left" Height="40" Margin="10,300,0,0" TextWrapping="Wrap" Text="Weitere Informationen (optional)" VerticalAlignment="Top" Width="340" FontSize="20" FontWeight="Bold"/>
-        <TextBox x:Name="textBoxErstellenWEITEREINFOS" HorizontalAlignment="Left" Height="150" Margin="10,350,0,0" TextWrapping="Wrap" Text="Hier können Sie weitere Informationen zu ihrer Veranstaltung eintragen wie z.B. besondere Angebote oder Auftritte." VerticalAlignment="Top" Width="340" FontSize="20"/>
+        <TextBox x:Name="textBoxErstellenWEITEREINFOS" HorizontalAlignment="Left" Height="150" Margin="10,350,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="340" FontSize="20" PlaceholderText="Hier können Sie weitere Informationen zu ihrer Veranstaltung eintragen wie z.B. besondere Angebote oder Auftritte."/>
         <TextBlock x:Name="textBlErstellenTyp" HorizontalAlignment="Left" Height="41" Margin="12,175,0,0" TextWrapping="Wrap" Text="Typ" VerticalAlignment="Top" Width="140" FontSize="20" FontWeight="Bold"/>
         <ComboBox x:Name="comboBoxErstellenTYP" HorizontalAlignment="Left" Height="40" Margin="157,175,0,0" VerticalAlignment="Top" Width="195" FontSize="20"/>
         <TextBlock x:Name="textBlErstellenPreis" HorizontalAlignment="Left" Height="41" Margin="10,230,0,0" TextWrapping="Wrap" Text="Preis" VerticalAlignment="Top" Width="140" FontSize="20" FontWeight="Bold"/>
-        <TextBox x:Name="textBoxErstellenPREIS" HorizontalAlignment="Left" Margin="157,230,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="40" Width="193"/>
+        <TextBox x:Name="textBoxErstellenPREIS" HorizontalAlignment="Left" Margin="157,230,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="40" Width="193" PlaceholderText="Preis" FontSize="20"/>
+        <ProgressRing x:Name="progRingErstellen02" HorizontalAlignment="Left" Margin="150,230,0,0" VerticalAlignment="Top" Width="70" Height="70"/>
     </Grid>
 </Page>

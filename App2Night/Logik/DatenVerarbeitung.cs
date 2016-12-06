@@ -60,7 +60,7 @@ namespace App2Night.Logik
             return ausDatei;
         }
 
-        public static async Task<bool> DatenInDateiSchreibenToken(Login neuerNutzer)
+        public static async Task<bool> DatenInDateiSchreibenToken(Token tok)
         {
             bool erfolg = false;
             speicherDatei = await speicherOrdner.CreateFileAsync(DateiToken, Windows.Storage.CreationCollisionOption.ReplaceExisting);
@@ -75,8 +75,8 @@ namespace App2Night.Logik
 
             try
             {
-                string loginJsonAlsString = JsonConvert.SerializeObject(neuerNutzer);
-                await FileIO.WriteTextAsync(speicherDatei, loginJsonAlsString);
+                string tokenJsonAlsString = JsonConvert.SerializeObject(tok);
+                await FileIO.WriteTextAsync(speicherDatei, tokenJsonAlsString);
 
                 erfolg = true;
             }
@@ -119,8 +119,8 @@ namespace App2Night.Logik
         public static async Task<Token> aktuellerTokenFuerPost()
         {
             // TODO: File not found
-            Login aktuellerNutzer = await DatenVerarbeitung.DatenAusDateiLesenLogin();
-            Token aktuellerToken = await DatenVerarbeitung.DatenAusDateiLesenToken();
+            Login aktuellerNutzer = await DatenAusDateiLesenLogin();
+            Token aktuellerToken = await DatenAusDateiLesenToken();
 
             return aktuellerToken = await BackEndComUserLogik.RefreshToken(aktuellerToken);
         }
