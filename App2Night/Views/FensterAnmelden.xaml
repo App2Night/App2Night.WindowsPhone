@@ -6,6 +6,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.Content>
+                <Grid/>
+            </CommandBar.Content>
+            <AppBarButton x:Name="AppBarButtonZurueck" Icon="Back" Label="Zurueck" Width="85"/>
+            <!--<AppBarButton Icon="Back" Label="Areally&#x00AD;longlabel"/>-->
+            <AppBarButton x:Name="AppBarButtonPasswortVergessen" Icon="Help" Label="PasswortVergessen" Width="150"/>
+            <AppBarButton x:Name="AppBarButtonBestaetigen" Icon="Accept" Label="Bestaetigen" Width="85"/>
+        </CommandBar>
+    </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Button x:Name="btnAnmAnmelden" Content="Anmelden" HorizontalAlignment="Left" Margin="190,513,0,0" VerticalAlignment="Top" Height="45" Width="154" FontSize="20" Click="btnAnmelden_AnmeldenWechselZuHauptansicht"/>

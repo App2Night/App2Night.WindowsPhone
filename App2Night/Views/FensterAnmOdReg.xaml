@@ -6,6 +6,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.Content>
+                <Grid/>
+            </CommandBar.Content>
+            <AppBarButton x:Name="AppBarButtonAnmelden" Icon="Contact" Label="Anmelden" Width="150"/>
+            <AppBarButton x:Name="AppBarButtonRegistrieren" Icon="Edit" Label="Registrieren" Width="150"/>
+        </CommandBar>
+    </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Image x:Name="LogoApp2Night" HorizontalAlignment="Center" Height="200" Margin="80,40,78,0" VerticalAlignment="Top" Width="202" Source="ms-appx:///Ressources/A2N_Logo01_Variante02.png" Stretch="Fill" NineGrid="0"/>

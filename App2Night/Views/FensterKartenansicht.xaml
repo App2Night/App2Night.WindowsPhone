@@ -7,6 +7,15 @@
     xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps" x:Name="FensterKartenansicht1"
     x:Class="App2Night.Views.FensterKartenansicht"
     mc:Ignorable="d">
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.Content>
+                <Grid/>
+            </CommandBar.Content>
+            <AppBarButton x:Name="AppBarButtonZurueck" Icon="Back" Label="Zurueck" Click="Zurueck_WechselZuPartyAnzeigen" Width="150"/>
+            <AppBarButton x:Name="AppBarButtonHauptansicht" Icon="Home" Label="ZurueckZurHauptansicht" Click="Zurueck_WechselZuHauptansicht" Width="150"/>
+        </CommandBar>
+    </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 

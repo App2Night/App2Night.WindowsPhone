@@ -6,6 +6,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.Content>
+                <Grid/>
+            </CommandBar.Content>
+            <AppBarButton x:Name="AppBarButtonZurueck" Icon="Back" Label="Zurueck" Width="100"/>
+            <AppBarButton x:Name="AppBarButtonAufKarteAnzeigen" Icon="Map" Label="AufKarteAnzeigen" Width="100"/>
+            <AppBarButton x:Name="AppBarButtonVormerken" Icon="Accept" Label="Vormerken" Width="100"/>
+        </CommandBar>
+    </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <TextBlock x:Name="txtBlVeranstAnzeigenNAME" Height="50" Margin="10,-22,0,0" TextWrapping="Wrap" Text="-- Name --" VerticalAlignment="Top" Width="340" FontSize="20" HorizontalAlignment="Left" TextAlignment="Center" SelectionHighlightColor="White"/>
