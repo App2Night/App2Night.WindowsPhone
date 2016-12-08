@@ -66,7 +66,7 @@ namespace App2Night.Views
             zuValidieren.HouseNumber = textBoxErstellenHAUSNUMMER.Text;
             zuValidieren.ZipCode = textBoxErstellenPLZ.Text;
 
-            Token tok = await DatenVerarbeitung.aktuellerTokenFuerPost();
+            Token tok = await DatenVerarbeitung.aktuellerToken();
 
             // TODO: Prüfen, ob das geht
             string erfolg = await BackEndComPartyLogik.ValidateLocation(zuValidieren, tok);

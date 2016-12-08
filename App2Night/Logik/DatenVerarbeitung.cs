@@ -55,7 +55,15 @@ namespace App2Night.Logik
 
             string text = await FileIO.ReadTextAsync(speicherDatei);
 
-            ausDatei = JsonConvert.DeserializeObject<Login>(text);
+            // Bei Fehler in Datei oder beim Auslesen wird der Token als null zurückgegeben
+            if (text != null)
+            {
+                ausDatei = JsonConvert.DeserializeObject<Login>(text);
+            }
+            else
+            {
+                ausDatei = null;
+            }
 
             return ausDatei;
         }
@@ -97,7 +105,15 @@ namespace App2Night.Logik
 
             string text = await FileIO.ReadTextAsync(speicherDatei);
 
-            ausDatei = JsonConvert.DeserializeObject<Token>(text);
+            // Bei Fehler in Datei oder beim Auslesen wird der Token als null zurückgegeben
+            if (text != null)
+            {
+                ausDatei = JsonConvert.DeserializeObject<Token>(text);
+            }
+            else
+            {
+                ausDatei = null;
+            }
 
             return ausDatei;
         }
@@ -116,9 +132,8 @@ namespace App2Night.Logik
             return korrekterLogin;
         }
 
-        public static async Task<Token> aktuellerTokenFuerPost()
+        public static async Task<Token> aktuellerToken()
         {
-            // TODO: File not found
             Login aktuellerNutzer = await DatenAusDateiLesenLogin();
             Token aktuellerToken = await DatenAusDateiLesenToken();
 

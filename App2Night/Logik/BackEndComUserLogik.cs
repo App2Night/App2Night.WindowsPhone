@@ -32,6 +32,50 @@ namespace App2Night.Logik
             return client;
         }
 
+        public static async Task<bool> GetUserInfo()
+        {
+            string stringFromServer = "";
+            bool internetVorhanden = BackEndComPartyLogik.IsInternet();
+            Login login = await DatenVerarbeitung.DatenAusDateiLesenLogin();
+            // aktueller Token wird benötigt
+            Token tok = await DatenVerarbeitung.aktuellerToken();
+
+            if (internetVorhanden == true)
+            {
+                HttpClient client = GetClientUser();
+                HttpResponseMessage httpAntwort = new HttpResponseMessage();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + tok.AccessToken);
+
+                try
+                {
+                    // GET Request
+                    httpAntwort = await client.GetAsync("connect/userinfo");
+                    //httpAntwort.EnsureSuccessStatusCode();
+                    login.userID = await httpAntwort.Content.ReadAsStringAsync();
+                    // ID in die Datei schreiben
+                    await DatenVerarbeitung.DatenInDateiSchreibenLogin(login);
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    stringFromServer = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+                    var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
+                    await message.ShowAsync();
+                    // Code 21 - Fehler bei Abrufen
+                    return false;
+                }
+
+            }
+            else
+            {
+                // Nachricht, dass Internet eingeschaltet werden soll
+                // Code 42 - Fehler: Keine Internetverbindung
+                var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
+                await message.ShowAsync();
+                return false;
+            }
+        }
+
         /// <summary>
         /// Erstellt einen neuen User und gibt die dazugehörige Guid aus.
         /// </summary>
@@ -40,6 +84,7 @@ namespace App2Night.Logik
         public static async Task<bool> CreateUser(Login login)
         {
             bool internetVorhanden = BackEndComPartyLogik.IsInternet();
+            login.userID = "0";
 
             if (internetVorhanden == true)
             {
@@ -70,7 +115,6 @@ namespace App2Night.Logik
                 return false;
             }
         }
-
 
         public static async Task<bool> ResetPasswort(Login login)
         {
@@ -176,18 +220,18 @@ namespace App2Night.Logik
             {
                 try
                 {
-                    using (HttpClient client = GetClientUser())
-                    {
-                        client.BaseAddress = new Uri("http://app2nightuser.azurewebsites.net/");
-                        client.DefaultRequestHeaders.Host = "app2nightuser.azurewebsites.net";
-                        //client.DefaultRequestHeaders.Accept.Clear();
-                        var query =     "client_id=nativeApp&" +
-                                              "client_secret=secret&" +
-                                              "grant_type=password&" +
-                                              $"username={login.Username}&" +
-                                              $"password={login.Password}&" +
-                                              "scope=App2NightAPI offline_access&" +
-                                              "openid email";
+                    HttpClient client = GetClientUser();
+
+                    client.BaseAddress = new Uri("http://app2nightuser.azurewebsites.net/");
+                    client.DefaultRequestHeaders.Host = "app2nightuser.azurewebsites.net";
+                    //client.DefaultRequestHeaders.Accept.Clear();
+                    var query =     "client_id=nativeApp&" +
+                                            "client_secret=secret&" +
+                                            "grant_type=password&" +
+                                            $"username={login.Username}&" +
+                                            $"password={login.Password}&" +
+                                            "scope=App2NightAPI offline_access&" +
+                                            "openid email";
                         var content = new StringContent(query, Encoding.UTF8, "application/x-www-form-urlencoded");
                         var requestResult = await client.PostAsync("connect/token", content);
 
@@ -196,7 +240,6 @@ namespace App2Night.Logik
                             string response = await requestResult.Content.ReadAsStringAsync();
                             token = JsonConvert.DeserializeObject<Token>(response);
                         }
-                    }
                 }
                 catch (Exception ex)
                 {

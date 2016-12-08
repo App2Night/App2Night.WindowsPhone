@@ -160,6 +160,7 @@ namespace App2Night.Views
         private void Einstellungen_wechselZuMenu(object sender, RoutedEventArgs e)
         {
             // TODO: Fenster mit Menü und Einstellungsmöglichkeiten (Radius)
+            this.Frame.Navigate(typeof(FensterUserEinstellungen));
         }
 
         private void listeEigeneVeranstFokus_zeigeVeranstaltungen(object sender, RoutedEventArgs e)

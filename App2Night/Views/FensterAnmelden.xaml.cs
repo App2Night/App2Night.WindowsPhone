@@ -45,6 +45,7 @@ namespace App2Night.Views
 
             this.IsEnabled = false;
 
+            // TODO: GetUserInfos damit überprüfen statt mit gespeicherten Daten, da eventuell nicht aktuell. Wenn vorhanden, dann in Datei schreiben.
             bool korrekteEingabe = await DatenVerarbeitung.LoginUeberpruefen(anmeldung);
 
             if (korrekteEingabe == true)

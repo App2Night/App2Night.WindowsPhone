@@ -13,11 +13,11 @@
         <TextBlock x:Name="textBlNutzername" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Nutzername:" VerticalAlignment="Top" Height="40" Width="340" FontSize="20" FontWeight="Bold"/>
         <TextBlock x:Name="textBlPasswortBestaetigen" HorizontalAlignment="Left" Margin="10,288,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" Width="340" Text="Passwort bestätigen" FontWeight="Bold" FontSize="20"/>
         <TextBlock x:Name="textBlPasswort" HorizontalAlignment="Left" Margin="10,192,0,0" TextWrapping="Wrap" Text="Passwort" VerticalAlignment="Top" Height="40" Width="340" FontSize="20" FontWeight="Bold"/>
-        <TextBox x:Name="textBoxRegNUTZERNAME" HorizontalAlignment="Left" Margin="10,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="40" Width="340"/>
-        <PasswordBox x:Name="pwBoxPASSWORTBEST" HorizontalAlignment="Left" Height="40" Margin="10,328,0,0" VerticalAlignment="Top" Width="340"/>
-        <PasswordBox x:Name="pwBoxPASSWORT" HorizontalAlignment="Left" Height="40" Margin="10,232,0,0" VerticalAlignment="Top" Width="340"/>
+        <TextBox x:Name="textBoxRegNUTZERNAME" HorizontalAlignment="Left" Margin="10,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="40" Width="340" PlaceholderText="Nutzername"/>
+        <PasswordBox x:Name="pwBoxPASSWORTBEST" HorizontalAlignment="Left" Height="40" Margin="10,328,0,0" VerticalAlignment="Top" Width="340" PlaceholderText="Passwort wiederholen"/>
+        <PasswordBox x:Name="pwBoxPASSWORT" HorizontalAlignment="Left" Height="40" Margin="10,232,0,0" VerticalAlignment="Top" Width="340" PlaceholderText="Passwort"/>
         <TextBlock x:Name="textBlEmailadresse" HorizontalAlignment="Left" Margin="10,101,0,0" TextWrapping="Wrap" Text="Email - Adresse" VerticalAlignment="Top" Height="40" Width="340" FontSize="20" FontWeight="Bold"/>
-        <TextBox x:Name="textBoxRegEMAIL" HorizontalAlignment="Left" Margin="10,140,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="40" Width="340"/>
+        <TextBox x:Name="textBoxRegEMAIL" HorizontalAlignment="Left" Margin="10,140,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="40" Width="340" InputScope="EmailSmtpAddress" PlaceholderText="E-Mailadresse"/>
 
     </Grid>
 </Page>

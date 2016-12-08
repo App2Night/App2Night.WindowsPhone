@@ -1,0 +1,15 @@
+﻿<Page
+    x:Class="App2Night.Views.FensterUserEinstellungen"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:App2Night.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBlock x:Name="textBlEinstellungenTitel" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Einstellungen" VerticalAlignment="Top" Height="45" Width="340" FontSize="20" FontWeight="Bold"/>
+        <Button x:Name="buttonTestUserInfo" Content="UserInfo Test" HorizontalAlignment="Left" Margin="108,140,0,0" VerticalAlignment="Top" Click="ButtonUserInfo_Test"/>
+
+    </Grid>
+</Page>

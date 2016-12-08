@@ -56,8 +56,6 @@ namespace App2Night.Views
 
                     // Speichert Login und Token in Textdatei
                     await DatenVerarbeitung.DatenInDateiSchreibenLogin(neuerNutzer);
-                    Token tok = await BackEndComUserLogik.GetToken(neuerNutzer);
-                    await DatenVerarbeitung.DatenInDateiSchreibenToken(tok);
 
                     this.Frame.Navigate(typeof(FensterHauptansicht)); 
                 }

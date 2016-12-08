@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Newtonsoft.Json;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -55,10 +56,28 @@ namespace App2Night.Views
             zuValidieren.HouseNumber = textBoxErstellenHAUSNR.Text;
             zuValidieren.ZipCode = textBoxErstellenPLZ.Text;
 
-            Token tok = await DatenVerarbeitung.aktuellerTokenFuerPost();
+            Token tok = await DatenVerarbeitung.aktuellerToken();
 
-            // TODO: Prüfen, ob das geht bzw Nachricht bei ungültiger Adresse
-            string erfolg = await BackEndComPartyLogik.ValidateLocation(zuValidieren, tok);
+            // Falls noch kein Token angelegt wurde, wird ein neuer erzeugt
+            if (tok.AccessToken == null)
+            {
+                Login nutzer = await DatenVerarbeitung.DatenAusDateiLesenLogin();
+                tok = await BackEndComUserLogik.GetToken(nutzer);
+                await DatenVerarbeitung.DatenInDateiSchreibenToken(tok);
+
+                if (tok.AccessToken == null)
+                {
+                    var message = new MessageDialog("Die Email wurde noch nicht bestätigt!");
+                    await message.ShowAsync();
+                    this.IsEnabled = true;
+                    return;
+                }
+            }
+
+            // Gibt die korrekte Adresse zurück, falls Google sie finden kann
+            string adresseLautGoogle = await BackEndComPartyLogik.ValidateLocation(zuValidieren, tok);
+
+            zuValidieren = JsonConvert.DeserializeObject<Location>(adresseLautGoogle);
 
             //TODO: Auf falsche Eingabe reagieren 
             try
@@ -80,6 +99,12 @@ namespace App2Night.Views
                 string preis = textBoxErstellenPREIS.Text;
                 partyZuErstellen.Price = Double.Parse(preis);
 
+                if (partyZuErstellen.PartyDate < DateTime.Today)
+                {
+                    Exception FehlerhaftesDatum = new Exception();
+                    throw FehlerhaftesDatum;
+                }
+
                 bool status = await BackEndComPartyLogik.CreateParty(partyZuErstellen);
 
                 if (status == true)
@@ -94,11 +119,6 @@ namespace App2Night.Views
                     await message.ShowAsync();
                 }
 
-                if (partyZuErstellen.PartyDate < DateTime.Today)
-                {
-                    Exception FehlerhaftesDatum = new Exception();
-                    throw FehlerhaftesDatum;
-                }
             }
             catch (Exception ex)
             {

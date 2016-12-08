@@ -133,6 +133,9 @@
     <Compile Include="FensterAnmOdReg.xaml.cs">
       <DependentUpon>FensterAnmOdReg.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FensterAnmOdReg.xaml.cs">
+      <DependentUpon>FensterAnmOdReg.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FensterErstellen.xaml.cs">
       <DependentUpon>FensterErstellen.xaml</DependentUpon>
     </Compile>
@@ -147,6 +150,9 @@
     </Compile>
     <Compile Include="Views\FensterReg.xaml.cs">
       <DependentUpon>FensterReg.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FensterUserEinstellungen.xaml.cs">
+      <DependentUpon>FensterUserEinstellungen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FensterVeranstaltungAnzeigen.xaml.cs">
       <DependentUpon>FensterVeranstaltungAnzeigen.xaml</DependentUpon>
@@ -215,6 +221,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FensterReg.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FensterUserEinstellungen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

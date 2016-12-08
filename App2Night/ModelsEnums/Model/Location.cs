@@ -9,8 +9,6 @@ namespace App2Night.ModelsEnums.Model
 {
     public class Location
     {
-        [JsonProperty("LocationId")]
-        public int LocationId { get; set; }
         [JsonProperty("CountryName")]
         public string CountryName { get; set; }
         [JsonProperty("Cityname")]

@@ -142,7 +142,7 @@ namespace App2Night.Logik
             string status = "";
             party.CountryName = "Deutschland";
 
-            Token tok = await DatenVerarbeitung.aktuellerTokenFuerPost();
+            Token tok = await DatenVerarbeitung.aktuellerToken();
 
             if (internetVorhanden == true)
             {
