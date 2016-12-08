@@ -11,16 +11,17 @@
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
-            <AppBarButton Icon="Back" Label="appbarbutton" Width="150"/>
+            <AppBarButton x:Name="AppBarButtonUserInfoZurueck" Icon="Back" Label="appbarbutton" Width="150" Click="Zurueck_wechselZuHauptansicht"/>
             <AppBarButton Icon="Accept" Label="appbarbutton" Width="150"/>
         </CommandBar>
     </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <TextBlock x:Name="textBlEinstellungenTitel" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Einstellungen" VerticalAlignment="Top" Height="45" Width="340" FontSize="20" FontWeight="Bold"/>
-        <Button x:Name="buttonTestUserInfo" Content="UserInfo Test" HorizontalAlignment="Left" Margin="10,238,0,0" VerticalAlignment="Top" Click="ButtonUserInfo_Test" Height="35" Width="110"/>
+        <Button x:Name="buttonTestUserInfo" Content="UserInfo Test" HorizontalAlignment="Left" Margin="10,238,0,0" VerticalAlignment="Top" Click="ButtonUserInfo_Test" Height="40" Width="180" FontSize="20"/>
         <TextBlock x:Name="textBlRadius" HorizontalAlignment="Left" Margin="10,96,0,0" TextWrapping="Wrap" Text="Suchradius" VerticalAlignment="Top" Width="180" Height="35" FontSize="20" FontWeight="Bold"/>
         <Slider x:Name="sliderSuchradius" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top" Width="340" Height="50" Minimum="20" Maximum="100" Value="50"/>
+        <Button x:Name="btnAbmelden" Content="Abmelden" HorizontalAlignment="Left" Margin="10,311,0,0" VerticalAlignment="Top" Height="40" Width="180" FontSize="20" Click="btnAnmelden_wechselZuFensterAnmelden"/>
 
     </Grid>
 </Page>

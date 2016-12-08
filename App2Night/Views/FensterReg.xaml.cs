@@ -32,51 +32,6 @@ namespace App2Night.Views
             this.InitializeComponent();
         }
 
-        //private void btnZurueck_wechselZuAnmOderReg(object sender, RoutedEventArgs e)
-        //{
-        //    this.Frame.Navigate(typeof(FensterAnmOdReg));
-        //}
-
-        //private async void btnNutzerAnlegen_wechselZuHauptansicht(object sender, RoutedEventArgs e)
-        //{
-        //    neuerNutzer.Username = textBoxRegNUTZERNAME.Text;
-        //    neuerNutzer.Email = textBoxRegEMAIL.Text;
-
-        //    progRingReg.Visibility = Visibility.Visible;
-        //    this.IsEnabled = false;
-
-        //    if (pwBoxPASSWORT.Password == pwBoxPASSWORTBEST.Password)
-        //    {
-        //        neuerNutzer.Password = pwBoxPASSWORTBEST.Password;
-        //        bool status = await BackEndComUserLogik.CreateUser(neuerNutzer);
-
-        //        progRingReg.Visibility = Visibility.Collapsed;
-
-        //        if (status == true)
-        //        {
-        //            var message = new MessageDialog($"Eine E-Mail mit Aktivierungslink wurde an die angegebene E-Mailadresse({neuerNutzer.Email}) geschickt.", "Nutzer erfolgreich registriert!");
-        //            await message.ShowAsync();
-
-        //            // Speichert Login und Token in Textdatei
-        //            await DatenVerarbeitung.DatenInDateiSchreibenLogin(neuerNutzer);
-
-        //            this.Frame.Navigate(typeof(FensterHauptansicht)); 
-        //        }
-        //        else
-        //        {
-        //            var message = new MessageDialog("Fehler bei Erstellen des Nutzers!");
-        //            await message.ShowAsync();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        var message = new MessageDialog("Fehler! Die Passwörter stimmen nicht überein!");
-        //        await message.ShowAsync();
-        //    }
-
-        //    this.IsEnabled = true;
-        //}
-
         private void Zurueck_wechselnZuAnmOReg(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(FensterAnmOdReg));

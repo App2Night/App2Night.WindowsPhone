@@ -39,5 +39,15 @@ namespace App2Night.Views
             }
 
         }
+
+        private void Zurueck_wechselZuHauptansicht(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(FensterHauptansicht));
+        }
+
+        private void btnAnmelden_wechselZuFensterAnmelden(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(FensterAnmelden));
+        }
     }
 }

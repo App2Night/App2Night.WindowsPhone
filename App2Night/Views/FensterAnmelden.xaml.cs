@@ -32,17 +32,15 @@ namespace App2Night.Views
             this.InitializeComponent();
         }
 
-        private void btnZurueck_wechselZuAnmOderReg(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(FensterAnmOdReg));
-        }
+        //private void btnZurueck_wechselZuAnmOderReg(object sender, RoutedEventArgs e)
+        //{
+        //    this.Frame.Navigate(typeof(FensterAnmOdReg));
+        //}        
 
-        
-
-        private void btnPwVergessen_wechselZuNeuesPW(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(FensterNeuesPW));
-        }
+        //private void btnPwVergessen_wechselZuNeuesPW(object sender, RoutedEventArgs e)
+        //{
+        //    this.Frame.Navigate(typeof(FensterNeuesPW));
+        //}
 
         private void Zurueck_wechselZuHauptansicht(object sender, RoutedEventArgs e)
         {
