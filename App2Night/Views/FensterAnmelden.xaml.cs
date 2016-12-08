@@ -37,30 +37,7 @@ namespace App2Night.Views
             this.Frame.Navigate(typeof(FensterAnmOdReg));
         }
 
-        private async void btnAnmelden_AnmeldenWechselZuHauptansicht(object sender, RoutedEventArgs e)
-        {
-            anmeldung.Username = txtBoxAnmNUTZERNAME.Text;
-            anmeldung.Email = txtBlAnmEMAIL.Text;
-            anmeldung.Password = pwBoxPASSWORT.Password;
-
-            this.IsEnabled = false;
-
-            // TODO: GetUserInfos damit überprüfen statt mit gespeicherten Daten, da eventuell nicht aktuell. Wenn vorhanden, dann in Datei schreiben.
-            bool korrekteEingabe = await DatenVerarbeitung.LoginUeberpruefen(anmeldung);
-
-            if (korrekteEingabe == true)
-            {
-                this.Frame.Navigate(typeof(FensterHauptansicht)); 
-            }
-            else
-            {
-                var message = new MessageDialog("Keine korrekten Nutzerdaten!");
-                await message.ShowAsync();
-            }
-
-            this.IsEnabled = true;
-
-        }
+        
 
         private void btnPwVergessen_wechselZuNeuesPW(object sender, RoutedEventArgs e)
         {
@@ -75,6 +52,31 @@ namespace App2Night.Views
         private void PasswortVergessen_wechselZuNeuesPasswort(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(FensterNeuesPW));
+        }
+
+        private async void Anmelden_WechselZuHauptansicht(object sender, RoutedEventArgs e)
+        {
+            anmeldung.Username = txtBoxAnmNUTZERNAME.Text;
+            anmeldung.Email = txtBlAnmEMAIL.Text;
+            anmeldung.Password = pwBoxPASSWORT.Password;
+
+            this.IsEnabled = false;
+
+            // TODO: GetUserInfos damit überprüfen statt mit gespeicherten Daten, da eventuell nicht aktuell. Wenn vorhanden, dann in Datei schreiben.
+            bool korrekteEingabe = await DatenVerarbeitung.LoginUeberpruefen(anmeldung);
+
+            if (korrekteEingabe == true)
+            {
+                this.Frame.Navigate(typeof(FensterHauptansicht));
+            }
+            else
+            {
+                var message = new MessageDialog("Keine korrekten Nutzerdaten!");
+                await message.ShowAsync();
+            }
+
+            this.IsEnabled = true;
+
         }
     }
 }
