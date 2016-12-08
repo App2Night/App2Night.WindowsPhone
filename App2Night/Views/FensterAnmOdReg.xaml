@@ -1,4 +1,4 @@
-﻿<Page
+﻿<Page x:Name="FensterAnmeldenOderRegistrieren"
     x:Class="App2Night.Views.FensterAnmOdReg"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,12 +6,19 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.Content>
+                <Grid/>
+            </CommandBar.Content>
+            <AppBarButton x:Name="AppBarButtonAnmelden" Icon="Contact" Label="Anmelden" Width="150" Click="Anmelden_wechselZuAnmelden"/>
+            <AppBarButton x:Name="AppBarButtonRegistrieren" Icon="Edit" Label="Registrieren" Width="150" Click="Registrieren_wechselZuReg"/>
+        </CommandBar>
+    </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Image x:Name="iconA2N" HorizontalAlignment="Center" Height="200" Margin="80,40,78,0" VerticalAlignment="Top" Width="202" Source="ms-appx:///Ressources/A2N_Logo01_Variante02.png" Stretch="Fill" NineGrid="0"/>
-        <Button x:Name="btnAnmelden" Content="Anmelden" HorizontalAlignment="Center" Height="59" Margin="78,313,82,0" VerticalAlignment="Top" Width="200" FontSize="22"/>
-        <Button x:Name="button" Content="Registrieren" HorizontalAlignment="Center" Height="62" Margin="80,377,80,0" VerticalAlignment="Top" Width="200" FontSize="22"/>
-        <TextBlock x:Name="txtBlockGetApp2Night" HorizontalAlignment="Center" Height="63" Margin="0,245,0,0" TextWrapping="Wrap" Text="Get App2Night!" VerticalAlignment="Top" Width="205" FontSize="20" TextAlignment="Center" Foreground="#FF463B3B" FontWeight="Bold"/>
+        <Image x:Name="LogoApp2Night" HorizontalAlignment="Center" Height="200" Margin="80,40,78,0" VerticalAlignment="Top" Width="202" Source="ms-appx:///Ressources/A2N_Logo01_Variante02.png" Stretch="Fill" NineGrid="0"/>
+        <TextBlock x:Name="txtBlStartGetApp2Night" HorizontalAlignment="Center" Height="63" Margin="0,245,0,0" TextWrapping="Wrap" Text="Get App2Night!" VerticalAlignment="Top" Width="205" FontSize="20" TextAlignment="Center" Foreground="#FF463B3B" FontWeight="Bold"/>
 
     </Grid>
 </Page>

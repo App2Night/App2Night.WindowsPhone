@@ -15,6 +15,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+
+
 namespace App2Night
 {
     /// <summary>
@@ -22,6 +24,9 @@ namespace App2Night
     /// </summary>
     sealed partial class App : Application
     {
+        public static string Token { get; set; } = "BEISPIEL";
+
+
         /// <summary>
         /// Initialisiert das Singletonanwendungsobjekt. Dies ist die erste Zeile von erstelltem Code
         /// und daher das logische Äquivalent von main() bzw. WinMain().
@@ -58,7 +63,7 @@ namespace App2Night
                 rootFrame = new Frame();
 
                 // Ändern des erstes Fensters
-                rootFrame.Navigate(typeof(Views.FensterHauptansicht), e.Arguments);
+                rootFrame.Navigate(typeof(Views.FensterAnmelden), e.Arguments);
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 

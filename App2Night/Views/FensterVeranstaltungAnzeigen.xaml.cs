@@ -12,6 +12,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using App2Night.Controller;
+using Newtonsoft.Json;
+using App2Night.ModelsEnums.Model;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -22,15 +25,47 @@ namespace App2Night.Views
     /// </summary>
     public sealed partial class FensterVeranstaltungAnzeigen : Page
     {
+        public Party uebergebenderParameter = new Party();
+
         public FensterVeranstaltungAnzeigen()
         {
-            //DateTimeOffset aktuellesJahr = DateTime.Today.AddYears(0);
-            //DateTimeOffset aktuellesJahrPlusEins = DateTime.Today.AddYears(1);
-
             this.InitializeComponent();
-            //this.DatePickerVeranstSuche.Date = DateTime.Today;
-            //this.DatePickerVeranstSuche.MinYear = aktuellesJahr;
-            //this.DatePickerVeranstSuche.MaxYear = aktuellesJahrPlusEins;
+        }
+
+        private void btnVormerken_wechselZuHauptansicht(object sender, RoutedEventArgs e)
+        {
+            //Ansicht des Reigsters vorgemerkt?
+            this.Frame.Navigate(typeof(FensterHauptansicht));
+            
+        }
+
+        private void btnZurueck_wechselZuHauptansicht(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(FensterHauptansicht));
+            
+            
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            uebergebenderParameter = e.Parameter as Party;
+
+            DateTime partyDatumUhrzeit = uebergebenderParameter.PartyDate;
+            DateTime partyDatum = partyDatumUhrzeit.Date;
+            TimeSpan partyUhrzeit = partyDatumUhrzeit.TimeOfDay;
+            
+            // null möglich!
+            txtBlVeranstAnzeigenNAME.Text = uebergebenderParameter.PartyName;
+            textBoxAnzeigenDATUM.Text = partyDatum.ToString("dd/MM/yyyy");
+            textBoxAnzeigenUHRZEIT.Text = partyDatumUhrzeit.ToString("HH:mm");
+            textBoxAnzeigenORT.Text = uebergebenderParameter.Location.CityName;
+            textBoxAnzeigenMUSIKRICHTUNG.Text = uebergebenderParameter.MusicGenre.ToString();
+            textBoxAnzeigenWeitereINFOS.Text = uebergebenderParameter.Description;
+        }
+
+        private void btnAufKarteAnzeigen_wechselZuKartenAnzeige(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(FensterKartenansicht), uebergebenderParameter);
         }
     }
 }

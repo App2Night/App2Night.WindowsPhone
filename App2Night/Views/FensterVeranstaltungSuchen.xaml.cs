@@ -24,13 +24,48 @@ namespace App2Night.Views
     {
         public FensterVeranstaltungSuchen()
         {
-            //DateTimeOffset aktuellesJahr = DateTime.Today.AddYears(0);
-            //DateTimeOffset aktuellesJahrPlusEins = DateTime.Today.AddYears(1);
-
             this.InitializeComponent();
-            //this.DatePickerVeranstSuche.Date = DateTime.Today;
-            //this.DatePickerVeranstSuche.MinYear = aktuellesJahr;
-            //this.DatePickerVeranstSuche.MaxYear = aktuellesJahrPlusEins;
+        }
+
+        private void btnAbbrechen_wechselZuHauptansicht(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(FensterHauptansicht));
+        }
+
+        private void btnSuchen_wechselZuHauptansichtMitSuchergebnissen(object sender, RoutedEventArgs e)
+        {
+            // In der Anzeige müssen nun die Ergebnisse der Suche angezeigt werden
+            this.Frame.Navigate(typeof(FensterHauptansicht));
+        }
+
+        private void chkBoxGPSNutzenClick_GPSinOrtWandeln(object sender, RoutedEventArgs e)
+        {
+            if (chkBoxSucheGPSNutzen.IsChecked == true)
+            {
+                // Keine Eingabe des Standortes zulassen
+                textBoxEingabePLZ.IsReadOnly = true;
+                textBoxEingabeOrt.IsReadOnly = true;
+                Controller.FensterSucheController.GPSinOrtUmwandeln(); 
+            }
+            else //if (chkBoxSucheGPSNutzen.IsChecked == false)
+            {
+                // Eingabe des Standortes zulassen
+                textBoxEingabePLZ.IsReadOnly = false;
+                textBoxEingabeOrt.IsReadOnly = false;
+            }
+
+            //if (chkBoxErstellenGPS.IsChecked == true)
+            //{
+            //    var pos = GetGeoLocation.GetLocation().Result;
+            //    party.Location.Latitude = pos.Coordinate.Latitude;
+            //    party.Location.Longitude = pos.Coordinate.Longitude;
+            //}
+            //else
+            //{
+            //    party.Location.CityName = textBoxErstellenORT.Text;
+            //    party.Location.StreetName = textBoxErstellenADRESSE.Text;
+            //    party.Location.HouseNumber = textBoxErstellenHAUSNUMMER.Text;
+            //}
 
         }
     }
