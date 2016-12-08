@@ -6,16 +6,24 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.Content>
+                <Grid/>
+            </CommandBar.Content>
+            <AppBarButton x:Name="AppBarButtonZurueck" Icon="Back" Label="Zurueck" Width="85" Click="Zurueck_wechselZuHauptansicht"/>
+            <AppBarButton x:Name="AppBarButtonPasswortVergessen" Icon="Help" Label="PasswortVergessen" Width="150" Click="PasswortVergessen_wechselZuNeuesPasswort"/>
+            <AppBarButton x:Name="AppBarButtonBestaetigen" Icon="Accept" Label="Bestaetigen" Width="85"/>
+        </CommandBar>
+    </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Button x:Name="btnAnmAnmelden" Content="Anmelden" HorizontalAlignment="Left" Margin="190,513,0,0" VerticalAlignment="Top" Height="45" Width="154" FontSize="20" Click="btnAnmelden_AnmeldenWechselZuHauptansicht"/>
-        <Button x:Name="btnAnmZurueck" Content="Zurück" HorizontalAlignment="Left" Margin="12,515,0,0" VerticalAlignment="Top" Height="45" Width="146" FontSize="20" Click="btnZurueck_wechselZuAnmOderReg"/>
         <TextBox x:Name="txtBoxAnmNUTZERNAME" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="10,40,0,0" Width="334" Height="40"/>
         <TextBox x:Name="txtBlAnmEMAIL" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="10,160,0,0" Width="334" Height="40"/>
         <TextBlock x:Name="txtBLAnmPasswort" HorizontalAlignment="Left" Margin="12,240,0,0" TextWrapping="Wrap" Text="Passwort:" VerticalAlignment="Top" Height="40" Width="334" FontSize="20" FontWeight="Bold"/>
         <TextBlock x:Name="txtBlAnmEmail" HorizontalAlignment="Left" Margin="12,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" Width="334" FontSize="20" FontWeight="Bold" Text="E-Mailadresse"/>
         <TextBlock x:Name="txtBlAnmNutzername" HorizontalAlignment="Left" Margin="12,0,0,0" TextWrapping="Wrap" Text="Nutzername:" VerticalAlignment="Top" Height="40" Width="334" FontSize="20" FontWeight="Bold"/>
         <PasswordBox x:Name="pwBoxPASSWORT" HorizontalAlignment="Left" Height="40" Margin="10,280,0,0" VerticalAlignment="Top" Width="334"/>
-        <Button x:Name="btnAnmPwVergessen" Content="Passwort vergessen" HorizontalAlignment="Left" Margin="72,459,0,0" VerticalAlignment="Top" Height="45" Width="200" FontSize="20" Click="btnPwVergessen_wechselZuNeuesPW"/>
     </Grid>
 </Page>

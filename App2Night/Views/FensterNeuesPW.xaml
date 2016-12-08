@@ -6,6 +6,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.Content>
+                <Grid/>
+            </CommandBar.Content>
+            <AppBarButton x:Name="AppBarButtonZurueck" Icon="Back" Label="Zurueck" Width="150"/>
+            <AppBarButton x:Name="AppBarButtonBestaetigen" Icon="Accept" Label="Bestaetigen" Width="150"/>
+        </CommandBar>
+    </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Button x:Name="btnNpwBestaetigen" Content="Bestätigen" HorizontalAlignment="Left" Margin="210,514,0,0" VerticalAlignment="Top" Width="140" Height="40" FontSize="20" Click="btnBestaetigen_wechselZuAnmelden"/>

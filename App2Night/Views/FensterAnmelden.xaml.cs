@@ -66,5 +66,15 @@ namespace App2Night.Views
         {
             this.Frame.Navigate(typeof(FensterNeuesPW));
         }
+
+        private void Zurueck_wechselZuHauptansicht(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(FensterAnmOdReg));
+        }
+
+        private void PasswortVergessen_wechselZuNeuesPasswort(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(FensterNeuesPW));
+        }
     }
 }
