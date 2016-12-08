@@ -17,8 +17,6 @@
     </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button x:Name="btnRegZurueck" Content="Zurück" HorizontalAlignment="Left" Margin="10,515,0,0" VerticalAlignment="Top" Width="146" Height="45" FontSize="20" Click="btnZurueck_wechselZuAnmOderReg"/>
-        <Button x:Name="btnNutzerAnlegen" Content="Bestätigen" HorizontalAlignment="Left" Margin="204,515,0,0" VerticalAlignment="Top" Width="146" Height="45" FontSize="20" Click="btnNutzerAnlegen_wechselZuHauptansicht"/>
         <TextBlock x:Name="textBlNutzername" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Nutzername:" VerticalAlignment="Top" Height="40" Width="340" FontSize="20" FontWeight="Bold"/>
         <TextBlock x:Name="textBlPasswortBestaetigen" HorizontalAlignment="Left" Margin="10,288,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" Width="340" Text="Passwort bestätigen" FontWeight="Bold" FontSize="20"/>
         <TextBlock x:Name="textBlPasswort" HorizontalAlignment="Left" Margin="10,192,0,0" TextWrapping="Wrap" Text="Passwort" VerticalAlignment="Top" Height="40" Width="340" FontSize="20" FontWeight="Bold"/>
@@ -27,6 +25,7 @@
         <PasswordBox x:Name="pwBoxPASSWORT" HorizontalAlignment="Left" Height="40" Margin="10,232,0,0" VerticalAlignment="Top" Width="340" PlaceholderText="Passwort"/>
         <TextBlock x:Name="textBlEmailadresse" HorizontalAlignment="Left" Margin="10,101,0,0" TextWrapping="Wrap" Text="Email - Adresse" VerticalAlignment="Top" Height="40" Width="340" FontSize="20" FontWeight="Bold"/>
         <TextBox x:Name="textBoxRegEMAIL" HorizontalAlignment="Left" Margin="10,140,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="40" Width="340" InputScope="EmailSmtpAddress" PlaceholderText="E-Mailadresse"/>
+        <ProgressRing x:Name="progRingReg" HorizontalAlignment="Center" Margin="170,465,170,0" VerticalAlignment="Top" Width="70" Height="70"/>
 
     </Grid>
 </Page>

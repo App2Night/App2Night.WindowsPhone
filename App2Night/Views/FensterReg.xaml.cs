@@ -42,12 +42,15 @@ namespace App2Night.Views
             neuerNutzer.Username = textBoxRegNUTZERNAME.Text;
             neuerNutzer.Email = textBoxRegEMAIL.Text;
 
+            progRingReg.Visibility = Visibility.Visible;
             this.IsEnabled = false;
 
             if (pwBoxPASSWORT.Password == pwBoxPASSWORTBEST.Password)
             {
                 neuerNutzer.Password = pwBoxPASSWORTBEST.Password;
                 bool status = await BackEndComUserLogik.CreateUser(neuerNutzer);
+
+                progRingReg.Visibility = Visibility.Collapsed;
 
                 if (status == true)
                 {

@@ -22,19 +22,19 @@ namespace App2Night.Views
     /// </summary>
     public sealed partial class FensterAnmOdReg : Page
     {
-        //public FensterAnmOdReg()
-        //{
-        //    this.InitializeComponent();
-        //}
+        public FensterAnmOdReg()
+        {
+            this.InitializeComponent();
+        }
 
-        //private void btnAnmelden_wechselZuFensterAnmelden(object sender, RoutedEventArgs e)
-        //{
-        //    this.Frame.Navigate(typeof(FensterAnmelden));
-        //}
+        private void Anmelden_wechselZuAnmelden(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(FensterAnmelden));
+        }
 
-        //private void btnRegistrieren_wechselZuFensterReg(object sender, RoutedEventArgs e)
-        //{
-        //    this.Frame.Navigate(typeof(FensterReg));
-        //}
+        private void Registrieren_wechselZuReg(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(FensterReg));
+        }
     }
 }
