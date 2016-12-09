@@ -17,7 +17,7 @@ using Windows.Devices.Geolocation;
 using App2Night.Controller;
 using Windows.UI.Popups;
 using App2Night.Logik;
-
+// TODO: löschen 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
 namespace App2Night.Views
@@ -46,7 +46,7 @@ namespace App2Night.Views
                 textBoxErstellenHAUSNUMMER.Text = partyZuErstellen.HouseNumber;
                 textBoxErstellenADRESSE.Text = partyZuErstellen.StreetName;
                 textBoxErstellenPLZ.Text = partyZuErstellen.ZipCode;
-                DatePickerErstellenDATUM.Date = new DateTime(partyZuErstellen.PartyDate.Date.Day, partyZuErstellen.PartyDate.Month, partyZuErstellen.PartyDate.Year); 
+                DatePickerErstellenDATUM.Date = new DateTime(partyZuErstellen.PartyDate.Date.Day, partyZuErstellen.PartyDate.Month, partyZuErstellen.PartyDate.Year);
             }
         }
 
@@ -55,53 +55,58 @@ namespace App2Night.Views
             this.Frame.Navigate(typeof(FensterHauptansicht));
         }
 
-        private async void  btnWeiter_wechselZuErstellen02(object sender, RoutedEventArgs e)
+        private async void btnWeiter_wechselZuErstellen02(object sender, RoutedEventArgs e)
         {
-            CreatePartyModel partyZuErstellen = new CreatePartyModel();
+            //        Party partyZuErstellen = new Party();
 
-            // Validieren der Ortsangabe
-            Location zuValidieren = new Location();
-            zuValidieren.CityName = textBoxErstellenORT.Text;
-            zuValidieren.StreetName = textBoxErstellenADRESSE.Text;
-            zuValidieren.HouseNumber = textBoxErstellenHAUSNUMMER.Text;
-            zuValidieren.ZipCode = textBoxErstellenPLZ.Text;
+            //        // Validieren der Ortsangabe
+            //        Location zuValidieren = new Location();
+            //        zuValidieren.CityName = textBoxErstellenORT.Text;
+            //        zuValidieren.StreetName = textBoxErstellenADRESSE.Text;
+            //        zuValidieren.HouseNumber = textBoxErstellenHAUSNUMMER.Text;
+            //        zuValidieren.ZipCode = textBoxErstellenPLZ.Text;
 
-            Token tok = await DatenVerarbeitung.aktuellerToken();
+            //        Token tok = await DatenVerarbeitung.aktuellerToken();
+            //        Token tok = await DatenVerarbeitung.aktuellerToken();
 
-            // TODO: Prüfen, ob das geht
-            string erfolg = await BackEndComPartyLogik.ValidateLocation(zuValidieren, tok);
+            //        // TODO: Prüfen, ob das geht
+            //        string erfolg = await BackEndComPartyLogik.ValidateLocation(zuValidieren, tok);
 
-            //TODO: Nullwerte abfangen
-            //TODO: Auf falsche Eingabe reagieren 
-            //TODO: bei Zurueckkommen auf Erstellen02 müssen die Werte noch da sein
-            try
-            {
-                partyZuErstellen.PartyName = textBoxErstellenNAME.Text;
+            //        //TODO: Nullwerte abfangen
+            //        //TODO: Auf falsche Eingabe reagieren 
+            //        //TODO: bei Zurueckkommen auf Erstellen02 müssen die Werte noch da sein
+            //        try
+            //        {
+            //            partyZuErstellen.PartyName = textBoxErstellenNAME.Text;
 
-                partyZuErstellen.CityName = textBoxErstellenORT.Text;
-                partyZuErstellen.StreetName = textBoxErstellenADRESSE.Text;
-                partyZuErstellen.HouseNumber = textBoxErstellenHAUSNUMMER.Text;
-                partyZuErstellen.ZipCode = textBoxErstellenPLZ.Text;
+            //            partyZuErstellen.Location.CityName = textBoxErstellenORT.Text;
+            //            partyZuErstellen.Location.StreetName = textBoxErstellenADRESSE.Text;
+            //            partyZuErstellen.Location.HouseNumber = textBoxErstellenHAUSNUMMER.Text;
+            //            partyZuErstellen.Location.ZipCode = textBoxErstellenPLZ.Text;
 
-                DateTime zwischenSpeicherDate = new DateTime(DatePickerErstellenDATUM.Date.Year, DatePickerErstellenDATUM.Date.Month, DatePickerErstellenDATUM.Date.Day,
-                                                                                        TimePickerErstellenUHRZEIT.Time.Hours, TimePickerErstellenUHRZEIT.Time.Minutes, TimePickerErstellenUHRZEIT.Time.Seconds);
+            //            DateTime zwischenSpeicherDate = new DateTime(DatePickerErstellenDATUM.Date.Year, DatePickerErstellenDATUM.Date.Month, DatePickerErstellenDATUM.Date.Day,
+            //                                                                                    TimePickerErstellenUHRZEIT.Time.Hours, TimePickerErstellenUHRZEIT.Time.Minutes, TimePickerErstellenUHRZEIT.Time.Seconds);
 
-                partyZuErstellen.PartyDate = zwischenSpeicherDate;
+            //            partyZuErstellen.PartyDate = zwischenSpeicherDate;
 
-                if (partyZuErstellen.PartyDate < DateTime.Today)
-                {
-                    Exception FehlerhaftesDatum = new Exception();
-                    throw FehlerhaftesDatum;
-                }
-            }
-            catch (Exception ex)
-            {
-                var message = new MessageDialog("Fehler! Ein oder mehrere Eingaben sind ungültig!\nBeispielsweise wird eine Party in der Vergangenheit angelegt oder die Adresse existiert nicht!");
-                await message.ShowAsync();
-                return;
-            }
+            //            if (partyZuErstellen.PartyDate < DateTime.Today)
+            //            {
+            //                Exception FehlerhaftesDatum = new Exception();
+            //                throw FehlerhaftesDatum;
+            //            }
 
-            this.Frame.Navigate(typeof(FensterVeranstaltungErstellen02), partyZuErstellen);
+
+            //        }
+            //        catch (Exception)
+            //        {
+            //            var message = new MessageDialog("Fehler! Ein oder mehrere Eingaben sind ungültig!\nBeispielsweise wird eine Party in der Vergangenheit angelegt oder die Adresse existiert nicht!");
+            //            await message.ShowAsync();
+            //            return;
+            //        }
+
+            //        this.Frame.Navigate(typeof(FensterVeranstaltungErstellen02), partyZuErstellen);
+            //    }
+            //}
         }
     }
 }

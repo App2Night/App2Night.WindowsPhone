@@ -39,7 +39,7 @@ namespace App2Night.Logik
                 erfolg = true;
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
                 var message = new MessageDialog("Es ist ein Problem aufgetreten. Bitte versuche es später erneut.");
                 await message.ShowAsync();
@@ -89,7 +89,7 @@ namespace App2Night.Logik
                 erfolg = true;
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
                 var message = new MessageDialog("Es ist ein Problem aufgetreten. Bitte versuche es später erneut.");
                 await message.ShowAsync();
@@ -132,12 +132,14 @@ namespace App2Night.Logik
             return korrekterLogin;
         }
 
-        public static async Task<Token> aktuellerToken()
+        public static async Task<bool> aktuellerToken()
         {
             Login aktuellerNutzer = await DatenAusDateiLesenLogin();
             Token aktuellerToken = await DatenAusDateiLesenToken();
 
-            return aktuellerToken = await BackEndComUserLogik.RefreshToken(aktuellerToken);
+            bool erfolg = await BackEndComUserLogik.RefreshToken(aktuellerToken);
+
+            return erfolg;
         }
 
 

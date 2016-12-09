@@ -38,9 +38,10 @@ namespace App2Night.Logik
             bool internetVorhanden = BackEndComPartyLogik.IsInternet();
             Login login = await DatenVerarbeitung.DatenAusDateiLesenLogin();
             // aktueller Token wird benötigt
-            Token tok = await DatenVerarbeitung.aktuellerToken();
+            bool erfolg = await DatenVerarbeitung.aktuellerToken();
+            Token tok = await DatenVerarbeitung.DatenAusDateiLesenToken();
 
-            if (internetVorhanden == true)
+            if (internetVorhanden == true && erfolg == true)
             {
                 HttpClient client = GetClientUser();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
@@ -262,9 +263,10 @@ namespace App2Night.Logik
         /// Erneuert den Token.
         /// </summary>
         /// <returns>Token mit weiteren Daten</returns>
-        public static async Task<Token> RefreshToken(Token token)
+        public static async Task<bool> RefreshToken(Token token)
         {
             bool internetVorhanden = BackEndComPartyLogik.IsInternet();
+            bool erfolg = false;
 
             if (internetVorhanden == true)
             {
@@ -273,20 +275,20 @@ namespace App2Night.Logik
                     using (HttpClient client = GetClientUser())
                     {
                         client.BaseAddress = new Uri("http://app2nightuser.azurewebsites.net/");
-                        client.DefaultRequestHeaders.Host = "app2nightuser.azurewebsites.net";
-                        client.DefaultRequestHeaders.Add("Authorization", "Baerer " + token.AccessToken);
+                        //client.DefaultRequestHeaders.Host = "http://app2nightuser.azurewebsites.net";
+                        client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token.AccessToken);
                         //client.DefaultRequestHeaders.Accept.Clear();
                         var query =     "client_id=nativeApp&" +
-                                              "client_secret=secret" +
+                                              "client_secret=secret&" +
                                               $"token={token.RefreshToken}&" +
                                               "token_type_hint=refresh_token";
                         var content = new StringContent(query, Encoding.UTF8, "application/x-www-form-urlencoded");
-                        var requestResult = await client.PostAsync("connect/token", content);
+                        
+                        var requestResult = await client.PostAsync("connect/revocation", content);
 
                         if (requestResult.IsSuccessStatusCode)
                         {
-                            string response = await requestResult.Content.ReadAsStringAsync();
-                            token = JsonConvert.DeserializeObject<Token>(response);
+                            erfolg = true;
                         }
                     }
                 }
@@ -304,7 +306,7 @@ namespace App2Night.Logik
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
                 await message.ShowAsync();
             }
-            return token;
+            return erfolg;
         }
 
         /// <summary>

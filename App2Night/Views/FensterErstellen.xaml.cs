@@ -47,7 +47,7 @@ namespace App2Night.Views
             this.IsEnabled = false;
 
             // Überprüfung und Post
-            CreatePartyModel partyZuErstellen = new CreatePartyModel();
+            Party partyZuErstellen = new Party();
 
             // Validieren der Ortsangabe
             Location zuValidieren = new Location();
@@ -56,10 +56,11 @@ namespace App2Night.Views
             zuValidieren.HouseNumber = textBoxErstellenHAUSNR.Text;
             zuValidieren.ZipCode = textBoxErstellenPLZ.Text;
 
-            Token tok = await DatenVerarbeitung.aktuellerToken();
+            Token tok = await DatenVerarbeitung.DatenAusDateiLesenToken();
+            bool erfolg = await DatenVerarbeitung.aktuellerToken();
 
             // Falls noch kein Token angelegt wurde, wird ein neuer erzeugt
-            if (tok.AccessToken == null)
+            if (tok == null)
             {
                 Login nutzer = await DatenVerarbeitung.DatenAusDateiLesenLogin();
                 tok = await BackEndComUserLogik.GetToken(nutzer);
@@ -77,17 +78,17 @@ namespace App2Night.Views
             // Gibt die korrekte Adresse zurück, falls Google sie finden kann
             string adresseLautGoogle = await BackEndComPartyLogik.ValidateLocation(zuValidieren, tok);
 
-            zuValidieren = JsonConvert.DeserializeObject<Location>(adresseLautGoogle);
+            if (adresseLautGoogle != "")
+            {
+                zuValidieren = JsonConvert.DeserializeObject<Location>(adresseLautGoogle); 
+            }
 
             //TODO: Auf falsche Eingabe reagieren 
             try
             {
                 partyZuErstellen.PartyName = textBoxErstellenNAME.Text;
 
-                partyZuErstellen.CityName = textBoxErstellenORT.Text;
-                partyZuErstellen.StreetName = textBoxErstellenSTRASSE.Text;
-                partyZuErstellen.HouseNumber = textBoxErstellenHAUSNR.Text;
-                partyZuErstellen.ZipCode = textBoxErstellenPLZ.Text;
+                partyZuErstellen.Location = zuValidieren;
 
                 DateTime zwischenSpeicherDate = new DateTime(DatePickerErstellenDATUM.Date.Year, DatePickerErstellenDATUM.Date.Month, DatePickerErstellenDATUM.Date.Day,
                                                                                         TimePickerErstellenUHRZEIT.Time.Hours, TimePickerErstellenUHRZEIT.Time.Minutes, TimePickerErstellenUHRZEIT.Time.Seconds);
@@ -95,9 +96,26 @@ namespace App2Night.Views
                 partyZuErstellen.PartyDate = zwischenSpeicherDate;
                 partyZuErstellen.MusicGenre = (MusicGenre)comboBoxErstellenMUSIKRICHTUNG.SelectedItem;
                 partyZuErstellen.PartyType = (PartyType)comboBoxErstellenTYP.SelectedItem;
-                partyZuErstellen.Description = textBoxErstellenINFOS.Text;
-                string preis = textBoxErstellenPREIS.Text;
-                partyZuErstellen.Price = Double.Parse(preis);
+
+                if (textBoxErstellenINFOS.Text != null)
+                {
+                    partyZuErstellen.Description = textBoxErstellenINFOS.Text; 
+                }
+                else
+                {
+                    partyZuErstellen.Description = "";
+                }
+
+                if (textBoxErstellenPREIS.Text != null)
+                {
+                    string preis = textBoxErstellenPREIS.Text;
+                    partyZuErstellen.Price = Double.Parse(preis); 
+                }
+                else
+                {
+                    partyZuErstellen.Price = 0;
+                }
+                
 
                 if (partyZuErstellen.PartyDate < DateTime.Today)
                 {
@@ -117,18 +135,22 @@ namespace App2Night.Views
                 {
                     var message = new MessageDialog("Es ist ein Fehler beim Erstellen aufgetreten. Bitte versuche es später erneut.");
                     await message.ShowAsync();
+                    this.IsEnabled = true;
+                    progressRingErstellen.Visibility = Visibility.Collapsed;
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 var message = new MessageDialog("Fehler! Ein oder mehrere Eingaben sind ungültig!\nBeispielsweise wird eine Party in der Vergangenheit angelegt oder die Adresse existiert nicht!");
                 await message.ShowAsync();
+                this.IsEnabled = true;
+                progressRingErstellen.Visibility = Visibility.Collapsed;
                 return;
             }
 
-            this.IsEnabled = true;
-            progressRingErstellen.Visibility = Visibility.Collapsed;
+            //this.IsEnabled = true;
+            //progressRingErstellen.Visibility = Visibility.Collapsed;
 
         }
     }

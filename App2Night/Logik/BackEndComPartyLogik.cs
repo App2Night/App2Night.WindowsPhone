@@ -136,15 +136,16 @@ namespace App2Night.Logik
         /// </summary>
         /// <param name="party">Zu erstellende Party mit allen Informationen</param>
         /// <returns>ID</returns>
-        public static async Task<bool> CreateParty(CreatePartyModel party)
+        public static async Task<bool> CreateParty(Party party)
         {
             bool internetVorhanden = IsInternet();
             string status = "";
-            party.CountryName = "Deutschland";
+            party.Location.CountryName = "Deutschland";
 
-            Token tok = await DatenVerarbeitung.aktuellerToken();
+            bool erfolg = await DatenVerarbeitung.aktuellerToken();
+            Token tok = await DatenVerarbeitung.DatenAusDateiLesenToken();
 
-            if (internetVorhanden == true)
+            if (internetVorhanden == true && erfolg == true)
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
@@ -280,6 +281,7 @@ namespace App2Night.Logik
             bool internetVorhanden = IsInternet();
             // TODO: eventuell Locations statt string
             string adresseLautGoogle = "";
+            location.CountryName = "Deutschland";
 
             if (internetVorhanden == true)
             {
@@ -291,7 +293,6 @@ namespace App2Night.Logik
                 try
                 {
                     httpAntwort = await client.PostAsync("Party/validate", content);
-                    // 200 Erfolg
                     adresseLautGoogle = await httpAntwort.Content.ReadAsStringAsync();
                     return adresseLautGoogle;
                 }

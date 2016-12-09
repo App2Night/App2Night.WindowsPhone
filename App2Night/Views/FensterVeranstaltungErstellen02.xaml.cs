@@ -49,32 +49,32 @@ namespace App2Night.Views
             this.Frame.Navigate(typeof(FensterVeranstaltungErstellen));
         }
 
-        private async void btnErstellen_wechselZuAnzeige(object sender, RoutedEventArgs e)
+        private void btnErstellen_wechselZuAnzeige(object sender, RoutedEventArgs e)
         {
-            this.IsEnabled = false;
-            progRingErstellen02.Visibility = Visibility.Visible;
-            partyZuErstellen.MusicGenre = (MusicGenre)comboBoxErstellenMUSIKRICHTUNG.SelectedItem;
-            partyZuErstellen.PartyType = (PartyType)comboBoxErstellenTYP.SelectedItem;
-            partyZuErstellen.Description = textBoxErstellenWEITEREINFOS.Text;
-            string preis = textBoxErstellenPREIS.Text;
-            partyZuErstellen.Price = Double.Parse(preis);
+            //this.IsEnabled = false;
+            //progRingErstellen02.Visibility = Visibility.Visible;
+            //partyZuErstellen.MusicGenre = (MusicGenre)comboBoxErstellenMUSIKRICHTUNG.SelectedItem;
+            //partyZuErstellen.PartyType = (PartyType)comboBoxErstellenTYP.SelectedItem;
+            //partyZuErstellen.Description = textBoxErstellenWEITEREINFOS.Text;
+            //string preis = textBoxErstellenPREIS.Text;
+            //partyZuErstellen.Price = Double.Parse(preis);
 
-            bool status = await BackEndComPartyLogik.CreateParty(partyZuErstellen);
+            ////bool status = await BackEndComPartyLogik.CreateParty(partyZuErstellen);
 
-            progRingErstellen02.Visibility = Visibility.Collapsed;
+            //progRingErstellen02.Visibility = Visibility.Collapsed;
 
-            if (status == true)
-            {
-                var message = new MessageDialog("Party erfolgreich erstellt!");
-                await message.ShowAsync();
-                this.Frame.Navigate(typeof(FensterHauptansicht));
-            }
-            else
-            {
-                var message = new MessageDialog("Es ist ein Fehler beim Erstellen aufgetreten. Bitte versuche es später erneut.");
-                await message.ShowAsync();
-            }
-            this.IsEnabled = true;
+            //if (status == true)
+            //{
+            //    var message = new MessageDialog("Party erfolgreich erstellt!");
+            //    await message.ShowAsync();
+            //    this.Frame.Navigate(typeof(FensterHauptansicht));
+            //}
+            //else
+            //{
+            //    var message = new MessageDialog("Es ist ein Fehler beim Erstellen aufgetreten. Bitte versuche es später erneut.");
+            //    await message.ShowAsync();
+            //}
+            //this.IsEnabled = true;
         }     
 
     }

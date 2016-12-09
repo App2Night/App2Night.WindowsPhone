@@ -33,11 +33,14 @@
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout/>
             </FlyoutBase.AttachedFlyout>
-            <PivotItem x:Name="pItemSuchErgebnisse" Header="Suchergebnisse" FontSize="18" Margin="10,0,0,200" HorizontalAlignment="Left" Width="340" Height="345" VerticalAlignment="Bottom">
-                <ListView x:Name="listViewSuchErgebnis" HorizontalAlignment="Center" Height="347" Width="340" Margin="0,0,0,200" ItemClick="listViewSuchErgebnisse_ItemClick" SelectionChanged="listView_ClickOnItem"/>
+            <PivotItem x:Name="pItemSuchErgebnisse" Header="Suchergebnisse" FontSize="18" Margin="10.145,0,0,100" HorizontalAlignment="Left" Width="340" Height="445" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto">
+                <PivotItem.RenderTransform>
+                    <CompositeTransform SkewX="0.208" TranslateX="0.663"/>
+                </PivotItem.RenderTransform>
+                <ListView x:Name="listViewSuchErgebnis" HorizontalAlignment="Center" Height="438" Width="340" ItemClick="listViewSuchErgebnisse_ItemClick" SelectionChanged="listView_ClickOnItem"/>
             </PivotItem>
-            <PivotItem x:Name="pItemVorgemerkt" Header="Vorgemerkt" Margin="10,0,0,195" Width="340" HorizontalAlignment="Left">
-                <ListView x:Name="listViewVorgemerkt" Height="350" Margin="0" Width="340" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <PivotItem x:Name="pItemVorgemerkt" Header="Vorgemerkt" Margin="10,0,0,100" Width="340" HorizontalAlignment="Left">
+                <ListView x:Name="listViewVorgemerkt" Height="445" Margin="0" Width="340" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             </PivotItem>
         </Pivot>
         <ProgressRing x:Name="progressRingInDerNaehe" HorizontalAlignment="Center" Height="70" Margin="170,465,170,0" VerticalAlignment="Top" Width="70" IsActive="True"/>
