@@ -17,8 +17,8 @@
     </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Image x:Name="LogoApp2Night" HorizontalAlignment="Center" Height="200" Margin="80,40,78,0" VerticalAlignment="Top" Width="202" Source="ms-appx:///Ressources/A2N_Logo01_Variante02.png" Stretch="Fill" NineGrid="0"/>
-        <TextBlock x:Name="txtBlStartGetApp2Night" HorizontalAlignment="Center" Height="63" Margin="0,245,0,0" TextWrapping="Wrap" Text="Get App2Night!" VerticalAlignment="Top" Width="205" FontSize="20" TextAlignment="Center" Foreground="#FF463B3B" FontWeight="Bold"/>
+        <TextBlock x:Name="txtBlStartGetApp2Night" HorizontalAlignment="Center" Height="40" Margin="0,150,0,0" TextWrapping="Wrap" Text="Get App2Night!" VerticalAlignment="Center" Width="185" FontSize="24" TextAlignment="Center" Foreground="#FF463B3B" FontWeight="Bold"/>
+        <Image x:Name="imageAnmeldenApp2Night" HorizontalAlignment="Center" Height="200" Margin="0,-250,0,0" VerticalAlignment="Center" Width="200" Source="ms-appx:///Ressources/a2nIconColor200.png"/>
 
     </Grid>
 </Page>
