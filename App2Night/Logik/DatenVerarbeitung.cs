@@ -122,11 +122,23 @@ namespace App2Night.Logik
         {
             bool korrekterLogin = false;
 
-            Login ausDatei = await DatenAusDateiLesenLogin();
+            //Login ausDatei = await DatenAusDateiLesenLogin();
 
-            if (ausDatei.Email == loginZuPruefen.Email && ausDatei.Password == loginZuPruefen.Password && ausDatei.Username == loginZuPruefen.Username)
+            //if (ausDatei.Email == loginZuPruefen.Email && ausDatei.Password == loginZuPruefen.Password && ausDatei.Username == loginZuPruefen.Username)
+            //{
+            //    korrekterLogin = true;
+            //}
+
+            Token loginUeberpruefung = await BackEndComUserLogik.GetToken(loginZuPruefen);
+
+            if (loginUeberpruefung.AccessToken != null)
             {
-                korrekterLogin = true;
+                bool tokenIstGespeichert = await DatenInDateiSchreibenToken(loginUeberpruefung);
+
+                if (tokenIstGespeichert == true)
+                {
+                    korrekterLogin = true;
+                }
             }
 
             return korrekterLogin;
@@ -134,10 +146,11 @@ namespace App2Night.Logik
 
         public static async Task<bool> aktuellerToken()
         {
-            Login aktuellerNutzer = await DatenAusDateiLesenLogin();
+            bool erfolg = false;
+            //Login aktuellerNutzer = await DatenAusDateiLesenLogin();
             Token aktuellerToken = await DatenAusDateiLesenToken();
 
-            bool erfolg = await BackEndComUserLogik.RefreshToken(aktuellerToken);
+            erfolg = await BackEndComUserLogik.RefreshToken(aktuellerToken);
 
             return erfolg;
         }
