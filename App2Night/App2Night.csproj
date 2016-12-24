@@ -96,6 +96,7 @@
     <Content Include="Ressources\A2N_Logo01_Variante01_300x300.png" />
     <Content Include="Ressources\A2N_Logo01_Variante02.png" />
     <Content Include="Ressources\A2N_Logo01_Variante02_300x300.png" />
+    <Content Include="Ressources\Schluessel.xml" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
