@@ -11,9 +11,9 @@
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
-            <AppBarButton x:Name="AppBarButtonZurueck" Icon="Back" Label="Zurueck" Width="85" Click="Zurueck_wechselZuHauptansicht"/>
-            <AppBarButton x:Name="AppBarButtonPasswortVergessen" Icon="Help" Label="PasswortVergessen" Width="150" Click="PasswortVergessen_wechselZuNeuesPasswort"/>
-            <AppBarButton x:Name="AppBarButtonBestaetigen" Icon="Accept" Label="Bestaetigen" Width="85" Click="Anmelden_WechselZuHauptansicht"/>
+            <AppBarButton x:Name="AppBarButtonZurueck" Icon="Back" Label="Zurueck" Width="120" Click="Zurueck_wechselZuHauptansicht"/>
+            <AppBarButton x:Name="AppBarButtonPasswortVergessen" Icon="Help" Label="PasswortVergessen" Width="80" Click="PasswortVergessen_wechselZuNeuesPasswort"/>
+            <AppBarButton x:Name="AppBarButtonBestaetigen" Icon="Accept" Label="Bestaetigen" Width="120" Click="Anmelden_WechselZuHauptansicht"/>
         </CommandBar>
     </Page.BottomAppBar>
 

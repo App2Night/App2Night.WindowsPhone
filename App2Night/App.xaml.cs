@@ -23,10 +23,7 @@ namespace App2Night
     /// Stellt das anwendungsspezifische Verhalten bereit, um die Standardanwendungsklasse zu ergänzen.
     /// </summary>
     sealed partial class App : Application
-    {
-        public static string Token { get; set; } = "BEISPIEL";
-
-
+    { 
         /// <summary>
         /// Initialisiert das Singletonanwendungsobjekt. Dies ist die erste Zeile von erstelltem Code
         /// und daher das logische Äquivalent von main() bzw. WinMain().

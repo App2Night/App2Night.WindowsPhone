@@ -38,10 +38,10 @@ namespace App2Night.Views
             this.Frame.Navigate(typeof(FensterAnmOdReg));
         }
 
-        private void PasswortVergessen_wechselZuNeuesPasswort(object sender, RoutedEventArgs e)
+        private async void PasswortVergessen_wechselZuNeuesPasswort(object sender, RoutedEventArgs e)
         {
-            // TODO: wird nicht unterstützt
-            this.Frame.Navigate(typeof(FensterNeuesPW));
+            var message = new MessageDialog("Diese Funktion wird leider noch nicht unterstützt.", "Achtung!");
+            await message.ShowAsync();
         }
 
         private async void Anmelden_WechselZuHauptansicht(object sender, RoutedEventArgs e)
