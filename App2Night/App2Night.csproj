@@ -124,6 +124,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ModelsEnums\Model\PartyVoting.cs" />
     <Compile Include="ModelsEnums\Model\ResultLogin.cs" />
     <Compile Include="ModelsEnums\Model\Token.cs" />
     <Compile Include="ModelsEnums\Model\User.cs" />

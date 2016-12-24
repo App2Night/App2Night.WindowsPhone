@@ -32,19 +32,19 @@ namespace App2Night.Views
             this.InitializeComponent();
         }
 
-        private void btnVormerken_wechselZuHauptansicht(object sender, RoutedEventArgs e)
-        {
-            //Ansicht des Reigsters vorgemerkt?
-            this.Frame.Navigate(typeof(FensterHauptansicht));
+        //private void btnVormerken_wechselZuHauptansicht(object sender, RoutedEventArgs e)
+        //{
+        //    //Ansicht des Reigsters vorgemerkt?
+        //    this.Frame.Navigate(typeof(FensterHauptansicht));
             
-        }
+        //}
 
-        private void btnZurueck_wechselZuHauptansicht(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(FensterHauptansicht));
+        //private void btnZurueck_wechselZuHauptansicht(object sender, RoutedEventArgs e)
+        //{
+        //    this.Frame.Navigate(typeof(FensterHauptansicht));
             
             
-        }
+        //}
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -63,7 +63,22 @@ namespace App2Night.Views
             textBoxAnzeigenWeitereINFOS.Text = uebergebenderParameter.Description;
         }
 
-        private void btnAufKarteAnzeigen_wechselZuKartenAnzeige(object sender, RoutedEventArgs e)
+        //private void btnAufKarteAnzeigen_wechselZuKartenAnzeige(object sender, RoutedEventArgs e)
+        //{
+        //    this.Frame.Navigate(typeof(FensterKartenansicht), uebergebenderParameter);
+        //}
+
+        private void Zurueck_wechselZuHauptansicht(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(FensterHauptansicht));
+        }
+
+        private void Vormerken_wechselZuHauptansicht(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(FensterHauptansicht));
+        }
+
+        private void AufKarteAnzeigen_wechselZuKartenAnzeige(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(FensterKartenansicht), uebergebenderParameter);
         }

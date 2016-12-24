@@ -19,14 +19,14 @@ namespace App2Night.ModelsEnums.Model
     public class Party
     {
         [JsonProperty("PartyId")]
-        public Guid PartyId { get; set; }
+        public string PartyId { get; set; }
         [JsonProperty("PartyName")]
         [MaxLength(32)]
         public string PartyName { get; set; }
         [JsonProperty("CreationDate")]
         public DateTime CreationDate { get; set; }
         [JsonProperty("Price")]
-        public int Price { get; set; }
+        public double Price { get; set; }
         [JsonProperty("Host")]
         public User Host { get; set; }
         [JsonProperty("PartyDate")]
@@ -40,8 +40,8 @@ namespace App2Night.ModelsEnums.Model
         public string Description { get; set; }
         [JsonProperty("Location")]
         public Location Location { get; set; }
-        [JsonProperty("HostedByUser")]
-        public bool HostedByUser { get; set; }
-        public EventCommitmentState CommitmentState { get; set; }
+        
+        public PartyVoting Voting { get; set; }
+
     }
 }

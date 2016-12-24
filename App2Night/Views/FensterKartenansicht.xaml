@@ -12,15 +12,14 @@
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
-            <AppBarButton x:Name="AppBarButtonZurueck" Icon="Back" Label="Zurück" Width="150"/>
-            <AppBarButton x:Name="AppBarButtonHauptansicht" Icon="Home" Label="Zurück zur Hauptansicht" Width="150"/>
+            <AppBarButton x:Name="AppBarButtonZurueck" Icon="Back" Label="Zurück" Width="150" Click="KartenAnsichtZurueck_WechselZuPartyAnzeigen"/>
+            <AppBarButton x:Name="AppBarButtonHauptansicht" Icon="Home" Label="Zurück zur Hauptansicht" Width="150" Click="KartenAnsichtZurueck_WechselZuHauptansicht"/>
         </CommandBar>
     </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <Maps:MapControl x:Name="mapControlKarte" ZoomInteractionMode="GestureAndControl" TiltInteractionMode="GestureAndControl" HorizontalAlignment="Left" Height="371" Margin="10,71,0,0" VerticalAlignment="Top" Width="340" MapServiceToken="YGij1QSheJhf6PD1CMz5~S0uJKsfpcTtY0Q8ToTVh0w~ApwZzEogiNXUJ9Yl0lYAO4oOoPNaU8Zz_JBVETUZ5OC_nJJnVtvANylwLau-3Wdj"/>
-        <Button x:Name="buttonKartenAnsichtZurueck" Content="&lt; Zurück" HorizontalAlignment="Left" Height="40" Margin="12,515,0,0" VerticalAlignment="Top" Width="140" FontSize="20" Click="btnKartenAnsichtZurueck_WechselZuPartyAnzeigen" Background="#FF9E9393"/>
 
     </Grid>
 </Page>

@@ -136,15 +136,16 @@ namespace App2Night.Logik
         /// </summary>
         /// <param name="party">Zu erstellende Party mit allen Informationen</param>
         /// <returns>ID</returns>
-        public static async Task<bool> CreateParty(CreatePartyModel party)
+        public static async Task<bool> CreateParty(Party party)
         {
             bool internetVorhanden = IsInternet();
             string status = "";
-            party.CountryName = "Deutschland";
+            party.Location.CountryName = "Deutschland";
 
-            Token tok = await DatenVerarbeitung.aktuellerToken();
+            bool erfolg = await DatenVerarbeitung.aktuellerToken();
+            Token tok = await DatenVerarbeitung.DatenAusDateiLesenToken();
 
-            if (internetVorhanden == true)
+            if (internetVorhanden == true && erfolg == true)
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
@@ -280,6 +281,7 @@ namespace App2Night.Logik
             bool internetVorhanden = IsInternet();
             // TODO: eventuell Locations statt string
             string adresseLautGoogle = "";
+            location.CountryName = "Deutschland";
 
             if (internetVorhanden == true)
             {
@@ -290,8 +292,8 @@ namespace App2Night.Logik
 
                 try
                 {
+                    // TODO: Unauthorized
                     httpAntwort = await client.PostAsync("Party/validate", content);
-                    // 200 Erfolg
                     adresseLautGoogle = await httpAntwort.Content.ReadAsStringAsync();
                     return adresseLautGoogle;
                 }
@@ -314,6 +316,50 @@ namespace App2Night.Logik
                 return "42";
             }
         }
+
+
+        public static async Task<string> PostPartyRating(Party party, PartyVoting voting, Token token)
+        {
+            bool internetVorhanden = IsInternet();
+            string erfolgreichesVoting = "";
+           
+
+            if (internetVorhanden == true)
+            {
+                HttpClient client = GetClientParty();
+                HttpResponseMessage httpAntwort = new HttpResponseMessage();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token.AccessToken);
+                HttpContent content = new StringContent(JsonConvert.SerializeObject(voting), Encoding.UTF8, "application/json");
+
+                try
+                {
+                    // TODO: Unauthorized
+                    httpAntwort = await client.PutAsync($"UserParty/partyRating?id={party.PartyId}", content);   //Rest von URL von Swagger
+                    erfolgreichesVoting = await httpAntwort.Content.ReadAsStringAsync();
+                    return erfolgreichesVoting;
+                }
+
+                catch (Exception ex)
+                {
+                    erfolgreichesVoting = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+                    var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
+                    await message.ShowAsync();
+                    // Code 21 - Fehler bei Abrufen
+                    return "21";
+                }
+            }
+            else
+            {
+                // Nachricht, dass Internet eingeschaltet werden soll
+                // Code 42 - Fehler: Keine Internetverbindung
+                var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
+                await message.ShowAsync();
+                return "42";
+            }
+        }
+
+
+
 
         /// <summary>
         /// Checken, ob Intenet eingeschaltet ist.

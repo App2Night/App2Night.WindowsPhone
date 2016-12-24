@@ -45,9 +45,19 @@ namespace App2Night.Views
             mapControlKarte.LandmarksVisible = true;
         }
 
-        private void btnKartenAnsichtZurueck_WechselZuPartyAnzeigen(object sender, RoutedEventArgs e)
+        //private void btnKartenAnsichtZurueck_WechselZuPartyAnzeigen(object sender, RoutedEventArgs e)
+        //{
+        //    this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen), uebergebenderParameter);
+        //}
+
+        private void KartenAnsichtZurueck_WechselZuPartyAnzeigen(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen), uebergebenderParameter);
+        }
+
+        private void KartenAnsichtZurueck_WechselZuHauptansicht(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(FensterHauptansicht), uebergebenderParameter);
         }
     }
 }
