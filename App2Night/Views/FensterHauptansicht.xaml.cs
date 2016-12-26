@@ -40,48 +40,6 @@ namespace App2Night.Views
             progressRingInDerNaehe.Visibility = Visibility.Collapsed;          
         }
 
-        //private void btnErstellen_wechselZuVeranstErstellen(object sender, RoutedEventArgs e)
-        //{
-        //    this.Frame.Navigate(typeof(FensterVeranstaltungErstellen));
-        //}
-
-        private void btnSuche_wechselZuVeranstSuchen(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(FensterVeranstaltungSuchen));
-        }
-
-        //public async void btnVeranstInDerNaehe_GetPartys(object sender, RoutedEventArgs e)
-        //{
-        //    this.IsEnabled = false;
-        //    //Anzeige der Partys, die vom Server geschickt werden
-        //    progressRingInDerNaehe.IsEnabled = true;
-        //    progressRingInDerNaehe.Visibility = Visibility.Visible;
-
-        //    partyListe =  await FensterHauptansichtController.btnInDerNaehePartysAbrufen();
-
-        //    if (partyListe.Any())
-        //    {
-        //        int anzahl = partyListe.Count();
-
-        //        for (int i = 0; i < anzahl; i++)
-        //        {
-        //            party = partyListe.ElementAt(i);
-        //            listViewSuchErgebnis.Items.Add(party.PartyName);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        var message = new MessageDialog("Leider keine Partys in deiner Nähe.");
-        //        await message.ShowAsync();
-        //    }
-
-        //    progressRingInDerNaehe.IsEnabled = false;
-        //    progressRingInDerNaehe.Visibility = Visibility.Collapsed;
-
-        //    this.IsEnabled = true;
-
-        //}
-
         private void listViewSuchErgebnisse_ItemClick(object sender, ItemClickEventArgs e)
         {
             //Daten von der Party mitnehmen

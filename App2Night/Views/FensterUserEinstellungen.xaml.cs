@@ -43,7 +43,7 @@ namespace App2Night.Views
             // UserEinstellungen auf Default zurücksetzen
             bool speichernErfolgreich = false;
             UserEinstellungen einst = new UserEinstellungen();
-            einst.Radius = 50.00;
+            einst.Radius = 50;
 
             speichernErfolgreich = await DatenVerarbeitung.UserEinstellungenSpeichern(einst);
 
@@ -59,7 +59,7 @@ namespace App2Night.Views
             this.IsEnabled = false;
             bool speichernErfolgreich = false;
             UserEinstellungen einst = new UserEinstellungen();
-            einst.Radius = sliderSuchradius.Value;
+            einst.Radius = (float)sliderSuchradius.Value;
             // Weitere Einstellungen möglich...
 
             speichernErfolgreich = await DatenVerarbeitung.UserEinstellungenSpeichern(einst);
@@ -84,7 +84,9 @@ namespace App2Night.Views
             string text = "Diese App wurde entwickelt von Yvette Labastille und Manuela Leopold im Zuge einer Vorlesung an der DHBW Stuttgart Campus Horb.\n" +
                                 "Verwendet wurde:\n" +
                                 "- JSON-Framwork von Newtonsoft\n" +
-                                "- Xam.Plugin.Geolocator von James Montemango\n" + 
+                                "- Xam.Plugin.Geolocator von James Montemango\n" +
+                                "- Maps von Bing\n" +
+                               // "- Verschlüsselung von Dritten\n" + 
                                 "- Bibliotheken vom Microsoft";
             var message = new MessageDialog(text, "App2Night");
             await message.ShowAsync();

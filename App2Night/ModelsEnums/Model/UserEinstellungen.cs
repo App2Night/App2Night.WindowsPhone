@@ -8,7 +8,7 @@ namespace App2Night.ModelsEnums.Model
 {
     class UserEinstellungen
     {
-        public double Radius { get; set; }
+        public float Radius { get; set; }
 
     }
 }

@@ -169,6 +169,7 @@
     <Compile Include="Logik\BackEndComUserLogik.cs" />
     <Compile Include="Controller\SpeichereNutzerdaten.cs" />
     <Compile Include="Logik\DatenVerarbeitung.cs" />
+    <Compile Include="Logik\Verschluesselung.cs" />
     <Compile Include="ModelsEnums\Enums\EventCommitmentState.cs" />
     <Compile Include="ModelsEnums\Enums\Gender.cs" />
     <Compile Include="ModelsEnums\Enums\MusicGenre.cs" />

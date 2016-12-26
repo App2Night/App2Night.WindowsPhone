@@ -31,7 +31,10 @@ namespace App2Night.Controller
             var geoLocation = new GeolocationLogik();
 
             pos = await geoLocation.GetLocation();
-            float radius = 50;
+            
+            // Radius aus UserEinstellungen
+            UserEinstellungen einst = await DatenVerarbeitung.UserEinstellungenAuslesen();
+            float radius = einst.Radius;
 
             partyListe = await BackEndComPartyLogik.GetParties(pos, radius);
 

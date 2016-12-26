@@ -51,7 +51,7 @@ namespace App2Night.Views
             bool einstellungenErfolgreich = false;
 
             UserEinstellungen einst = new UserEinstellungen();
-            einst.Radius = 50.00;
+            einst.Radius = 50;
 
             anmeldung.Username = txtBoxAnmNUTZERNAME.Text;
             anmeldung.Email = txtBlAnmEMAIL.Text;
