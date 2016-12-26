@@ -17,9 +17,11 @@ namespace App2Night.Logik
         private static StorageFile speicherDatei;
         private static string DateiLogin = "Login.txt";
         private static string DateiToken = "Token.txt";
+        private static string UserEinstellungen = "UserEinst.txt";
 
-        public static async Task<bool> DatenInDateiSchreibenLogin(Login neuerNutzer)
+        public static async Task<bool> LoginSpeichern(Login neuerNutzer)
         {
+            // TODO: Verschlüsseln - Entschlüsseln
             bool erfolg = false;
             speicherDatei = await speicherOrdner.CreateFileAsync(DateiLogin, Windows.Storage.CreationCollisionOption.ReplaceExisting);
 
@@ -48,7 +50,7 @@ namespace App2Night.Logik
             return erfolg;
         }
 
-        public static async Task<Login> DatenAusDateiLesenLogin()
+        public static async Task<Login> LoginAuslesen()
         {
             Login ausDatei = new Login();
             speicherDatei = await speicherOrdner.GetFileAsync(DateiLogin);
@@ -68,7 +70,7 @@ namespace App2Night.Logik
             return ausDatei;
         }
 
-        public static async Task<bool> DatenInDateiSchreibenToken(Token tok)
+        public static async Task<bool> TokenSpeichern(Token tok)
         {
             bool erfolg = false;
             speicherDatei = await speicherOrdner.CreateFileAsync(DateiToken, Windows.Storage.CreationCollisionOption.ReplaceExisting);
@@ -98,7 +100,7 @@ namespace App2Night.Logik
             return erfolg;
         }
 
-        public static async Task<Token> DatenAusDateiLesenToken()
+        public static async Task<Token> TokenAuslesen()
         {
             Token ausDatei = new Token();
             speicherDatei = await speicherOrdner.GetFileAsync(DateiToken);
@@ -133,7 +135,7 @@ namespace App2Night.Logik
 
             if (loginUeberpruefung.AccessToken != null)
             {
-                bool tokenIstGespeichert = await DatenInDateiSchreibenToken(loginUeberpruefung);
+                bool tokenIstGespeichert = await TokenSpeichern(loginUeberpruefung);
 
                 if (tokenIstGespeichert == true)
                 {
@@ -148,13 +150,61 @@ namespace App2Night.Logik
         {
             bool erfolg = false;
             //Login aktuellerNutzer = await DatenAusDateiLesenLogin();
-            Token aktuellerToken = await DatenAusDateiLesenToken();
+            Token aktuellerToken = await TokenAuslesen();
 
             erfolg = await BackEndComUserLogik.RefreshToken(aktuellerToken);
 
             return erfolg;
         }
 
+        public static async Task<bool> UserEinstellungenSpeichern(UserEinstellungen einst)
+        {
+            bool erfolg = false;
+            speicherDatei = await speicherOrdner.CreateFileAsync(UserEinstellungen, Windows.Storage.CreationCollisionOption.ReplaceExisting);
 
+            // Kontrolle
+            if (speicherOrdner == null)
+            {
+                var message = new MessageDialog("Es ist ein Problem aufgetreten. Bitte versuche es später erneut.");
+                await message.ShowAsync();
+                return erfolg;
+            }
+
+            try
+            {
+                string tokenJsonAlsString = JsonConvert.SerializeObject(einst);
+                await FileIO.WriteTextAsync(speicherDatei, tokenJsonAlsString);
+
+                erfolg = true;
+            }
+
+            catch (Exception)
+            {
+                var message = new MessageDialog("Es ist ein Problem aufgetreten. Bitte versuche es später erneut.");
+                await message.ShowAsync();
+                return erfolg;
+            }
+            return erfolg;
+        }
+
+        public static async Task<UserEinstellungen> UserEinstellungenAuslesen()
+        {
+            UserEinstellungen ausDatei = new UserEinstellungen();
+            speicherDatei = await speicherOrdner.GetFileAsync(DateiToken);
+
+            string text = await FileIO.ReadTextAsync(speicherDatei);
+
+            // Bei Fehler in Datei oder beim Auslesen wird der Token als null zurückgegeben
+            if (text != null)
+            {
+                ausDatei = JsonConvert.DeserializeObject<UserEinstellungen>(text);
+            }
+            else
+            {
+                ausDatei = null;
+            }
+
+            return ausDatei;
+        }
     }
 }

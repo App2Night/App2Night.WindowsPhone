@@ -36,10 +36,10 @@ namespace App2Night.Logik
         {
             string stringFromServer = "";
             bool internetVorhanden = BackEndComPartyLogik.IsInternet();
-            Login login = await DatenVerarbeitung.DatenAusDateiLesenLogin();
+            Login login = await DatenVerarbeitung.LoginAuslesen();
             // aktueller Token wird benötigt
             bool erfolg = await DatenVerarbeitung.aktuellerToken();
-            Token tok = await DatenVerarbeitung.DatenAusDateiLesenToken();
+            Token tok = await DatenVerarbeitung.TokenAuslesen();
 
             if (internetVorhanden == true && erfolg == true)
             {
@@ -54,7 +54,7 @@ namespace App2Night.Logik
                     //httpAntwort.EnsureSuccessStatusCode();
                     login.userID = await httpAntwort.Content.ReadAsStringAsync();
                     // ID in die Datei schreiben
-                    await DatenVerarbeitung.DatenInDateiSchreibenLogin(login);
+                    await DatenVerarbeitung.LoginSpeichern(login);
                     return true;
                 }
                 catch (Exception ex)

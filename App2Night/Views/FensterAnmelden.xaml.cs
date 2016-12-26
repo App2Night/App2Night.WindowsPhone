@@ -48,6 +48,10 @@ namespace App2Night.Views
         {
             bool korrekteEingabe = false;
             bool speichernErfolgreich = false;
+            bool einstellungenErfolgreich = false;
+
+            UserEinstellungen einst = new UserEinstellungen();
+            einst.Radius = 50.00;
 
             anmeldung.Username = txtBoxAnmNUTZERNAME.Text;
             anmeldung.Email = txtBlAnmEMAIL.Text;
@@ -60,9 +64,12 @@ namespace App2Night.Views
 
             if (korrekteEingabe == true)
             {
-                speichernErfolgreich = await DatenVerarbeitung.DatenInDateiSchreibenLogin(anmeldung);
+                speichernErfolgreich = await DatenVerarbeitung.LoginSpeichern(anmeldung);
 
-                if (speichernErfolgreich == true)
+                // Default-Radius für Suchumfeld in Datei speichern (momentan nur Radius, hier stehen könnten noch weitere Einstellungen vom User gespeichert werden
+                einstellungenErfolgreich = await DatenVerarbeitung.UserEinstellungenSpeichern(einst);
+
+                if (speichernErfolgreich == true && einstellungenErfolgreich == true)
                 {
                     progressRingAnmeldung.Visibility = Visibility.Collapsed;
                     var message = new MessageDialog("Erfolgreich angemeldet. Viel Spaß!", "Erfolg!");
