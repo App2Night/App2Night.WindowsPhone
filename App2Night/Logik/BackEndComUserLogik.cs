@@ -13,12 +13,12 @@ namespace App2Night.Logik
 {
     public class BackEndComUserLogik
     {
+        HttpClient client = new HttpClient();
+
         public BackEndComUserLogik()
         {
 
         }
-
-        HttpClient client = new HttpClient();
 
         /// <summary>
         /// Client fuer die Backend-Kommunikation mit app2nightuser.azurewebsites.net
@@ -32,6 +32,10 @@ namespace App2Night.Logik
             return client;
         }
 
+        /// <summary>
+        /// UserID wird geholt und in File für Login geschrieben.
+        /// </summary>
+        /// <returns></returns>
         public static async Task<bool> GetUserInfo()
         {
             string stringFromServer = "";
@@ -117,40 +121,41 @@ namespace App2Night.Logik
             }
         }
 
-        public static async Task<bool> ResetPasswort(Login login)
-        {
-            bool internetVorhanden = BackEndComPartyLogik.IsInternet();
-            string emailadresse = login.Email;
+        // Vom BackEnd noch nicht unterstützt
+        //public static async Task<bool> ResetPasswort(Login login)
+        //{
+        //    bool internetVorhanden = BackEndComPartyLogik.IsInternet();
+        //    string emailadresse = login.Email;
 
-            if (internetVorhanden == true)
-            {
-                HttpClient client = GetClientUser();
-                HttpResponseMessage httpAntwort = new HttpResponseMessage();
-                HttpContent content = new StringContent(JsonConvert.SerializeObject(emailadresse), Encoding.UTF8, "application/json");
+        //    if (internetVorhanden == true)
+        //    {
+        //        HttpClient client = GetClientUser();
+        //        HttpResponseMessage httpAntwort = new HttpResponseMessage();
+        //        HttpContent content = new StringContent(JsonConvert.SerializeObject(emailadresse), Encoding.UTF8, "application/json");
 
-                try
-                {
-                    httpAntwort = await client.PostAsync("User/ResetPassword", content);
-                    bool erfolgreich = httpAntwort.IsSuccessStatusCode;
-                    return erfolgreich;
-                }
+        //        try
+        //        {
+        //            httpAntwort = await client.PostAsync("User/ResetPassword", content);
+        //            bool erfolgreich = httpAntwort.IsSuccessStatusCode;
+        //            return erfolgreich;
+        //        }
 
-                catch (Exception ex)
-                {
-                    var fehler = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
-                    var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
-                    await message.ShowAsync();
-                    return false;
-                }
-            }
-            else
-            {
-                // Nachricht, dass Internet eingeschaltet werden soll
-                var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
-                await message.ShowAsync();
-                return false;
-            }
-        }
+        //        catch (Exception ex)
+        //        {
+        //            var fehler = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+        //            var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
+        //            await message.ShowAsync();
+        //            return false;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        // Nachricht, dass Internet eingeschaltet werden soll
+        //        var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
+        //        await message.ShowAsync();
+        //        return false;
+        //    }
+        //}
 
         /// <summary>
         /// Loescht den durch die Guid angegebenen User.
@@ -270,14 +275,9 @@ namespace App2Night.Logik
 
             if (internetVorhanden == true)
             {
-                try
-                {
-                    using (HttpClient client = GetClientUser())
-                    {
-                        client.BaseAddress = new Uri("http://app2nightuser.azurewebsites.net/");
-                        //client.DefaultRequestHeaders.Host = "http://app2nightuser.azurewebsites.net";
-                        client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token.AccessToken);
-                        //client.DefaultRequestHeaders.Accept.Clear();
+                HttpClient client = GetClientUser();
+                client.BaseAddress = new Uri("http://app2nightAPI.azurewebsites.net/");
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token.AccessToken);
                         var query =     "client_id=nativeApp&" +
                                               "client_secret=secret&" +
                                               $"token={token.RefreshToken}&" +
@@ -286,17 +286,9 @@ namespace App2Night.Logik
                         
                         var requestResult = await client.PostAsync("connect/revocation", content);
 
-                        if (requestResult.IsSuccessStatusCode)
-                        {
-                            erfolg = true;
-                        }
-                    }
-                }
-                catch (Exception ex)
+                if (requestResult.IsSuccessStatusCode)
                 {
-                    string error = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
-                    var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
-                    await message.ShowAsync();
+                    erfolg = true;
                 }
             }
             else

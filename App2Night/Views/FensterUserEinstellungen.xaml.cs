@@ -97,5 +97,17 @@ namespace App2Night.Views
             var message = new MessageDialog("Schreib uns doch unter mobApp@outlook.com", "App2Night");
             await message.ShowAsync();
         }
+
+        private async void btnUserInfo_Test(object sender, RoutedEventArgs e)
+        {
+            string userid = "";
+            bool userIdErhalten = await BackEndComUserLogik.GetUserInfo();
+
+            if (userIdErhalten == true)
+            {
+                Login loginDaten = await DatenVerarbeitung.LoginAuslesen();
+                userid = loginDaten.userID;
+            }
+        }
     }
 }

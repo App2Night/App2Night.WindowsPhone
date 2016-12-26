@@ -149,8 +149,13 @@ namespace App2Night.Logik
         public static async Task<bool> aktuellerToken()
         {
             bool erfolg = false;
-            //Login aktuellerNutzer = await DatenAusDateiLesenLogin();
+            Login login = await DatenVerarbeitung.LoginAuslesen();
             Token aktuellerToken = await TokenAuslesen();
+
+            if (aktuellerToken.AccessToken == null)
+            {
+                aktuellerToken = await BackEndComUserLogik.GetToken(login);
+            }
 
             erfolg = await BackEndComUserLogik.RefreshToken(aktuellerToken);
 
