@@ -155,6 +155,11 @@ namespace App2Night.Logik
             if (aktuellerToken.AccessToken == null)
             {
                 aktuellerToken = await BackEndComUserLogik.GetToken(login);
+
+                if (aktuellerToken.AccessToken != null)
+                {
+                    await TokenSpeichern(aktuellerToken);
+                }
             }
 
             erfolg = await BackEndComUserLogik.RefreshToken(aktuellerToken);

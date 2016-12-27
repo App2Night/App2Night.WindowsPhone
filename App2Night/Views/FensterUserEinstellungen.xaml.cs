@@ -107,6 +107,7 @@ namespace App2Night.Views
             {
                 Login loginDaten = await DatenVerarbeitung.LoginAuslesen();
                 userid = loginDaten.userID;
+                await DatenVerarbeitung.LoginSpeichern(loginDaten);
             }
         }
     }

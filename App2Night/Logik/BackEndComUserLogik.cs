@@ -54,6 +54,7 @@ namespace App2Night.Logik
                 try
                 {
                     // GET Request
+                    client.BaseAddress = new Uri("http://app2nightuser.azurewebsites.net/");
                     httpAntwort = await client.GetAsync("connect/userinfo");
                     //httpAntwort.EnsureSuccessStatusCode();
                     login.userID = await httpAntwort.Content.ReadAsStringAsync();
@@ -69,7 +70,6 @@ namespace App2Night.Logik
                     // Code 21 - Fehler bei Abrufen
                     return false;
                 }
-
             }
             else
             {
