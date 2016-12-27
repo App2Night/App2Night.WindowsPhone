@@ -26,7 +26,7 @@ namespace App2Night.Logik
         /// <returns>Client</returns>
         private static HttpClient GetClientUser()
         {
-            HttpClient client = new HttpClient { BaseAddress = new Uri("http://app2nightuser.azurewebsites.net/api/") };
+            HttpClient client = new HttpClient { BaseAddress = new Uri("http://app2nightuser.azurewebsites.net/") };
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Host = "app2nightuser.azurewebsites.net";
             return client;
@@ -221,9 +221,6 @@ namespace App2Night.Logik
                 try
                 {
                     HttpClient client = GetClientUser();
-
-                    client.BaseAddress = new Uri("http://app2nightuser.azurewebsites.net/");
-                    client.DefaultRequestHeaders.Host = "app2nightuser.azurewebsites.net";
                     //client.DefaultRequestHeaders.Accept.Clear();
                     var query =     "client_id=nativeApp&" +
                                             "client_secret=secret&" +
@@ -272,8 +269,6 @@ namespace App2Night.Logik
                 {
                     using (HttpClient client = GetClientUser())
                     {
-                        client.BaseAddress = new Uri("http://app2nightuser.azurewebsites.net/");
-                        client.DefaultRequestHeaders.Host = "app2nightuser.azurewebsites.net";
                         client.DefaultRequestHeaders.Add("Authorization", "Baerer " + token.AccessToken);
                         //client.DefaultRequestHeaders.Accept.Clear();
                         var query =     "client_id=nativeApp&" +
