@@ -27,8 +27,10 @@ namespace App2Night.ModelsEnums.Model
         public DateTime CreationDate { get; set; }
         [JsonProperty("Price")]
         public double Price { get; set; }
-        [JsonProperty("Host")]
-        public User Host { get; set; }
+        //[JsonProperty("Host")]
+        //public User Host { get; set; }
+        [JsonProperty("HostId")]
+        public int HostId { get; set; }
         [JsonProperty("PartyDate")]
         public DateTime PartyDate { get; set; }
         [JsonProperty("MusicGenre")]

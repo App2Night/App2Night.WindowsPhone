@@ -18,28 +18,29 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <TextBlock x:Name="textBlErstellen" HorizontalAlignment="Left" Height="80" Margin="10,-30,0,0" TextWrapping="Wrap" Text="Erstellen" VerticalAlignment="Top" Width="340" FontSize="36" TextAlignment="Center" FontWeight="Bold"/>
-        <ListView x:Name="listViewErstellen" HorizontalAlignment="Left" Height="494" Margin="10,55,0,0" VerticalAlignment="Top" Width="340">
-            <TextBlock x:Name="textBlErstellenName" HorizontalAlignment="Center" Height="35" TextWrapping="Wrap" Text="Name der Veranstaltung" VerticalAlignment="Top" Width="318" FontSize="20" FontWeight="Bold" Margin="0,-5,0,0"/>
-            <TextBox x:Name="textBoxErstellenNAME" HorizontalAlignment="Center" Height="35" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="318" PlaceholderText="Name der Veranstaltung" Margin="0,-30,0,0" FontSize="20"/>
-            <TextBlock x:Name="textBlErstellenAdresse" Height="35" TextWrapping="Wrap" Text="Adresse" Width="318" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="0,-40,0,0"/>
-            <TextBox x:Name="textBoxErstellenPLZ" Height="35" TextWrapping="Wrap" Text="" Width="107" Margin="0,-65,0,0" PlaceholderText="PLZ" FontSize="20" HorizontalAlignment="Left"/>
-            <TextBox x:Name="textBoxErstellenORT" Height="35" TextWrapping="Wrap" Text="" Width="204" Margin="112,-153,0,0" FontSize="20" PlaceholderText="Ort" HorizontalAlignment="Right"/>
-            <TextBox x:Name="textBoxErstellenSTRASSE" Height="35" TextWrapping="Wrap" Text="" Width="247" PlaceholderText="Straße" Margin="0,-165,0,0" HorizontalAlignment="Left" FontSize="20"/>
-            <TextBox x:Name="textBoxErstellenHAUSNR" Height="35" TextWrapping="Wrap" Text="" Width="41" PlaceholderText="HausNr" Margin="0,-253,-316,0" HorizontalAlignment="Right" FontSize="20"/>
-            <TextBlock x:Name="textBlErstellenDatum" Height="35" TextWrapping="Wrap" Text="Datum" Width="318" FontWeight="Bold" FontSize="20" Margin="0,-260,0,0"/>
-            <DatePicker x:Name="DatePickerErstellenDATUM" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="318" Margin="0,-285,0,0" FontSize="20"/>
-            <TextBlock x:Name="textBlErstellenUhrzeit" TextWrapping="Wrap" Text="Uhrzeit" Width="318" Height="35" Margin="0,-290,0,0" FontSize="20" FontWeight="Bold"/>
-            <TimePicker x:Name="TimePickerErstellenUHRZEIT" Width="318" Height="40" HorizontalAlignment="Center" FontSize="20" Margin="0,-315,0,0"/>
-            <TextBlock x:Name="textBlErstellenMusikrichtung" TextWrapping="Wrap" Text="Musikrichtung" Width="150" Height="35" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-320,0,0" FontWeight="Bold" FontSize="20"/>
-            <TextBlock x:Name="textBlErstellenTyp" Height="35" TextWrapping="Wrap" Text="Typ" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="0,-330,0,0"/>
-            <ComboBox x:Name="comboBoxErstellenMUSIKRICHTUNG" Width="150" Height="35" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="168,-495,0,0"/>
-            <ComboBox x:Name="comboBoxErstellenTYP" Width="150" Margin="168,-505,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="35"/>
-            <TextBlock x:Name="textBlErstellenPreis" Height="35" TextWrapping="Wrap" Text="Preis" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-515,0,0" FontWeight="Bold" FontSize="20"/>
-            <TextBox x:Name="textBoxErstellenPREIS" TextWrapping="Wrap" Text="" Width="150" Height="35" Margin="168,-605,0,0" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" PlaceholderText="Preis"/>
-            <TextBlock x:Name="textBlErstellenInfos" TextWrapping="Wrap" Text="Weitere Informationen (optional)" Width="318" Height="35" FontSize="20" FontWeight="Bold" Margin="0,-615,0,0"/>
-            <TextBox x:Name="textBoxErstellenINFOS" TextWrapping="Wrap" Text="" Width="318" Height="100" Margin="0,-582,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" PlaceholderText="Optionale zusätzliche Informationen (z.B. besondere Angebote oder Auftritte)."/>
-
-        </ListView>
+        <ScrollViewer x:Name="scrollViewErstellen" Margin="0,50,0,0" Height="530" VerticalAlignment="Top">
+            <Grid x:Name="GridErstellenScrollView" Height="742" Width="323">
+                <TextBlock x:Name="textBlErstellenName" HorizontalAlignment="Center" Height="35" TextWrapping="Wrap" Text="Name der Veranstaltung" VerticalAlignment="Top" Width="313" FontSize="20" FontWeight="Bold" Margin="0,4,10,0"/>
+                <TextBox x:Name="textBoxErstellenNAME" HorizontalAlignment="Center" Height="35" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="313" PlaceholderText="Name der Veranstaltung" Margin="0,39,10,668" FontSize="20"/>
+                <TextBlock x:Name="textBlErstellenAdresse" TextWrapping="Wrap" Text="Adresse" Width="308" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="5,90,10,617" Height="35"/>
+                <TextBox x:Name="textBoxErstellenPLZ" TextWrapping="Wrap" Text="" Width="72" Margin="0,122,0,585" PlaceholderText="PLZ" FontSize="20" HorizontalAlignment="Left" Height="35" InputScope="Number"/>
+                <TextBox x:Name="textBoxErstellenORT" TextWrapping="Wrap" Text="" Width="236" Margin="0,122,10,585" FontSize="20" PlaceholderText="Ort" HorizontalAlignment="Right" Height="35"/>
+                <TextBox x:Name="textBoxErstellenSTRASSE" TextWrapping="Wrap" Text="" Width="220" PlaceholderText="Straße" Margin="0,159,0,548" HorizontalAlignment="Left" FontSize="20" Height="35"/>
+                <TextBox x:Name="textBoxErstellenHAUSNR" TextWrapping="Wrap" Text="" Width="88" PlaceholderText="Nr" Margin="0,159,10,548" HorizontalAlignment="Right" FontSize="20" Height="35"/>
+                <TextBlock x:Name="textBlErstellenDatum" TextWrapping="Wrap" Text="Datum" FontWeight="Bold" FontSize="20" Margin="0,208,8,499" Width="315" Height="35"/>
+                <DatePicker x:Name="DatePickerErstellenDATUM" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="313" Margin="0,240,10,462" FontSize="20"/>
+                <TextBlock x:Name="textBlErstellenUhrzeit" TextWrapping="Wrap" Text="Uhrzeit" Margin="0,291,10,416" FontSize="20" FontWeight="Bold" Height="35"/>
+                <TimePicker x:Name="TimePickerErstellenUHRZEIT" Width="313" Height="40" HorizontalAlignment="Center" FontSize="20" Margin="0,328,10,374"/>
+                <TextBlock x:Name="textBlErstellenMusikrichtung" TextWrapping="Wrap" Text="Musikrichtung" Width="150" Height="35" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,380,173,327" FontWeight="Bold" FontSize="20"/>
+                <TextBlock x:Name="textBlErstellenTyp" Height="35" TextWrapping="Wrap" Text="Typ" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="0,420,173,287"/>
+                <ComboBox x:Name="comboBoxErstellenMUSIKRICHTUNG" Width="145" Height="35" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="168,379,10,328"/>
+                <ComboBox x:Name="comboBoxErstellenTYP" Width="145" Margin="168,419,10,288" HorizontalAlignment="Center" VerticalAlignment="Center" Height="35"/>
+                <TextBlock x:Name="textBlErstellenPreis" Height="35" TextWrapping="Wrap" Text="Preis (optional)" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,465,173,242" FontWeight="Bold" FontSize="20"/>
+                <TextBox x:Name="textBoxErstellenPREIS" TextWrapping="Wrap" Text="" Width="145" Height="35" Margin="168,464,10,243" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" PlaceholderText="Preis"/>
+                <TextBlock x:Name="textBlErstellenInfos" TextWrapping="Wrap" Text="Weitere Informationen (opt.)" FontSize="20" FontWeight="Bold" Margin="0,513,20,194" Height="35"/>
+                <TextBox x:Name="textBoxErstellenINFOS" TextWrapping="Wrap" Text="" Width="313" Height="139" Margin="0,548,10,0" HorizontalAlignment="Center" VerticalAlignment="Top" PlaceholderText="Optionale zusätzliche Informationen (z.B. besondere Angebote oder Auftritte)."/>
+            </Grid>
+        </ScrollViewer>
         <ProgressRing x:Name="progressRingErstellen" HorizontalAlignment="Center" Margin="0,400,0,0" VerticalAlignment="Center" Width="70" Height="70"/>
 
     </Grid>

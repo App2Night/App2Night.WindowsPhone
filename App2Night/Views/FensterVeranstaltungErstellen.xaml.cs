@@ -55,7 +55,7 @@ namespace App2Night.Views
             this.Frame.Navigate(typeof(FensterHauptansicht));
         }
 
-        private async void btnWeiter_wechselZuErstellen02(object sender, RoutedEventArgs e)
+        private void btnWeiter_wechselZuErstellen02(object sender, RoutedEventArgs e)
         {
             //        Party partyZuErstellen = new Party();
 

@@ -143,7 +143,7 @@ namespace App2Night.Logik
             party.Location.CountryName = "Deutschland";
 
             bool erfolg = await DatenVerarbeitung.aktuellerToken();
-            Token tok = await DatenVerarbeitung.DatenAusDateiLesenToken();
+            Token tok = await DatenVerarbeitung.TokenAuslesen();
 
             if (internetVorhanden == true && erfolg == true)
             {

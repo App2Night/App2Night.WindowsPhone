@@ -56,15 +56,15 @@ namespace App2Night.Views
             zuValidieren.HouseNumber = textBoxErstellenHAUSNR.Text;
             zuValidieren.ZipCode = textBoxErstellenPLZ.Text;
 
-            Token tok = await DatenVerarbeitung.DatenAusDateiLesenToken();
+            Token tok = await DatenVerarbeitung.TokenAuslesen();
             bool erfolg = await DatenVerarbeitung.aktuellerToken();
 
             // Falls noch kein Token angelegt wurde, wird ein neuer erzeugt
             if (tok == null)
             {
-                Login nutzer = await DatenVerarbeitung.DatenAusDateiLesenLogin();
+                Login nutzer = await DatenVerarbeitung.LoginAuslesen();
                 tok = await BackEndComUserLogik.GetToken(nutzer);
-                await DatenVerarbeitung.DatenInDateiSchreibenToken(tok);
+                await DatenVerarbeitung.TokenSpeichern(tok);
 
                 if (tok.AccessToken == null)
                 {

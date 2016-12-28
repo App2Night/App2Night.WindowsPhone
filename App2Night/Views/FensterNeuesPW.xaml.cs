@@ -29,15 +29,15 @@ namespace App2Night.Views
             this.InitializeComponent();
         }
 
-        private async void btnBestaetigen_wechselZuAnmelden(object sender, RoutedEventArgs e)
+        private void btnBestaetigen_wechselZuAnmelden(object sender, RoutedEventArgs e)
         {
-            Login pwLogin = new Login();
-            pwLogin.Password =  pwBoxNpwALTESPW.Password;  
-            await BackEndComUserLogik.ResetPasswort(pwLogin);
+            //Login pwLogin = new Login();
+            //pwLogin.Password =  pwBoxNpwALTESPW.Password;  
+            //await BackEndComUserLogik.ResetPasswort(pwLogin);
 
-            // TODO: Was nun machen?
+            //// TODO: Was nun machen?
 
-            this.Frame.Navigate(typeof(FensterAnmelden));
+            //this.Frame.Navigate(typeof(FensterAnmelden));
         }
 
         private void btnAbbrechen_wechselZuAnmOderReg(object sender, RoutedEventArgs e)

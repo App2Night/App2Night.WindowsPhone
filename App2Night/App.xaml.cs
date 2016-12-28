@@ -23,10 +23,7 @@ namespace App2Night
     /// Stellt das anwendungsspezifische Verhalten bereit, um die Standardanwendungsklasse zu ergänzen.
     /// </summary>
     sealed partial class App : Application
-    {
-        public static string Token { get; set; } = "BEISPIEL";
-
-
+    { 
         /// <summary>
         /// Initialisiert das Singletonanwendungsobjekt. Dies ist die erste Zeile von erstelltem Code
         /// und daher das logische Äquivalent von main() bzw. WinMain().
@@ -63,7 +60,7 @@ namespace App2Night
                 rootFrame = new Frame();
 
                 // Ändern des erstes Fensters
-                rootFrame.Navigate(typeof(Views.FensterHauptansicht), e.Arguments);
+                rootFrame.Navigate(typeof(Views.FensterUserEinstellungen), e.Arguments);
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
