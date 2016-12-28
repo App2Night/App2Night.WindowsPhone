@@ -11,14 +11,14 @@
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
-            <AppBarButton x:Name="AppBarButtonZurueck" Icon="Back" Label="Zurueck" Width="100" Click="Zurueck_wechselZuHauptansicht"/>
+            <AppBarButton x:Name="AppBarButtonZurueck" Icon="Back" Label="Zurück" Width="100" Click="Zurueck_wechselZuHauptansicht"/>
             <AppBarButton x:Name="AppBarButtonAufKarteAnzeigen" Icon="Map" Label="AufKarteAnzeigen" Width="100" Click="AufKarteAnzeigen_wechselZuKartenAnzeige"/>
             <AppBarButton x:Name="AppBarButtonVormerken" Icon="Accept" Label="Vormerken" Width="100" Click="Vormerken_wechselZuHauptansicht"/>
         </CommandBar>
     </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock x:Name="txtBlVeranstAnzeigenNAME" Height="50" Margin="10,-22,0,0" TextWrapping="Wrap" Text="-- Name --" VerticalAlignment="Top" Width="340" FontSize="20" HorizontalAlignment="Left" TextAlignment="Center" SelectionHighlightColor="White"/>
+        <TextBlock x:Name="txtBlVeranstAnzeigenNAME" Margin="8,-30,0,590" TextWrapping="Wrap" Text="Deine Party" Width="340" FontSize="36" HorizontalAlignment="Left" TextAlignment="Center" SelectionHighlightColor="White" FontWeight="Bold"/>
         <TextBlock x:Name="textBlAnzeigenOrt" HorizontalAlignment="Left" Height="40" Margin="10,78,0,0" TextWrapping="Wrap" Text="Ort" VerticalAlignment="Top" Width="74" FontSize="20" FontWeight="Bold" RenderTransformOrigin="0.568,-0.375"/>
         <TextBlock x:Name="textBlDatum" HorizontalAlignment="Left" Height="40" Margin="12,133,0,0" TextWrapping="Wrap" Text="Datum" VerticalAlignment="Top" Width="142" FontSize="20" FontWeight="Bold"/>
         <TextBlock x:Name="textBlUhrzeit" HorizontalAlignment="Left" Height="40" Margin="13,188,0,0" TextWrapping="Wrap" Text="Uhrzeit" VerticalAlignment="Top" Width="142" FontSize="20" FontWeight="Bold"/>
@@ -29,5 +29,7 @@
         <TextBox x:Name="textBoxAnzeigenMUSIKRICHTUNG" HorizontalAlignment="Left" Height="40" Margin="151,243,0,0" TextWrapping="Wrap" Text="-- Musikrichtung --" VerticalAlignment="Top" Width="199" IsReadOnly="True" FontSize="20" TextAlignment="Right"/>
         <TextBox x:Name="textBoxAnzeigenDATUM" HorizontalAlignment="Left" Height="40" Margin="151,133,0,0" TextWrapping="Wrap" Text="-- Datum --" VerticalAlignment="Top" Width="197" FontSize="20" IsReadOnly="True" TextAlignment="Right"/>
         <TextBox x:Name="textBoxAnzeigenUHRZEIT" HorizontalAlignment="Left" Height="40" Margin="153,188,0,0" TextWrapping="Wrap" Text="-- Uhrzeit --" VerticalAlignment="Top" Width="197" IsReadOnly="True" FontSize="20" TextAlignment="Right"/>
+        <AppBarButton x:Name="AppBarButtonTeilnehmen" HorizontalAlignment="Left" Icon="Add" Label="" Margin="13,495,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.157,-0.07"/>
+        <AppBarButton x:Name="appBarButtonVoten" HorizontalAlignment="Left" Icon="Like" Label="" Margin="280,495,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Page>
