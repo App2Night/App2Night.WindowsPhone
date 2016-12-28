@@ -21,10 +21,9 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <TextBlock x:Name="textBlEinstellungenTitel" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Einstellungen" VerticalAlignment="Top" Height="45" Width="340" FontSize="20" FontWeight="Bold"/>
         <TextBlock x:Name="textBlRadius" HorizontalAlignment="Left" Margin="10,96,0,0" TextWrapping="Wrap" Text="Suchradius" VerticalAlignment="Top" Width="180" Height="35" FontSize="20" FontWeight="Bold"/>
-        <Slider x:Name="sliderSuchradius" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top" Width="340" Height="50" Minimum="20" Maximum="100" Value="50"/>
+        <Slider x:Name="sliderSuchradius" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top" Width="340" Height="50" Minimum="20" Maximum="150" Value="50"/>
         <Button x:Name="btnAbmelden" Content="Abmelden" HorizontalAlignment="Left" Margin="10,245,0,0" VerticalAlignment="Top" Height="40" Width="180" FontSize="20" Click="btnAbmelden_wechselZuFensterAnmelden"/>
         <ProgressRing x:Name="progRingUserEinstellungen" HorizontalAlignment="Center" Margin="0,400,0,0" VerticalAlignment="Center" Width="70" Height="70"/>
-        <Button x:Name="btnUserInfoTest" Content="UserInfo" HorizontalAlignment="Left" Margin="65,332,0,0" VerticalAlignment="Top" Height="153" Width="205" Click="btnUserInfo_Test"/>
 
     </Grid>
 </Page>

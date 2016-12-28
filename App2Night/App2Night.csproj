@@ -192,7 +192,7 @@
     </Compile>
     <Compile Include="ModelsEnums\Model\PartyVoting.cs" />
     <Compile Include="ModelsEnums\Model\Token.cs" />
-    <Compile Include="ModelsEnums\Model\User.cs" />
+    <Compile Include="ModelsEnums\Model\UserInfo.cs" />
     <Compile Include="ModelsEnums\Model\UserEinstellungen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\FensterAnmelden.xaml.cs">

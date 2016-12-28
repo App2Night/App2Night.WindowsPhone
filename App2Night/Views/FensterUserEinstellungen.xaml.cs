@@ -29,6 +29,22 @@ namespace App2Night.Views
         {
             this.InitializeComponent();
             progRingUserEinstellungen.Visibility = Visibility.Collapsed;
+
+            SuchRadiusEinstellen();
+        }
+
+        private async void SuchRadiusEinstellen()
+        {
+            UserEinstellungen einst = await DatenVerarbeitung.UserEinstellungenAuslesen();
+
+            if (einst.Radius != 0)
+            {
+                sliderSuchradius.Value = einst.Radius;
+            }
+            else
+            {
+                sliderSuchradius.Value = 50;
+            }
         }
 
         private void Zurueck_wechselZuHauptansicht(object sender, RoutedEventArgs e)
@@ -94,21 +110,9 @@ namespace App2Night.Views
 
         private async void Email_zeigeKontakt(object sender, RoutedEventArgs e)
         {
-            var message = new MessageDialog("Schreib uns doch unter mobApp@outlook.com", "App2Night");
+            var message = new MessageDialog("Schreib uns doch unter mobApp@outlook.com!", "App2Night");
             await message.ShowAsync();
         }
 
-        private async void btnUserInfo_Test(object sender, RoutedEventArgs e)
-        {
-            string userid = "";
-            bool userIdErhalten = await BackEndComUserLogik.GetUserInfo();
-
-            if (userIdErhalten == true)
-            {
-                Login loginDaten = await DatenVerarbeitung.LoginAuslesen();
-                userid = loginDaten.userID;
-                await DatenVerarbeitung.LoginSpeichern(loginDaten);
-            }
-        }
     }
 }

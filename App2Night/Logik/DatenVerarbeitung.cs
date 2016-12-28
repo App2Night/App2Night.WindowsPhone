@@ -17,7 +17,7 @@ namespace App2Night.Logik
         private static StorageFile speicherDatei;
         private static string DateiLogin = "Login.txt";
         private static string DateiToken = "Token.txt";
-        private static string UserEinstellungen = "UserEinst.txt";
+        private static string DateiUserEinstellungen = "UserEinst.txt";
 
         public static async Task<bool> LoginSpeichern(Login neuerNutzer)
         {
@@ -124,13 +124,6 @@ namespace App2Night.Logik
         {
             bool korrekterLogin = false;
 
-            //Login ausDatei = await DatenAusDateiLesenLogin();
-
-            //if (ausDatei.Email == loginZuPruefen.Email && ausDatei.Password == loginZuPruefen.Password && ausDatei.Username == loginZuPruefen.Username)
-            //{
-            //    korrekterLogin = true;
-            //}
-
             Token loginUeberpruefung = await BackEndComUserLogik.GetToken(loginZuPruefen);
 
             if (loginUeberpruefung.AccessToken != null)
@@ -170,7 +163,7 @@ namespace App2Night.Logik
         public static async Task<bool> UserEinstellungenSpeichern(UserEinstellungen einst)
         {
             bool erfolg = false;
-            speicherDatei = await speicherOrdner.CreateFileAsync(UserEinstellungen, Windows.Storage.CreationCollisionOption.ReplaceExisting);
+            speicherDatei = await speicherOrdner.CreateFileAsync(DateiUserEinstellungen, Windows.Storage.CreationCollisionOption.ReplaceExisting);
 
             // Kontrolle
             if (speicherOrdner == null)
@@ -182,8 +175,8 @@ namespace App2Night.Logik
 
             try
             {
-                string tokenJsonAlsString = JsonConvert.SerializeObject(einst);
-                await FileIO.WriteTextAsync(speicherDatei, tokenJsonAlsString);
+                string userEinstellungenAlsString = JsonConvert.SerializeObject(einst);
+                await FileIO.WriteTextAsync(speicherDatei, userEinstellungenAlsString);
 
                 erfolg = true;
             }
@@ -200,7 +193,7 @@ namespace App2Night.Logik
         public static async Task<UserEinstellungen> UserEinstellungenAuslesen()
         {
             UserEinstellungen ausDatei = new UserEinstellungen();
-            speicherDatei = await speicherOrdner.GetFileAsync(DateiToken);
+            speicherDatei = await speicherOrdner.GetFileAsync(DateiUserEinstellungen);
 
             string text = await FileIO.ReadTextAsync(speicherDatei);
 

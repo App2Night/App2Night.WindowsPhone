@@ -39,6 +39,7 @@ namespace App2Night.Logik
         public static async Task<bool> GetUserInfo()
         {
             string stringFromServer = "";
+            Login id;
             bool internetVorhanden = BackEndComPartyLogik.IsInternet();
             Login login = await DatenVerarbeitung.LoginAuslesen();
             // aktueller Token wird benötigt
@@ -56,7 +57,9 @@ namespace App2Night.Logik
                     // GET Request
                     httpAntwort = await client.GetAsync("connect/userinfo");
                     //httpAntwort.EnsureSuccessStatusCode();
-                    login.userID = await httpAntwort.Content.ReadAsStringAsync();
+                    stringFromServer = await httpAntwort.Content.ReadAsStringAsync();
+                    id = JsonConvert.DeserializeObject<Login>(stringFromServer);
+                    login.userID = id.userID;
                     // ID in die Datei schreiben
                     await DatenVerarbeitung.LoginSpeichern(login);
                     return true;
@@ -233,8 +236,7 @@ namespace App2Night.Logik
                                             "grant_type=password&" +
                                             $"username={login.Username}&" +
                                             $"password={login.Password}&" +
-                                            "scope=App2NightAPI offline_access&" +
-                                            "openid email";
+                                            "scope=App2NightAPI offline_access openid";
                         var content = new StringContent(query, Encoding.UTF8, "application/x-www-form-urlencoded");
                         var requestResult = await client.PostAsync("connect/token", content);
 
@@ -277,7 +279,7 @@ namespace App2Night.Logik
                         var query =     "client_id=nativeApp&" +
                                               "client_secret=secret&" +
                                               $"token={token.RefreshToken}&" +
-                                              "token_type_hint=refresh_token";
+                                              "token_type_hint=access_token";
                         var content = new StringContent(query, Encoding.UTF8, "application/x-www-form-urlencoded");
                         
                         var requestResult = await client.PostAsync("connect/revocation", content);

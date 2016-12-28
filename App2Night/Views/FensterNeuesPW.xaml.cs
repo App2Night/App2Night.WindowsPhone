@@ -29,7 +29,7 @@ namespace App2Night.Views
             this.InitializeComponent();
         }
 
-        private async void btnBestaetigen_wechselZuAnmelden(object sender, RoutedEventArgs e)
+        private void btnBestaetigen_wechselZuAnmelden(object sender, RoutedEventArgs e)
         {
             //Login pwLogin = new Login();
             //pwLogin.Password =  pwBoxNpwALTESPW.Password;  
