@@ -16,10 +16,9 @@ namespace App2NightTestKomponente
         public async Task<Token> GetToken()
         {
             Login temp = new Login();
-            // TODO: gültige Daten!
-            //temp.Email = "testY@test.de";
-            //temp.Password = "hallo1234";
-            //temp.Username = "YvetteLa";
+            temp.Username = "mobapp4";
+            temp.Email = "mobapp4@you-spam.com";
+            temp.Password = "mobapp";
 
             return await BackEndComUserLogik.GetToken(temp);
         }
@@ -27,19 +26,17 @@ namespace App2NightTestKomponente
         [TestMethod]
         public async void PostCreatePartyTest()
         {
-            var testParty = new CreatePartyModel()
-            {
-                PartyName = "Hallo",
-                Description = "Test",
-                CityName = "Horb am Neckar",
-                CountryName = "Deutschland",
-                HouseNumber = "15",
-                MusicGenre = MusicGenre.Electro,
-                PartyDate = DateTime.Today.AddDays(30),
-                PartyType = PartyType.Bar,
-                StreetName = "Florianstraße",
-                ZipCode = "72160"
-            };
+            Party testParty = new Party();
+
+            testParty.PartyName = "PostCreatePartyTest";
+            testParty.PartyType = PartyType.Bar;
+            testParty.PartyDate = new DateTime(2016, 02, 12, 20, 14, 00);
+            testParty.Description = "Diese Party wurde durch einen Test erstellt";
+            testParty.MusicGenre = MusicGenre.Pop;
+            testParty.Location.CityName = "Horb am Neckar";
+            testParty.Location.ZipCode = "72160";
+            testParty.Location.StreetName = "Floranstraße";
+            testParty.Location.HouseNumber = "15";
 
             var erg = await BackEndComPartyLogik.CreateParty(testParty);
 
@@ -62,6 +59,8 @@ namespace App2NightTestKomponente
         [TestMethod]
         public async void ValidateLoc(Location loc)
         {
+            Token token = await GetToken();
+
             Location position = new Location();
             position.CityName = "Horb am Neckar";
             position.CountryName = "Deutschland";
@@ -71,9 +70,9 @@ namespace App2NightTestKomponente
             position.Latitude = 48.445031;
             position.Longitude = 8.696494;
 
-            //string erg = await BackEndComPartyLogik.ValidateLocation(position, token);
+            var erg = await BackEndComPartyLogik.ValidateLocation(position, token);
 
-            //Assert.Equals("200", erg);
+            Assert.Equals("200", erg);
         }
 
 
