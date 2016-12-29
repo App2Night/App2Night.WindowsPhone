@@ -25,7 +25,7 @@
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="38*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock x:Name="textBlVeranstAnzeigenNAME" Margin="10,10,33,0" TextWrapping="Wrap" Text="Deine Party" FontSize="22" TextAlignment="Center" SelectionHighlightColor="White" FontWeight="Bold" Height="60" VerticalAlignment="Top"/>
+                <TextBlock x:Name="textBlVeranstAnzeigenNAME" Margin="10,10,0,0" TextWrapping="Wrap" Text="Deine Party" FontSize="22" TextAlignment="Center" SelectionHighlightColor="White" FontWeight="Bold" Height="60" VerticalAlignment="Top" HorizontalAlignment="Left" Width="245"/>
                 <TextBlock x:Name="textBlAnzeigenOrt" HorizontalAlignment="Left" Height="40" Margin="0,105,0,0" TextWrapping="Wrap" Text="Ort" VerticalAlignment="Top" Width="74" FontSize="20" FontWeight="Bold" RenderTransformOrigin="0.568,-0.375"/>
                 <TextBlock x:Name="textBlDatum" HorizontalAlignment="Left" Height="40" Margin="0,150,0,0" TextWrapping="Wrap" Text="Datum" VerticalAlignment="Top" Width="142" FontSize="20" FontWeight="Bold"/>
                 <TextBox x:Name="textBoxAnzeigenORT" HorizontalAlignment="Left" Height="40" Margin="62,105,0,0" TextWrapping="Wrap" Text="-- Ort --" VerticalAlignment="Top" Width="261" IsReadOnly="True" FontSize="20" TextAlignment="Right" Grid.ColumnSpan="3"/>

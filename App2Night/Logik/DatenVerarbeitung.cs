@@ -143,17 +143,21 @@ namespace App2Night.Logik
         {
             bool erfolg = false;
             Login login = await DatenVerarbeitung.LoginAuslesen();
-            Token aktuellerToken = await TokenAuslesen();
+            Token aktuellerToken;
 
-            if (aktuellerToken.AccessToken == null)
-            {
-                aktuellerToken = await BackEndComUserLogik.GetToken(login);
+            //Token aktuellerToken = await TokenAuslesen();
 
-                if (aktuellerToken.AccessToken != null)
-                {
-                    await TokenSpeichern(aktuellerToken);
-                }
-            }
+            //if (aktuellerToken.AccessToken == null)
+            //{
+            //    aktuellerToken = await BackEndComUserLogik.GetToken(login);
+
+            //    if (aktuellerToken.AccessToken != null)
+            //    {
+            //        await TokenSpeichern(aktuellerToken);
+            //    }
+            //}
+
+            aktuellerToken = await BackEndComUserLogik.GetToken(login);
 
             erfolg = await BackEndComUserLogik.RefreshToken(aktuellerToken);
 

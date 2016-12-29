@@ -51,12 +51,17 @@ namespace App2Night.Logik
             bool internetVorhanden = IsInternet();
             IEnumerable<Party> partyListe = null;
 
-            if (internetVorhanden == true)
+            bool erfolg = await DatenVerarbeitung.aktuellerToken();
+            Token tok = await DatenVerarbeitung.TokenAuslesen();
+
+            if (internetVorhanden == true && erfolg == true)
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
                 double latitude = aktuellePosition.Latitude;
                 double longitude = aktuellePosition.Longitude;
+
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + tok.AccessToken);
 
                 string anfrage = $"Party?lat={latitude}&lon={longitude}&radius={radius}";
                 // durch das Speichern in den String wird aus einem Punkt ein Komma, deshalb muss das danach ausgebessert werden
@@ -64,23 +69,19 @@ namespace App2Night.Logik
 
                 try
                 {
-                    // TODO: Geht das noch ohne rest der url?
                     httpAntwort = await client.GetAsync(anfrage);                   
                     stringFromServer = await httpAntwort.Content.ReadAsStringAsync();
                     partyListe = JsonConvert.DeserializeObject<IEnumerable<Party>>(stringFromServer);
                 }
                 catch (Exception ex)
                 {
-                    stringFromServer = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
                     await message.ShowAsync();
                 }
-
             }
             else
             {
                 // Nachricht, dass Internet eingeschaltet werden soll
-                // Code 42 - Fehler: Keine Internetverbindung
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
                 await message.ShowAsync();
             }
@@ -93,10 +94,11 @@ namespace App2Night.Logik
         /// </summary>
         /// <param name="id">ID der Daten</param>
         /// <returns>Party als String</returns>
-        public static async Task<string> GetPartyByID(string id)
+        public static async Task<Party> GetPartyByID(string id)
         {
             string stringFromServer = "";
             bool internetVorhanden = IsInternet();
+            Party party = new Party();
 
             if (internetVorhanden == true)
             {
@@ -109,26 +111,22 @@ namespace App2Night.Logik
                     httpAntwort = await client.GetAsync($"Party/id={id}");
                     //httpAntwort.EnsureSuccessStatusCode();
                     stringFromServer = await httpAntwort.Content.ReadAsStringAsync();
-                    return stringFromServer;
+                    party = JsonConvert.DeserializeObject<Party>(stringFromServer);
                 }
                 catch (Exception ex)
                 {
-                    stringFromServer = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
                     await message.ShowAsync();
-                    // Code 21 - Fehler bei Abrufen
-                    return "21";
                 }
-
             }
             else
             {
                 // Nachricht, dass Internet eingeschaltet werden soll
-                // Code 42 - Fehler: Keine Internetverbindung
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
                 await message.ShowAsync();
-                return "42";
             }
+
+            return party;
         }
 
         /// <summary>
@@ -139,7 +137,6 @@ namespace App2Night.Logik
         public static async Task<bool> CreateParty(Party party)
         {
             bool internetVorhanden = IsInternet();
-            string status = "";
             party.Location.CountryName = "Deutschland";
 
             bool erfolg = await DatenVerarbeitung.aktuellerToken();
@@ -149,7 +146,6 @@ namespace App2Night.Logik
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
-                //client.DefaultRequestHeaders.Add("Content-Type", "application/json");
                 var json = JsonConvert.SerializeObject(party);
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + tok.AccessToken);
                 HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");              
@@ -158,24 +154,19 @@ namespace App2Night.Logik
                 {
                     httpAntwort = await client.PostAsync("Party", content);
                     bool erfolgreich = httpAntwort.IsSuccessStatusCode;
-                    //status = await httpAntwort.Content.ReadAsStringAsync();
-                    //return status;
                     return erfolgreich;
                 }
 
                 catch (Exception ex)
                 {
-                    status = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
                     await message.ShowAsync();
-                    // Code 21 - Fehler bei Abrufen
                     return false;
                 }
             }
             else
             {
                 // Nachricht, dass Internet eingeschaltet werden soll
-                // Code 42 - Fehler: Keine Internetverbindung
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
                 await message.ShowAsync();
                 return false;
@@ -232,12 +223,15 @@ namespace App2Night.Logik
         /// <param name="id">ID der zu aktualisierenden Party</param>
         /// <param name="party">Party mit neuen Werten</param>
         /// <returns>Status</returns>
-        public static async Task<string> UpdatePartyByID(Party party, Token token)
+        public static async Task<bool> UpdatePartyByID(Party party)
         {
             bool internetVorhanden = IsInternet();
-            string status = "";
+            bool erfolg = false;
 
-            if (internetVorhanden == true)
+            bool aktuellerToken = await DatenVerarbeitung.aktuellerToken();
+            Token token = await DatenVerarbeitung.TokenAuslesen();
+
+            if (internetVorhanden == true && aktuellerToken == true)
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
@@ -246,28 +240,24 @@ namespace App2Night.Logik
 
                 try
                 {
-                    httpAntwort = await client.PutAsync($"Party/id ={party.PartyId}", content);
-                    //httpAntwort.EnsureSuccessStatusCode();
-                    status = await httpAntwort.Content.ReadAsStringAsync();
-                    return status;
+                    httpAntwort = await client.PutAsync($"Party/id={party.PartyId}", content);
+                    erfolg = httpAntwort.IsSuccessStatusCode;
+                    return erfolg;
                 }
 
                 catch (Exception ex)
                 {
-                    status = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
                     await message.ShowAsync();
-                    // Code 21 - Fehler bei Abrufen
-                    return "21";
+                    return false;
                 }
             }
             else
             {
                 // Nachricht, dass Internet eingeschaltet werden soll
-                // Code 42 - Fehler: Keine Internetverbindung
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
                 await message.ShowAsync();
-                return "42";
+                return false;
             }
         }
 
@@ -276,12 +266,15 @@ namespace App2Night.Logik
         /// </summary>
         /// <param name="location">Zu pruefende Adresse</param>
         /// <returns>Location laut Google</returns>
-        public static async Task<string> ValidateLocation(Location location, Token token)
+        public static async Task<string> ValidateLocation(Location location)
         {
             bool internetVorhanden = IsInternet();
-            // TODO: eventuell Locations statt string
+            // TODO: von String in Location umwandeln -> null abfangen
             string adresseLautGoogle = "";
             location.CountryName = "Deutschland";
+
+            bool aktuellerToken = await DatenVerarbeitung.aktuellerToken();
+            Token token = await DatenVerarbeitung.TokenAuslesen();
 
             if (internetVorhanden == true)
             {
@@ -292,7 +285,6 @@ namespace App2Night.Logik
 
                 try
                 {
-                    // TODO: Unauthorized
                     httpAntwort = await client.PostAsync("Party/validate", content);
                     adresseLautGoogle = await httpAntwort.Content.ReadAsStringAsync();
                     return adresseLautGoogle;
@@ -300,17 +292,14 @@ namespace App2Night.Logik
 
                 catch (Exception ex)
                 {
-                    adresseLautGoogle = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
                     await message.ShowAsync();
-                    // Code 21 - Fehler bei Abrufen
                     return "21";
                 }
             }
             else
             {
                 // Nachricht, dass Internet eingeschaltet werden soll
-                // Code 42 - Fehler: Keine Internetverbindung
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
                 await message.ShowAsync();
                 return "42";

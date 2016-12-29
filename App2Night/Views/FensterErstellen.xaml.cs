@@ -27,6 +27,9 @@ namespace App2Night.Views
     /// </summary>
     public sealed partial class FensterErstellen : Page
     {
+        public Party uebergebeneParty = new Party();
+        public bool ueberarbeiten = false;
+
         public FensterErstellen()
         {
             this.InitializeComponent();
@@ -34,6 +37,18 @@ namespace App2Night.Views
             // MusicGenres in ComboBox anzeigen
             comboBoxErstellenMUSIKRICHTUNG.ItemsSource = Enum.GetValues(typeof(MusicGenre));
             comboBoxErstellenTYP.ItemsSource = Enum.GetValues(typeof(PartyType));
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            uebergebeneParty = e.Parameter as Party;
+
+            if (e.SourcePageType == typeof(FensterVeranstaltungAnzeigen))
+            {
+                ueberarbeiten = true;
+                AppBarButtonErstellen.Icon = new SymbolIcon(Symbol.Edit);
+                AppBarButtonErstellen.Label = "Änderungen speichern";
+            }
         }
 
         private void Abbrechen_wechselZuHauptansicht(object sender, RoutedEventArgs e)
@@ -48,6 +63,7 @@ namespace App2Night.Views
 
             // Überprüfung und Post
             Party partyZuErstellen = new Party();
+            bool status = false;
 
             // Validieren der Ortsangabe
             Location zuValidieren = new Location();
@@ -56,34 +72,14 @@ namespace App2Night.Views
             zuValidieren.HouseNumber = textBoxErstellenHAUSNR.Text;
             zuValidieren.ZipCode = textBoxErstellenPLZ.Text;
 
-            Token tok = await DatenVerarbeitung.TokenAuslesen();
-            bool erfolg = await DatenVerarbeitung.aktuellerToken();
-
-            // Falls noch kein Token angelegt wurde, wird ein neuer erzeugt
-            if (tok == null)
-            {
-                Login nutzer = await DatenVerarbeitung.LoginAuslesen();
-                tok = await BackEndComUserLogik.GetToken(nutzer);
-                await DatenVerarbeitung.TokenSpeichern(tok);
-
-                if (tok.AccessToken == null)
-                {
-                    var message = new MessageDialog("Die Email wurde noch nicht bestätigt!");
-                    await message.ShowAsync();
-                    this.IsEnabled = true;
-                    return;
-                }
-            }
-
             // Gibt die korrekte Adresse zurück, falls Google sie finden kann
-            string adresseLautGoogle = await BackEndComPartyLogik.ValidateLocation(zuValidieren, tok);
+            string adresseLautGoogle = await BackEndComPartyLogik.ValidateLocation(zuValidieren);
 
             if (adresseLautGoogle != "")
             {
                 zuValidieren = JsonConvert.DeserializeObject<Location>(adresseLautGoogle); 
             }
 
-            //TODO: Auf falsche Eingabe reagieren 
             try
             {
                 partyZuErstellen.PartyName = textBoxErstellenNAME.Text;
@@ -123,17 +119,24 @@ namespace App2Night.Views
                     throw FehlerhaftesDatum;
                 }
 
-                bool status = await BackEndComPartyLogik.CreateParty(partyZuErstellen);
+                if (ueberarbeiten == false)
+                {
+                    status = await BackEndComPartyLogik.CreateParty(partyZuErstellen); 
+                }
+                else
+                {
+                    status = await BackEndComPartyLogik.UpdatePartyByID(partyZuErstellen);
+                }
 
                 if (status == true)
                 {
-                    var message = new MessageDialog("Party erfolgreich erstellt!");
+                    var message = new MessageDialog("Party erfolgreich gespeichert!");
                     await message.ShowAsync();
                     this.Frame.Navigate(typeof(FensterHauptansicht));
                 }
                 else
                 {
-                    var message = new MessageDialog("Es ist ein Fehler beim Erstellen aufgetreten. Bitte versuche es später erneut.");
+                    var message = new MessageDialog("Es ist ein Fehler beim Speichern aufgetreten. Bitte versuche es später erneut.");
                     await message.ShowAsync();
                     this.IsEnabled = true;
                     progressRingErstellen.Visibility = Visibility.Collapsed;
@@ -149,8 +152,8 @@ namespace App2Night.Views
                 return;
             }
 
-            //this.IsEnabled = true;
-            //progressRingErstellen.Visibility = Visibility.Collapsed;
+            this.IsEnabled = true;
+            progressRingErstellen.Visibility = Visibility.Collapsed;
 
         }
     }

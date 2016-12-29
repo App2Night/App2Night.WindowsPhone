@@ -59,8 +59,6 @@ namespace App2NightTestKomponente
         [TestMethod]
         public async void ValidateLoc(Location loc)
         {
-            Token token = await GetToken();
-
             Location position = new Location();
             position.CityName = "Horb am Neckar";
             position.CountryName = "Deutschland";
@@ -70,7 +68,7 @@ namespace App2NightTestKomponente
             position.Latitude = 48.445031;
             position.Longitude = 8.696494;
 
-            var erg = await BackEndComPartyLogik.ValidateLocation(position, token);
+            var erg = await BackEndComPartyLogik.ValidateLocation(position);
 
             Assert.Equals("200", erg);
         }

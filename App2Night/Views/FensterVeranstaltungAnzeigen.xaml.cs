@@ -52,6 +52,17 @@ namespace App2Night.Views
             textBoxAnzeigenMUSIKRICHTUNG.Text = uebergebeneParty.MusicGenre.ToString();
             textBoxAnzeigenWeitereINFOS.Text = uebergebeneParty.Description;
 
+            if (uebergebeneParty.HostedByUser == true)
+            {
+                appBarButtonBearbeiten.Visibility = Visibility.Visible;
+                textBlVeranstAnzeigenNAME.Width = 245;
+            }
+            else
+            {
+                appBarButtonBearbeiten.Visibility = Visibility.Collapsed;
+                textBlVeranstAnzeigenNAME.Width = 303;
+            }
+
             if (uebergebeneParty.UserCommitmentState != EventCommitmentState.Noted)
             {
                 AppBarButtonVormerken.Icon = new SymbolIcon(Symbol.OutlineStar);
@@ -138,7 +149,7 @@ namespace App2Night.Views
 
         private void Bearbeiten_wechselZuErstellen(object sender, RoutedEventArgs e)
         {
-
+            this.Frame.Navigate(typeof(FensterErstellen), uebergebeneParty);
         }
 
         private async void Teilnehmen_CommitmentStateSetzen(object sender, RoutedEventArgs e)
