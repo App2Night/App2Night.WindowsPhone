@@ -15,6 +15,8 @@ using Windows.UI.Xaml.Navigation;
 using App2Night.Controller;
 using Newtonsoft.Json;
 using App2Night.ModelsEnums.Model;
+using App2Night.Logik;
+using Windows.UI.Popups;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -30,22 +32,9 @@ namespace App2Night.Views
         public FensterVeranstaltungAnzeigen()
         {
             this.InitializeComponent();
+            ProgRingAnzeigen.Visibility = Visibility.Collapsed;
         }
-
-        //private void btnVormerken_wechselZuHauptansicht(object sender, RoutedEventArgs e)
-        //{
-        //    //Ansicht des Reigsters vorgemerkt?
-        //    this.Frame.Navigate(typeof(FensterHauptansicht));
-            
-        //}
-
-        //private void btnZurueck_wechselZuHauptansicht(object sender, RoutedEventArgs e)
-        //{
-        //    this.Frame.Navigate(typeof(FensterHauptansicht));
-            
-            
-        //}
-
+        
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             uebergebenderParameter = e.Parameter as Party;
@@ -62,11 +51,6 @@ namespace App2Night.Views
             textBoxAnzeigenMUSIKRICHTUNG.Text = uebergebenderParameter.MusicGenre.ToString();
             textBoxAnzeigenWeitereINFOS.Text = uebergebenderParameter.Description;
         }
-
-        //private void btnAufKarteAnzeigen_wechselZuKartenAnzeige(object sender, RoutedEventArgs e)
-        //{
-        //    this.Frame.Navigate(typeof(FensterKartenansicht), uebergebenderParameter);
-        //}
 
         private void Zurueck_wechselZuHauptansicht(object sender, RoutedEventArgs e)
         {
@@ -87,5 +71,60 @@ namespace App2Night.Views
         {
 
         }
+
+        private async void Teilnehmen_CommitmentStateSetzen(object sender, RoutedEventArgs e)
+        {
+            CommitmentParty teilnehmen = new CommitmentParty();
+            bool zusagen = false;
+
+
+            if (uebergebenderParameter.UserCommitmentState == ModelsEnums.Enums.EventCommitmentState.Rejected  
+                || uebergebenderParameter.UserCommitmentState == ModelsEnums.Enums.EventCommitmentState.Noted) 
+            {
+                appBarButtonTeilnehmen.Icon = new SymbolIcon(Symbol.Audio); ;
+                appBarButtonTeilnehmen.Label = "Teilnehmen";
+                
+                teilnehmen.Teilnahme = ModelsEnums.Enums.EventCommitmentState.Accepted;
+
+                zusagen = true;
+            }
+            else
+            {
+                appBarButtonTeilnehmen.Icon = new SymbolIcon(Symbol.Undo); ;
+                appBarButtonTeilnehmen.Label = "Absagen";
+
+                teilnehmen.Teilnahme = ModelsEnums.Enums.EventCommitmentState.Rejected;
+
+                zusagen = false;
+            }
+
+            ProgRingAnzeigen.Visibility = Visibility.Visible;
+            this.IsEnabled = false;
+
+            string teilnahme = await BackEndComPartyLogik.PutPartyCommitmentState(uebergebenderParameter, teilnehmen);
+            if (teilnahme == "200")
+            {
+                if (zusagen == true)
+                {
+                    var message = new MessageDialog("Deine Teilnahme wurde berücksichtigt!", "Viel Spaß!");
+                    await message.ShowAsync();
+                }
+                else
+                {
+                   var message = new MessageDialog("Deine Absage wurde berücksichtigt!", "Pech gehabt!");
+                    await message.ShowAsync();
+                }
+            }
+            else
+            {
+                var message = new MessageDialog("Schade, wenn Du noch teilnehmen möchtest, versuche es erneut!", "Nicht erfolgreich");
+                await message.ShowAsync();
+
+            }
+            this.IsEnabled = true;
+            ProgRingAnzeigen.Visibility = Visibility.Collapsed;
+
+        }
+
     }
 }

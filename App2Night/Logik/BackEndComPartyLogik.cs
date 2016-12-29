@@ -318,17 +318,19 @@ namespace App2Night.Logik
         }
 
 
-        public static async Task<string> PostPartyRating(Party party, PartyVoting voting, Token token)
+        public static async Task<string> PutPartyRating(Party party, PartyVoting voting)
         {
             bool internetVorhanden = IsInternet();
             string erfolgreichesVoting = "";
-           
 
-            if (internetVorhanden == true)
+            bool erfolg = await DatenVerarbeitung.aktuellerToken();
+            Token tok = await DatenVerarbeitung.TokenAuslesen();
+
+            if (internetVorhanden == true && erfolg == true)
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
-                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token.AccessToken);
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + tok.AccessToken);
                 HttpContent content = new StringContent(JsonConvert.SerializeObject(voting), Encoding.UTF8, "application/json");
 
                 try
@@ -358,7 +360,46 @@ namespace App2Night.Logik
             }
         }
 
+        public static async Task<string> PutPartyCommitmentState(Party party, CommitmentParty teilnahme)
+        {
+            bool internetVorhanden = IsInternet();
+            string teilnehmen = "";
 
+            bool erfolg = await DatenVerarbeitung.aktuellerToken();
+            Token tok = await DatenVerarbeitung.TokenAuslesen();
+
+            if (internetVorhanden == true && erfolg == true)
+            {
+                HttpClient client = GetClientParty();
+                HttpResponseMessage httpAntwort = new HttpResponseMessage();
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + tok.AccessToken);
+                HttpContent content = new StringContent(JsonConvert.SerializeObject(teilnahme), Encoding.UTF8, "application/json");
+
+                try
+                {
+                    httpAntwort = await client.PutAsync($"UserParty/partyCommitmentState?id={party.PartyId}", content);   //Rest von URL von Swagger
+                    teilnehmen = await httpAntwort.Content.ReadAsStringAsync();
+                    return teilnehmen;
+                }
+
+                catch (Exception ex)
+                {
+                    teilnehmen = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+                    var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
+                    await message.ShowAsync();
+                    // Code 21 - Fehler bei Abrufen
+                    return "21";
+                }
+            }
+            else
+            {
+                // Nachricht, dass Internet eingeschaltet werden soll
+                // Code 42 - Fehler: Keine Internetverbindung
+                var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
+                await message.ShowAsync();
+                return "42";
+            }
+        }
 
 
         /// <summary>
