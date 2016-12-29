@@ -11,6 +11,11 @@ namespace App2Night.ModelsEnums.Model
 {
     public class PartyVoting
     {
+        // Zahlen = Bedeutung
+        // 0 = nicht bewertet
+        // 1 = positiv bewertet
+        // -1 = negativ bewertet
+
         private int priceRatingVar;
         [JsonProperty("priceRating")]
         public int priceRating
