@@ -55,7 +55,7 @@ namespace App2Night.Views
             TimeSpan partyUhrzeit = partyDatumUhrzeit.TimeOfDay;
             
             // null möglich!
-            txtBlVeranstAnzeigenNAME.Text = uebergebenderParameter.PartyName;
+            textBoxVeranstAnzeigenNAME.Text = uebergebenderParameter.PartyName;
             textBoxAnzeigenDATUM.Text = partyDatum.ToString("dd/MM/yyyy");
             textBoxAnzeigenUHRZEIT.Text = partyDatumUhrzeit.ToString("HH:mm");
             textBoxAnzeigenORT.Text = uebergebenderParameter.Location.CityName;
@@ -81,6 +81,11 @@ namespace App2Night.Views
         private void AufKarteAnzeigen_wechselZuKartenAnzeige(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(FensterKartenansicht), uebergebenderParameter);
+        }
+
+        private void Bearbeiten_wechselZuErstellen(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
