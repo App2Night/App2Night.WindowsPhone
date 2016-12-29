@@ -229,12 +229,6 @@
     <Compile Include="Views\FensterVeranstaltungAnzeigen.xaml.cs">
       <DependentUpon>FensterVeranstaltungAnzeigen.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FensterVeranstaltungErstellen02.xaml.cs">
-      <DependentUpon>FensterVeranstaltungErstellen02.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FensterVeranstaltungErstellen.xaml.cs">
-      <DependentUpon>FensterVeranstaltungErstellen.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\FensterVeranstaltungSuchen.xaml.cs">
       <DependentUpon>FensterVeranstaltungSuchen.xaml</DependentUpon>
     </Compile>
@@ -304,14 +298,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FensterVeranstaltungAnzeigen.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\FensterVeranstaltungErstellen02.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\FensterVeranstaltungErstellen.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
