@@ -60,7 +60,7 @@ namespace App2Night
                 rootFrame = new Frame();
 
                 // Ändern des erstes Fensters
-                rootFrame.Navigate(typeof(Views.FensterUserEinstellungen), e.Arguments);
+                rootFrame.Navigate(typeof(Views.FensterHauptansicht), e.Arguments);
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 

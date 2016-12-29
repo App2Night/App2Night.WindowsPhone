@@ -44,6 +44,10 @@ namespace App2Night.ModelsEnums.Model
         public string Description { get; set; }
         [JsonProperty("Location")]
         public Location Location { get; set; }
+
+        [JsonProperty(PropertyName = "UserCommitmentState")]
+        public EventCommitmentState UserCommitmentState { get; set;}
+
         //[JsonProperty("GeneralVoting")]
         //public PartyVoting Voting { get; set; }
 
@@ -52,18 +56,18 @@ namespace App2Night.ModelsEnums.Model
         public int GeneralUpVoting { get; set; }
         [JsonProperty("GeneralDownVoting")]
         public int GeneralDownVoting { get; set; }
-        [JsonProperty("PriceUpVoting")]
-        public int PriceUpVoting { get; set; }
-        [JsonProperty("PriceDownVoting")]
-        public int PriceDownVoting { get; set; }
-        [JsonProperty("LocationUpVoting")]
-        public int LocationUpVoting { get; set; }
-        [JsonProperty("LocationDownVoting")]
-        public int LocationDownVoting { get; set; }
-        [JsonProperty("MoodUpVoting")]
-        public int MoodUpVoting { get; set; }
-        [JsonProperty("MoodDownVoting")]
-        public int MoodDownVoting { get; set; }
+        //[JsonProperty("PriceUpVoting")]
+        //public int PriceUpVoting { get; set; }
+        //[JsonProperty("PriceDownVoting")]
+        //public int PriceDownVoting { get; set; }
+        //[JsonProperty("LocationUpVoting")]
+        //public int LocationUpVoting { get; set; }
+        //[JsonProperty("LocationDownVoting")]
+        //public int LocationDownVoting { get; set; }
+        //[JsonProperty("MoodUpVoting")]
+        //public int MoodUpVoting { get; set; }
+        //[JsonProperty("MoodDownVoting")]
+        //public int MoodDownVoting { get; set; }
 
 
     }

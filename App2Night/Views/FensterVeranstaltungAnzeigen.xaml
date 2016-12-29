@@ -18,18 +18,20 @@
     </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock x:Name="txtBlVeranstAnzeigenNAME" Margin="8,-30,0,590" TextWrapping="Wrap" Text="Deine Party" Width="340" FontSize="36" HorizontalAlignment="Left" TextAlignment="Center" SelectionHighlightColor="White" FontWeight="Bold"/>
-        <TextBlock x:Name="textBlAnzeigenOrt" HorizontalAlignment="Left" Height="40" Margin="10,78,0,0" TextWrapping="Wrap" Text="Ort" VerticalAlignment="Top" Width="74" FontSize="20" FontWeight="Bold" RenderTransformOrigin="0.568,-0.375"/>
-        <TextBlock x:Name="textBlDatum" HorizontalAlignment="Left" Height="40" Margin="12,133,0,0" TextWrapping="Wrap" Text="Datum" VerticalAlignment="Top" Width="142" FontSize="20" FontWeight="Bold"/>
-        <TextBlock x:Name="textBlUhrzeit" HorizontalAlignment="Left" Height="40" Margin="13,188,0,0" TextWrapping="Wrap" Text="Uhrzeit" VerticalAlignment="Top" Width="142" FontSize="20" FontWeight="Bold"/>
-        <TextBlock x:Name="textBlMusikRichtung" HorizontalAlignment="Left" Height="40" Margin="10,243,0,0" TextWrapping="Wrap" Text="Musikrichtung" VerticalAlignment="Top" Width="141" FontWeight="Bold" FontSize="20"/>
-        <TextBlock x:Name="textBlWeitereInfos" HorizontalAlignment="Left" Height="40" Margin="8,288,0,0" TextWrapping="Wrap" Text="Weitere Infos" VerticalAlignment="Top" Width="143" FontSize="20" FontWeight="Bold"/>
-        <TextBox x:Name="textBoxAnzeigenWeitereINFOS" HorizontalAlignment="Left" Height="122" Margin="12,333,0,0" TextWrapping="Wrap" Text="-- keine weiteren Infos --" VerticalAlignment="Top" Width="340" IsReadOnly="True" FontSize="20"/>
-        <TextBox x:Name="textBoxAnzeigenORT" HorizontalAlignment="Left" Height="40" Margin="87,78,0,0" TextWrapping="Wrap" Text="-- Ort --" VerticalAlignment="Top" Width="261" IsReadOnly="True" FontSize="20" TextAlignment="Right"/>
-        <TextBox x:Name="textBoxAnzeigenMUSIKRICHTUNG" HorizontalAlignment="Left" Height="40" Margin="151,243,0,0" TextWrapping="Wrap" Text="-- Musikrichtung --" VerticalAlignment="Top" Width="199" IsReadOnly="True" FontSize="20" TextAlignment="Right"/>
-        <TextBox x:Name="textBoxAnzeigenDATUM" HorizontalAlignment="Left" Height="40" Margin="151,133,0,0" TextWrapping="Wrap" Text="-- Datum --" VerticalAlignment="Top" Width="197" FontSize="20" IsReadOnly="True" TextAlignment="Right"/>
-        <TextBox x:Name="textBoxAnzeigenUHRZEIT" HorizontalAlignment="Left" Height="40" Margin="153,188,0,0" TextWrapping="Wrap" Text="-- Uhrzeit --" VerticalAlignment="Top" Width="197" IsReadOnly="True" FontSize="20" TextAlignment="Right"/>
-        <AppBarButton x:Name="AppBarButtonTeilnehmen" HorizontalAlignment="Left" Icon="Add" Label="" Margin="13,495,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.157,-0.07"/>
-        <AppBarButton x:Name="appBarButtonVoten" HorizontalAlignment="Left" Icon="Like" Label="" Margin="280,495,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="txtBlVeranstAnzeigenNAME" Margin="8,-30,0,590" TextWrapping="Wrap" Text="Deine Party" Width="340" FontSize="36" HorizontalAlignment="Left" TextAlignment="Center" SelectionHighlightColor="White" FontWeight="Bold" VerticalAlignment="Bottom"/>
+        <ScrollViewer Height="530" Margin="0,55,0,0" VerticalAlignment="Top" Width="360" Grid.ColumnSpan="2">
+            <Grid Height="742" Width="323">
+                <TextBlock x:Name="textBlAnzeigenOrt" HorizontalAlignment="Left" Height="40" Margin="0,20,0,0" TextWrapping="Wrap" Text="Ort" VerticalAlignment="Top" Width="74" FontSize="20" FontWeight="Bold" RenderTransformOrigin="0.568,-0.375"/>
+                <TextBlock x:Name="textBlDatum" HorizontalAlignment="Left" Height="40" Margin="0,75,0,0" TextWrapping="Wrap" Text="Datum" VerticalAlignment="Top" Width="142" FontSize="20" FontWeight="Bold"/>
+                <TextBox x:Name="textBoxAnzeigenORT" HorizontalAlignment="Left" Height="40" Margin="62,20,0,0" TextWrapping="Wrap" Text="-- Ort --" VerticalAlignment="Top" Width="261" IsReadOnly="True" FontSize="20" TextAlignment="Right"/>
+                <TextBox x:Name="textBoxAnzeigenDATUM" HorizontalAlignment="Left" Height="40" Margin="72,75,0,0" TextWrapping="Wrap" Text="-- Datum --" VerticalAlignment="Top" Width="251" FontSize="20" IsReadOnly="True" TextAlignment="Right"/>
+                <TextBlock x:Name="textBlUhrzeit" HorizontalAlignment="Left" Height="40" Margin="0,130,0,0" TextWrapping="Wrap" Text="Uhrzeit" VerticalAlignment="Top" Width="142" FontSize="20" FontWeight="Bold"/>
+                <TextBox x:Name="textBoxAnzeigenUHRZEIT" HorizontalAlignment="Left" Height="40" Margin="126,130,0,0" TextWrapping="Wrap" Text="-- Uhrzeit --" VerticalAlignment="Top" Width="197" IsReadOnly="True" FontSize="20" TextAlignment="Right"/>
+                <TextBlock x:Name="textBlMusikRichtung" HorizontalAlignment="Left" Height="40" Margin="0,185,0,0" TextWrapping="Wrap" Text="Musikrichtung" VerticalAlignment="Top" Width="141" FontWeight="Bold" FontSize="20" RenderTransformOrigin="0.27,-1.183"/>
+                <TextBox x:Name="textBoxAnzeigenMUSIKRICHTUNG" HorizontalAlignment="Left" Height="40" Margin="146,185,0,0" TextWrapping="Wrap" Text="-- Musik --" VerticalAlignment="Top" Width="177" IsReadOnly="True" FontSize="20" TextAlignment="Right" RenderTransformOrigin="0.707,0.5"/>
+                <TextBlock x:Name="textBlWeitereInfos" HorizontalAlignment="Left" Height="40" Margin="0,230,0,0" TextWrapping="Wrap" Text="Weitere Infos" VerticalAlignment="Top" Width="143" FontSize="20" FontWeight="Bold"/>
+                <TextBox x:Name="textBoxAnzeigenWeitereINFOS" HorizontalAlignment="Left" Height="122" Margin="0,275,0,0" TextWrapping="Wrap" Text="-- keine weiteren Infos --" VerticalAlignment="Top" Width="323" IsReadOnly="True" FontSize="20"/>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>
