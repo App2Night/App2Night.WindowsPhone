@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using App2Night.Controller;
 using Newtonsoft.Json;
 using App2Night.ModelsEnums.Model;
+using App2Night.ModelsEnums.Enums;
 using App2Night.Logik;
 using Windows.UI.Popups;
 
@@ -27,7 +28,7 @@ namespace App2Night.Views
     /// </summary>
     public sealed partial class FensterVeranstaltungAnzeigen : Page
     {
-        public Party uebergebenderParameter = new Party();
+        public Party uebergebeneParty = new Party();
 
         public FensterVeranstaltungAnzeigen()
         {
@@ -37,19 +38,19 @@ namespace App2Night.Views
         
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            uebergebenderParameter = e.Parameter as Party;
+            uebergebeneParty = e.Parameter as Party;
 
-            DateTime partyDatumUhrzeit = uebergebenderParameter.PartyDate;
+            DateTime partyDatumUhrzeit = uebergebeneParty.PartyDate;
             DateTime partyDatum = partyDatumUhrzeit.Date;
             TimeSpan partyUhrzeit = partyDatumUhrzeit.TimeOfDay;
             
             // null möglich!
-            textBlVeranstAnzeigenNAME.Text = uebergebenderParameter.PartyName;
+            textBlVeranstAnzeigenNAME.Text = uebergebeneParty.PartyName;
             textBoxAnzeigenDATUM.Text = partyDatum.ToString("dd/MM/yyyy");
             textBoxAnzeigenUHRZEIT.Text = partyDatumUhrzeit.ToString("HH:mm");
-            textBoxAnzeigenORT.Text = uebergebenderParameter.Location.CityName;
-            textBoxAnzeigenMUSIKRICHTUNG.Text = uebergebenderParameter.MusicGenre.ToString();
-            textBoxAnzeigenWeitereINFOS.Text = uebergebenderParameter.Description;
+            textBoxAnzeigenORT.Text = uebergebeneParty.Location.CityName;
+            textBoxAnzeigenMUSIKRICHTUNG.Text = uebergebeneParty.MusicGenre.ToString();
+            textBoxAnzeigenWeitereINFOS.Text = uebergebeneParty.Description;
         }
 
         private void Zurueck_wechselZuHauptansicht(object sender, RoutedEventArgs e)
@@ -57,14 +58,36 @@ namespace App2Night.Views
             this.Frame.Navigate(typeof(FensterHauptansicht));
         }
 
-        private void Vormerken_wechselZuHauptansicht(object sender, RoutedEventArgs e)
+        private async void Vormerken_wechselZuHauptansicht(object sender, RoutedEventArgs e)
         {
+            ProgRingAnzeigen.Visibility = Visibility.Visible;
+            this.IsEnabled = false;
+
+            CommitmentParty commitment = new CommitmentParty();
+            commitment.Teilnahme = EventCommitmentState.Noted;
+
+            string antwort = await BackEndComPartyLogik.PutPartyCommitmentState(uebergebeneParty, commitment);
+
+            this.IsEnabled = true;
+            ProgRingAnzeigen.Visibility = Visibility.Collapsed;
+
+            if (antwort == "200")
+            {
+                var message = new MessageDialog("Diese Party wurde für dich vorgemerkt!", "Erfolg!");
+                await message.ShowAsync();
+            }
+            else
+            {
+                var message = new MessageDialog("Es ist ein Fehler aufgetreten. Bitte versuche es später erneut!", "Fehler!");
+                await message.ShowAsync();
+            }
+
             this.Frame.Navigate(typeof(FensterHauptansicht));
         }
 
         private void AufKarteAnzeigen_wechselZuKartenAnzeige(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(FensterKartenansicht), uebergebenderParameter);
+            this.Frame.Navigate(typeof(FensterKartenansicht), uebergebeneParty);
         }
 
         private void Bearbeiten_wechselZuErstellen(object sender, RoutedEventArgs e)
@@ -78,13 +101,13 @@ namespace App2Night.Views
             bool zusagen = false;
 
 
-            if (uebergebenderParameter.UserCommitmentState == ModelsEnums.Enums.EventCommitmentState.Rejected  
-                || uebergebenderParameter.UserCommitmentState == ModelsEnums.Enums.EventCommitmentState.Noted) 
+            if (uebergebeneParty.UserCommitmentState == EventCommitmentState.Rejected  
+                || uebergebeneParty.UserCommitmentState == EventCommitmentState.Noted) 
             {
                 appBarButtonTeilnehmen.Icon = new SymbolIcon(Symbol.Audio); ;
                 appBarButtonTeilnehmen.Label = "Teilnehmen";
                 
-                teilnehmen.Teilnahme = ModelsEnums.Enums.EventCommitmentState.Accepted;
+                teilnehmen.Teilnahme = .EventCommitmentState.Accepted;
 
                 zusagen = true;
             }
@@ -93,7 +116,7 @@ namespace App2Night.Views
                 appBarButtonTeilnehmen.Icon = new SymbolIcon(Symbol.Undo); ;
                 appBarButtonTeilnehmen.Label = "Absagen";
 
-                teilnehmen.Teilnahme = ModelsEnums.Enums.EventCommitmentState.Rejected;
+                teilnehmen.Teilnahme = EventCommitmentState.Rejected;
 
                 zusagen = false;
             }
@@ -101,7 +124,8 @@ namespace App2Night.Views
             ProgRingAnzeigen.Visibility = Visibility.Visible;
             this.IsEnabled = false;
 
-            string teilnahme = await BackEndComPartyLogik.PutPartyCommitmentState(uebergebenderParameter, teilnehmen);
+            string teilnahme = await BackEndComPartyLogik.PutPartyCommitmentState(uebergebeneParty, teilnehmen);
+
             if (teilnahme == "200")
             {
                 if (zusagen == true)
@@ -125,6 +149,5 @@ namespace App2Night.Views
             ProgRingAnzeigen.Visibility = Visibility.Collapsed;
 
         }
-
     }
 }
