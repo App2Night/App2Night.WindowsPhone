@@ -21,6 +21,7 @@ using Windows.UI.Popups;
 using Newtonsoft.Json;
 using Plugin.Geolocator.Abstractions;
 using App2Night.Logik;
+using App2Night.ModelsEnums.Enums;
 
 // Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -54,8 +55,6 @@ namespace App2Night.Views
             bool partygefunden = false;
             int suchDurchLauf = 0;
 
-
-            // TODO: geht da wirklich so?
             while (partygefunden == false)
             {
                 party = partyListe.ElementAt(suchDurchLauf);
@@ -74,9 +73,7 @@ namespace App2Night.Views
 
             this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen), party);
             
-        }
-
-        
+        }    
 
         private void Hinzufuegen_wechselZuErstellen(object sender, RoutedEventArgs e)
         {
@@ -98,8 +95,15 @@ namespace App2Night.Views
 
                 for (int i = 0; i < anzahl; i++)
                 {
+                    // Liste aller Partys in der Nähe
                     party = partyListe.ElementAt(i);
                     listViewSuchErgebnis.Items.Add(party.PartyName);
+
+                    // Liste der vorgemerkten Partys
+                    if (party.UserCommitmentState == EventCommitmentState.Noted)
+                    {
+                        listViewVorgemerkt.Items.Add(party.PartyName);
+                    }
                 }
             }
             else

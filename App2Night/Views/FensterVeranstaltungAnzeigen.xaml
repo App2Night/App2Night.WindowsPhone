@@ -18,23 +18,28 @@
     </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBox x:Name="textBoxVeranstAnzeigenNAME" Margin="8,-10,0,590" TextWrapping="Wrap" Text="Deine Party" Width="261" FontSize="36" HorizontalAlignment="Left" TextAlignment="Center" SelectionHighlightColor="White" FontWeight="Bold" VerticalAlignment="Bottom"/>
-        <ScrollViewer Height="530" Margin="0,55,0,0" VerticalAlignment="Top" Width="360" Grid.ColumnSpan="2">
-            <Grid Height="742" Width="323">
-                <TextBlock x:Name="textBlAnzeigenOrt" HorizontalAlignment="Left" Height="40" Margin="0,20,0,0" TextWrapping="Wrap" Text="Ort" VerticalAlignment="Top" Width="74" FontSize="20" FontWeight="Bold" RenderTransformOrigin="0.568,-0.375"/>
-                <TextBlock x:Name="textBlDatum" HorizontalAlignment="Left" Height="40" Margin="0,75,0,0" TextWrapping="Wrap" Text="Datum" VerticalAlignment="Top" Width="142" FontSize="20" FontWeight="Bold"/>
-                <TextBox x:Name="textBoxAnzeigenORT" HorizontalAlignment="Left" Height="40" Margin="62,20,0,0" TextWrapping="Wrap" Text="-- Ort --" VerticalAlignment="Top" Width="261" IsReadOnly="True" FontSize="20" TextAlignment="Right"/>
-                <TextBox x:Name="textBoxAnzeigenDATUM" HorizontalAlignment="Left" Height="40" Margin="72,75,0,0" TextWrapping="Wrap" Text="-- Datum --" VerticalAlignment="Top" Width="251" FontSize="20" IsReadOnly="True" TextAlignment="Right"/>
-                <TextBlock x:Name="textBlUhrzeit" HorizontalAlignment="Left" Height="40" Margin="0,130,0,0" TextWrapping="Wrap" Text="Uhrzeit" VerticalAlignment="Top" Width="142" FontSize="20" FontWeight="Bold"/>
-                <TextBox x:Name="textBoxAnzeigenUHRZEIT" HorizontalAlignment="Left" Height="40" Margin="126,130,0,0" TextWrapping="Wrap" Text="-- Uhrzeit --" VerticalAlignment="Top" Width="197" IsReadOnly="True" FontSize="20" TextAlignment="Right"/>
-                <TextBlock x:Name="textBlMusikRichtung" HorizontalAlignment="Left" Height="40" Margin="0,185,0,0" TextWrapping="Wrap" Text="Musikrichtung" VerticalAlignment="Top" Width="141" FontWeight="Bold" FontSize="20" RenderTransformOrigin="0.27,-1.183"/>
-                <TextBox x:Name="textBoxAnzeigenMUSIKRICHTUNG" HorizontalAlignment="Left" Height="40" Margin="146,185,0,0" TextWrapping="Wrap" Text="-- Musik --" VerticalAlignment="Top" Width="177" IsReadOnly="True" FontSize="20" TextAlignment="Right" RenderTransformOrigin="0.707,0.5"/>
-                <TextBlock x:Name="textBlWeitereInfos" HorizontalAlignment="Left" Height="40" Margin="0,230,0,0" TextWrapping="Wrap" Text="Weitere Infos" VerticalAlignment="Top" Width="143" FontSize="20" FontWeight="Bold"/>
-                <TextBox x:Name="textBoxAnzeigenWeitereINFOS" HorizontalAlignment="Left" Height="122" Margin="0,275,0,0" TextWrapping="Wrap" Text="-- keine weiteren Infos --" VerticalAlignment="Top" Width="323" IsReadOnly="True" FontSize="20"/>
-                <AppBarButton x:Name="appBarButtonTeilnehmen" HorizontalAlignment="Left" Icon="Audio" Label="Teilnehmen" Margin="10,429,0,0" VerticalAlignment="Top" Height="69" Width="79" Click="Teilnehmen_CommitmentStateSetzen"/>
-                <AppBarButton x:Name="appBarButtonLiken" HorizontalAlignment="Left" Icon="Like" Label="Liken" Margin="126,438,0,0" VerticalAlignment="Top"/>
-                <AppBarButton x:Name="appBarButtonNichtLiken" HorizontalAlignment="Left" Icon="Dislike" Label="Dislike" Margin="245,438,0,0" VerticalAlignment="Top"/>
-                <AppBarButton x:Name="appBarButtonBearbeiten" HorizontalAlignment="Left" Icon="Edit" Label="" Margin="282,-4,-27,0" VerticalAlignment="Top" Height="58" Click="Bearbeiten_wechselZuErstellen"/>
+        <ScrollViewer Height="575" Margin="0,10,0,0" VerticalAlignment="Top" Width="360">
+            <Grid Height="610" Width="323">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="283*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="38*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="textBlVeranstAnzeigenNAME" Margin="10,10,33,0" TextWrapping="Wrap" Text="Deine Party" FontSize="22" TextAlignment="Center" SelectionHighlightColor="White" FontWeight="Bold" Height="60" VerticalAlignment="Top"/>
+                <TextBlock x:Name="textBlAnzeigenOrt" HorizontalAlignment="Left" Height="40" Margin="0,105,0,0" TextWrapping="Wrap" Text="Ort" VerticalAlignment="Top" Width="74" FontSize="20" FontWeight="Bold" RenderTransformOrigin="0.568,-0.375"/>
+                <TextBlock x:Name="textBlDatum" HorizontalAlignment="Left" Height="40" Margin="0,150,0,0" TextWrapping="Wrap" Text="Datum" VerticalAlignment="Top" Width="142" FontSize="20" FontWeight="Bold"/>
+                <TextBox x:Name="textBoxAnzeigenORT" HorizontalAlignment="Left" Height="40" Margin="62,105,0,0" TextWrapping="Wrap" Text="-- Ort --" VerticalAlignment="Top" Width="261" IsReadOnly="True" FontSize="20" TextAlignment="Right" Grid.ColumnSpan="3"/>
+                <TextBox x:Name="textBoxAnzeigenDATUM" HorizontalAlignment="Left" Height="40" Margin="73,150,0,0" TextWrapping="Wrap" Text="-- Datum --" VerticalAlignment="Top" Width="250" FontSize="20" IsReadOnly="True" TextAlignment="Right" Grid.ColumnSpan="3"/>
+                <TextBlock x:Name="textBlUhrzeit" HorizontalAlignment="Left" Height="40" Margin="0,195,0,0" TextWrapping="Wrap" Text="Uhrzeit" VerticalAlignment="Top" Width="142" FontSize="20" FontWeight="Bold"/>
+                <TextBox x:Name="textBoxAnzeigenUHRZEIT" HorizontalAlignment="Left" Height="40" Margin="126,195,0,0" TextWrapping="Wrap" Text="-- Uhrzeit --" VerticalAlignment="Top" Width="197" IsReadOnly="True" FontSize="20" TextAlignment="Right" Grid.ColumnSpan="3"/>
+                <TextBlock x:Name="textBlMusikRichtung" HorizontalAlignment="Left" Height="40" Margin="0,240,0,0" TextWrapping="Wrap" Text="Musikrichtung" VerticalAlignment="Top" Width="141" FontWeight="Bold" FontSize="20" RenderTransformOrigin="0.27,-1.183"/>
+                <TextBox x:Name="textBoxAnzeigenMUSIKRICHTUNG" HorizontalAlignment="Left" Height="40" Margin="146,240,0,0" TextWrapping="Wrap" Text="-- Musik --" VerticalAlignment="Top" Width="177" IsReadOnly="True" FontSize="20" TextAlignment="Right" RenderTransformOrigin="0.707,0.5" Grid.ColumnSpan="3"/>
+                <TextBlock x:Name="textBlWeitereInfos" HorizontalAlignment="Left" Height="40" Margin="0,285,0,0" TextWrapping="Wrap" Text="Weitere Infos" VerticalAlignment="Top" Width="143" FontSize="20" FontWeight="Bold"/>
+                <TextBox x:Name="textBoxAnzeigenWeitereINFOS" HorizontalAlignment="Left" Height="122" Margin="0,325,0,0" TextWrapping="Wrap" Text="-- keine weiteren Infos --" VerticalAlignment="Top" Width="323" IsReadOnly="True" FontSize="20" Grid.ColumnSpan="3"/>
+                <AppBarButton x:Name="appBarButtonTeilnehmen" HorizontalAlignment="Left" Icon="Audio" Label="Teilnehmen" Margin="10,480,0,0" VerticalAlignment="Top" Height="69" Width="79" Click="Teilnehmen_CommitmentStateSetzen"/>
+                <AppBarButton x:Name="appBarButtonLiken" HorizontalAlignment="Left" Icon="Like" Label="Liken" Margin="126,480,0,0" VerticalAlignment="Top"/>
+                <AppBarButton x:Name="appBarButtonNichtLiken" HorizontalAlignment="Left" Icon="Dislike" Label="Dislike" Margin="245,480,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
+                <AppBarButton x:Name="appBarButtonBearbeiten" HorizontalAlignment="Left" Icon="Edit" Label="" Margin="255,10,0,0" VerticalAlignment="Top" Height="60" Click="Bearbeiten_wechselZuErstellen" Width="60" Grid.ColumnSpan="3"/>
             </Grid>
         </ScrollViewer>
         <ProgressRing x:Name="ProgRingAnzeigen" HorizontalAlignment="Center" Margin="0,400,0,0" VerticalAlignment="Center" Width="70" Height="70"/>

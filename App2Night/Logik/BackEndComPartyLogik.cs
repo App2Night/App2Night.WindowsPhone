@@ -335,8 +335,8 @@ namespace App2Night.Logik
 
                 try
                 {
-                    // TODO: Unauthorized
-                    httpAntwort = await client.PutAsync($"UserParty/partyRating?id={party.PartyId}", content);   //Rest von URL von Swagger
+                    // TODO: Testen
+                    httpAntwort = await client.PutAsync($"UserParty/partyRating?id={party.PartyId}", content);  
                     erfolgreichesVoting = await httpAntwort.Content.ReadAsStringAsync();
                     return erfolgreichesVoting;
                 }
@@ -372,12 +372,13 @@ namespace App2Night.Logik
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
+                var json = JsonConvert.SerializeObject(teilnahme);
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + tok.AccessToken);
-                HttpContent content = new StringContent(JsonConvert.SerializeObject(teilnahme), Encoding.UTF8, "application/json");
+                HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 try
                 {
-                    httpAntwort = await client.PutAsync($"UserParty/partyCommitmentState?id={party.PartyId}", content);   //Rest von URL von Swagger
+                    httpAntwort = await client.PutAsync($"UserParty/commitmentState?id={party.PartyId}", content);  
                     teilnehmen = await httpAntwort.Content.ReadAsStringAsync();
                     return teilnehmen;
                 }

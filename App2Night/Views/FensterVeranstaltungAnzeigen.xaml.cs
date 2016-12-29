@@ -44,7 +44,7 @@ namespace App2Night.Views
             TimeSpan partyUhrzeit = partyDatumUhrzeit.TimeOfDay;
             
             // null möglich!
-            textBoxVeranstAnzeigenNAME.Text = uebergebenderParameter.PartyName;
+            textBlVeranstAnzeigenNAME.Text = uebergebenderParameter.PartyName;
             textBoxAnzeigenDATUM.Text = partyDatum.ToString("dd/MM/yyyy");
             textBoxAnzeigenUHRZEIT.Text = partyDatumUhrzeit.ToString("HH:mm");
             textBoxAnzeigenORT.Text = uebergebenderParameter.Location.CityName;
