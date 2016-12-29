@@ -232,7 +232,7 @@ namespace App2Night.Logik
         /// <param name="id">ID der zu aktualisierenden Party</param>
         /// <param name="party">Party mit neuen Werten</param>
         /// <returns>Status</returns>
-        public static async Task<string> UpdatePartyByID(string id, Party party, Token token)
+        public static async Task<string> UpdatePartyByID(Party party, Token token)
         {
             bool internetVorhanden = IsInternet();
             string status = "";

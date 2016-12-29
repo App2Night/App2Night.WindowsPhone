@@ -16,8 +16,6 @@ using App2Night.ModelsEnums.Model;
 using App2Night.Logik;
 using Windows.UI.Popups;
 
-// Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
-
 namespace App2Night.Views
 {
     /// <summary>
@@ -36,12 +34,6 @@ namespace App2Night.Views
         private void Zurueck_wechselZuHauptansicht(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(FensterAnmOdReg));
-        }
-
-        private async void PasswortVergessen_wechselZuNeuesPasswort(object sender, RoutedEventArgs e)
-        {
-            var message = new MessageDialog("Diese Funktion wird leider noch nicht unterstützt.", "Achtung!");
-            await message.ShowAsync();
         }
 
         private async void Anmelden_WechselZuHauptansicht(object sender, RoutedEventArgs e)
