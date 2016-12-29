@@ -29,6 +29,8 @@ namespace App2Night.ModelsEnums.Model
         public double Price { get; set; }
         //[JsonProperty("Host")]
         //public User Host { get; set; }
+        [JsonProperty("HostedByUser")]
+        public bool HostedByUser { get; set; }
         [JsonProperty("HostId")]
         public int HostId { get; set; }
         [JsonProperty("PartyDate")]

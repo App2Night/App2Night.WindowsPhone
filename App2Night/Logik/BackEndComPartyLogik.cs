@@ -45,7 +45,6 @@ namespace App2Night.Logik
         /// Gibt Partys zurueck.
         /// </summary>
         /// <returns>Partys</returns>
-        //TODO: GPS und Radius mitschicken
         public static async Task<IEnumerable<Party>> GetParties(Location aktuellePosition, float radius)
         {
             string stringFromServer = "";
@@ -60,7 +59,8 @@ namespace App2Night.Logik
                 double longitude = aktuellePosition.Longitude;
 
                 string anfrage = $"Party?lat={latitude}&lon={longitude}&radius={radius}";
-                anfrage = anfrage.Replace(',', '.'); // durch das Speichern in den String wird aus einem Punkt ein Komma, deshalb muss das danach ausgebessert werden
+                // durch das Speichern in den String wird aus einem Punkt ein Komma, deshalb muss das danach ausgebessert werden
+                anfrage = anfrage.Replace(',', '.'); 
 
                 try
                 {
