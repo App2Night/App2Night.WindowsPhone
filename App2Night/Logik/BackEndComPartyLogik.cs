@@ -360,15 +360,19 @@ namespace App2Night.Logik
             }
         }
 
-        public static async Task<string> PutPartyCommitmentState(Party party, CommitmentParty teilnahme)
+        public static async Task<bool> PutPartyCommitmentState(Party party, CommitmentParty teilnahme)
         {
             bool internetVorhanden = IsInternet();
-            string teilnehmen = "";
+            bool teilnehmen = false;
+            string nachricht = "";
 
-            bool erfolg = await DatenVerarbeitung.aktuellerToken();
-            Token tok = await DatenVerarbeitung.TokenAuslesen();
+            //bool erfolg = await DatenVerarbeitung.aktuellerToken();
+            //Token tok = await DatenVerarbeitung.TokenAuslesen();
 
-            if (internetVorhanden == true && erfolg == true)
+            Login login = await DatenVerarbeitung.LoginAuslesen();
+            Token tok = await BackEndComUserLogik.GetToken(login);
+
+            if (internetVorhanden == true)// && erfolg == true)
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
@@ -378,18 +382,18 @@ namespace App2Night.Logik
 
                 try
                 {
-                    httpAntwort = await client.PutAsync($"UserParty/commitmentState?id={party.PartyId}", content);  
-                    teilnehmen = await httpAntwort.Content.ReadAsStringAsync();
+                    httpAntwort = await client.PutAsync($"UserParty/commitmentState?id={party.PartyId}", content);
+                    teilnehmen = httpAntwort.IsSuccessStatusCode;
                     return teilnehmen;
                 }
 
                 catch (Exception ex)
                 {
-                    teilnehmen = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
+                    nachricht = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
                     await message.ShowAsync();
                     // Code 21 - Fehler bei Abrufen
-                    return "21";
+                    return false;
                 }
             }
             else
@@ -398,7 +402,7 @@ namespace App2Night.Logik
                 // Code 42 - Fehler: Keine Internetverbindung
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
                 await message.ShowAsync();
-                return "42";
+                return false;
             }
         }
 

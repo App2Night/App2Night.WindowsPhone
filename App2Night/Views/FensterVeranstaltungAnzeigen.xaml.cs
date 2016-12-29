@@ -35,7 +35,8 @@ namespace App2Night.Views
             this.InitializeComponent();
             ProgRingAnzeigen.Visibility = Visibility.Collapsed;
         }
-        
+
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             uebergebeneParty = e.Parameter as Party;
@@ -44,13 +45,35 @@ namespace App2Night.Views
             DateTime partyDatum = partyDatumUhrzeit.Date;
             TimeSpan partyUhrzeit = partyDatumUhrzeit.TimeOfDay;
             
-            // null möglich!
             textBlVeranstAnzeigenNAME.Text = uebergebeneParty.PartyName;
             textBoxAnzeigenDATUM.Text = partyDatum.ToString("dd/MM/yyyy");
             textBoxAnzeigenUHRZEIT.Text = partyDatumUhrzeit.ToString("HH:mm");
             textBoxAnzeigenORT.Text = uebergebeneParty.Location.CityName;
             textBoxAnzeigenMUSIKRICHTUNG.Text = uebergebeneParty.MusicGenre.ToString();
             textBoxAnzeigenWeitereINFOS.Text = uebergebeneParty.Description;
+
+            if (uebergebeneParty.UserCommitmentState != EventCommitmentState.Noted)
+            {
+                AppBarButtonVormerken.Icon = new SymbolIcon(Symbol.OutlineStar);
+                AppBarButtonVormerken.Label = "Vormerken";
+            }
+            else
+            {
+                AppBarButtonVormerken.Icon = new SymbolIcon(Symbol.Favorite);
+                AppBarButtonVormerken.Label = "Nicht vormerken";
+            }
+
+            if (uebergebeneParty.UserCommitmentState != EventCommitmentState.Accepted)
+            {
+                appBarButtonTeilnehmen.Icon = new SymbolIcon(Symbol.Audio); ;
+                appBarButtonTeilnehmen.Label = "Teilnehmen";
+
+            }
+            else
+            {
+                appBarButtonTeilnehmen.Icon = new SymbolIcon(Symbol.Undo); ;
+                appBarButtonTeilnehmen.Label = "Absagen";
+            }
         }
 
         private void Zurueck_wechselZuHauptansicht(object sender, RoutedEventArgs e)
@@ -60,21 +83,44 @@ namespace App2Night.Views
 
         private async void Vormerken_wechselZuHauptansicht(object sender, RoutedEventArgs e)
         {
+            CommitmentParty commitment = new CommitmentParty();
+            bool notiert = false;
+
             ProgRingAnzeigen.Visibility = Visibility.Visible;
             this.IsEnabled = false;
 
-            CommitmentParty commitment = new CommitmentParty();
-            commitment.Teilnahme = EventCommitmentState.Noted;
+            if (uebergebeneParty.UserCommitmentState != EventCommitmentState.Noted)
+            {
+                commitment.Teilnahme = EventCommitmentState.Noted;
 
-            string antwort = await BackEndComPartyLogik.PutPartyCommitmentState(uebergebeneParty, commitment);
+                notiert = true;
+            }
+            else
+            {
+                commitment.Teilnahme = EventCommitmentState.Rejected;
+
+                notiert = false;
+            }
+
+            bool antwort = await BackEndComPartyLogik.PutPartyCommitmentState(uebergebeneParty, commitment);
 
             this.IsEnabled = true;
             ProgRingAnzeigen.Visibility = Visibility.Collapsed;
 
-            if (antwort == "200")
+            if (antwort == true)
             {
-                var message = new MessageDialog("Diese Party wurde für dich vorgemerkt!", "Erfolg!");
-                await message.ShowAsync();
+                if (notiert == true)
+                {
+                    var message = new MessageDialog("Diese Party wurde für dich vorgemerkt!", "Erfolg!");
+                    await message.ShowAsync();
+                    uebergebeneParty.UserCommitmentState = EventCommitmentState.Noted; 
+                }
+                else
+                {
+                    var message = new MessageDialog("Diese Party ist nicht mehr vorgemerkt!", "Erfolg!");
+                    await message.ShowAsync();
+                    uebergebeneParty.UserCommitmentState = EventCommitmentState.Rejected;
+                }
             }
             else
             {
@@ -101,21 +147,14 @@ namespace App2Night.Views
             bool zusagen = false;
 
 
-            if (uebergebeneParty.UserCommitmentState == EventCommitmentState.Rejected  
-                || uebergebeneParty.UserCommitmentState == EventCommitmentState.Noted) 
-            {
-                appBarButtonTeilnehmen.Icon = new SymbolIcon(Symbol.Audio); ;
-                appBarButtonTeilnehmen.Label = "Teilnehmen";
-                
-                teilnehmen.Teilnahme = .EventCommitmentState.Accepted;
+            if (uebergebeneParty.UserCommitmentState != EventCommitmentState.Accepted) 
+            {          
+                teilnehmen.Teilnahme = EventCommitmentState.Accepted;
 
                 zusagen = true;
             }
             else
             {
-                appBarButtonTeilnehmen.Icon = new SymbolIcon(Symbol.Undo); ;
-                appBarButtonTeilnehmen.Label = "Absagen";
-
                 teilnehmen.Teilnahme = EventCommitmentState.Rejected;
 
                 zusagen = false;
@@ -124,24 +163,27 @@ namespace App2Night.Views
             ProgRingAnzeigen.Visibility = Visibility.Visible;
             this.IsEnabled = false;
 
-            string teilnahme = await BackEndComPartyLogik.PutPartyCommitmentState(uebergebeneParty, teilnehmen);
+            bool teilnahme = await BackEndComPartyLogik.PutPartyCommitmentState(uebergebeneParty, teilnehmen);
 
-            if (teilnahme == "200")
+            if (teilnahme == true)
             {
                 if (zusagen == true)
                 {
                     var message = new MessageDialog("Deine Teilnahme wurde berücksichtigt!", "Viel Spaß!");
                     await message.ShowAsync();
+                    uebergebeneParty.UserCommitmentState = EventCommitmentState.Accepted;
+                    this.Frame.Navigate(typeof(FensterHauptansicht));
                 }
                 else
                 {
-                   var message = new MessageDialog("Deine Absage wurde berücksichtigt!", "Pech gehabt!");
+                   var message = new MessageDialog("Deine Absage wurde berücksichtigt!", "Schade!");
                     await message.ShowAsync();
+                    uebergebeneParty.UserCommitmentState = EventCommitmentState.Rejected;
                 }
             }
             else
             {
-                var message = new MessageDialog("Schade, wenn Du noch teilnehmen möchtest, versuche es erneut!", "Nicht erfolgreich");
+                var message = new MessageDialog("Es ist ein Fehler aufgetreten. Bitte versuche es später erneut.", "Fehler!");
                 await message.ShowAsync();
 
             }
