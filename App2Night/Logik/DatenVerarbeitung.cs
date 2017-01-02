@@ -189,12 +189,28 @@ namespace App2Night.Logik
 
                 if (aktuellerToken.AccessToken != null)
                 {
-                    await TokenSpeichern(aktuellerToken);
+                    erfolg = await TokenSpeichern(aktuellerToken);
+                }
+                else
+                {
+                    erfolg = false;
                 }
             }
+            else
+            {
+                erfolg = true;
+            }
 
-            // Der Token wird refresht, dass er verwendet werden kann
-            erfolg = await BackEndComUserLogik.RefreshToken(aktuellerToken);
+            if (erfolg == true)
+            {
+                // Der Token wird refresht, dass er verwendet werden kann
+                erfolg = await BackEndComUserLogik.RefreshToken(aktuellerToken);
+
+                if (erfolg == true)
+                {
+                    erfolg = await DatenVerarbeitung.TokenSpeichern(aktuellerToken);
+                } 
+            }
 
             return erfolg;
         }

@@ -282,5 +282,44 @@ namespace App2Night.Views
             // Wechsel zur Hauptansicht
             this.Frame.Navigate(typeof(FensterHauptansicht));
         }
+
+        private async void Loeschen_PartyLoeschen(object sender, RoutedEventArgs e)
+        {
+            // Teile übernommen von http://stackoverflow.com/questions/35392306/does-the-messagedialog-class-for-uwp-apps-support-three-buttons-on-mobile  
+            const int OK = 1;
+            const int ABBR = 2;
+
+            // Dialog, der abfragt, ob der Nutzer die Party wirklich löschen will
+            var message = new MessageDialog("Willst du diese Party wirklich löschen?", "Achtung!");
+            message.Commands.Add(new UICommand { Label = "Ja", Id = OK });
+            message.Commands.Add(new UICommand { Label = "Abbrechen", Id = ABBR });
+            var reaktion = await message.ShowAsync();
+
+            var id = (int)(reaktion?.Id ?? ABBR);
+
+            // Falls der Nutzer bestätigt, dass er die Party löschen will
+            if (id == 1)
+            {
+                this.IsEnabled = false;
+                ProgRingAnzeigen.Visibility = Visibility.Visible;
+                bool erfolg = await BackEndComPartyLogik.DeletePartyByID(uebergebeneParty);
+
+                if (erfolg == true)
+                {
+                    message = new MessageDialog("Party erfolgreich gelöscht.", "Erfolg!");
+                    await message.ShowAsync();
+                }
+                else
+                {
+                    message = new MessageDialog("Party nicht gelöscht.", "Fehler!");
+                    await message.ShowAsync();
+                }
+            }
+            else
+            {
+                message = new MessageDialog("Aktion abgebrochen", "Abbrechen");
+                await message.ShowAsync();
+            }
+        }
     }
 }

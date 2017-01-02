@@ -27,8 +27,8 @@
                 <TextBlock x:Name="textBlErstellenName" HorizontalAlignment="Center" Height="35" TextWrapping="Wrap" Text="Name der Veranstaltung" VerticalAlignment="Top" Width="313" FontSize="20" FontWeight="Bold" Margin="0,4,10,0"/>
                 <TextBox x:Name="textBoxErstellenNAME" HorizontalAlignment="Center" Height="35" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="313" PlaceholderText="Name der Veranstaltung" Margin="0,39,10,668" FontSize="20"/>
                 <TextBlock x:Name="textBlErstellenAdresse" TextWrapping="Wrap" Text="Adresse" Width="308" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="5,90,10,617" Height="35"/>
-                <TextBox x:Name="textBoxErstellenPLZ" TextWrapping="Wrap" Text="" Width="72" Margin="0,122,0,585" PlaceholderText="PLZ" FontSize="20" HorizontalAlignment="Left" Height="35" InputScope="Number"/>
-                <TextBox x:Name="textBoxErstellenORT" TextWrapping="Wrap" Text="" Width="236" Margin="0,122,10,585" FontSize="20" PlaceholderText="Ort" HorizontalAlignment="Right" Height="35"/>
+                <TextBox x:Name="textBoxErstellenPLZ" TextWrapping="Wrap" Text="" Width="88" Margin="0,122,0,585" PlaceholderText="PLZ" FontSize="20" HorizontalAlignment="Left" Height="35" InputScope="Number"/>
+                <TextBox x:Name="textBoxErstellenORT" TextWrapping="Wrap" Text="" Width="220" Margin="0,122,10,585" FontSize="20" PlaceholderText="Ort" HorizontalAlignment="Right" Height="35"/>
                 <TextBox x:Name="textBoxErstellenSTRASSE" TextWrapping="Wrap" Text="" Width="220" PlaceholderText="Straße" Margin="0,159,0,548" HorizontalAlignment="Left" FontSize="20" Height="35"/>
                 <TextBox x:Name="textBoxErstellenHAUSNR" TextWrapping="Wrap" Text="" Width="88" PlaceholderText="Nr" Margin="0,159,10,548" HorizontalAlignment="Right" FontSize="20" Height="35"/>
                 <TextBlock x:Name="textBlErstellenDatum" TextWrapping="Wrap" Text="Datum" FontWeight="Bold" FontSize="20" Margin="0,208,8,499" Width="315" Height="35"/>

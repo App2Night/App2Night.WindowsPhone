@@ -138,9 +138,9 @@ namespace App2Night.Logik
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
-                var json = JsonConvert.SerializeObject(party);
+                var partyJson = JsonConvert.SerializeObject(party);
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + tok.AccessToken);
-                HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");              
+                HttpContent content = new StringContent(partyJson, Encoding.UTF8, "application/json");              
 
                 try
                 {
@@ -170,12 +170,15 @@ namespace App2Night.Logik
         /// </summary>
         /// <param name="id">Zu loeschende Party</param>
         /// <returns>Erfolg</returns>
-        public static async Task<bool> DeletePartyByID(Party party, Token token)
+        public static async Task<bool> DeletePartyByID(Party party)
         {
             bool internetVorhanden = IsInternet();
-            bool erfolg = false;
+            bool status = false;
 
-            if (internetVorhanden == true)
+            bool erfolg = await DatenVerarbeitung.aktuellerToken();
+            Token token = await DatenVerarbeitung.TokenAuslesen();
+
+            if (internetVorhanden == true && erfolg == true)
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
@@ -184,8 +187,8 @@ namespace App2Night.Logik
                 try
                 {
                     httpAntwort = await client.DeleteAsync($"Party/id={party.PartyId}");
-                    erfolg = httpAntwort.IsSuccessStatusCode;
-                    return erfolg;
+                    status = httpAntwort.IsSuccessStatusCode;
+                    return status;
                 }
 
                 catch (Exception)
@@ -262,7 +265,7 @@ namespace App2Night.Logik
             bool aktuellerToken = await DatenVerarbeitung.aktuellerToken();
             Token token = await DatenVerarbeitung.TokenAuslesen();
 
-            if (internetVorhanden == true)
+            if (internetVorhanden == true && aktuellerToken == true)
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
@@ -351,9 +354,6 @@ namespace App2Night.Logik
             bool internetVorhanden = IsInternet();
             bool teilnehmen = false;
             string nachricht = "";
-
-            //bool erfolg = await DatenVerarbeitung.aktuellerToken();
-            //Token tok = await DatenVerarbeitung.TokenAuslesen();
 
             Login login = await DatenVerarbeitung.LoginAuslesen();
             Token tok = await BackEndComUserLogik.GetToken(login);

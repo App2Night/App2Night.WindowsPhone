@@ -102,7 +102,7 @@ namespace App2Night.Views
 
                 // Die Beschreibung und der Preis sind optional.
                 // Deshalb werden Standardwerte benötigt, falls die Felder vom Nutzer leergelassen wurden.
-                if (textBoxErstellenINFOS.Text != null)
+                if (textBoxErstellenINFOS.Text != "")
                 {
                     partyZuErstellen.Description = textBoxErstellenINFOS.Text; 
                 }
@@ -112,7 +112,7 @@ namespace App2Night.Views
                     partyZuErstellen.Description = "";
                 }
 
-                if (textBoxErstellenPREIS.Text != null)
+                if (textBoxErstellenPREIS.Text != "")
                 {
                     string preis = textBoxErstellenPREIS.Text;
                     partyZuErstellen.Price = Double.Parse(preis); 
