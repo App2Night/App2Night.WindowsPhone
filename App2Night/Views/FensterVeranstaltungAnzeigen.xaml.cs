@@ -133,7 +133,8 @@ namespace App2Night.Views
             // Icon für Standort Party
             MapIcon partyIcon = new MapIcon();
             partyIcon.Title = uebergebeneParty.PartyName;
-            partyIcon.Image = RandomAccessStreamReference.CreateFromUri(new Uri("ms - appx:///Assets/weather.png"));
+
+            // TODO partyIcon.Image = RandomAccessStreamReference.CreateFromUri(new Uri("ms - appx:///Assets/weather.png"));
 
             mapControlKarte.MapElements.Add(partyIcon);
         }
