@@ -52,8 +52,8 @@ namespace App2Night.Views
             anmeldung.Password = pwBoxPASSWORT.Password;
 
             // Sperren der Ansicht
-            progressRingAnmeldung.Visibility = Visibility.Visible;
-            this.IsEnabled = false;            
+            this.IsEnabled = false;
+            progressRingAnmeldung.Visibility = Visibility.Visible;          
 
             korrekteEingabe = await DatenVerarbeitung.LoginUeberpruefen(anmeldung);
 
@@ -86,8 +86,8 @@ namespace App2Night.Views
             }
 
             // Oberfläche entsperren
-            this.IsEnabled = true;
             progressRingAnmeldung.Visibility = Visibility.Collapsed;
+            this.IsEnabled = true;
 
         }
     }

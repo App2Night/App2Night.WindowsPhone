@@ -11,8 +11,8 @@
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
-            <AppBarButton x:Name="AppBarButtonZurueck" Icon="Back" Label="Zurueck" Width="155" Click="Zurueck_wechselZuAnmOderReg"/>
-            <AppBarButton x:Name="AppBarButtonBestaetigen" Icon="Accept" Label="Bestaetigen" Width="155" Click="Anmelden_WechselZuHauptansicht"/>
+            <AppBarButton x:Name="AppBarButtonZurueck" Icon="Back" Label="Zurück" Width="155" Click="Zurueck_wechselZuAnmOderReg"/>
+            <AppBarButton x:Name="AppBarButtonBestaetigen" Icon="Accept" Label="Bestätigen" Width="155" Click="Anmelden_WechselZuHauptansicht"/>
         </CommandBar>
     </Page.BottomAppBar>
 

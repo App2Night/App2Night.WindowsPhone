@@ -22,7 +22,7 @@
             </CommandBar.Content>
             <AppBarButton x:Name="AppBarButtonHinzufuegen" Icon="Add" Label="Erstellen" Click="Hinzufuegen_wechselZuErstellen" Width="90"/>
             <AppBarButton x:Name="AppBarButtonInDerNaehe" Icon="Zoom" Label="In der Nähe" Click="Suchen_abrufenPartys" Width="150"/>
-            <AppBarButton x:Name="AppBarButtonEinstelllungen" Icon="Setting" Label="Einstellungen" Click="Einstellungen_wechselZuMenu" Width="70"/>
+            <AppBarButton x:Name="AppBarButtonEinstellungen" Icon="Setting" Label="Einstellungen" Click="Einstellungen_wechselZuMenu" Width="70"/>
 
         </CommandBar>
     </Page.BottomAppBar>
@@ -37,10 +37,13 @@
                 <PivotItem.RenderTransform>
                     <CompositeTransform SkewX="0.208" TranslateX="0.663"/>
                 </PivotItem.RenderTransform>
-                <ListView x:Name="listViewSuchErgebnis" HorizontalAlignment="Center" Height="438" Width="340" SelectionChanged="listViewSuchErgebnis_AnklickenParty"/>
+                <ListView x:Name="listViewSuchErgebnis" HorizontalAlignment="Center" Height="438" Width="340"/>
             </PivotItem>
             <PivotItem x:Name="pItemVorgemerkt" Header="Vorgemerkt" Margin="10,0,0,100" Width="340" HorizontalAlignment="Left">
-                <ListView x:Name="listViewVorgemerkt" Height="445" Margin="0" Width="340" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="listViewVorgemerkt_AnklickenParty"/>
+                <ListView x:Name="listViewVorgemerkt" Height="445" Margin="0" Width="340" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            </PivotItem>
+            <PivotItem x:Name="pItemTeilnahme" Header="Teilnahme">
+                <ListView x:Name="listViewTeilnahme" Height="445" Width="340" VerticalAlignment="Top" HorizontalAlignment="Center"/>
             </PivotItem>
         </Pivot>
         <ProgressRing x:Name="progressRingInDerNaehe" HorizontalAlignment="Center" Height="70" Margin="170,465,170,0" VerticalAlignment="Top" Width="70" IsActive="True"/>

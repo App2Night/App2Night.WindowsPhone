@@ -9,6 +9,8 @@ using Windows.UI.Popups;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.Storage.Streams;
+using Windows.UI.Xaml.Media;
+using Windows.UI;
 
 namespace App2Night.Views
 {
@@ -46,6 +48,28 @@ namespace App2Night.Views
             textBoxAnzeigenORT.Text = uebergebeneParty.Location.CityName;
             textBoxAnzeigenMUSIKRICHTUNG.Text = uebergebeneParty.MusicGenre.ToString();
             textBoxAnzeigenWeitereINFOS.Text = uebergebeneParty.Description;
+            textBoxAnzahlUPVOTES.Text = uebergebeneParty.GeneralUpVoting.ToString();
+            textBoxAnzahlDOWNVOTES.Text = uebergebeneParty.GeneralDownVoting.ToString();
+            
+            // Farbliche Hervorhebung der Upvotes
+            if (uebergebeneParty.GeneralUpVoting != 0)
+            {
+                textBoxAnzahlUPVOTES.Foreground = new SolidColorBrush(Colors.Green);
+            }
+            else
+            {
+                textBoxAnzahlUPVOTES.Foreground = new SolidColorBrush(Colors.Black);
+            }
+
+            // Farbliche Hervorhebung der Downvotes
+            if (uebergebeneParty.GeneralUpVoting != 0)
+            {
+                textBoxAnzahlUPVOTES.Foreground = new SolidColorBrush(Colors.Red);
+            }
+            else
+            {
+                textBoxAnzahlUPVOTES.Foreground = new SolidColorBrush(Colors.Black);
+            }
 
             // Falls der aktuelle Nutzer der Ersteller der Party ist, wird ihm der Button um zur Bearbeitung zu wechseln angezeigt.
             if (uebergebeneParty.HostedByUser == true)

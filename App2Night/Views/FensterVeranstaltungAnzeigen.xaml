@@ -12,8 +12,9 @@
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
-            <AppBarButton x:Name="AppBarButtonZurueck" Icon="Back" Label="Zurück" Width="100" Click="Zurueck_wechselZuHauptansicht"/>
-            <AppBarButton x:Name="AppBarButtonVormerken" Icon="OutlineStar" Label="Vormerken" Width="100" Click="Vormerken_wechselZuHauptansicht"/>
+            <AppBarButton x:Name="AppBarButtonZurueck" Icon="Back" Label="Zurück" Width="105" Click="Zurueck_wechselZuHauptansicht"/>
+            <AppBarButton x:Name="appBarButtonTeilnehmen" HorizontalAlignment="Left" Icon="Audio" Label="Teilnehmen" VerticalAlignment="Top" Width="105" Click="Teilnehmen_CommitmentStateSetzen"/>
+            <AppBarButton x:Name="AppBarButtonVormerken" Icon="OutlineStar" Label="Vormerken" Width="105" Click="Vormerken_wechselZuHauptansicht"/>
         </CommandBar>
     </Page.BottomAppBar>
 
@@ -36,9 +37,10 @@
                 <TextBox x:Name="textBoxAnzeigenMUSIKRICHTUNG" HorizontalAlignment="Left" Height="40" Margin="146,590,0,0" TextWrapping="Wrap" Text="-- Musik --" VerticalAlignment="Top" Width="177" IsReadOnly="True" FontSize="20" TextAlignment="Right" RenderTransformOrigin="0.707,0.5" Grid.ColumnSpan="3"/>
                 <TextBlock x:Name="textBlWeitereInfos" HorizontalAlignment="Left" Height="40" Margin="0,635,0,0" TextWrapping="Wrap" Text="Weitere Infos" VerticalAlignment="Top" Width="143" FontSize="20" FontWeight="Bold"/>
                 <TextBox x:Name="textBoxAnzeigenWeitereINFOS" HorizontalAlignment="Left" Height="122" Margin="0,675,0,0" TextWrapping="Wrap" Text="-- keine weiteren Infos --" VerticalAlignment="Top" Width="323" IsReadOnly="True" FontSize="20" Grid.ColumnSpan="3"/>
-                <AppBarButton x:Name="appBarButtonTeilnehmen" HorizontalAlignment="Left" Icon="Audio" Label="Teilnehmen" Margin="10,800,0,0" VerticalAlignment="Top" Height="70" Width="80" Click="Teilnehmen_CommitmentStateSetzen"/>
-                <AppBarButton x:Name="appBarButtonLiken" HorizontalAlignment="Center" Icon="Like" Label="Liken" Margin="126,800,0,0" VerticalAlignment="Top" Width="80" Height="70"/>
-                <AppBarButton x:Name="appBarButtonNichtLiken" HorizontalAlignment="Right" Icon="Dislike" Label="Dislike" Margin="245,800,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Width="80" Height="70"/>
+                <AppBarButton x:Name="appBarButtonLiken" HorizontalAlignment="Left" Icon="Like" Label="Liken" Margin="10,800,0,0" VerticalAlignment="Top" Width="80" Height="70"/>
+                <TextBox x:Name="textBoxAnzahlUPVOTES" HorizontalAlignment="Left" TextWrapping="Wrap" Text=":)" VerticalAlignment="Top" Margin="90,815,0,0" Height="40" Width="50" FontSize="20" IsReadOnly="True"/>
+                <AppBarButton x:Name="appBarButtonNichtLiken" HorizontalAlignment="Left" Icon="Dislike" Label="Dislike" Margin="160,800,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Width="80" Height="70"/>
+                <TextBox x:Name="textBoxAnzahlDOWNVOTES" HorizontalAlignment="Left" TextWrapping="Wrap" Text=":(" VerticalAlignment="Top" Margin="240,815,0,0" Height="40" Width="50" Grid.ColumnSpan="3" FontSize="20" IsReadOnly="True"/>
                 <AppBarButton x:Name="appBarButtonBearbeiten" HorizontalAlignment="Left" Icon="Edit" Label="" Margin="255,10,0,0" VerticalAlignment="Top" Height="50" Click="Bearbeiten_wechselZuErstellen" Width="60" Grid.ColumnSpan="3"/>
                 <AppBarButton x:Name="appBarButtonLoeschen" HorizontalAlignment="Left" Icon="Delete" Label="" VerticalAlignment="Top" Width="60" Height="50" Margin="255,60,0,0" Grid.ColumnSpan="3"/>
                 <Maps:MapControl x:Name="mapControlKarte" ZoomInteractionMode="GestureAndControl" TiltInteractionMode="GestureAndControl" HorizontalAlignment="Left" Height="320" Margin="10,110,0,0" VerticalAlignment="Top" Width="300" MapServiceToken="YGij1QSheJhf6PD1CMz5~S0uJKsfpcTtY0Q8ToTVh0w~ApwZzEogiNXUJ9Yl0lYAO4oOoPNaU8Zz_JBVETUZ5OC_nJJnVtvANylwLau-3Wdj"/>

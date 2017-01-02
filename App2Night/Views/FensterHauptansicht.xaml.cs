@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Windows.UI.Popups;
 using App2Night.Logik;
 using App2Night.ModelsEnums.Enums;
+using Windows.UI.Xaml.Navigation;
 
 namespace App2Night.Views
 {
@@ -19,12 +20,25 @@ namespace App2Night.Views
     {
         public Party party;
         public IEnumerable<Party> partyListe;
+        string anzeige = "Um Partys anzuzeigen benötigt die App GPS und eine Internetverbindung. Zum Suchen oder Aktualisieren klicke bitte auf die Lupe unten. Viel Spaß!";
         int anzahlPartys = 0;
+        int anzahlVorgemerkt = 0;
+        int anzahlTeilgenommen = 0;
 
         public FensterHauptansicht()
         {
             this.InitializeComponent();
             progressRingInDerNaehe.Visibility = Visibility.Collapsed;
+        }
+
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            // Hinweis erscheitn nur, wenn man vom Anmelden/Registrieren auf diese Haupansicht kommt
+            if (e.SourcePageType == (typeof(FensterAnmelden)) || e.SourcePageType == (typeof(FensterReg)))
+            {
+                var message = new MessageDialog(anzeige, "Hinweis");
+                await message.ShowAsync(); 
+            }
         }
 
         /// <summary>
@@ -126,6 +140,16 @@ namespace App2Night.Views
                     if (party.UserCommitmentState == EventCommitmentState.Noted)
                     {
                         listViewVorgemerkt.Items.Add(party.PartyName);
+
+                        anzahlVorgemerkt++;
+                    }
+
+                    // Liste der Partys, bei denen der Nutzer teilnimmt, werden in einer separaten ListView angezeigt
+                    if (party.UserCommitmentState == EventCommitmentState.Accepted)
+                    {
+                        listViewTeilnahme.Items.Add(party.PartyName);
+
+                        anzahlTeilgenommen++;
                     }
                 }
             }
@@ -133,6 +157,21 @@ namespace App2Night.Views
             {
                 var message = new MessageDialog("Leider keine Partys in deiner Nähe.");
                 await message.ShowAsync();
+            }
+
+            // Benachrichtigung, wenn keine Party vorgemerkt.
+            if (anzahlVorgemerkt == 0)
+            {
+                // Box mit neuer Nachricht anzeigen
+                //textBlockVorgemerktLeereListe.Text = "Du hast noch keine Party vorgemerkt. Vormerken erfolgt über den Stern unten rechts in der Anzeige einer Party.";
+
+            }
+
+            // Benachrichtigung, wenn an keiner Party teilgenommen.
+            if (anzahlTeilgenommen == 0)
+            {
+                // Box mit neuer Nachricht anzeigen
+                //textBlockVorgemerktLeereListe.Text = "Du hast bei keiner Party zugesagt. Teilnehmen erfolgt über die Musiknoten unten mittig in der Anzeige einer Party.";
             }
 
             progressRingInDerNaehe.IsEnabled = false;
@@ -174,6 +213,26 @@ namespace App2Night.Views
             return partyListe;
 
         }
+
+        //private async void test(object sender, RoutedEventArgs e)
+        //{
+        //    bool listeLeer = false;
+
+        //    try
+        //    {
+        //        var items = listViewTeilnahme.Items;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        listeLeer = true;
+        //    }
+
+        //    if (listeLeer == true)
+        //    {
+        //        var message = new MessageDialog("Du hast bei keiner Party zugesagt. Um bei einer Party teilzunehmen, klicke bei der Anzeige der Party einfach auf die Musiknoten.", "Hinweis");
+        //        await message.ShowAsync();
+        //    }
+        //}
     }
 }
 
