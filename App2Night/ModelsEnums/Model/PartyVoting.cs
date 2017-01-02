@@ -1,14 +1,10 @@
-﻿using App2Night.ModelsEnums.Enums;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace App2Night.ModelsEnums.Model
 {
+    /// <summary>
+    ///  Model fürs Voting einer Party.
+    /// </summary>
     public class PartyVoting
     {
         // Zahlen = Bedeutung

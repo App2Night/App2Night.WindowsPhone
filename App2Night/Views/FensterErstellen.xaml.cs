@@ -2,28 +2,16 @@
 using App2Night.ModelsEnums.Enums;
 using App2Night.ModelsEnums.Model;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Newtonsoft.Json;
-
-// Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
 namespace App2Night.Views
 {
     /// <summary>
-    /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+    /// Auf dieser Seite kann der Nutzer eine Party erstellen. Die Seite dient auch zum Bearbeiten bereits erstellter Partys.
     /// </summary>
     public sealed partial class FensterErstellen : Page
     {
@@ -34,15 +22,21 @@ namespace App2Night.Views
         {
             this.InitializeComponent();
             progressRingErstellen.Visibility = Visibility.Collapsed;
-            // MusicGenres in ComboBox anzeigen
+            // MusicGenres und PartyTypen in ComboBox anzeigen
             comboBoxErstellenMUSIKRICHTUNG.ItemsSource = Enum.GetValues(typeof(MusicGenre));
             comboBoxErstellenTYP.ItemsSource = Enum.GetValues(typeof(PartyType));
         }
 
+        /// <summary>
+        ///  Abhängig von der Quellseite, von der aus man auf diese Seite gelangt, wird eine Party erstellt oder bearbeitet.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            // Nimmt die beim Seitenwechsel übergebene Party an (falls vorhanden)
             uebergebeneParty = e.Parameter as Party;
 
+            // Falls man von der Seite Anzeigen kommt, wird die Party hier zum Bearbeiten freigegeben und die Buttons dementsprechend angepasst.
             if (e.SourcePageType == typeof(FensterVeranstaltungAnzeigen))
             {
                 ueberarbeiten = true;
@@ -51,21 +45,33 @@ namespace App2Night.Views
             }
         }
 
+        /// <summary>
+        /// Einfacher Wechsel zur Hauptansicht, falls der Nutzer die Erstellung abbricht.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Abbrechen_wechselZuHauptansicht(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(FensterHauptansicht));
         }
 
+        /// <summary>
+        /// Hier werden die Daten, die der Nutzer eingegeben hat, ausgelesen und abhängig davon, ob diese Party neu erstellt oder bearbeitet wird,
+        /// die passende Backend-Methode aufgerufen.
+        /// Bei Fehleingaben wird der Nutzer darauf hingewiesen und die Erstellung/Bearbeitung kann fortgesetzt werden.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Erstellen_wechselPostUndZuAnzeige(object sender, RoutedEventArgs e)
         {
+            // Sperren der Oberfläche
             progressRingErstellen.Visibility = Visibility.Visible;
             this.IsEnabled = false;
 
-            // Überprüfung und Post
             Party partyZuErstellen = new Party();
             bool status = false;
 
-            // Validieren der Ortsangabe
+            // Objekt zum Validieren der Ortsangabe
             Location zuValidieren = new Location();
             zuValidieren.CityName = textBoxErstellenORT.Text;
             zuValidieren.StreetName = textBoxErstellenSTRASSE.Text;
@@ -80,6 +86,7 @@ namespace App2Night.Views
                 zuValidieren = JsonConvert.DeserializeObject<Location>(adresseLautGoogle); 
             }
 
+            // Speichern der Eingaben des Nutzers. Falscheingaben werden abgefangen und es wird eine Fehlermeldung ausgegeben.
             try
             {
                 partyZuErstellen.PartyName = textBoxErstellenNAME.Text;
@@ -93,12 +100,15 @@ namespace App2Night.Views
                 partyZuErstellen.MusicGenre = (MusicGenre)comboBoxErstellenMUSIKRICHTUNG.SelectedItem;
                 partyZuErstellen.PartyType = (PartyType)comboBoxErstellenTYP.SelectedItem;
 
+                // Die Beschreibung und der Preis sind optional.
+                // Deshalb werden Standardwerte benötigt, falls die Felder vom Nutzer leergelassen wurden.
                 if (textBoxErstellenINFOS.Text != null)
                 {
                     partyZuErstellen.Description = textBoxErstellenINFOS.Text; 
                 }
                 else
                 {
+                    // Standardwert
                     partyZuErstellen.Description = "";
                 }
 
@@ -109,22 +119,26 @@ namespace App2Night.Views
                 }
                 else
                 {
+                    // Standardwert
                     partyZuErstellen.Price = 0;
                 }
                 
-
+                // Die zu erstellende/bearbeitende Party darf nicht in der Vergangenheit sein.
                 if (partyZuErstellen.PartyDate < DateTime.Today)
                 {
                     Exception FehlerhaftesDatum = new Exception();
                     throw FehlerhaftesDatum;
                 }
 
+                // Hier wird unterschieden, ob die Party bearbeitet oder neu erstellt wird.
                 if (ueberarbeiten == false)
                 {
+                    // Party neu erstellen
                     status = await BackEndComPartyLogik.CreateParty(partyZuErstellen); 
                 }
                 else
                 {
+                    // Party bearbeiten
                     status = await BackEndComPartyLogik.UpdatePartyByID(partyZuErstellen);
                 }
 
@@ -152,6 +166,7 @@ namespace App2Night.Views
                 return;
             }
 
+            // Oberfläche entsperren 
             this.IsEnabled = true;
             progressRingErstellen.Visibility = Visibility.Collapsed;
 

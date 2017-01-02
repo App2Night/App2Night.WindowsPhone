@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using App2Night.ModelsEnums.Model;
-using App2Night.ModelsEnums.Enums;
+﻿using App2Night.ModelsEnums.Enums;
 using Newtonsoft.Json;
 
 namespace App2Night.ModelsEnums.Model
 {
+    /// <summary>
+    /// Model für Teilnahme-Status
+    /// </summary>
     public class CommitmentParty
     {
         [JsonProperty("eventCommitment")]

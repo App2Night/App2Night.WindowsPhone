@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using Windows.Networking.Connectivity;
-using Windows.Data.Json;
 using Windows.UI.Popups;
 using App2Night.ModelsEnums.Model;
-using Windows.Devices.Geolocation;
-using Plugin.Geolocator.Abstractions;
-using App2Night.Logik;
 
 //https://github.com/App2Night/App2Night.Xamarin/blob/dev/PartyUp.Service/Service/ClientService.cs
 //http://app2nightapi.azurewebsites.net/swagger/ui/index.html
@@ -30,7 +24,7 @@ namespace App2Night.Logik
         HttpClient client = new HttpClient();
 
         /// <summary>
-        /// Client fuer die Backend-Kommunikation mit app2nightapi.azurewebsites.net
+        /// Client für die Backend-Kommunikation mit app2nightapi.azurewebsites.net
         /// </summary>
         /// <returns>Client</returns>
         private static HttpClient GetClientParty()
@@ -73,7 +67,7 @@ namespace App2Night.Logik
                     stringFromServer = await httpAntwort.Content.ReadAsStringAsync();
                     partyListe = JsonConvert.DeserializeObject<IEnumerable<Party>>(stringFromServer);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
                     await message.ShowAsync();
@@ -92,8 +86,8 @@ namespace App2Night.Logik
         /// <summary>
         /// Gibt die Daten einer bestimmten Party (ID) zurueck.
         /// </summary>
-        /// <param name="id">ID der Daten</param>
-        /// <returns>Party als String</returns>
+        /// <param name="id">ID der Party</param>
+        /// <returns>Party</returns>
         public static async Task<Party> GetPartyByID(string id)
         {
             string stringFromServer = "";
@@ -107,13 +101,11 @@ namespace App2Night.Logik
 
                 try
                 {
-                    // GET Request
                     httpAntwort = await client.GetAsync($"Party/id={id}");
-                    //httpAntwort.EnsureSuccessStatusCode();
                     stringFromServer = await httpAntwort.Content.ReadAsStringAsync();
                     party = JsonConvert.DeserializeObject<Party>(stringFromServer);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
                     await message.ShowAsync();
@@ -132,8 +124,8 @@ namespace App2Night.Logik
         /// <summary>
         /// Erstellt eine Party mit allen wichtigen Informationen und schickt sie zur Sicherung an den Server.
         /// </summary>
-        /// <param name="party">Zu erstellende Party mit allen Informationen</param>
-        /// <returns>ID</returns>
+        /// <param name="party">Zu erstellende Party</param>
+        /// <returns>Erfolg</returns>
         public static async Task<bool> CreateParty(Party party)
         {
             bool internetVorhanden = IsInternet();
@@ -157,7 +149,7 @@ namespace App2Night.Logik
                     return erfolgreich;
                 }
 
-                catch (Exception ex)
+                catch (Exception)
                 {
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
                     await message.ShowAsync();
@@ -177,43 +169,38 @@ namespace App2Night.Logik
         /// Loescht eine bestimmte Party (ID) vom Server.
         /// </summary>
         /// <param name="id">Zu loeschende Party</param>
-        /// <returns>Status</returns>
-        public static async Task<string> DeletePartyByID(Party party, Token token)
+        /// <returns>Erfolg</returns>
+        public static async Task<bool> DeletePartyByID(Party party, Token token)
         {
             bool internetVorhanden = IsInternet();
-            string status = "";
+            bool erfolg = false;
 
             if (internetVorhanden == true)
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token.AccessToken);
-                //HttpContent content = new StringContent(JsonConvert.SerializeObject(party), Encoding.UTF8, "application/json");
 
                 try
                 {
                     httpAntwort = await client.DeleteAsync($"Party/id={party.PartyId}");
-                    //httpAntwort.EnsureSuccessStatusCode();
-                    status = await httpAntwort.Content.ReadAsStringAsync();
-                    return status;
+                    erfolg = httpAntwort.IsSuccessStatusCode;
+                    return erfolg;
                 }
 
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    status = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
                     await message.ShowAsync();
-                    // Code 21 - Fehler bei Abrufen
-                    return "21";
+                    return false;
                 }
             }
             else
             {
                 // Nachricht, dass Internet eingeschaltet werden soll
-                // Code 42 - Fehler: Keine Internetverbindung
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
                 await message.ShowAsync();
-                return "42";
+                return false;
             }
         }
 
@@ -222,7 +209,7 @@ namespace App2Night.Logik
         /// </summary>
         /// <param name="id">ID der zu aktualisierenden Party</param>
         /// <param name="party">Party mit neuen Werten</param>
-        /// <returns>Status</returns>
+        /// <returns>Erfolg</returns>
         public static async Task<bool> UpdatePartyByID(Party party)
         {
             bool internetVorhanden = IsInternet();
@@ -245,7 +232,7 @@ namespace App2Night.Logik
                     return erfolg;
                 }
 
-                catch (Exception ex)
+                catch (Exception)
                 {
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
                     await message.ShowAsync();
@@ -269,7 +256,6 @@ namespace App2Night.Logik
         public static async Task<string> ValidateLocation(Location location)
         {
             bool internetVorhanden = IsInternet();
-            // TODO: von String in Location umwandeln -> null abfangen
             string adresseLautGoogle = "";
             location.CountryName = "Deutschland";
 
@@ -290,7 +276,7 @@ namespace App2Night.Logik
                     return adresseLautGoogle;
                 }
 
-                catch (Exception ex)
+                catch (Exception)
                 {
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
                     await message.ShowAsync();
@@ -306,7 +292,12 @@ namespace App2Night.Logik
             }
         }
 
-
+        /// <summary>
+        /// Post des Votings.
+        /// </summary>
+        /// <param name="party">Party, bei der gevotet wird.</param>
+        /// <param name="voting">Voting</param>
+        /// <returns></returns>
         public static async Task<string> PutPartyRating(Party party, PartyVoting voting)
         {
             bool internetVorhanden = IsInternet();
@@ -349,6 +340,12 @@ namespace App2Night.Logik
             }
         }
 
+        /// <summary>
+        /// Post des Teilnahme-Status.
+        /// </summary>
+        /// <param name="party">Party, bei der sich der Teilnahme-Status ändert.</param>
+        /// <param name="teilnahme">Teilnahmestatus</param>
+        /// <returns></returns>
         public static async Task<bool> PutPartyCommitmentState(Party party, CommitmentParty teilnahme)
         {
             bool internetVorhanden = IsInternet();
@@ -395,7 +392,7 @@ namespace App2Night.Logik
             }
         }
 
-
+    
         /// <summary>
         /// Checken, ob Intenet eingeschaltet ist.
         /// </summary>

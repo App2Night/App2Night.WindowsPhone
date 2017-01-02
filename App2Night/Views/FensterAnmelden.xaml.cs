@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using App2Night.ModelsEnums.Model;
 using App2Night.Logik;
 using Windows.UI.Popups;
@@ -19,7 +8,8 @@ using Windows.UI.Popups;
 namespace App2Night.Views
 {
     /// <summary>
-    /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+    /// Dies ist die Seite für die Anmeldung. Hier werden die Daten vom Nutzer validiert. Falls diese korrekt sind, wird der Nutzer auf die Hauptansicht 
+    /// weitergeleitet.
     /// </summary>
     public sealed partial class FensterAnmelden : Page
     {
@@ -31,17 +21,29 @@ namespace App2Night.Views
             progressRingAnmeldung.Visibility = Visibility.Collapsed;
         }
 
-        private void Zurueck_wechselZuHauptansicht(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Einfacher Wechsel zu FensterAnmOdReg (Zurück).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Zurueck_wechselZuAnmOderReg(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(FensterAnmOdReg));
         }
 
+        /// <summary>
+        /// Hier werden die Daten vom Nutzer validiert. Entweder ändert sich die Anzeige (korrekte Daten) oder der Nutzer erhält eine Nachricht, 
+        /// dass die eingegeben Daten falsch sind. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Anmelden_WechselZuHauptansicht(object sender, RoutedEventArgs e)
         {
             bool korrekteEingabe = false;
             bool speichernErfolgreich = false;
             bool einstellungenErfolgreich = false;
 
+            // Einstellungen vom User auf einen Standardwert setzen.
             UserEinstellungen einst = new UserEinstellungen();
             einst.Radius = 50;
 
@@ -49,6 +51,7 @@ namespace App2Night.Views
             anmeldung.Email = txtBlAnmEMAIL.Text;
             anmeldung.Password = pwBoxPASSWORT.Password;
 
+            // Sperren der Ansicht
             progressRingAnmeldung.Visibility = Visibility.Visible;
             this.IsEnabled = false;            
 
@@ -56,13 +59,15 @@ namespace App2Night.Views
 
             if (korrekteEingabe == true)
             {
+                // Speichern der Anmeldedaten in eine Textdatei
                 speichernErfolgreich = await DatenVerarbeitung.LoginSpeichern(anmeldung);
 
-                // Default-Radius für Suchumfeld in Datei speichern (momentan nur Radius, hier stehen könnten noch weitere Einstellungen vom User gespeichert werden
+                // Default-Radius für Suchumfeld in Datei speichern 
                 einstellungenErfolgreich = await DatenVerarbeitung.UserEinstellungenSpeichern(einst);
 
                 if (speichernErfolgreich == true && einstellungenErfolgreich == true)
                 {
+                    // Wenn alles erfolgreich gespeichert wurde
                     progressRingAnmeldung.Visibility = Visibility.Collapsed;
                     var message = new MessageDialog("Erfolgreich angemeldet. Viel Spaß!", "Erfolg!");
                     await message.ShowAsync();
@@ -80,6 +85,7 @@ namespace App2Night.Views
                 await message.ShowAsync();
             }
 
+            // Oberfläche entsperren
             this.IsEnabled = true;
             progressRingAnmeldung.Visibility = Visibility.Collapsed;
 

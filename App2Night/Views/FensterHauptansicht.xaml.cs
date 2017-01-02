@@ -1,39 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using App2Night.Controller;
-using Windows.Data.Json;
-using App2Night.ModelsEnums;
 using App2Night.ModelsEnums.Model;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
-using Newtonsoft.Json;
-using Plugin.Geolocator.Abstractions;
 using App2Night.Logik;
 using App2Night.ModelsEnums.Enums;
-
-// Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
 namespace App2Night.Views
 {
     /// <summary>
-    /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+    /// Die Hauptansicht ist der Mittelpunkt der App. Von hier aus kann der Nutzer: eine neue Party erstellen, Partys in der Nähe abrufen, 
+    /// eine Party anzeigen lassen, seine Vormerkungen einsehen und seine Einstellungen bearbeiten
     /// </summary>
     public sealed partial class FensterHauptansicht : Page
     {
         public Party party;
         public IEnumerable<Party> partyListe;
+        int anzahlPartys = 0;
 
         public FensterHauptansicht()
         {
@@ -41,21 +27,40 @@ namespace App2Night.Views
             progressRingInDerNaehe.Visibility = Visibility.Collapsed;          
         }
 
-        private void listViewSuchErgebnisse_ItemClick(object sender, ItemClickEventArgs e)
+        /// <summary>
+        /// Wechselt bei Anklicken einer Party zur Anzeige dieser.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listViewSuchErgebnis_AnklickenParty(object sender, SelectionChangedEventArgs e)
         {
-            //Daten von der Party mitnehmen
-            
-            this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen));
+            AuswahlPartyUndAnzeige(sender);
         }
 
-        private void listView_ClickOnItem(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// Wechselt bei Anklicken einer Party zur Anzeige dieser.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listViewVorgemerkt_AnklickenParty(object sender, SelectionChangedEventArgs e)
         {
-            // Seitenwechsel mit Übergabe der Daten aus der ausgewählten Party 
+            AuswahlPartyUndAnzeige(sender);
+        }
+
+        /// <summary>
+        /// Wählt die angeklickte Party aus, wechselt zum FensterAnzeigen und übergibt dabei die Daten der gewählten Party.
+        /// </summary>
+        /// <param name="sender"></param>
+        private void AuswahlPartyUndAnzeige(object sender)
+        {
+            // Name des gewählten ListItems auslesen 
             string partyName = ((ListView)sender).SelectedItem.ToString();
             bool partygefunden = false;
             int suchDurchLauf = 0;
 
-            while (partygefunden == false)
+            // Solange die Namen der Partys in der Liste mit dem Namen der gewählten Party vergleichen, bis die richtige Party gefunden ist.
+            // Begrent wird die Suche durch die Anzahl der Partys in der Liste
+            while (partygefunden == false || suchDurchLauf <= anzahlPartys)
             {
                 party = partyListe.ElementAt(suchDurchLauf);
 
@@ -69,37 +74,55 @@ namespace App2Night.Views
                 }
             }
 
-            party = partyListe.ElementAt(suchDurchLauf);
+            // Wenn die Party gefunden wurde, dann Wechsel zu FensterAnzeigen und übergabe der gewählten Party.
+            if (partygefunden == true)
+            {
+                party = partyListe.ElementAt(suchDurchLauf);
 
-            this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen), party);
-            
-        }    
+                this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen), party);
+            }
+            else
+            {
+                var message = new MessageDialog("Leider ist ein Fehler aufgetreten. Bitte versuche es erneut", "Fehler");
+            }
+        }
 
+        /// <summary>
+        /// Einfacher Wechsel zu FensterErstellen.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Hinzufuegen_wechselZuErstellen(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(FensterErstellen));
         }
 
+        /// <summary>
+        /// Zeigt die Partys in der Umgebung an. Suchradius wird in UserEinstellungen geändert.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public async void Suchen_abrufenPartys(object sender, RoutedEventArgs e)
         {
+            // Sperren der Oberfläche
             this.IsEnabled = false;
-            //Anzeige der Partys, die vom Server geschickt werden
-            progressRingInDerNaehe.IsEnabled = true;
             progressRingInDerNaehe.Visibility = Visibility.Visible;
 
-            partyListe = await FensterHauptansichtController.btnInDerNaehePartysAbrufen();
+            // Liste der Partys aus der Nähe 
+            partyListe = await btnInDerNaehePartysAbrufen();
 
+            // Anzeigen der Partys in der "normalen" Liste und ggf. in der Liste für die vorgemerkten Partys.
             if (partyListe.Any())
             {
-                int anzahl = partyListe.Count();
+                anzahlPartys = partyListe.Count();
 
-                for (int i = 0; i < anzahl; i++)
+                for (int durchlauf = 0; durchlauf < anzahlPartys; durchlauf++)
                 {
-                    // Liste aller Partys in der Nähe
-                    party = partyListe.ElementAt(i);
+                    // Liste aller Partys in der Nähe werden in der "normalen" ListView angezeigt
+                    party = partyListe.ElementAt(durchlauf);
                     listViewSuchErgebnis.Items.Add(party.PartyName);
 
-                    // Liste der vorgemerkten Partys
+                    // Liste der vorgemerkten Partys werden in einer separaten ListView angezeigt
                     if (party.UserCommitmentState == EventCommitmentState.Noted)
                     {
                         listViewVorgemerkt.Items.Add(party.PartyName);
@@ -116,18 +139,40 @@ namespace App2Night.Views
             progressRingInDerNaehe.Visibility = Visibility.Collapsed;
 
             this.IsEnabled = true;
-
         }
 
+        /// <summary>
+        ///  Einfacher Wechsel zu FensterUserEinstellungen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Einstellungen_wechselZuMenu(object sender, RoutedEventArgs e)
         {
-            // TODO: Fenster mit Menü und Einstellungsmöglichkeiten (Radius)
             this.Frame.Navigate(typeof(FensterUserEinstellungen));
         }
 
-        private void listeEigeneVeranstFokus_zeigeVeranstaltungen(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Gibt die aktuellen Partys aus der Umgebung zurück.
+        /// </summary>
+        /// <returns></returns>
+        private static async Task<IEnumerable<Party>> btnInDerNaehePartysAbrufen()
         {
-            // TODO: BackEndKommunikation eigenePartysAnzeigen
+            IEnumerable<Party> partyListe = null;
+            Location pos;
+
+            // Aktuelle Position ermitteln
+            var geoLocation = new GeolocationLogik();
+            pos = await geoLocation.GetLocation();
+
+            // Radius aus UserEinstellungen
+            UserEinstellungen einst = await DatenVerarbeitung.UserEinstellungenAuslesen();
+            float radius = einst.Radius;
+
+            // Liste der Partys vom BackEnd erhalten
+            partyListe = await BackEndComPartyLogik.GetParties(pos, radius);
+
+            return partyListe;
+
         }
     }
 }

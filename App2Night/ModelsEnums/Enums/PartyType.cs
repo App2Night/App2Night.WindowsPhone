@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace App2Night.ModelsEnums.Enums
+﻿namespace App2Night.ModelsEnums.Enums
 {
+    /// <summary>
+    /// Alle momentan verfügbaren Partyarten.
+    /// </summary>
     public enum PartyType
     {
         Bar,

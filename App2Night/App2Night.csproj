@@ -165,17 +165,12 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\FensterRegistrierenController.cs" />
     <Compile Include="Logik\BackEndComUserLogik.cs" />
-    <Compile Include="Controller\SpeichereNutzerdaten.cs" />
     <Compile Include="Logik\DatenVerarbeitung.cs" />
-    <Compile Include="Logik\Verschluesselung.cs" />
     <Compile Include="ModelsEnums\Enums\EventCommitmentState.cs" />
-    <Compile Include="ModelsEnums\Enums\Gender.cs" />
     <Compile Include="ModelsEnums\Enums\MusicGenre.cs" />
     <Compile Include="ModelsEnums\Enums\PartyType.cs" />
     <Compile Include="ModelsEnums\Model\CommitmentParty.cs" />
-    <Compile Include="ModelsEnums\Model\CreatePartyModel.cs" />
     <Compile Include="ModelsEnums\Model\Location.cs" />
     <Compile Include="ModelsEnums\Model\Login.cs" />
     <Compile Include="ModelsEnums\Model\Party.cs" />
@@ -183,25 +178,14 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Logik\BackEndComPartyLogik.cs" />
-    <Compile Include="Controller\FensterHauptansichtController.cs" />
-    <Compile Include="Controller\FensterSucheController.cs" />
-    <Compile Include="Controller\FensterVeranstAnzeigenController.cs" />
     <Compile Include="Logik\GetGeoLocation.cs" />
-    <Compile Include="Controller\ZwischenController.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ModelsEnums\Model\PartyVoting.cs" />
     <Compile Include="ModelsEnums\Model\Token.cs" />
-    <Compile Include="ModelsEnums\Model\UserInfo.cs" />
     <Compile Include="ModelsEnums\Model\UserEinstellungen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\FensterTeilnehmen.xaml.cs">
-      <DependentUpon>FensterTeilnehmen.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FensterVoten.xaml.cs">
-      <DependentUpon>FensterVoten.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\FensterAnmelden.xaml.cs">
       <DependentUpon>FensterAnmelden.xaml</DependentUpon>
     </Compile>
@@ -217,9 +201,6 @@
     <Compile Include="Views\FensterKartenansicht.xaml.cs">
       <DependentUpon>FensterKartenansicht.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FensterNeuesPW.xaml.cs">
-      <DependentUpon>FensterNeuesPW.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\FensterReg.xaml.cs">
       <DependentUpon>FensterReg.xaml</DependentUpon>
     </Compile>
@@ -228,9 +209,6 @@
     </Compile>
     <Compile Include="Views\FensterVeranstaltungAnzeigen.xaml.cs">
       <DependentUpon>FensterVeranstaltungAnzeigen.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FensterVeranstaltungSuchen.xaml.cs">
-      <DependentUpon>FensterVeranstaltungSuchen.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -257,14 +235,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\FensterTeilnehmen.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\FensterVoten.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\FensterAnmelden.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -285,10 +255,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\FensterNeuesPW.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\FensterReg.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -300,10 +266,6 @@
     <Page Include="Views\FensterVeranstaltungAnzeigen.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\FensterVeranstaltungSuchen.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup />

@@ -2,15 +2,15 @@
 using App2Night.ModelsEnums.Model;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Popups;
 
 namespace App2Night.Logik
 {
+    /// <summary>
+    ///  Die Datenverarbeitung bietet Methoden zum Speichern und Auslesen vom Login, vomm Token und von den Einstellungen des Nutzers.
+    /// </summary>
     class DatenVerarbeitung
     {
         private static StorageFolder speicherOrdner = ApplicationData.Current.LocalFolder;
@@ -19,10 +19,15 @@ namespace App2Night.Logik
         private static string DateiToken = "Token.txt";
         private static string DateiUserEinstellungen = "UserEinst.txt";
 
+        /// <summary>
+        /// Speichert den übergebenen Login in die dafür vorgesehene Datei. Falls die Datei schon bestehen sollte, wird diese Überschrieben.
+        /// </summary>
+        /// <param name="neuerNutzer"></param>
+        /// <returns></returns>
         public static async Task<bool> LoginSpeichern(Login neuerNutzer)
         {
-            // TODO: Verschlüsseln - Entschlüsseln
             bool erfolg = false;
+            // Zieldatei erstellen/überschreiben
             speicherDatei = await speicherOrdner.CreateFileAsync(DateiLogin, Windows.Storage.CreationCollisionOption.ReplaceExisting);
 
             // Kontrolle
@@ -36,6 +41,7 @@ namespace App2Night.Logik
             try
             {
                 string loginJsonAlsString = JsonConvert.SerializeObject(neuerNutzer);
+                // In Datei schreiben
                 await FileIO.WriteTextAsync(speicherDatei, loginJsonAlsString);
 
                 erfolg = true;
@@ -50,14 +56,19 @@ namespace App2Night.Logik
             return erfolg;
         }
 
+        /// <summary>
+        /// Liest die Daten aus der Datei für den Login.
+        /// </summary>
+        /// <returns></returns>
         public static async Task<Login> LoginAuslesen()
         {
             Login ausDatei = new Login();
             speicherDatei = await speicherOrdner.GetFileAsync(DateiLogin);
 
+            // Daten auslesen
             string text = await FileIO.ReadTextAsync(speicherDatei);
 
-            // Bei Fehler in Datei oder beim Auslesen wird der Token als null zurückgegeben
+            // Bei Fehler in Datei oder beim Auslesen wird null zurückgegeben.
             if (text != null)
             {
                 ausDatei = JsonConvert.DeserializeObject<Login>(text);
@@ -70,9 +81,15 @@ namespace App2Night.Logik
             return ausDatei;
         }
 
+        /// <summary>
+        /// Speichert den übergebenen Token in die dafür vorgesehene Datei. Falls die Datei schon bestehen sollte, wird diese Überschrieben.
+        /// </summary>
+        /// <param name="tok"></param>
+        /// <returns></returns>
         public static async Task<bool> TokenSpeichern(Token tok)
         {
             bool erfolg = false;
+            // Zieldatei erstellen/überschreiben
             speicherDatei = await speicherOrdner.CreateFileAsync(DateiToken, Windows.Storage.CreationCollisionOption.ReplaceExisting);
 
             // Kontrolle
@@ -86,6 +103,7 @@ namespace App2Night.Logik
             try
             {
                 string tokenJsonAlsString = JsonConvert.SerializeObject(tok);
+                // In Datei schreiben
                 await FileIO.WriteTextAsync(speicherDatei, tokenJsonAlsString);
 
                 erfolg = true;
@@ -100,14 +118,19 @@ namespace App2Night.Logik
             return erfolg;
         }
 
+        /// <summary>
+        /// Liest die Daten aus der Datei für den Login.
+        /// </summary>
+        /// <returns></returns>
         public static async Task<Token> TokenAuslesen()
         {
             Token ausDatei = new Token();
             speicherDatei = await speicherOrdner.GetFileAsync(DateiToken);
 
+            // Daten auslesen
             string text = await FileIO.ReadTextAsync(speicherDatei);
 
-            // Bei Fehler in Datei oder beim Auslesen wird der Token als null zurückgegeben
+            // Bei Fehler in Datei oder beim Auslesen wird null zurückgegeben.
             if (text != null)
             {
                 ausDatei = JsonConvert.DeserializeObject<Token>(text);
@@ -120,15 +143,23 @@ namespace App2Night.Logik
             return ausDatei;
         }
 
+        /// <summary>
+        /// Überprüft den übergebenen Login auf Korrektheit um zu erfahren, ob der Nutzer existiert.
+        /// </summary>
+        /// <param name="loginZuPruefen"></param>
+        /// <returns></returns>
         public static async Task<bool> LoginUeberpruefen(Login loginZuPruefen)
         {
             bool korrekterLogin = false;
 
-            Token loginUeberpruefung = await BackEndComUserLogik.GetToken(loginZuPruefen);
+            // Prüfen, ob ein Token erhalten werden kann
+            Token tokenLoginUeberpruefung = await BackEndComUserLogik.GetToken(loginZuPruefen);
 
-            if (loginUeberpruefung.AccessToken != null)
+            // Falls ja, existiert der Nutzer und der Token kann gespeichert werden.
+            if (tokenLoginUeberpruefung.AccessToken != null)
             {
-                bool tokenIstGespeichert = await TokenSpeichern(loginUeberpruefung);
+                // Speichern des Tokens in Datei
+                bool tokenIstGespeichert = await TokenSpeichern(tokenLoginUeberpruefung);
 
                 if (tokenIstGespeichert == true)
                 {
@@ -139,34 +170,44 @@ namespace App2Night.Logik
             return korrekterLogin;
         }
 
+        /// <summary>
+        /// Schreibt einen aktuellen Token in die dafür vorgesehen Datei. Gibt den Erfolg der Aktion zurück.
+        /// </summary>
+        /// <returns></returns>
         public static async Task<bool> aktuellerToken()
         {
             bool erfolg = false;
             Login login = await DatenVerarbeitung.LoginAuslesen();
-            Token aktuellerToken;
 
-            //Token aktuellerToken = await TokenAuslesen();
+            // Der Token wird aus der Datei ausgelesen
+            Token aktuellerToken = await TokenAuslesen();
 
-            //if (aktuellerToken.AccessToken == null)
-            //{
-            //    aktuellerToken = await BackEndComUserLogik.GetToken(login);
+            // Falls in dieser Datei kein Token ist, wird ein neuer Token geholt
+            if (aktuellerToken.AccessToken == null)
+            {
+                aktuellerToken = await BackEndComUserLogik.GetToken(login);
 
-            //    if (aktuellerToken.AccessToken != null)
-            //    {
-            //        await TokenSpeichern(aktuellerToken);
-            //    }
-            //}
+                if (aktuellerToken.AccessToken != null)
+                {
+                    await TokenSpeichern(aktuellerToken);
+                }
+            }
 
-            aktuellerToken = await BackEndComUserLogik.GetToken(login);
-
+            // Der Token wird refresht, dass er verwendet werden kann
             erfolg = await BackEndComUserLogik.RefreshToken(aktuellerToken);
 
             return erfolg;
         }
 
+        /// <summary>
+        /// Speichert die übergebenen Einstellungen in die dafür vorgesehene Datei. Falls die Datei schon bestehen sollte, wird diese Überschrieben.
+        /// </summary>
+        /// <param name="einst"></param>
+        /// <returns></returns>
         public static async Task<bool> UserEinstellungenSpeichern(UserEinstellungen einst)
         {
             bool erfolg = false;
+            // Zieldatei erstellen/überschreiben
             speicherDatei = await speicherOrdner.CreateFileAsync(DateiUserEinstellungen, Windows.Storage.CreationCollisionOption.ReplaceExisting);
 
             // Kontrolle
@@ -180,11 +221,11 @@ namespace App2Night.Logik
             try
             {
                 string userEinstellungenAlsString = JsonConvert.SerializeObject(einst);
+                // In Datei schreiben
                 await FileIO.WriteTextAsync(speicherDatei, userEinstellungenAlsString);
 
                 erfolg = true;
             }
-
             catch (Exception)
             {
                 var message = new MessageDialog("Es ist ein Problem aufgetreten. Bitte versuche es später erneut.");
@@ -194,14 +235,19 @@ namespace App2Night.Logik
             return erfolg;
         }
 
+        /// <summary>
+        /// Liest die Daten aus der Datei für die Nutzereinstellungen.
+        /// </summary>
+        /// <returns></returns>
         public static async Task<UserEinstellungen> UserEinstellungenAuslesen()
         {
             UserEinstellungen ausDatei = new UserEinstellungen();
             speicherDatei = await speicherOrdner.GetFileAsync(DateiUserEinstellungen);
 
+            // Daten auslesen
             string text = await FileIO.ReadTextAsync(speicherDatei);
 
-            // Bei Fehler in Datei oder beim Auslesen wird der Token als null zurückgegeben
+            // Bei Fehler in Datei oder beim Auslesen wird null zurückgegeben.
             if (text != null)
             {
                 ausDatei = JsonConvert.DeserializeObject<UserEinstellungen>(text);

@@ -1,26 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Devices.Geolocation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using App2Night.ModelsEnums.Model;
-
-// Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
+using Windows.UI.Xaml.Controls.Maps;
+using Windows.Storage.Streams;
 
 namespace App2Night.Views
 {
     /// <summary>
-    /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+    /// Zeigt die Party auf der Karte an.
     /// </summary>
     public sealed partial class FensterKartenansicht : Page
     {
@@ -35,20 +25,21 @@ namespace App2Night.Views
         {
             uebergebenderParameter = e.Parameter as Party;
 
-            // Specify a known location.
-            BasicGeoposition cityPosition = new BasicGeoposition() { Latitude = uebergebenderParameter.Location.Latitude, Longitude = uebergebenderParameter.Location.Longitude };
-            Geopoint cityCenter = new Geopoint(cityPosition);
+            // Festlegen der Position
+            BasicGeoposition partyPosition = new BasicGeoposition() { Latitude = uebergebenderParameter.Location.Latitude, Longitude = uebergebenderParameter.Location.Longitude };
+            Geopoint partyZentrum = new Geopoint(partyPosition);
 
-            // Set the map location.
-            mapControlKarte.Center = cityCenter;
+            // Festlegen des Mittelpunkts
+            mapControlKarte.Center = partyZentrum;
             mapControlKarte.ZoomLevel = 15;
             mapControlKarte.LandmarksVisible = true;
-        }
 
-        //private void btnKartenAnsichtZurueck_WechselZuPartyAnzeigen(object sender, RoutedEventArgs e)
-        //{
-        //    this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen), uebergebenderParameter);
-        //}
+            // Icon für Standort Party
+            MapIcon partyIcon = new MapIcon();
+            partyIcon.Title = uebergebenderParameter.PartyName;
+            partyIcon.Image = RandomAccessStreamReference.CreateFromUri(new Uri("App2Night/Assets/Square150x150Logo.scale-400.png"));
+
+        }
 
         private void KartenAnsichtZurueck_WechselZuPartyAnzeigen(object sender, RoutedEventArgs e)
         {

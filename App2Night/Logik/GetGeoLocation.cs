@@ -1,26 +1,24 @@
 ﻿using App2Night.ModelsEnums.Model;
 using Plugin.Geolocator;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
-using Windows.UI.Popups;
 
 namespace App2Night.Logik
 {
     public class GeolocationLogik
     {
         /// <summary>
-        /// Gibt den aktuellen Standort als Latitude und Longitude oder CivicAddress zurueck.
+        /// Gibt den aktuellen Standort als Latitude und Longitude zurück.
         /// </summary>
         /// <returns>Aktuellen Standort des Nutzers</returns>
         public async Task<Location> GetLocation()
         {
+            // Code von http://stackoverflow.com/questions/32323942/windows-universal-uwp-geolocation-api-permissions
+
             CancellationTokenSource _cts;
+
             try
             {
 

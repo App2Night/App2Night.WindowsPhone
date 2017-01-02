@@ -1,21 +1,14 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Threading.Tasks;
-using App2Night.ModelsEnums.Model;
 using App2Night.ModelsEnums.Enums;
 
 
 namespace App2Night.ModelsEnums.Model
 {
+    /// <summary>
+    /// Model für eine Party.
+    /// </summary>
     public class Party
     {
         [JsonProperty("PartyId")]
