@@ -37,13 +37,13 @@
                 <PivotItem.RenderTransform>
                     <CompositeTransform SkewX="0.208" TranslateX="0.663"/>
                 </PivotItem.RenderTransform>
-                <ListView x:Name="listViewSuchErgebnis" HorizontalAlignment="Center" Height="438" Width="340"/>
+                <ListView x:Name="listViewSuchErgebnis" HorizontalAlignment="Center" Height="438" Width="340" SelectionChanged="listViewSuche_SelectParty"/>
             </PivotItem>
             <PivotItem x:Name="pItemVorgemerkt" Header="Vorgemerkt" Margin="10,0,0,100" Width="340" HorizontalAlignment="Left">
-                <ListView x:Name="listViewVorgemerkt" Height="445" Margin="0" Width="340" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <ListView x:Name="listViewVorgemerkt" Height="445" Margin="0" Width="340" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="listViewVorgemerkt_SelectParty"/>
             </PivotItem>
             <PivotItem x:Name="pItemTeilnahme" Header="Teilnahme">
-                <ListView x:Name="listViewTeilnahme" Height="445" Width="340" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                <ListView x:Name="listViewTeilnahme" Height="445" Width="340" VerticalAlignment="Top" HorizontalAlignment="Center" SelectionChanged="listViewTeilnahme_SelectParty"/>
             </PivotItem>
         </Pivot>
         <ProgressRing x:Name="progressRingInDerNaehe" HorizontalAlignment="Center" Height="70" Margin="170,465,170,0" VerticalAlignment="Top" Width="70" IsActive="True"/>

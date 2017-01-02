@@ -42,26 +42,6 @@ namespace App2Night.Views
         }
 
         /// <summary>
-        /// Wechselt bei Anklicken einer Party zur Anzeige dieser.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void listViewSuchErgebnis_AnklickenParty(object sender, SelectionChangedEventArgs e)
-        {
-            AuswahlPartyUndAnzeige(sender);
-        }
-
-        /// <summary>
-        /// Wechselt bei Anklicken einer Party zur Anzeige dieser.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void listViewVorgemerkt_AnklickenParty(object sender, SelectionChangedEventArgs e)
-        {
-            AuswahlPartyUndAnzeige(sender);
-        }
-
-        /// <summary>
         /// Wählt die angeklickte Party aus, wechselt zum FensterAnzeigen und übergibt dabei die Daten der gewählten Party.
         /// </summary>
         /// <param name="sender"></param>
@@ -214,25 +194,35 @@ namespace App2Night.Views
 
         }
 
-        //private async void test(object sender, RoutedEventArgs e)
-        //{
-        //    bool listeLeer = false;
+        /// <summary>
+        /// Wechselt bei Anklicken einer Party zur Anzeige dieser.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listViewTeilnahme_SelectParty(object sender, SelectionChangedEventArgs e)
+        {
+            AuswahlPartyUndAnzeige(sender);
+        }
 
-        //    try
-        //    {
-        //        var items = listViewTeilnahme.Items;
-        //    }
-        //    catch (Exception)
-        //    {
-        //        listeLeer = true;
-        //    }
+        /// <summary>
+        /// Wechselt bei Anklicken einer Party zur Anzeige dieser.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listViewVorgemerkt_SelectParty(object sender, SelectionChangedEventArgs e)
+        {
+            AuswahlPartyUndAnzeige(sender);
+        }
 
-        //    if (listeLeer == true)
-        //    {
-        //        var message = new MessageDialog("Du hast bei keiner Party zugesagt. Um bei einer Party teilzunehmen, klicke bei der Anzeige der Party einfach auf die Musiknoten.", "Hinweis");
-        //        await message.ShowAsync();
-        //    }
-        //}
+        /// <summary>
+        /// Wechselt bei Anklicken einer Party zur Anzeige dieser.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listViewSuche_SelectParty(object sender, SelectionChangedEventArgs e)
+        {
+            AuswahlPartyUndAnzeige(sender);
+        }
     }
 }
 

@@ -269,8 +269,9 @@ namespace App2Night.Logik
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
+                var jsonLocation = JsonConvert.SerializeObject(location);
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token.AccessToken);
-                HttpContent content = new StringContent(JsonConvert.SerializeObject(location), Encoding.UTF8, "application/json");
+                HttpContent content = new StringContent(jsonLocation, Encoding.UTF8, "application/json");
 
                 try
                 {

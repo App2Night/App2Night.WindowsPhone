@@ -133,7 +133,7 @@ namespace App2Night.Views
             // Icon für Standort Party
             MapIcon partyIcon = new MapIcon();
             partyIcon.Title = uebergebeneParty.PartyName;
-            partyIcon.Image = RandomAccessStreamReference.CreateFromUri(new Uri(@"C:\Users\i15011\Documents\Visual Studio 2015\Projects\App2Night\App2Night\Assets\Square310x310Logo.scale-100.png"));
+            partyIcon.Image = RandomAccessStreamReference.CreateFromUri(new Uri("ms - appx:///Assets/weather.png"));
 
             mapControlKarte.MapElements.Add(partyIcon);
         }
@@ -283,6 +283,11 @@ namespace App2Night.Views
             this.Frame.Navigate(typeof(FensterHauptansicht));
         }
 
+        /// <summary>
+        /// Gibt dem Nutzer die Möglichkeit seine erstelle Party zu löschen.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Loeschen_PartyLoeschen(object sender, RoutedEventArgs e)
         {
             // Teile übernommen von http://stackoverflow.com/questions/35392306/does-the-messagedialog-class-for-uwp-apps-support-three-buttons-on-mobile  
