@@ -6,6 +6,9 @@ using App2Night.ModelsEnums.Model;
 using App2Night.ModelsEnums.Enums;
 using App2Night.Logik;
 using Windows.UI.Popups;
+using Windows.Devices.Geolocation;
+using Windows.UI.Xaml.Controls.Maps;
+using Windows.Storage.Streams;
 
 namespace App2Night.Views
 {
@@ -25,7 +28,7 @@ namespace App2Night.Views
 
         /// <summary>
         /// Anzeigen der Daten der Party.
-        /// Anpassen der Ansicht abhängig vom Nutzer, Stand der Vormerkung und Teilnahme.
+        /// Anpassen der Ansicht abhängig vom Nutzer, Stand der Vormerkung und Teilnahme und der Position der Party.
         /// </summary>
         /// <param name="e"></param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -48,11 +51,13 @@ namespace App2Night.Views
             if (uebergebeneParty.HostedByUser == true)
             {
                 appBarButtonBearbeiten.Visibility = Visibility.Visible;
+                appBarButtonLoeschen.Visibility = Visibility.Visible;
                 textBlVeranstAnzeigenNAME.Width = 245;
             }
             else
             {
                 appBarButtonBearbeiten.Visibility = Visibility.Collapsed;
+                appBarButtonLoeschen.Visibility = Visibility.Collapsed;
                 textBlVeranstAnzeigenNAME.Width = 303;
             }
 
@@ -81,6 +86,32 @@ namespace App2Night.Views
                 appBarButtonTeilnehmen.Icon = new SymbolIcon(Symbol.Undo); ;
                 appBarButtonTeilnehmen.Label = "Absagen";
             }
+
+            // Party auf Karte anzeigen
+            MapPartyAnzeigen(uebergebeneParty);
+        }
+
+        /// <summary>
+        /// Zeigt die Party mittig auf der Karte an.
+        /// </summary>
+        /// <param name="uebergebeneParty"></param>
+        private void MapPartyAnzeigen(Party uebergebeneParty)
+        {
+            // Festlegen der Position
+            BasicGeoposition partyPosition = new BasicGeoposition() { Latitude = uebergebeneParty.Location.Latitude, Longitude = uebergebeneParty.Location.Longitude };
+            Geopoint partyZentrum = new Geopoint(partyPosition);
+
+            // Festlegen des Mittelpunkts
+            mapControlKarte.Center = partyZentrum;
+            mapControlKarte.ZoomLevel = 15;
+            mapControlKarte.LandmarksVisible = true;
+
+            // Icon für Standort Party
+            MapIcon partyIcon = new MapIcon();
+            partyIcon.Title = uebergebeneParty.PartyName;
+            partyIcon.Image = RandomAccessStreamReference.CreateFromUri(new Uri(@"C:\Users\i15011\Documents\Visual Studio 2015\Projects\App2Night\App2Night\Assets\Square310x310Logo.scale-100.png"));
+
+            mapControlKarte.MapElements.Add(partyIcon);
         }
 
         /// <summary>
@@ -153,17 +184,6 @@ namespace App2Night.Views
 
             // Zum Schluss wechselt man zur Hauptansicht
             this.Frame.Navigate(typeof(FensterHauptansicht));
-        }
-
-        /// <summary>
-        /// Einfacher Wechsel zur Kartenanzeige. Die anzuzeigende Party wird mitgegeben. 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AufKarteAnzeigen_wechselZuKartenAnzeige(object sender, RoutedEventArgs e)
-        {
-            // TODO: Ersetzen. Karte mit auf Ansicht
-            this.Frame.Navigate(typeof(FensterKartenansicht), uebergebeneParty);
         }
 
         /// <summary>

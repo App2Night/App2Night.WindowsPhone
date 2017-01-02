@@ -24,7 +24,7 @@ namespace App2Night.Views
         public FensterHauptansicht()
         {
             this.InitializeComponent();
-            progressRingInDerNaehe.Visibility = Visibility.Collapsed;          
+            progressRingInDerNaehe.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace App2Night.Views
 
             // Solange die Namen der Partys in der Liste mit dem Namen der gewählten Party vergleichen, bis die richtige Party gefunden ist.
             // Begrent wird die Suche durch die Anzahl der Partys in der Liste
-            while (partygefunden == false || suchDurchLauf <= anzahlPartys)
+            while (partygefunden == false && suchDurchLauf <= anzahlPartys)
             {
                 party = partyListe.ElementAt(suchDurchLauf);
 
@@ -176,3 +176,4 @@ namespace App2Night.Views
         }
     }
 }
+
