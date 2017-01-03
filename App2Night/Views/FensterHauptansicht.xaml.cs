@@ -42,15 +42,15 @@ namespace App2Night.Views
             this.IsEnabled = false;
             progressRingInDerNaehe.Visibility = Visibility.Visible;
 
-            PageStackEntry vorherigeSeite = Frame.BackStack.Last();
-            Type vorherigeSeiteTyp = vorherigeSeite?.SourcePageType;
+            //PageStackEntry vorherigeSeite = Frame.BackStack.Last();
+            //Type vorherigeSeiteTyp = vorherigeSeite?.SourcePageType;
 
-            // Hinweis erscheint nur, wenn man vom Anmelden/Registrieren auf diese Haupansicht kommt
-            if (vorherigeSeiteTyp == (typeof(FensterAnmelden)) || vorherigeSeiteTyp == (typeof(FensterReg)))
-            {
-                var message = new MessageDialog(Meldungen.Hauptansicht.Nutzungsbedingungen, "Hinweis");
-                await message.ShowAsync(); 
-            }
+            //// Hinweis erscheint nur, wenn man vom Anmelden/Registrieren auf diese Haupansicht kommt
+            //if (vorherigeSeiteTyp == (typeof(FensterAnmelden)) || vorherigeSeiteTyp == (typeof(FensterReg)))
+            //{
+            //    var message = new MessageDialog(Meldungen.Hauptansicht.Nutzungsbedingungen, "Hinweis");
+            //    await message.ShowAsync(); 
+            //}
 
             try
             {

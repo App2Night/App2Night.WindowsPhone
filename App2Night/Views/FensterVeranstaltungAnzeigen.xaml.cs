@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI;
 using App2Night.Ressources;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.Foundation;
 
 namespace App2Night.Views
 {
@@ -134,11 +135,12 @@ namespace App2Night.Views
 
             // Icon für Standort Party
             MapIcon partyIcon = new MapIcon();
-            // TODO: Icon in Map
-            //partyIcon.Title = uebergebeneParty.PartyName;
-            //var logo = new BitmapIcon();
-            //logo.UriSource = new Uri("../Assets/Square150x150Logo.scale-400.png", UriKind.Relative);
-            //partyIcon.Image = RandomAccessStreamReference.CreateFromUri(logo.UriSource);
+
+            partyIcon.Image = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/Square44x44Logo.scale-100.png", UriKind.Absolute));
+            partyIcon.Location = partyZentrum;
+            partyIcon.NormalizedAnchorPoint = new Point(0.5, 1.0);
+            partyIcon.Title = uebergebeneParty.PartyName;
+            partyIcon.ZIndex = 0;
 
             mapControlKarte.MapElements.Add(partyIcon);
         }
