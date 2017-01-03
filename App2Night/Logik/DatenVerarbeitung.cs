@@ -1,7 +1,9 @@
 ﻿
 using App2Night.ModelsEnums.Model;
+using App2Night.Ressources;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Popups;
@@ -18,11 +20,12 @@ namespace App2Night.Logik
         private static string DateiLogin = "Login.txt";
         private static string DateiToken = "Token.txt";
         private static string DateiUserEinstellungen = "UserEinst.txt";
+        private static string DateiPartys = "Partys.txt";
 
         /// <summary>
         /// Speichert den übergebenen Login in die dafür vorgesehene Datei. Falls die Datei schon bestehen sollte, wird diese Überschrieben.
         /// </summary>
-        /// <param name="neuerNutzer"></param>
+        /// <param name="neuerNutzer">Login zu speichern</param>
         /// <returns></returns>
         public static async Task<bool> LoginSpeichern(Login neuerNutzer)
         {
@@ -33,7 +36,7 @@ namespace App2Night.Logik
             // Kontrolle
             if (speicherOrdner == null)
             {
-                var message = new MessageDialog("Es ist ein Problem aufgetreten. Bitte versuche es später erneut.");
+                var message = new MessageDialog(Meldungen.DatenVerarbeitung.FehlerSpeichern, "Fehler beim Speichern!");
                 await message.ShowAsync();
                 return erfolg;
             }
@@ -49,7 +52,7 @@ namespace App2Night.Logik
 
             catch (Exception)
             {
-                var message = new MessageDialog("Es ist ein Problem aufgetreten. Bitte versuche es später erneut.");
+                var message = new MessageDialog(Meldungen.DatenVerarbeitung.FehlerSpeichern, "Fehler beim Speichern!");
                 await message.ShowAsync();
                 return erfolg;
             }
@@ -84,7 +87,7 @@ namespace App2Night.Logik
         /// <summary>
         /// Speichert den übergebenen Token in die dafür vorgesehene Datei. Falls die Datei schon bestehen sollte, wird diese Überschrieben.
         /// </summary>
-        /// <param name="tok"></param>
+        /// <param name="tok">Token zu speichern</param>
         /// <returns></returns>
         public static async Task<bool> TokenSpeichern(Token tok)
         {
@@ -95,7 +98,7 @@ namespace App2Night.Logik
             // Kontrolle
             if (speicherOrdner == null)
             {
-                var message = new MessageDialog("Es ist ein Problem aufgetreten. Bitte versuche es später erneut.");
+                var message = new MessageDialog(Meldungen.DatenVerarbeitung.FehlerSpeichern, "Fehler beim Speichern!");
                 await message.ShowAsync();
                 return erfolg;
             }
@@ -111,7 +114,7 @@ namespace App2Night.Logik
 
             catch (Exception)
             {
-                var message = new MessageDialog("Es ist ein Problem aufgetreten. Bitte versuche es später erneut.");
+                var message = new MessageDialog(Meldungen.DatenVerarbeitung.FehlerSpeichern, "Fehler beim Speichern!");
                 await message.ShowAsync();
                 return erfolg;
             }
@@ -218,7 +221,7 @@ namespace App2Night.Logik
         /// <summary>
         /// Speichert die übergebenen Einstellungen in die dafür vorgesehene Datei. Falls die Datei schon bestehen sollte, wird diese Überschrieben.
         /// </summary>
-        /// <param name="einst"></param>
+        /// <param name="einst">Einstellungen zu speichern</param>
         /// <returns></returns>
         public static async Task<bool> UserEinstellungenSpeichern(UserEinstellungen einst)
         {
@@ -229,7 +232,7 @@ namespace App2Night.Logik
             // Kontrolle
             if (speicherOrdner == null)
             {
-                var message = new MessageDialog("Es ist ein Problem aufgetreten. Bitte versuche es später erneut.");
+                var message = new MessageDialog(Meldungen.DatenVerarbeitung.FehlerSpeichern, "Fehler beim Speichern!");
                 await message.ShowAsync();
                 return erfolg;
             }
@@ -244,7 +247,7 @@ namespace App2Night.Logik
             }
             catch (Exception)
             {
-                var message = new MessageDialog("Es ist ein Problem aufgetreten. Bitte versuche es später erneut.");
+                var message = new MessageDialog(Meldungen.DatenVerarbeitung.FehlerSpeichern, "Fehler beim Speichern!");
                 await message.ShowAsync();
                 return erfolg;
             }
@@ -274,6 +277,72 @@ namespace App2Night.Logik
             }
 
             return ausDatei;
+        }
+
+
+        /// <summary>
+        /// Speichert die übergebenen Partyliste in die dafür vorgesehene Datei. Falls die Datei schon bestehen sollte, wird diese Überschrieben.
+        /// </summary>
+        /// <param name="partyListe">Partyliste zu speichern</param>
+        /// <returns></returns>
+        public static async Task<bool> PartysSpeichern(IEnumerable<Party> partyListe)
+        {
+            bool erfolg = false;
+
+            // Zieldatei erstellen/überschreiben
+            speicherDatei = await speicherOrdner.CreateFileAsync(DateiPartys, Windows.Storage.CreationCollisionOption.ReplaceExisting);
+
+            // Kontrolle
+            if (speicherOrdner == null)
+            {
+                var message = new MessageDialog(Meldungen.DatenVerarbeitung.FehlerSpeichern, "Fehler beim Speichern!");
+                await message.ShowAsync();
+                return erfolg;
+            }
+
+            try
+            {
+                string partyListeAlsJson = JsonConvert.SerializeObject(partyListe);
+                // In Datei schreiben
+                await FileIO.WriteTextAsync(speicherDatei, partyListeAlsJson);
+
+                erfolg = true;
+            }
+
+            catch (Exception)
+            {
+                var message = new MessageDialog(Meldungen.DatenVerarbeitung.FehlerSpeichern, "Fehler beim Speichern!");
+                await message.ShowAsync();
+                return erfolg;
+            }
+
+            return erfolg;
+        }
+
+        /// <summary>
+        /// Liest die Daten aus der Datei für die Partys.
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<IEnumerable<Party>> PartysAuslesen()
+        {
+            IEnumerable<Party> partyListe = null;
+            speicherDatei = await speicherOrdner.GetFileAsync(DateiPartys);
+
+            // Daten auslesen
+            string text = await FileIO.ReadTextAsync(speicherDatei);
+
+            // Bei Fehler in Datei oder beim Auslesen wird null zurückgegeben.
+            if (text != "null")
+            {
+                partyListe = JsonConvert.DeserializeObject<IEnumerable<Party>>(text);
+            }
+            else
+            {
+                partyListe = null;
+            }
+
+            return partyListe;
+
         }
     }
 }

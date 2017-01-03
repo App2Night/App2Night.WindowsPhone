@@ -20,9 +20,9 @@
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
-            <AppBarButton x:Name="AppBarButtonHinzufuegen" Icon="Add" Label="Erstellen" Click="Hinzufuegen_wechselZuErstellen" Width="90"/>
-            <AppBarButton x:Name="AppBarButtonInDerNaehe" Icon="Zoom" Label="In der Nähe" Click="Suchen_abrufenPartys" Width="150"/>
-            <AppBarButton x:Name="AppBarButtonEinstellungen" Icon="Setting" Label="Einstellungen" Click="Einstellungen_wechselZuMenu" Width="70"/>
+            <AppBarButton x:Name="AppBarButtonHinzufuegen" Icon="Add" Label="Erstellen" Click="Hinzufuegen_wechselZuErstellen" Width="80"/>
+            <AppBarButton x:Name="AppBarButtonInDerNaehe" Icon="Zoom" Label="Suchen/Aktualisieren" Click="Suchen_abrufenPartys" Width="150"/>
+            <AppBarButton x:Name="AppBarButtonEinstellungen" Icon="Setting" Label="Einstellungen" Click="Einstellungen_wechselZuMenu" Width="80"/>
 
         </CommandBar>
     </Page.BottomAppBar>

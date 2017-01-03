@@ -12,6 +12,7 @@ using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media;
 using Windows.UI;
 using App2Night.Ressources;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace App2Night.Views
 {
@@ -133,9 +134,11 @@ namespace App2Night.Views
 
             // Icon für Standort Party
             MapIcon partyIcon = new MapIcon();
-            partyIcon.Title = uebergebeneParty.PartyName;
-
-            // TODO partyIcon.Image = RandomAccessStreamReference.CreateFromUri(new Uri("ms - appx:///Assets/weather.png"));
+            // TODO: Icon in Map
+            //partyIcon.Title = uebergebeneParty.PartyName;
+            //var logo = new BitmapIcon();
+            //logo.UriSource = new Uri("../Assets/Square150x150Logo.scale-400.png", UriKind.Relative);
+            //partyIcon.Image = RandomAccessStreamReference.CreateFromUri(logo.UriSource);
 
             mapControlKarte.MapElements.Add(partyIcon);
         }

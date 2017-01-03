@@ -5,6 +5,7 @@ using App2Night.Logik;
 using App2Night.ModelsEnums.Model;
 using Windows.UI.Popups;
 using App2Night.Ressources;
+using System.Collections.Generic;
 
 namespace App2Night.Views
 {
@@ -67,6 +68,10 @@ namespace App2Night.Views
 
             // "Neue" Werte speichern
             speichernErfolgreich = await DatenVerarbeitung.UserEinstellungenSpeichern(einst);
+
+            // Partyliste aus Zwischenspeichern löschen
+            IEnumerable<Party> liste = null;
+            speichernErfolgreich = await DatenVerarbeitung.PartysSpeichern(liste);
 
             // Oberfläche entsperren
             this.IsEnabled = true;

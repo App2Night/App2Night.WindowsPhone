@@ -5,6 +5,7 @@ using App2Night.ModelsEnums.Model;
 using App2Night.Logik;
 using Windows.UI.Popups;
 using App2Night.Ressources;
+using System.Collections.Generic;
 
 namespace App2Night.Views
 {
@@ -44,9 +45,16 @@ namespace App2Night.Views
             bool speichernErfolgreich = false;
             bool einstellungenErfolgreich = false;
 
-            // Einstellungen vom User auf einen Standardwert setzen.
+            // UserEinstellungen auf Default zurücksetzen
             UserEinstellungen einst = new UserEinstellungen();
             einst.Radius = 50;
+
+            // "Neue" Werte speichern
+            speichernErfolgreich = await DatenVerarbeitung.UserEinstellungenSpeichern(einst);
+
+            // Partyliste aus Zwischenspeichern löschen
+            IEnumerable<Party> liste = null;
+            speichernErfolgreich = await DatenVerarbeitung.PartysSpeichern(liste);
 
             anmeldung.Username = txtBoxAnmNUTZERNAME.Text;
             anmeldung.Email = txtBlAnmEMAIL.Text;

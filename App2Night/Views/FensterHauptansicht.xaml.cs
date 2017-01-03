@@ -10,6 +10,7 @@ using App2Night.Logik;
 using App2Night.ModelsEnums.Enums;
 using Windows.UI.Xaml.Navigation;
 using App2Night.Ressources;
+using Newtonsoft.Json;
 
 namespace App2Night.Views
 {
@@ -20,8 +21,8 @@ namespace App2Night.Views
     public sealed partial class FensterHauptansicht : Page
     {
         public Party party;
-        public IEnumerable<Party> partyListe;
-        int anzahlPartys = 0;
+        public static IEnumerable<Party> partyListe;
+        static int anzahlPartys = 0;
         int anzahlVorgemerkt = 0;
         int anzahlTeilgenommen = 0;
 
@@ -31,14 +32,67 @@ namespace App2Night.Views
             progressRingInDerNaehe.Visibility = Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// Bei Wechsel auf diese Seite wird eine Hinweismeldung ausgegeben (falls man vom Anmelden oder Registrieren kommt).
+        /// Zusätzlich werden die eventuell schon zwischengespeicherten Partys wieder ausgelesen.
+        /// </summary>
+        /// <param name="e"></param>
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            this.IsEnabled = false;
+            progressRingInDerNaehe.Visibility = Visibility.Visible;
+
+            PageStackEntry vorherigeSeite = Frame.BackStack.Last();
+            Type vorherigeSeiteTyp = vorherigeSeite?.SourcePageType;
+
             // Hinweis erscheint nur, wenn man vom Anmelden/Registrieren auf diese Haupansicht kommt
-            if (e.SourcePageType == (typeof(FensterAnmelden)) || e.SourcePageType == (typeof(FensterReg)))
+            if (vorherigeSeiteTyp == (typeof(FensterAnmelden)) || vorherigeSeiteTyp == (typeof(FensterReg)))
             {
                 var message = new MessageDialog(Meldungen.Hauptansicht.Nutzungsbedingungen, "Hinweis");
                 await message.ShowAsync(); 
             }
+
+            try
+            {
+                // Anzeigen der zwischengespeicherten Partys (falls vorhanden)
+                partyListe = await DatenVerarbeitung.PartysAuslesen();
+            }
+            catch (Exception)
+            {
+
+            }
+
+            // Anzeigen der Partys in der "normalen" Liste und ggf. in der Liste für die vorgemerkten Partys.
+            if (partyListe != null && partyListe.Any() == true)
+            {
+                anzahlPartys = partyListe.Count();
+
+                for (int durchlauf = 0; durchlauf < anzahlPartys; durchlauf++)
+                {
+                    // Liste aller Partys in der Nähe werden in der "normalen" ListView angezeigt
+                    party = partyListe.ElementAt(durchlauf);
+                    listViewSuchErgebnis.Items.Add(party.PartyName);
+
+                    // Liste der vorgemerkten Partys werden in einer separaten ListView angezeigt
+                    if (party.UserCommitmentState == EventCommitmentState.Noted)
+                    {
+                        listViewVorgemerkt.Items.Add(party.PartyName);
+
+                        anzahlVorgemerkt++;
+                    }
+
+                    // Liste der Partys, bei denen der Nutzer teilnimmt, werden in einer separaten ListView angezeigt
+                    if (party.UserCommitmentState == EventCommitmentState.Accepted)
+                    {
+                        listViewTeilnahme.Items.Add(party.PartyName);
+
+                        anzahlTeilgenommen++;
+                    }
+                }
+            }
+
+            progressRingInDerNaehe.Visibility = Visibility.Collapsed;
+            this.IsEnabled = true;
         }
 
         /// <summary>
@@ -190,6 +244,14 @@ namespace App2Night.Views
             // Liste der Partys vom BackEnd erhalten
             partyListe = await BackEndComPartyLogik.GetParties(pos, radius);
 
+            // Zwischenspeichern der aktuell angezeigten Partys
+            bool erfolg = await ListViewAuslesenUndZwischenspeichern(partyListe);
+
+            if (erfolg == false)
+            {
+                var message = new MessageDialog(Meldungen.Hauptansicht.FehlerZwischenSpeichern, "Fehler beim Speichern für Offline-Nutzung!");
+            }
+
             return partyListe;
         }
 
@@ -222,6 +284,16 @@ namespace App2Night.Views
         {
             AuswahlPartyUndAnzeige(sender);
         }
+
+        private static async Task<bool> ListViewAuslesenUndZwischenspeichern(IEnumerable<Party> liste)
+        {
+            bool erfolg = false;
+
+            erfolg = await DatenVerarbeitung.PartysSpeichern(liste);
+            
+            return erfolg;
+        }
+
     }
 }
 

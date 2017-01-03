@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace App2Night.Ressources
 {
+    /// <summary>
+    /// Enthält die Meldungen an den Nutzer.
+    /// </summary>
     public static class Meldungen
     {
         public static class Anmeldung
@@ -36,6 +39,7 @@ namespace App2Night.Ressources
             public static readonly string Nutzungsbedingungen = "Um Partys anzuzeigen benötigt die App GPS und eine Internetverbindung. Zum Suchen oder Aktualisieren klicke bitte auf die Lupe unten. Viel Spaß!";
             public static readonly string KeinePartysInDerNaehe = "Leider sind keine Partys in deiner Nähe. Erstelle eine eigene Party, vergrößere in den Einstellungen den Suchradius oder versuche es später erneut.";
             public static readonly string AnzeigePartyFehler = "Leider ist ein Fehler aufgetreten. Bitte versuche es erneut";
+            public static readonly string FehlerZwischenSpeichern = "Leider hat das Zwischenspeichern der Veranstaltungen für die Offline-Nutzung nicht funktionier.";
         }
 
         public static class UserEinstellungen
@@ -66,6 +70,11 @@ namespace App2Night.Ressources
             public static readonly string ErfolgVergessen = "Diese Party ist nicht mehr vorgemerkt! Es kann etwas dauern, bis du die Änderungen siehst.";
             public static readonly string FehlerVormerkenVergessen = "Es ist ein Fehler aufgetreten. Bitte versuche es später erneut!";
 
+        }
+
+        public static class DatenVerarbeitung
+        {
+            public static readonly string FehlerSpeichern = "Es ist ein Problem aufgetreten. Bitte versuche es später erneut.";
         }
     }
 }
