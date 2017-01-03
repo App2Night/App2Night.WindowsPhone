@@ -46,15 +46,15 @@ namespace App2Night.Views
             this.IsEnabled = false;
             progressRingInDerNaehe.Visibility = Visibility.Visible;
 
-            //PageStackEntry vorherigeSeite = Frame.BackStack.Last();
-            //Type vorherigeSeiteTyp = vorherigeSeite?.SourcePageType;
+            // Hinweis erscheint nur, wenn man vom Anmelden/Registrieren auf diese Haupansicht kommt
+            PageStackEntry vorherigeSeite = Frame.BackStack.Last();
+            Type vorherigeSeiteTyp = vorherigeSeite?.SourcePageType;
 
-            //// Hinweis erscheint nur, wenn man vom Anmelden/Registrieren auf diese Haupansicht kommt
-            //if (vorherigeSeiteTyp == (typeof(FensterAnmelden)) || vorherigeSeiteTyp == (typeof(FensterReg)))
-            //{
-            //    var message = new MessageDialog(Meldungen.Hauptansicht.Nutzungsbedingungen, "Hinweis");
-            //    await message.ShowAsync();
-            //}
+            if (vorherigeSeiteTyp == (typeof(FensterAnmelden)) || vorherigeSeiteTyp == (typeof(FensterReg)))
+            {
+                var message = new MessageDialog(Meldungen.Hauptansicht.Nutzungsbedingungen, "Hinweis");
+                await message.ShowAsync();
+            }
 
             try
             {
@@ -111,6 +111,10 @@ namespace App2Night.Views
             this.IsEnabled = true;
         }
 
+        /// <summary>
+        /// Zeigt die übergebene Party auf der Karte an.
+        /// </summary>
+        /// <param name="party"></param>
         private void PartyAufMapAnzeigen(Party party)
         {
             // Festlegen der Position
@@ -322,6 +326,11 @@ namespace App2Night.Views
             AuswahlPartyUndAnzeige(sender);
         }
 
+        /// <summary>
+        /// Speichert die Partys auf der ListView für die Offline-Nutzung.
+        /// </summary>
+        /// <param name="liste"></param>
+        /// <returns></returns>
         private static async Task<bool> ListViewAuslesenUndZwischenspeichern(IEnumerable<Party> liste)
         {
             bool erfolg = false;
