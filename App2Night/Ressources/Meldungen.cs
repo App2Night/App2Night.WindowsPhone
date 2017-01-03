@@ -58,12 +58,12 @@ namespace App2Night.Ressources
             public static readonly string MisserfolgLoeschen = "Party nicht gelöscht.";
             public static readonly string AbbrechenLoeschen = "Aktion abgebrochen";
 
-            public static readonly string ErfolgTeilnahme = "Deine Teilnahme wurde berücksichtigt!";
-            public static readonly string ErfolgAbsage = "Deine Absage wurde berücksichtigt!";
+            public static readonly string ErfolgTeilnahme = "Deine Teilnahme wurde berücksichtigt! Es kann etwas dauern, bis du die Änderungen siehst.";
+            public static readonly string ErfolgAbsage = "Deine Absage wurde berücksichtigt! Es kann etwas dauern, bis du die Änderungen siehst.";
             public static readonly string FehlerTeilnahmeAbsage = "Es ist ein Fehler aufgetreten. Bitte versuche es später erneut.";
 
-            public static readonly string ErfolgVormerken = "Diese Party wurde für dich vorgemerkt!";
-            public static readonly string ErfolgVergessen = "Diese Party ist nicht mehr vorgemerkt!";
+            public static readonly string ErfolgVormerken = "Diese Party wurde für dich vorgemerkt! Es kann etwas dauern, bis du die Änderungen siehst.";
+            public static readonly string ErfolgVergessen = "Diese Party ist nicht mehr vorgemerkt! Es kann etwas dauern, bis du die Änderungen siehst.";
             public static readonly string FehlerVormerkenVergessen = "Es ist ein Fehler aufgetreten. Bitte versuche es später erneut!";
 
         }

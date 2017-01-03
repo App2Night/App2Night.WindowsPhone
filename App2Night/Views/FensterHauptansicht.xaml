@@ -16,7 +16,7 @@
         </ControlTemplate>
     </Page.Resources>
     <Page.BottomAppBar>
-        <CommandBar>
+        <CommandBar Background="#FFD97925">
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
@@ -29,7 +29,7 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <Pivot x:Name="registerHauptFenster" HorizontalAlignment="Left" Height="640" Margin="0,-4,0,0" Title="App2Night" VerticalAlignment="Top" Width="360">
+        <Pivot x:Name="registerHauptFenster" HorizontalAlignment="Left" Height="640" Margin="0,-4,0,0" Title="App2Night" VerticalAlignment="Top" Width="360" Foreground="#FFD97925" FontSize="15">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout/>
             </FlyoutBase.AttachedFlyout>
@@ -46,7 +46,7 @@
                 <ListView x:Name="listViewTeilnahme" Height="445" Width="340" VerticalAlignment="Top" HorizontalAlignment="Center" SelectionChanged="listViewTeilnahme_SelectParty"/>
             </PivotItem>
         </Pivot>
-        <ProgressRing x:Name="progressRingInDerNaehe" HorizontalAlignment="Center" Height="70" Margin="170,465,170,0" VerticalAlignment="Top" Width="70" IsActive="True"/>
+        <ProgressRing x:Name="progressRingInDerNaehe" HorizontalAlignment="Center" Height="70" Margin="170,465,170,0" VerticalAlignment="Top" Width="70" IsActive="True" Foreground="#FFD97925"/>
     </Grid>
 </Page>
 

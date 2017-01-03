@@ -21,7 +21,6 @@ namespace App2Night.Views
     {
         public Party party;
         public IEnumerable<Party> partyListe;
-        string anzeige = Meldungen.Hauptansicht.Nutzungsbedingungen;
         int anzahlPartys = 0;
         int anzahlVorgemerkt = 0;
         int anzahlTeilgenommen = 0;
