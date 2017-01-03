@@ -171,6 +171,7 @@
     <Compile Include="ModelsEnums\Enums\MusicGenre.cs" />
     <Compile Include="ModelsEnums\Enums\PartyType.cs" />
     <Compile Include="ModelsEnums\Model\CommitmentParty.cs" />
+    <Compile Include="ModelsEnums\Model\CreateParty.cs" />
     <Compile Include="ModelsEnums\Model\Location.cs" />
     <Compile Include="ModelsEnums\Model\Login.cs" />
     <Compile Include="ModelsEnums\Model\Party.cs" />

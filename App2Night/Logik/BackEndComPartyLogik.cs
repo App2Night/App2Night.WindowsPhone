@@ -129,7 +129,19 @@ namespace App2Night.Logik
         public static async Task<bool> CreateParty(Party party)
         {
             bool internetVorhanden = IsInternet();
-            party.Location.CountryName = "Deutschland";
+            // Umspeichern der Daten für BackEnd
+            CreateParty partyZuErstellen = new CreateParty();
+            partyZuErstellen.partyName = party.PartyName;
+            partyZuErstellen.partyDate = party.PartyDate.ToString("yyyy-MM-dd"+"T"+"HH:mm:ss.sss"+"Z");
+            partyZuErstellen.musicGenre = party.MusicGenre;
+            partyZuErstellen.countryName = "Deutschland";
+            partyZuErstellen.cityName = party.Location.CityName;
+            partyZuErstellen.streetName = party.Location.StreetName;
+            partyZuErstellen.houseNumber = party.Location.HouseNumber;
+            partyZuErstellen.zipcode = party.Location.ZipCode;
+            partyZuErstellen.partyType = party.PartyType;
+            partyZuErstellen.description = party.Description;
+            partyZuErstellen.price = party.Price;
 
             bool erfolg = await DatenVerarbeitung.aktuellerToken();
             Token tok = await DatenVerarbeitung.TokenAuslesen();
@@ -138,9 +150,8 @@ namespace App2Night.Logik
             {
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
-                var partyJson = JsonConvert.SerializeObject(party);
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + tok.AccessToken);
-                HttpContent content = new StringContent(partyJson, Encoding.UTF8, "application/json");              
+                HttpContent content = new StringContent(JsonConvert.SerializeObject(partyZuErstellen), Encoding.UTF8, "application/json");              
 
                 try
                 {
@@ -217,6 +228,19 @@ namespace App2Night.Logik
         {
             bool internetVorhanden = IsInternet();
             bool erfolg = false;
+            // Umspeichern der Daten für BackEnd
+            CreateParty partyZuErstellen = new CreateParty();
+            partyZuErstellen.partyName = party.PartyName;
+            partyZuErstellen.partyDate = party.PartyDate.ToString("yyyy-MM-dd" + "T" + "HH:mm:ss.sss" + "Z");
+            partyZuErstellen.musicGenre = party.MusicGenre;
+            partyZuErstellen.countryName = "Deutschland";
+            partyZuErstellen.cityName = party.Location.CityName;
+            partyZuErstellen.streetName = party.Location.StreetName;
+            partyZuErstellen.houseNumber = party.Location.HouseNumber;
+            partyZuErstellen.zipcode = party.Location.ZipCode;
+            partyZuErstellen.partyType = party.PartyType;
+            partyZuErstellen.description = party.Description;
+            partyZuErstellen.price = party.Price;
 
             bool aktuellerToken = await DatenVerarbeitung.aktuellerToken();
             Token token = await DatenVerarbeitung.TokenAuslesen();
@@ -226,7 +250,7 @@ namespace App2Night.Logik
                 HttpClient client = GetClientParty();
                 HttpResponseMessage httpAntwort = new HttpResponseMessage();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token.AccessToken);
-                HttpContent content = new StringContent(JsonConvert.SerializeObject(party), Encoding.UTF8, "application/json");
+                HttpContent content = new StringContent(JsonConvert.SerializeObject(partyZuErstellen), Encoding.UTF8, "application/json");
 
                 try
                 {
