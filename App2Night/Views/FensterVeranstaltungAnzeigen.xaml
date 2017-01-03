@@ -46,7 +46,7 @@
                 <TextBox x:Name="textBoxAnzahlDOWNVOTES" HorizontalAlignment="Left" TextWrapping="Wrap" Text=":(" VerticalAlignment="Top" Margin="240,815,0,0" Height="40" Width="50" Grid.ColumnSpan="3" FontSize="20" IsReadOnly="True" SelectionHighlightColor="#FFD97925" BorderBrush="#FF002635"/>
                 <AppBarButton x:Name="appBarButtonBearbeiten" HorizontalAlignment="Left" Icon="Edit" Label="" Margin="255,10,0,0" VerticalAlignment="Top" Height="50" Click="Bearbeiten_wechselZuErstellen" Width="60" Grid.ColumnSpan="3"/>
                 <AppBarButton x:Name="appBarButtonLoeschen" HorizontalAlignment="Left" Icon="Delete" Label="" VerticalAlignment="Top" Width="60" Height="50" Margin="255,60,0,0" Grid.ColumnSpan="3" Click="Loeschen_PartyLoeschen"/>
-                <Maps:MapControl x:Name="mapControlKarte" ZoomInteractionMode="GestureAndControl" TiltInteractionMode="GestureAndControl" HorizontalAlignment="Left" Height="320" Margin="10,110,0,0" VerticalAlignment="Top" Width="300" MapServiceToken="YGij1QSheJhf6PD1CMz5~S0uJKsfpcTtY0Q8ToTVh0w~ApwZzEogiNXUJ9Yl0lYAO4oOoPNaU8Zz_JBVETUZ5OC_nJJnVtvANylwLau-3Wdj"/>
+                <Maps:MapControl x:Name="mapControlKarte" ZoomInteractionMode="GestureAndControl" TiltInteractionMode="GestureAndControl" HorizontalAlignment="Left" Height="320" Margin="10,110,0,0" VerticalAlignment="Top" Width="300" MapServiceToken="YGij1QSheJhf6PD1CMz5~S0uJKsfpcTtY0Q8ToTVh0w~ApwZzEogiNXUJ9Yl0lYAO4oOoPNaU8Zz_JBVETUZ5OC_nJJnVtvANylwLau-3Wdj" Grid.ColumnSpan="3"/>
             </Grid>
         </ScrollViewer>
         <ProgressRing x:Name="ProgRingAnzeigen" HorizontalAlignment="Center" Margin="0,399,0,0" VerticalAlignment="Center" Width="70" Height="70" Foreground="#FFD97925" Background="Transparent"/>

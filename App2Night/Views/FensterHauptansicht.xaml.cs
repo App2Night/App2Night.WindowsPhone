@@ -11,6 +11,10 @@ using App2Night.ModelsEnums.Enums;
 using Windows.UI.Xaml.Navigation;
 using App2Night.Ressources;
 using Newtonsoft.Json;
+using Windows.Devices.Geolocation;
+using Windows.UI.Xaml.Controls.Maps;
+using Windows.Storage.Streams;
+using Windows.Foundation;
 
 namespace App2Night.Views
 {
@@ -42,15 +46,15 @@ namespace App2Night.Views
             this.IsEnabled = false;
             progressRingInDerNaehe.Visibility = Visibility.Visible;
 
-            PageStackEntry vorherigeSeite = Frame.BackStack.Last();
-            Type vorherigeSeiteTyp = vorherigeSeite?.SourcePageType;
+            //PageStackEntry vorherigeSeite = Frame.BackStack.Last();
+            //Type vorherigeSeiteTyp = vorherigeSeite?.SourcePageType;
 
-            // Hinweis erscheint nur, wenn man vom Anmelden/Registrieren auf diese Haupansicht kommt
-            if (vorherigeSeiteTyp == (typeof(FensterAnmelden)) || vorherigeSeiteTyp == (typeof(FensterReg)))
-            {
-                var message = new MessageDialog(Meldungen.Hauptansicht.Nutzungsbedingungen, "Hinweis");
-                await message.ShowAsync();
-            }
+            //// Hinweis erscheint nur, wenn man vom Anmelden/Registrieren auf diese Haupansicht kommt
+            //if (vorherigeSeiteTyp == (typeof(FensterAnmelden)) || vorherigeSeiteTyp == (typeof(FensterReg)))
+            //{
+            //    var message = new MessageDialog(Meldungen.Hauptansicht.Nutzungsbedingungen, "Hinweis");
+            //    await message.ShowAsync();
+            //}
 
             try
             {
@@ -73,6 +77,9 @@ namespace App2Night.Views
                     party = partyListe.ElementAt(durchlauf);
                     listViewSuchErgebnis.Items.Add(party.PartyName);
 
+                    // Auf der Karte anzeigen
+                    PartyAufMapAnzeigen(party);
+
                     // Liste der vorgemerkten Partys werden in einer separaten ListView angezeigt
                     if (party.UserCommitmentState == EventCommitmentState.Noted)
                     {
@@ -91,8 +98,35 @@ namespace App2Night.Views
                 }
             }
 
+            // Aktuelle Position ermitteln und dies als Kartenmittelpunkt setzen
+            var geoLocation = new GeolocationLogik();
+            Location location = await geoLocation.GetLocation();
+            BasicGeoposition basis = new BasicGeoposition() { Latitude = location.Latitude, Longitude = location.Longitude };
+            Geopoint point = new Geopoint(basis);
+            mapControlHauptansicht.Center = point;
+            mapControlHauptansicht.ZoomLevel = 15;
+            mapControlHauptansicht.LandmarksVisible = true;
+
             progressRingInDerNaehe.Visibility = Visibility.Collapsed;
             this.IsEnabled = true;
+        }
+
+        private void PartyAufMapAnzeigen(Party party)
+        {
+            // Festlegen der Position
+            BasicGeoposition partyPosition = new BasicGeoposition() { Latitude = party.Location.Latitude, Longitude = party.Location.Longitude };
+            Geopoint partyZentrum = new Geopoint(partyPosition);
+
+            // Icon für Standort Party
+            MapIcon partyIcon = new MapIcon();
+
+            partyIcon.Image = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/Square44x44Logo.scale-100.png", UriKind.Absolute));
+            partyIcon.Location = partyZentrum;
+            partyIcon.NormalizedAnchorPoint = new Point(0.5, 1.0);
+            partyIcon.Title = party.PartyName;
+            partyIcon.ZIndex = 0;
+
+            mapControlHauptansicht.MapElements.Add(partyIcon);
         }
 
         /// <summary>
@@ -169,6 +203,9 @@ namespace App2Night.Views
                     // Liste aller Partys in der Nähe werden in der "normalen" ListView angezeigt
                     party = partyListe.ElementAt(durchlauf);
                     listViewSuchErgebnis.Items.Add(party.PartyName);
+
+                    // Auf der Karte anzeigen
+                    PartyAufMapAnzeigen(party);
 
                     // Liste der vorgemerkten Partys werden in einer separaten ListView angezeigt
                     if (party.UserCommitmentState == EventCommitmentState.Noted)
