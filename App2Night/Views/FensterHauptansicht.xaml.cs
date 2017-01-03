@@ -34,7 +34,7 @@ namespace App2Night.Views
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            // Hinweis erscheitn nur, wenn man vom Anmelden/Registrieren auf diese Haupansicht kommt
+            // Hinweis erscheint nur, wenn man vom Anmelden/Registrieren auf diese Haupansicht kommt
             if (e.SourcePageType == (typeof(FensterAnmelden)) || e.SourcePageType == (typeof(FensterReg)))
             {
                 var message = new MessageDialog(Meldungen.Hauptansicht.Nutzungsbedingungen, "Hinweis");

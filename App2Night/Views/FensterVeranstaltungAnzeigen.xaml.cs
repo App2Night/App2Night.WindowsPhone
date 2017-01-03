@@ -161,8 +161,8 @@ namespace App2Night.Views
             bool notiert = false;
 
             // Sperren der Oberfläche
-            ProgRingAnzeigen.Visibility = Visibility.Visible;
             this.IsEnabled = false;
+            ProgRingAnzeigen.Visibility = Visibility.Visible;
 
             // Hier wird der Status der Vormerkung notiert
             if (uebergebeneParty.UserCommitmentState != EventCommitmentState.Noted)
@@ -182,8 +182,8 @@ namespace App2Night.Views
             bool antwort = await BackEndComPartyLogik.PutPartyCommitmentState(uebergebeneParty, commitment);
 
             // Entsperrung der Oberfläche
-            this.IsEnabled = true;
             ProgRingAnzeigen.Visibility = Visibility.Collapsed;
+            this.IsEnabled = true;
 
 
             if (antwort == true)
@@ -247,8 +247,8 @@ namespace App2Night.Views
             }
 
             // Sperren der Oberfläche
-            ProgRingAnzeigen.Visibility = Visibility.Visible;
             this.IsEnabled = false;
+            ProgRingAnzeigen.Visibility = Visibility.Visible;
 
             // Teilnahme/Absage ans BackEnd schicken
             bool teilnahme = await BackEndComPartyLogik.PutPartyCommitmentState(uebergebeneParty, teilnehmen);
@@ -265,7 +265,7 @@ namespace App2Night.Views
                 }
                 else
                 {
-                   var message = new MessageDialog(Meldungen.Anzeige.ErfolgAbsage, "Schade!");
+                    var message = new MessageDialog(Meldungen.Anzeige.ErfolgAbsage, "Schade!");
                     await message.ShowAsync();
                     uebergebeneParty.UserCommitmentState = EventCommitmentState.Rejected;
                 }
@@ -278,8 +278,8 @@ namespace App2Night.Views
             }
 
             // Entsperren der Oberfläche
-            this.IsEnabled = true;
             ProgRingAnzeigen.Visibility = Visibility.Collapsed;
+            this.IsEnabled = true;
 
             // Wechsel zur Hauptansicht
             this.Frame.Navigate(typeof(FensterHauptansicht));
@@ -309,7 +309,11 @@ namespace App2Night.Views
             {
                 this.IsEnabled = false;
                 ProgRingAnzeigen.Visibility = Visibility.Visible;
+
                 bool erfolg = await BackEndComPartyLogik.DeletePartyByID(uebergebeneParty);
+
+                ProgRingAnzeigen.Visibility = Visibility.Collapsed;
+                this.IsEnabled = true;
 
                 if (erfolg == true)
                 {
@@ -327,6 +331,7 @@ namespace App2Night.Views
                 message = new MessageDialog(Meldungen.Anzeige.AbbrechenLoeschen, "Abbrechen");
                 await message.ShowAsync();
             }
+
         }
     }
 }
