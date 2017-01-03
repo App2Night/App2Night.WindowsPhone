@@ -4,6 +4,7 @@ using Windows.UI.Xaml.Controls;
 using App2Night.ModelsEnums.Model;
 using App2Night.Logik;
 using Windows.UI.Popups;
+using App2Night.Ressources;
 
 namespace App2Night.Views
 {
@@ -69,19 +70,19 @@ namespace App2Night.Views
                 {
                     // Wenn alles erfolgreich gespeichert wurde
                     progressRingAnmeldung.Visibility = Visibility.Collapsed;
-                    var message = new MessageDialog("Erfolgreich angemeldet. Viel Spaß!", "Erfolg!");
+                    var message = new MessageDialog(Meldungen.Anmeldung.Erfolg, "Erfolg!");
                     await message.ShowAsync();
                     this.Frame.Navigate(typeof(FensterHauptansicht)); 
                 }
                 else
                 {
-                    var message = new MessageDialog("Es ist ein unerwarteter Fehler aufgetreten. Bitte versuche es später erneut.", "Unbekannter Fehler!");
+                    var message = new MessageDialog(Meldungen.Anmeldung.UnbekannterFehler, "Unbekannter Fehler!");
                     await message.ShowAsync();
                 }
             }
             else
             {
-                var message = new MessageDialog("Keine korrekten Nutzerdaten oder der Aktivierungslink wurde noch nicht bestätigt!", "Fehler bei der Anmeldung!");
+                var message = new MessageDialog(Meldungen.Anmeldung.Misserfolg, "Fehler bei der Anmeldung!");
                 await message.ShowAsync();
             }
 

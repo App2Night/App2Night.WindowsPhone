@@ -9,6 +9,7 @@ using Windows.UI.Popups;
 using App2Night.Logik;
 using App2Night.ModelsEnums.Enums;
 using Windows.UI.Xaml.Navigation;
+using App2Night.Ressources;
 
 namespace App2Night.Views
 {
@@ -20,7 +21,7 @@ namespace App2Night.Views
     {
         public Party party;
         public IEnumerable<Party> partyListe;
-        string anzeige = "Um Partys anzuzeigen benötigt die App GPS und eine Internetverbindung. Zum Suchen oder Aktualisieren klicke bitte auf die Lupe unten. Viel Spaß!";
+        string anzeige = Meldungen.Hauptansicht.Nutzungsbedingungen;
         int anzahlPartys = 0;
         int anzahlVorgemerkt = 0;
         int anzahlTeilgenommen = 0;
@@ -36,7 +37,7 @@ namespace App2Night.Views
             // Hinweis erscheitn nur, wenn man vom Anmelden/Registrieren auf diese Haupansicht kommt
             if (e.SourcePageType == (typeof(FensterAnmelden)) || e.SourcePageType == (typeof(FensterReg)))
             {
-                var message = new MessageDialog(anzeige, "Hinweis");
+                var message = new MessageDialog(Meldungen.Hauptansicht.Nutzungsbedingungen, "Hinweis");
                 await message.ShowAsync(); 
             }
         }
@@ -77,7 +78,7 @@ namespace App2Night.Views
             }
             else
             {
-                var message = new MessageDialog("Leider ist ein Fehler aufgetreten. Bitte versuche es erneut", "Fehler");
+                var message = new MessageDialog(Meldungen.Hauptansicht.AnzeigePartyFehler, "Fehler");
             }
         }
 
@@ -135,7 +136,7 @@ namespace App2Night.Views
             }
             else
             {
-                var message = new MessageDialog("Leider keine Partys in deiner Nähe.");
+                var message = new MessageDialog(Meldungen.Hauptansicht.KeinePartysInDerNaehe, "Schade!");
                 await message.ShowAsync();
             }
 
@@ -191,7 +192,6 @@ namespace App2Night.Views
             partyListe = await BackEndComPartyLogik.GetParties(pos, radius);
 
             return partyListe;
-
         }
 
         /// <summary>

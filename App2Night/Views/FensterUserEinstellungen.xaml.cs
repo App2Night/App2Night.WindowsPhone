@@ -4,6 +4,7 @@ using Windows.UI.Xaml.Controls;
 using App2Night.Logik;
 using App2Night.ModelsEnums.Model;
 using Windows.UI.Popups;
+using App2Night.Ressources;
 
 namespace App2Night.Views
 {
@@ -103,7 +104,7 @@ namespace App2Night.Views
             }
             else
             {
-                var message = new MessageDialog("Leider ist ein Fehler beim Speichern der Daten aufgetreten.", "Fehler!");
+                var message = new MessageDialog(Meldungen.UserEinstellungen.SpeicherFehler, "Fehler!");
                 await message.ShowAsync();
                 this.Frame.Navigate(typeof(FensterHauptansicht));
             }
@@ -120,14 +121,7 @@ namespace App2Night.Views
         /// <param name="e"></param>
         private async void About_zeigeAbout(object sender, RoutedEventArgs e)
         {
-            string text = "Diese App wurde entwickelt von Yvette Labastille und Manuela Leopold im Zuge einer Vorlesung an der DHBW Stuttgart Campus Horb.\n" +
-                                "Verwendet wurde:\n" +
-                                "- JSON-Framwork von Newtonsoft\n" +
-                                "- Xam.Plugin.Geolocator von James Montemango\n" +
-                                "- Maps von Bing\n" +
-                               // "- Verschlüsselung von Dritten\n" + 
-                                "- Bibliotheken vom Microsoft";
-            var message = new MessageDialog(text, "App2Night");
+            var message = new MessageDialog(Meldungen.UserEinstellungen.About, "App2Night");
             await message.ShowAsync();
         }
 
@@ -138,7 +132,7 @@ namespace App2Night.Views
         /// <param name="e"></param>
         private async void Email_zeigeKontakt(object sender, RoutedEventArgs e)
         {
-            var message = new MessageDialog("Schreib uns doch unter win.app2night@outlook.de!", "App2Night");
+            var message = new MessageDialog(Meldungen.UserEinstellungen.EmailKontakt, "App2Night");
             await message.ShowAsync();
         }
 

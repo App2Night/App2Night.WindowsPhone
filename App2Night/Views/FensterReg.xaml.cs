@@ -4,6 +4,7 @@ using Windows.UI.Xaml.Controls;
 using App2Night.ModelsEnums.Model;
 using Windows.UI.Popups;
 using App2Night.Logik;
+using App2Night.Ressources;
 
 namespace App2Night.Views
 {
@@ -56,7 +57,7 @@ namespace App2Night.Views
                 // Abhängig vom Erfolg/Misserfolg beim Erstellen wird eine Nachricht angezeigt und ggf. die Ansicht gewechselt.
                 if (status == true)
                 {
-                    var message = new MessageDialog($"Eine E-Mail mit Aktivierungslink wurde an die angegebene E-Mailadresse ({neuerNutzer.Email}) geschickt.", "Nutzer erfolgreich registriert!");
+                    var message = new MessageDialog(Meldungen.Registrierung.ErfolgEins + neuerNutzer.Email.ToString() + Meldungen.Registrierung.ErfolgZwei, "Nutzer erfolgreich registriert!");
                     await message.ShowAsync();
 
                     // Speichern der Login-Daten
@@ -69,19 +70,19 @@ namespace App2Night.Views
                     }
                     else
                     {
-                        message = new MessageDialog("Leider ist ein Fehler beim Speichern der Daten aufgetreten. Bitte versuche, die Anzumelden.", "Fehler beim Speichern!");
+                        message = new MessageDialog(Meldungen.Registrierung.SpeicherFehler, "Fehler beim Speichern!");
                         await message.ShowAsync();
                     }
                 }
                 else
                 {
-                    var message = new MessageDialog("Fehler bei Erstellen des Nutzers!");
+                    var message = new MessageDialog(Meldungen.Registrierung.ErstellenFehler, "Fehler beim Erstellen!");
                     await message.ShowAsync();
                 }
             }
             else
             {
-                var message = new MessageDialog("Fehler! Die Passwörter stimmen nicht überein!");
+                var message = new MessageDialog(Meldungen.Registrierung.PasswortFehler, "Passwörter sind nciht identisch!");
                 await message.ShowAsync();
             }
 

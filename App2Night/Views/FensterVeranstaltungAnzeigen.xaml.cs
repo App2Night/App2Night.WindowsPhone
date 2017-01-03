@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Controls.Maps;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media;
 using Windows.UI;
+using App2Night.Ressources;
 
 namespace App2Night.Views
 {
@@ -190,20 +191,20 @@ namespace App2Night.Views
                 // Abhängig davon, ob der Nutzer die Party vormerken will oder nicht, wird ihm eine entsprechende Nachricht ausgegeben.
                 if (notiert == true)
                 {
-                    var message = new MessageDialog("Diese Party wurde für dich vorgemerkt!", "Erfolg!");
+                    var message = new MessageDialog(Meldungen.Anzeige.ErfolgVormerken, "Erfolg!");
                     await message.ShowAsync();
                     uebergebeneParty.UserCommitmentState = EventCommitmentState.Noted; 
                 }
                 else
                 {
-                    var message = new MessageDialog("Diese Party ist nicht mehr vorgemerkt!", "Erfolg!");
+                    var message = new MessageDialog(Meldungen.Anzeige.ErfolgVergessen, "Erfolg!");
                     await message.ShowAsync();
                     uebergebeneParty.UserCommitmentState = EventCommitmentState.Rejected;
                 }
             }
             else
             {
-                var message = new MessageDialog("Es ist ein Fehler aufgetreten. Bitte versuche es später erneut!", "Fehler!");
+                var message = new MessageDialog(Meldungen.Anzeige.FehlerVormerkenVergessen, "Fehler!");
                 await message.ShowAsync();
             }
 
@@ -257,21 +258,21 @@ namespace App2Night.Views
                 // Abhängig davon, ob der Nutzer teilnehmen oder absagen will, wird ihm eine entsprechende Nachricht ausgegeben.
                 if (zusagen == true)
                 {
-                    var message = new MessageDialog("Deine Teilnahme wurde berücksichtigt!", "Viel Spaß!");
+                    var message = new MessageDialog(Meldungen.Anzeige.ErfolgTeilnahme, "Viel Spaß!");
                     await message.ShowAsync();
                     uebergebeneParty.UserCommitmentState = EventCommitmentState.Accepted;
                     this.Frame.Navigate(typeof(FensterHauptansicht));
                 }
                 else
                 {
-                   var message = new MessageDialog("Deine Absage wurde berücksichtigt!", "Schade!");
+                   var message = new MessageDialog(Meldungen.Anzeige.ErfolgAbsage, "Schade!");
                     await message.ShowAsync();
                     uebergebeneParty.UserCommitmentState = EventCommitmentState.Rejected;
                 }
             }
             else
             {
-                var message = new MessageDialog("Es ist ein Fehler aufgetreten. Bitte versuche es später erneut.", "Fehler!");
+                var message = new MessageDialog(Meldungen.Anzeige.FehlerTeilnahmeAbsage, "Fehler!");
                 await message.ShowAsync();
 
             }
@@ -296,7 +297,7 @@ namespace App2Night.Views
             const int ABBR = 2;
 
             // Dialog, der abfragt, ob der Nutzer die Party wirklich löschen will
-            var message = new MessageDialog("Willst du diese Party wirklich löschen?", "Achtung!");
+            var message = new MessageDialog(Meldungen.Anzeige.AbsicherungLoeschen, "Achtung!");
             message.Commands.Add(new UICommand { Label = "Ja", Id = OK });
             message.Commands.Add(new UICommand { Label = "Abbrechen", Id = ABBR });
             var reaktion = await message.ShowAsync();
@@ -312,18 +313,18 @@ namespace App2Night.Views
 
                 if (erfolg == true)
                 {
-                    message = new MessageDialog("Party erfolgreich gelöscht.", "Erfolg!");
+                    message = new MessageDialog(Meldungen.Anzeige.ErfolgLoeschen, "Erfolg!");
                     await message.ShowAsync();
                 }
                 else
                 {
-                    message = new MessageDialog("Party nicht gelöscht.", "Fehler!");
+                    message = new MessageDialog(Meldungen.Anzeige.MisserfolgLoeschen, "Fehler!");
                     await message.ShowAsync();
                 }
             }
             else
             {
-                message = new MessageDialog("Aktion abgebrochen", "Abbrechen");
+                message = new MessageDialog(Meldungen.Anzeige.AbbrechenLoeschen, "Abbrechen");
                 await message.ShowAsync();
             }
         }

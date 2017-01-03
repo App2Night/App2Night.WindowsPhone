@@ -186,6 +186,7 @@
     <Compile Include="ModelsEnums\Model\Token.cs" />
     <Compile Include="ModelsEnums\Model\UserEinstellungen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Ressources\Meldungen.cs" />
     <Compile Include="Views\FensterAnmelden.xaml.cs">
       <DependentUpon>FensterAnmelden.xaml</DependentUpon>
     </Compile>

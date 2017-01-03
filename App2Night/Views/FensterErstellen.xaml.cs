@@ -7,6 +7,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Newtonsoft.Json;
+using App2Night.Ressources;
 
 namespace App2Night.Views
 {
@@ -144,13 +145,13 @@ namespace App2Night.Views
 
                 if (status == true)
                 {
-                    var message = new MessageDialog("Party erfolgreich gespeichert!");
+                    var message = new MessageDialog(Meldungen.Erstellen.Erfolg, "Erfolg!");
                     await message.ShowAsync();
                     this.Frame.Navigate(typeof(FensterHauptansicht));
                 }
                 else
                 {
-                    var message = new MessageDialog("Es ist ein Fehler beim Speichern aufgetreten. Bitte versuche es später erneut.");
+                    var message = new MessageDialog(Meldungen.Erstellen.SpeicherFehler, "Fehler!");
                     await message.ShowAsync();
                     this.IsEnabled = true;
                     progressRingErstellen.Visibility = Visibility.Collapsed;
@@ -159,7 +160,7 @@ namespace App2Night.Views
             }
             catch (Exception)
             {
-                var message = new MessageDialog("Fehler! Ein oder mehrere Eingaben sind ungültig!\nBeispielsweise wird eine Party in der Vergangenheit angelegt oder die Adresse existiert nicht!");
+                var message = new MessageDialog(Meldungen.Erstellen.UngueltigeEingabe, "Fehler!");
                 await message.ShowAsync();
                 this.IsEnabled = true;
                 progressRingErstellen.Visibility = Visibility.Collapsed;
