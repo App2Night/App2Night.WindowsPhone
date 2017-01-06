@@ -25,7 +25,7 @@
         <ScrollViewer x:Name="scrollViewErstellen" Margin="0,50,0,0" Height="530" VerticalAlignment="Top" Grid.ColumnSpan="2">
             <Grid x:Name="GridErstellenScrollView" Height="742" Width="323">
                 <TextBlock x:Name="textBlErstellenName" HorizontalAlignment="Center" Height="35" TextWrapping="Wrap" Text="Name der Veranstaltung" VerticalAlignment="Top" Width="313" FontSize="20" FontWeight="Bold" Margin="0,4,10,0"/>
-                <TextBox x:Name="textBoxErstellenNAME" HorizontalAlignment="Center" Height="35" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="313" PlaceholderText="Name der Veranstaltung" Margin="0,39,10,668" FontSize="18" SelectionHighlightColor="#FFD97925" BorderBrush="#FF002635"/>
+                <TextBox x:Name="textBoxErstellenNAME" HorizontalAlignment="Center" Height="35" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="313" PlaceholderText="Name der Veranstaltung" Margin="0,39,10,668" FontSize="18" SelectionHighlightColor="#FFD97925" BorderBrush="#FF002635" MaxLength="32"/>
                 <TextBlock x:Name="textBlErstellenAdresse" TextWrapping="Wrap" Text="Adresse" Width="308" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="5,90,10,617" Height="35"/>
                 <TextBox x:Name="textBoxErstellenPLZ" TextWrapping="Wrap" Text="" Width="88" Margin="0,122,0,585" PlaceholderText="PLZ" FontSize="18" HorizontalAlignment="Left" Height="35" InputScope="Number" SelectionHighlightColor="#FFD97925" BorderBrush="#FF002635"/>
                 <TextBox x:Name="textBoxErstellenORT" TextWrapping="Wrap" Text="" Width="220" Margin="0,122,10,585" FontSize="20" PlaceholderText="Ort" HorizontalAlignment="Right" Height="35" SelectionHighlightColor="#FFD97925" BorderBrush="#FF002635"/>
@@ -42,7 +42,7 @@
                 <TextBlock x:Name="textBlErstellenPreis" Height="35" TextWrapping="Wrap" Text="Preis (optional)" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,465,173,242" FontWeight="Bold" FontSize="20"/>
                 <TextBox x:Name="textBoxErstellenPREIS" TextWrapping="Wrap" Text="" Width="145" Height="35" Margin="168,464,10,243" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" PlaceholderText="Preis" SelectionHighlightColor="#FFD97925" BorderBrush="#FF002635" InputScope="Digits"/>
                 <TextBlock x:Name="textBlErstellenInfos" TextWrapping="Wrap" Text="Weitere Informationen (opt.)" FontSize="20" FontWeight="Bold" Margin="0,513,20,194" Height="35"/>
-                <TextBox x:Name="textBoxErstellenINFOS" TextWrapping="Wrap" Text="" Width="313" Height="139" Margin="0,548,10,0" HorizontalAlignment="Center" VerticalAlignment="Top" PlaceholderText="Optionale zusätzliche Informationen (z.B. besondere Angebote oder Auftritte)." SelectionHighlightColor="#FFD97925" BorderBrush="#FF002635" FontSize="15"/>
+                <TextBox x:Name="textBoxErstellenINFOS" TextWrapping="Wrap" Text="" Width="313" Height="139" Margin="0,548,10,0" HorizontalAlignment="Center" VerticalAlignment="Top" PlaceholderText="Optionale zusätzliche Informationen (z.B. besondere Angebote oder Auftritte)." SelectionHighlightColor="#FFD97925" BorderBrush="#FF002635" FontSize="15" MaxLength="256"/>
             </Grid>
         </ScrollViewer>
         <ProgressRing x:Name="progressRingErstellen" HorizontalAlignment="Center" Margin="145,485,145,85" VerticalAlignment="Center" Width="70" Height="70" Grid.ColumnSpan="2" Foreground="#FFD97925"/>

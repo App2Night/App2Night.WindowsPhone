@@ -12,40 +12,15 @@ namespace App2Night.ModelsEnums.Model
         // 1 = positiv bewertet
         // -1 = negativ bewertet
 
-        private int priceRatingVar;
-        [JsonProperty("priceRating")]
-        public int priceRating
-        {
-            get { return priceRatingVar; }
-            set { priceRatingVar = 0; }
-        }
+        [JsonProperty("GeneralRating")]
+        public int GeneralRating { get; set; }
+        [JsonProperty("PriceRating")]
+        public int PriceRating { get; set; }
+        [JsonProperty("LocationRating")]
+        public int LocationRating { get; set; }
+        [JsonProperty("MoodRating")]
+        public int MoodRating { get; set; }
 
-        private int moodRatingVar;
-        [JsonProperty("moodRating")]
-        public int moodRating
-        {
-            get { return moodRatingVar; }
-            set { moodRatingVar = 0; }
-        }
-
-        private int locationRatingVar;
-        [JsonProperty("locationRating")]
-        public int locationRating
-        {
-            get { return locationRatingVar; }
-            set { locationRatingVar = 0; }
-
-
-        }
-        private int generalRatingVar;
-        [JsonProperty("generalRating")]
-        public int generalRating
-        {
-            get { return generalRatingVar; }
-            set { generalRatingVar = 0; }
-
-
-        }
     }
 }
 

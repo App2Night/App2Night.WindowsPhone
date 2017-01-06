@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Newtonsoft.Json;
 using App2Night.Ressources;
+using System.Linq;
 
 namespace App2Night.Views
 {
@@ -39,12 +40,32 @@ namespace App2Night.Views
             // Nimmt die beim Seitenwechsel übergebene Party an (falls vorhanden)
             uebergebeneParty = e.Parameter as Party;
 
-            // Falls man von der Seite Anzeigen kommt, wird die Party hier zum Bearbeiten freigegeben und die Buttons dementsprechend angepasst.
-            if (e.SourcePageType == typeof(FensterVeranstaltungAnzeigen))
+            // Quellseite auslesen
+            PageStackEntry vorherigeSeite = Frame.BackStack.Last();
+            Type vorherigeSeiteTyp = vorherigeSeite?.SourcePageType;
+
+            if (vorherigeSeiteTyp == (typeof(FensterVeranstaltungAnzeigen)))
             {
+                // Falls man von der Seite Anzeigen kommt, wird die Party hier zum Bearbeiten freigegeben und die Buttons dementsprechend angepasst.
                 ueberarbeiten = true;
                 AppBarButtonErstellen.Icon = new SymbolIcon(Symbol.Edit);
                 AppBarButtonErstellen.Label = "Änderungen speichern";
+
+                // Daten der uebergebenen Party anzeigen
+                TimeSpan uhrzeit = new TimeSpan(uebergebeneParty.PartyDate.Hour, uebergebeneParty.PartyDate.Minute, uebergebeneParty.PartyDate.Second);
+
+                textBoxErstellenNAME.Text = uebergebeneParty.PartyName;
+                DatePickerErstellenDATUM.Date = uebergebeneParty.PartyDate;
+                TimePickerErstellenUHRZEIT.Time = uhrzeit;
+                textBoxErstellenORT.Text = uebergebeneParty.Location.CityName;
+                textBoxErstellenSTRASSE.Text = uebergebeneParty.Location.StreetName;
+                textBoxErstellenHAUSNR.Text = uebergebeneParty.Location.HouseNumber;
+                textBoxErstellenPLZ.Text = uebergebeneParty.Location.ZipCode;
+                textBoxErstellenPREIS.Text = uebergebeneParty.Price.ToString();
+                comboBoxErstellenMUSIKRICHTUNG.SelectedItem = uebergebeneParty.MusicGenre;
+                comboBoxErstellenTYP.SelectedItem = uebergebeneParty.PartyType;
+                textBoxErstellenINFOS.Text = uebergebeneParty.Description;
+
             }
         }
 
@@ -93,6 +114,8 @@ namespace App2Night.Views
             // Speichern der Eingaben des Nutzers. Falscheingaben werden abgefangen und es wird eine Fehlermeldung ausgegeben.
             try
             {
+                partyZuErstellen.PartyId = uebergebeneParty.PartyId;
+
                 partyZuErstellen.PartyName = textBoxErstellenNAME.Text;
 
                 partyZuErstellen.Location = zuValidieren;
@@ -113,7 +136,7 @@ namespace App2Night.Views
                 else
                 {
                     // Standardwert
-                    partyZuErstellen.Description = "";
+                    partyZuErstellen.Description = "Keine Beschreibung vorhanden.";
                 }
 
                 if (textBoxErstellenPREIS.Text != "")

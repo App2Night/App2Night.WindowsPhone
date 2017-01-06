@@ -167,26 +167,26 @@ namespace App2Night.Views
         {
             UserEinstellungen einst = await DatenVerarbeitung.UserEinstellungenAuslesen();
 
-            // TODO: mehrmals abfragen
+            // TODO: null?
             var accessStatus = await Geolocator.RequestAccessAsync();
 
-            if (accessStatus == GeolocationAccessStatus.Allowed && toggleSwitchGPSErlaubnis.IsOn == false)
+            if (toggleSwitchGPSErlaubnis.IsOn == false && accessStatus == GeolocationAccessStatus.Allowed)
             {
                 toggleSwitchGPSErlaubnis.IsOn = true;
                 einst.GPSErlaubt = true;
             }
-            else if (accessStatus == GeolocationAccessStatus.Allowed && toggleSwitchGPSErlaubnis.IsOn == true)
+            else if (toggleSwitchGPSErlaubnis.IsOn == true && accessStatus == GeolocationAccessStatus.Allowed)
             {
                 einst.GPSErlaubt = true;
             }
-            else if (accessStatus == GeolocationAccessStatus.Denied && toggleSwitchGPSErlaubnis.IsOn == true)
+            else if (toggleSwitchGPSErlaubnis.IsOn == true && accessStatus == GeolocationAccessStatus.Denied)
             {
                 toggleSwitchGPSErlaubnis.IsOn = false;
                 einst.GPSErlaubt = false;
                 var message = new MessageDialog(Meldungen.UserEinstellungen.FehlerGPS, "Achtung!");
                 await message.ShowAsync();
             }
-            else if (accessStatus == GeolocationAccessStatus.Denied && toggleSwitchGPSErlaubnis.IsOn == false)
+            else if (toggleSwitchGPSErlaubnis.IsOn == false && accessStatus == GeolocationAccessStatus.Denied)
             {
                 einst.GPSErlaubt = false;
                 var message = new MessageDialog(Meldungen.UserEinstellungen.FehlerGPS, "Achtung!");

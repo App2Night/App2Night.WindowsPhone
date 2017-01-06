@@ -12,16 +12,13 @@ namespace App2Night.ModelsEnums.Model
     public class Party
     {
         [JsonProperty("PartyId")]
-        public string PartyId { get; set; }
+        public Guid PartyId { get; set; }
         [JsonProperty("PartyName")]
-        [MaxLength(32)]
         public string PartyName { get; set; }
         [JsonProperty("CreationDate")]
         public DateTime CreationDate { get; set; }
         [JsonProperty("Price")]
         public int Price { get; set; }
-        //[JsonProperty("Host")]
-        //public User Host { get; set; }
         [JsonProperty("HostedByUser")]
         public bool HostedByUser { get; set; }
         [JsonProperty("HostId")]
@@ -38,29 +35,18 @@ namespace App2Night.ModelsEnums.Model
         [JsonProperty("Location")]
         public Location Location { get; set; }
 
-        [JsonProperty(PropertyName = "UserCommitmentState")]
+        [JsonProperty("UserCommitmentState")]
         public EventCommitmentState UserCommitmentState { get; set;}
 
-        //[JsonProperty("GeneralVoting")]
-        //public PartyVoting Voting { get; set; }
-
         // Voting
-        [JsonProperty("GeneralUpVoting")]
-        public int GeneralUpVoting { get; set; }
-        [JsonProperty("GeneralDownVoting")]
-        public int GeneralDownVoting { get; set; }
-        //[JsonProperty("PriceUpVoting")]
-        //public int PriceUpVoting { get; set; }
-        //[JsonProperty("PriceDownVoting")]
-        //public int PriceDownVoting { get; set; }
-        //[JsonProperty("LocationUpVoting")]
-        //public int LocationUpVoting { get; set; }
-        //[JsonProperty("LocationDownVoting")]
-        //public int LocationDownVoting { get; set; }
-        //[JsonProperty("MoodUpVoting")]
-        //public int MoodUpVoting { get; set; }
-        //[JsonProperty("MoodDownVoting")]
-        //public int MoodDownVoting { get; set; }
+        [JsonProperty("GeneralRating")]
+        public int GeneralRating { get; set; }
+        [JsonProperty("PriceRating")]
+        public int PriceRating { get; set; }
+        [JsonProperty("LocationRating")]
+        public int LocationRating { get; set; }
+        [JsonProperty("MoodRating")]
+        public int MoodRating { get; set; }
 
 
     }

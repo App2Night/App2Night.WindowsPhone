@@ -56,7 +56,7 @@ namespace App2Night.Views
                 var message = new MessageDialog(Meldungen.Hauptansicht.Nutzungsbedingungen, "Hinweis");
                 await message.ShowAsync();
             }
-
+            
             try
             {
                 // Anzeigen der zwischengespeicherten Partys (falls vorhanden)

@@ -52,30 +52,21 @@ namespace App2Night.Views
             textBoxAnzeigenORT.Text = uebergebeneParty.Location.CityName;
             textBoxAnzeigenMUSIKRICHTUNG.Text = uebergebeneParty.MusicGenre.ToString();
             textBoxAnzeigenWeitereINFOS.Text = uebergebeneParty.Description;
-            textBoxAnzahlUPVOTES.Text = uebergebeneParty.GeneralUpVoting.ToString();
-            textBoxAnzahlDOWNVOTES.Text = uebergebeneParty.GeneralDownVoting.ToString();
-            
-            // Farbliche Hervorhebung der Upvotes
-            if (uebergebeneParty.GeneralUpVoting > 0)
-            {
-                textBoxAnzahlUPVOTES.Foreground = new SolidColorBrush(Colors.Green);
-            }
-            else 
-            {
-                textBoxAnzahlUPVOTES.Foreground = new SolidColorBrush(Colors.Black);
-            }
+            textBoxAnzahlVOTES.Text = uebergebeneParty.GeneralRating.ToString();
 
-
-            // Farbliche Hervorhebung der Downvotes
-            if (uebergebeneParty.GeneralDownVoting < 0)
+            // Farbliche Hervorhebung der Votes
+            if (uebergebeneParty.GeneralRating > 0)
             {
-                textBoxAnzahlDOWNVOTES.Foreground = new SolidColorBrush(Colors.Red);
+                textBoxAnzahlVOTES.Foreground = new SolidColorBrush(Colors.Green);
             }
-            else 
+            else if (uebergebeneParty.GeneralRating < 0)
             {
-                textBoxAnzahlDOWNVOTES.Foreground = new SolidColorBrush(Colors.Black);
+                textBoxAnzahlVOTES.Foreground = new SolidColorBrush(Colors.Red);
             }
-
+            else
+            {
+                textBoxAnzahlVOTES.Foreground = new SolidColorBrush(Colors.Black);
+            }
 
             // Falls der aktuelle Nutzer der Ersteller der Party ist, wird ihm der Button um zur Bearbeitung zu wechseln angezeigt.
             if (uebergebeneParty.HostedByUser == true)
@@ -118,7 +109,7 @@ namespace App2Night.Views
             }
 
             // Voting aktivieren, wenn Party am gleichen Tag und Nutzer teilnimmt
-            if (uebergebeneParty.PartyDate == DateTime.Today && uebergebeneParty.UserCommitmentState == EventCommitmentState.Accepted)
+            if (uebergebeneParty.PartyDate.Date == DateTime.Today && uebergebeneParty.UserCommitmentState == EventCommitmentState.Accepted)
             {
                 appBarButtonLiken.IsEnabled = true;
                 appBarButtonNichtLiken.IsEnabled = true;
@@ -360,7 +351,7 @@ namespace App2Night.Views
                 message = new MessageDialog(Meldungen.Anzeige.AbbrechenLoeschen, "Abbrechen");
                 await message.ShowAsync();
             }
-
+            this.Frame.Navigate(typeof(FensterHauptansicht));
         }
 
         /// <summary>
@@ -423,19 +414,19 @@ namespace App2Night.Views
             PartyVoting voting = new PartyVoting();
 
             // Da wir diese Bewertung nicht abfragen, setzen wir diese Werte auf 0 (= nicht bewertet)
-            voting.locationRating = 0;
-            voting.moodRating = 0;
-            voting.priceRating = 0;
+            voting.LocationRating = 0;
+            voting.MoodRating = 0;
+            voting.PriceRating = 0;
 
             if (like == true)
             {
-                voting.generalRating = 1;
+                voting.GeneralRating = 1;
 
                 erfolg = await BackEndComPartyLogik.PutPartyRating(uebergebeneParty, voting);
             }
             else
             {
-                voting.generalRating = -1;
+                voting.GeneralRating = -1;
 
                 erfolg = await BackEndComPartyLogik.PutPartyRating(uebergebeneParty, voting);
             }

@@ -197,7 +197,7 @@ namespace App2Night.Logik
 
                 try
                 {
-                    httpAntwort = await client.DeleteAsync($"Party/id={party.PartyId}");
+                    httpAntwort = await client.DeleteAsync($"Party/?id={party.PartyId}");
                     status = httpAntwort.IsSuccessStatusCode;
                     return status;
                 }
@@ -254,7 +254,7 @@ namespace App2Night.Logik
 
                 try
                 {
-                    httpAntwort = await client.PutAsync($"Party/id={party.PartyId}", content);
+                    httpAntwort = await client.PutAsync($"Party/?id={party.PartyId}", content);
                     erfolg = httpAntwort.IsSuccessStatusCode;
                     return erfolg;
                 }
