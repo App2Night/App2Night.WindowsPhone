@@ -47,6 +47,7 @@ namespace App2Night.Views
 
             // Oberfläche sperren
             progRingReg.Visibility = Visibility.Visible;
+            progRingReg.IsActive = true;
             this.IsEnabled = false;
 
             if (pwBoxPASSWORT.Password == pwBoxPASSWORTBEST.Password)
@@ -57,6 +58,7 @@ namespace App2Night.Views
                 status = await BackEndComUserLogik.CreateUser(neuerNutzer);
 
                 progRingReg.Visibility = Visibility.Collapsed;
+                progRingReg.IsActive = false;
 
                 // Abhängig vom Erfolg/Misserfolg beim Erstellen wird eine Nachricht angezeigt und ggf. die Ansicht gewechselt.
                 if (status == true)

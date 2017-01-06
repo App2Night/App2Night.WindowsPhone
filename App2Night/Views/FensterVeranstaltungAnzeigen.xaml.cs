@@ -14,6 +14,7 @@ using Windows.UI;
 using App2Night.Ressources;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.Foundation;
+using System.Threading.Tasks;
 
 namespace App2Night.Views
 {
@@ -28,7 +29,8 @@ namespace App2Night.Views
         public FensterVeranstaltungAnzeigen()
         {
             this.InitializeComponent();
-            ProgRingAnzeigen.Visibility = Visibility.Collapsed;
+            progRingAnzeigen.Visibility = Visibility.Collapsed;
+            progRingAnzeigen.IsActive = false;
         }
 
         /// <summary>
@@ -55,24 +57,26 @@ namespace App2Night.Views
             textBoxAnzahlDOWNVOTES.Text = uebergebeneParty.GeneralDownVoting.ToString();
             
             // Farbliche Hervorhebung der Upvotes
-            if (uebergebeneParty.GeneralUpVoting != 0)
+            if (uebergebeneParty.GeneralUpVoting > 0)
             {
                 textBoxAnzahlUPVOTES.Foreground = new SolidColorBrush(Colors.Green);
             }
-            else
+            else 
             {
                 textBoxAnzahlUPVOTES.Foreground = new SolidColorBrush(Colors.Black);
             }
 
+
             // Farbliche Hervorhebung der Downvotes
-            if (uebergebeneParty.GeneralUpVoting != 0)
+            if (uebergebeneParty.GeneralDownVoting < 0)
             {
-                textBoxAnzahlUPVOTES.Foreground = new SolidColorBrush(Colors.Red);
+                textBoxAnzahlDOWNVOTES.Foreground = new SolidColorBrush(Colors.Red);
             }
-            else
+            else 
             {
-                textBoxAnzahlUPVOTES.Foreground = new SolidColorBrush(Colors.Black);
+                textBoxAnzahlDOWNVOTES.Foreground = new SolidColorBrush(Colors.Black);
             }
+
 
             // Falls der aktuelle Nutzer der Ersteller der Party ist, wird ihm der Button um zur Bearbeitung zu wechseln angezeigt.
             if (uebergebeneParty.HostedByUser == true)
@@ -113,6 +117,21 @@ namespace App2Night.Views
                 appBarButtonTeilnehmen.Icon = new SymbolIcon(Symbol.Undo); ;
                 appBarButtonTeilnehmen.Label = "Absagen";
             }
+
+            // Voting aktivieren, wenn Party am gleichen Tag und Nutzer teilnimmt
+            if (uebergebeneParty.PartyDate == DateTime.Today && uebergebeneParty.UserCommitmentState == EventCommitmentState.Accepted)
+            {
+                appBarButtonLiken.IsEnabled = true;
+                appBarButtonNichtLiken.IsEnabled = true;
+            }
+            else
+            {
+                appBarButtonLiken.IsEnabled = false;
+                appBarButtonNichtLiken.IsEnabled = false;
+            }
+
+            // Info zum Voting anzeigen/nicht anzeigen
+            textBlockInfoVoting.Text = Meldungen.Anzeige.InfoVoting;
 
             // Party auf Karte anzeigen
             MapPartyAnzeigen(uebergebeneParty);
@@ -167,7 +186,8 @@ namespace App2Night.Views
 
             // Sperren der Oberfläche
             this.IsEnabled = false;
-            ProgRingAnzeigen.Visibility = Visibility.Visible;
+            progRingAnzeigen.Visibility = Visibility.Visible;
+            progRingAnzeigen.IsActive = true;
 
             // Hier wird der Status der Vormerkung notiert
             if (uebergebeneParty.UserCommitmentState != EventCommitmentState.Noted)
@@ -187,7 +207,8 @@ namespace App2Night.Views
             bool antwort = await BackEndComPartyLogik.PutPartyCommitmentState(uebergebeneParty, commitment);
 
             // Entsperrung der Oberfläche
-            ProgRingAnzeigen.Visibility = Visibility.Collapsed;
+            progRingAnzeigen.Visibility = Visibility.Collapsed;
+            progRingAnzeigen.IsActive = false;
             this.IsEnabled = true;
 
 
@@ -253,7 +274,8 @@ namespace App2Night.Views
 
             // Sperren der Oberfläche
             this.IsEnabled = false;
-            ProgRingAnzeigen.Visibility = Visibility.Visible;
+            progRingAnzeigen.Visibility = Visibility.Visible;
+            progRingAnzeigen.IsActive = true;
 
             // Teilnahme/Absage ans BackEnd schicken
             bool teilnahme = await BackEndComPartyLogik.PutPartyCommitmentState(uebergebeneParty, teilnehmen);
@@ -283,7 +305,8 @@ namespace App2Night.Views
             }
 
             // Entsperren der Oberfläche
-            ProgRingAnzeigen.Visibility = Visibility.Collapsed;
+            progRingAnzeigen.Visibility = Visibility.Collapsed;
+            progRingAnzeigen.IsActive = false;
             this.IsEnabled = true;
 
             // Wechsel zur Hauptansicht
@@ -313,11 +336,13 @@ namespace App2Night.Views
             if (id == 1)
             {
                 this.IsEnabled = false;
-                ProgRingAnzeigen.Visibility = Visibility.Visible;
+                progRingAnzeigen.Visibility = Visibility.Visible;
+                progRingAnzeigen.IsActive = true;
 
                 bool erfolg = await BackEndComPartyLogik.DeletePartyByID(uebergebeneParty);
 
-                ProgRingAnzeigen.Visibility = Visibility.Collapsed;
+                progRingAnzeigen.Visibility = Visibility.Collapsed;
+                progRingAnzeigen.IsActive = false;
                 this.IsEnabled = true;
 
                 if (erfolg == true)
@@ -337,6 +362,87 @@ namespace App2Night.Views
                 await message.ShowAsync();
             }
 
+        }
+
+        /// <summary>
+        /// Reagiert auf den Upvote vom Nutzer.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Liken_sendeUpvote(object sender, RoutedEventArgs e)
+        {
+            bool like = true;
+
+            bool erfolg = await SendeVote(like);
+
+            if (erfolg == true)
+            {
+                var message = new MessageDialog(Meldungen.Anzeige.ErfolgUpvoting, "Erfolg!");
+                await message.ShowAsync();
+            }
+            else
+            {
+                var message = new MessageDialog(Meldungen.Anzeige.FehlerVoting, "Fehler!");
+                await message.ShowAsync();
+            }
+            this.Frame.Navigate(typeof(FensterHauptansicht));
+        }
+
+        
+        /// <summary>
+        /// Reagiert auf den Downvote vom Nutzer.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Dislike_sendeDownvote(object sender, RoutedEventArgs e)
+        {
+            bool like = false;
+
+            bool erfolg = await SendeVote(like);
+
+            if (erfolg == true)
+            {
+                var message = new MessageDialog(Meldungen.Anzeige.ErfolgDownvoting, "Erfolg!");
+                await message.ShowAsync();
+            }
+            else
+            {
+                var message = new MessageDialog(Meldungen.Anzeige.FehlerVoting, "Fehler!");
+                await message.ShowAsync();
+            }
+
+            this.Frame.Navigate(typeof(FensterHauptansicht));
+        }
+
+        /// <summary>
+        ///  Nimmt die Bewertung entgegen und schickt sie ans BackEnd.
+        /// </summary>
+        /// <param name="like"></param>
+        /// <returns></returns>
+        private async Task<bool> SendeVote(bool like)
+        {
+            bool erfolg = false;
+            PartyVoting voting = new PartyVoting();
+
+            // Da wir diese Bewertung nicht abfragen, setzen wir diese Werte auf 0 (= nicht bewertet)
+            voting.locationRating = 0;
+            voting.moodRating = 0;
+            voting.priceRating = 0;
+
+            if (like == true)
+            {
+                voting.generalRating = 1;
+
+                erfolg = await BackEndComPartyLogik.PutPartyRating(uebergebeneParty, voting);
+            }
+            else
+            {
+                voting.generalRating = -1;
+
+                erfolg = await BackEndComPartyLogik.PutPartyRating(uebergebeneParty, voting);
+            }
+
+            return erfolg;
         }
     }
 }

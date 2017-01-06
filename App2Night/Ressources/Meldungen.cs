@@ -30,7 +30,8 @@ namespace App2Night.Ressources
         public static class Erstellen
         {
             public static readonly string Erfolg = "Party erfolgreich gespeichert!";
-            public static readonly string SpeicherFehler = "Es ist ein Fehler beim Speichern aufgetreten. Bitte versuche es später erneut.";
+            public static readonly string FehlerSpeicher = "Es ist ein Fehler beim Speichern aufgetreten. Bitte versuche es später erneut.";
+            public static readonly string FehlerAktualisieren = "Es ist ein Fehler beim Aktualisieren aufgetreten. Bitte versuche es später erneut.";
             public static readonly string UngueltigeEingabe = "Eine oder mehrere Eingaben sind ungültig!\nBeispielsweise wird eine Party in der Vergangenheit angelegt oder die Adresse existiert nicht!";
         }
 
@@ -72,6 +73,11 @@ namespace App2Night.Ressources
             public static readonly string ErfolgVergessen = "Diese Party ist nicht mehr vorgemerkt! Es kann etwas dauern, bis du die Änderungen siehst. Zum Suchen oder Aktualisieren klicke bitte auf die Lupe unten im nächsten Fenster.";
             public static readonly string FehlerVormerkenVergessen = "Es ist ein Fehler aufgetreten. Bitte versuche es später erneut!";
 
+            public static readonly string ErfolgUpvoting = "Dein Upvote wurde berücksichtigt. Es kann etwas dauern, bis du die Änderungen siehst.";
+            public static readonly string ErfolgDownvoting = "Dein Downvote wurde berücksichtigt. Es kann etwas dauern, bis du die Änderungen siehst.";
+            public static readonly string FehlerVoting = "Dein Voting konnte nicht berücksichtigt werden. Bitte versuche es später erneut.";
+
+            public static readonly string InfoVoting = "Das Voting wird erst am Tag der Party freigeschaltet und du musst an dieser Party teilnehmen (Noten).";
         }
 
         public static class DatenVerarbeitung

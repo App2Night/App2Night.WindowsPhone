@@ -326,10 +326,10 @@ namespace App2Night.Logik
         /// <param name="party">Party, bei der gevotet wird.</param>
         /// <param name="voting">Voting</param>
         /// <returns></returns>
-        public static async Task<string> PutPartyRating(Party party, PartyVoting voting)
+        public static async Task<bool> PutPartyRating(Party party, PartyVoting voting)
         {
             bool internetVorhanden = IsInternet();
-            string erfolgreichesVoting = "";
+            bool erfolgreichesVoting = false;
 
             bool erfolg = await DatenVerarbeitung.aktuellerToken();
             Token tok = await DatenVerarbeitung.TokenAuslesen();
@@ -343,28 +343,24 @@ namespace App2Night.Logik
 
                 try
                 {
-                    // TODO: Testen
-                    httpAntwort = await client.PutAsync($"UserParty/partyRating?id={party.PartyId}", content);  
-                    erfolgreichesVoting = await httpAntwort.Content.ReadAsStringAsync();
+                    httpAntwort = await client.PutAsync($"UserParty/partyRating?id={party.PartyId}", content);
+                    erfolgreichesVoting = httpAntwort.IsSuccessStatusCode;
                     return erfolgreichesVoting;
                 }
 
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    erfolgreichesVoting = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
                     var message = new MessageDialog("Fehler! Bitte versuche es später erneut.");
                     await message.ShowAsync();
-                    // Code 21 - Fehler bei Abrufen
-                    return "21";
+                    return false;
                 }
             }
             else
             {
                 // Nachricht, dass Internet eingeschaltet werden soll
-                // Code 42 - Fehler: Keine Internetverbindung
                 var message = new MessageDialog("Fehler! Keiner Internetverbindung.");
                 await message.ShowAsync();
-                return "42";
+                return false;
             }
         }
 

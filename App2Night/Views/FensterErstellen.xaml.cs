@@ -23,6 +23,8 @@ namespace App2Night.Views
         {
             this.InitializeComponent();
             progressRingErstellen.Visibility = Visibility.Collapsed;
+            progressRingErstellen.IsActive = false;
+
             // MusicGenres und PartyTypen in ComboBox anzeigen
             comboBoxErstellenMUSIKRICHTUNG.ItemsSource = Enum.GetValues(typeof(MusicGenre));
             comboBoxErstellenTYP.ItemsSource = Enum.GetValues(typeof(PartyType));
@@ -67,6 +69,7 @@ namespace App2Night.Views
         {
             // Sperren der Oberfläche
             progressRingErstellen.Visibility = Visibility.Visible;
+            progressRingErstellen.IsActive = true;
             this.IsEnabled = false;
 
             Party partyZuErstellen = new Party();
@@ -158,10 +161,22 @@ namespace App2Night.Views
                 }
                 else
                 {
-                    var message = new MessageDialog(Meldungen.Erstellen.SpeicherFehler, "Fehler!");
-                    await message.ShowAsync();
-                    this.IsEnabled = true;
-                    progressRingErstellen.Visibility = Visibility.Collapsed;
+                    if (ueberarbeiten == false)
+                    {
+                        var message = new MessageDialog(Meldungen.Erstellen.FehlerSpeicher, "Fehler!");
+                        await message.ShowAsync();
+                        this.IsEnabled = true;
+                        progressRingErstellen.Visibility = Visibility.Collapsed;
+                        progressRingErstellen.IsActive = false;
+                    }
+                    else
+                    {
+                        var message = new MessageDialog(Meldungen.Erstellen.FehlerAktualisieren, "Fehler!");
+                        await message.ShowAsync();
+                        this.IsEnabled = true;
+                        progressRingErstellen.Visibility = Visibility.Collapsed;
+                        progressRingErstellen.IsActive = false;
+                    }
                 }
 
             }
@@ -171,12 +186,14 @@ namespace App2Night.Views
                 await message.ShowAsync();
                 this.IsEnabled = true;
                 progressRingErstellen.Visibility = Visibility.Collapsed;
+                progressRingErstellen.IsActive = false;
                 return;
             }
 
             // Oberfläche entsperren 
             this.IsEnabled = true;
             progressRingErstellen.Visibility = Visibility.Collapsed;
+            progressRingErstellen.IsActive = false;
 
         }
     }

@@ -34,6 +34,7 @@ namespace App2Night.Views
         {
             this.InitializeComponent();
             progressRingInDerNaehe.Visibility = Visibility.Collapsed;
+            progressRingInDerNaehe.IsActive = false;
         }
 
         /// <summary>
@@ -45,6 +46,7 @@ namespace App2Night.Views
         {
             this.IsEnabled = false;
             progressRingInDerNaehe.Visibility = Visibility.Visible;
+            progressRingInDerNaehe.IsActive = true;
 
             // Hinweis erscheint nur, wenn man vom Anmelden/Registrieren auf diese Haupansicht kommt
             PageStackEntry vorherigeSeite = Frame.BackStack.Last();
@@ -113,6 +115,7 @@ namespace App2Night.Views
             }
 
             progressRingInDerNaehe.Visibility = Visibility.Collapsed;
+            progressRingInDerNaehe.IsActive = false;
             this.IsEnabled = true;
         }
 
@@ -198,6 +201,7 @@ namespace App2Night.Views
             // Sperren der Oberfläche
             this.IsEnabled = false;
             progressRingInDerNaehe.Visibility = Visibility.Visible;
+            progressRingInDerNaehe.IsActive = true;
 
             // Listen leeren
             listViewSuchErgebnis.Items.Clear();
@@ -254,8 +258,10 @@ namespace App2Night.Views
                 await message.ShowAsync();
             }
            
+            // Oberfläche entsperren
             progressRingInDerNaehe.IsEnabled = false;
             progressRingInDerNaehe.Visibility = Visibility.Collapsed;
+            progressRingInDerNaehe.IsActive = false;
 
             this.IsEnabled = true;
         }

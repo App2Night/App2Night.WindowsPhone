@@ -21,6 +21,7 @@ namespace App2Night.Views
         {
             this.InitializeComponent();
             progressRingAnmeldung.Visibility = Visibility.Collapsed;
+            progressRingAnmeldung.IsActive = false;
         }
 
         /// <summary>
@@ -63,7 +64,8 @@ namespace App2Night.Views
 
             // Sperren der Ansicht
             this.IsEnabled = false;
-            progressRingAnmeldung.Visibility = Visibility.Visible;          
+            progressRingAnmeldung.Visibility = Visibility.Visible;
+            progressRingAnmeldung.IsActive = true;       
 
             korrekteEingabe = await DatenVerarbeitung.LoginUeberpruefen(anmeldung);
 
@@ -79,6 +81,7 @@ namespace App2Night.Views
                 {
                     // Wenn alles erfolgreich gespeichert wurde
                     progressRingAnmeldung.Visibility = Visibility.Collapsed;
+                    progressRingAnmeldung.IsActive = false;
                     var message = new MessageDialog(Meldungen.Anmeldung.Erfolg, "Erfolg!");
                     await message.ShowAsync();
                     this.Frame.Navigate(typeof(FensterHauptansicht)); 
@@ -97,6 +100,7 @@ namespace App2Night.Views
 
             // Oberfläche entsperren
             progressRingAnmeldung.Visibility = Visibility.Collapsed;
+            progressRingAnmeldung.IsActive = false;
             this.IsEnabled = true;
 
         }

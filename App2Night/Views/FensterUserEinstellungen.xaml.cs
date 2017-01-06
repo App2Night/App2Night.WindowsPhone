@@ -19,6 +19,7 @@ namespace App2Night.Views
         {
             this.InitializeComponent();
             progRingUserEinstellungen.Visibility = Visibility.Collapsed;
+            progRingUserEinstellungen.IsActive = false;
 
             // Zeigt den aktuellen, vom Nutzer gesetzten Radius an.
             SuchRadiusUndGPSEinstellen();
@@ -70,6 +71,7 @@ namespace App2Night.Views
         {
             // Sperren der Oberfläche
             progRingUserEinstellungen.Visibility = Visibility.Visible;
+            progRingUserEinstellungen.IsActive = true;
             this.IsEnabled = false;
 
             // UserEinstellungen auf Default zurücksetzen
@@ -87,6 +89,7 @@ namespace App2Night.Views
             // Oberfläche entsperren
             this.IsEnabled = true;
             progRingUserEinstellungen.Visibility = Visibility.Collapsed;
+            progRingUserEinstellungen.IsActive = false;
 
             // Wechsel zum Start
             this.Frame.Navigate(typeof(FensterAnmOdReg));
@@ -101,6 +104,7 @@ namespace App2Night.Views
         {
             // Sperren der Oberfläche
             progRingUserEinstellungen.Visibility = Visibility.Visible;
+            progRingUserEinstellungen.IsActive = true;
             this.IsEnabled = false;
 
             bool speichernErfolgreich = false;
@@ -129,6 +133,7 @@ namespace App2Night.Views
             // Entsperren der Oberfläche
             this.IsEnabled = true;
             progRingUserEinstellungen.Visibility = Visibility.Collapsed;
+            progRingUserEinstellungen.IsActive = false;
         }
 
         /// <summary>
