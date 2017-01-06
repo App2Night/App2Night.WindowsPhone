@@ -158,6 +158,11 @@ namespace App2Night.Views
             await message.ShowAsync();
         }
 
+        /// <summary>
+        /// Stellt die Erlaubnis für die GPS-Nutzung ein und fragt bei Änderungen nochmal nach.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void toggleSwitchGPSErlaubnis_GPSEinstellen(object sender, RoutedEventArgs e)
         {
             UserEinstellungen einst = await DatenVerarbeitung.UserEinstellungenAuslesen();

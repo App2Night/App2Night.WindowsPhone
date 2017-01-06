@@ -12,7 +12,6 @@ using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media;
 using Windows.UI;
 using App2Night.Ressources;
-using Windows.UI.Xaml.Media.Imaging;
 using Windows.Foundation;
 using System.Threading.Tasks;
 
@@ -387,7 +386,6 @@ namespace App2Night.Views
             }
             this.Frame.Navigate(typeof(FensterHauptansicht));
         }
-
         
         /// <summary>
         /// Reagiert auf den Downvote vom Nutzer.
@@ -417,7 +415,7 @@ namespace App2Night.Views
         /// <summary>
         ///  Nimmt die Bewertung entgegen und schickt sie ans BackEnd.
         /// </summary>
-        /// <param name="like"></param>
+        /// <param name="like">Vote vom Nutzer</param>
         /// <returns></returns>
         private async Task<bool> SendeVote(bool like)
         {

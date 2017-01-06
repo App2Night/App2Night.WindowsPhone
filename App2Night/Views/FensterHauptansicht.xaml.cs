@@ -10,7 +10,6 @@ using App2Night.Logik;
 using App2Night.ModelsEnums.Enums;
 using Windows.UI.Xaml.Navigation;
 using App2Night.Ressources;
-using Newtonsoft.Json;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.Storage.Streams;
