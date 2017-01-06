@@ -132,7 +132,6 @@ namespace App2Night.Logik
                 try
                 {
                     HttpClient client = GetClientUser();
-
                     var query =     "client_id=nativeApp&" +
                                             "client_secret=secret&" +
                                             "grant_type=password&" +
@@ -177,10 +176,11 @@ namespace App2Night.Logik
             {
                 HttpClient client = GetClientUser(); 
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token.AccessToken);
-                        var query =     "client_id=nativeApp&" +
-                                              "client_secret=secret&" +
-                                              $"token={token.RefreshToken}&" +
-                                              "token_type_hint=access_token";
+
+                var query =     "client_id=nativeApp&" +
+                                "client_secret=secret&" +
+                                $"token={token.RefreshToken}&" +
+                                 "token_type_hint=access_token";
                 var content = new StringContent(query, Encoding.UTF8, "application/x-www-form-urlencoded");
 
                 var httpAntwort = await client.PostAsync("connect/revocation", content);
