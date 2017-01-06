@@ -131,17 +131,17 @@ namespace App2Night.Logik
             bool internetVorhanden = IsInternet();
             // Umspeichern der Daten für BackEnd
             CreateParty partyZuErstellen = new CreateParty();
-            partyZuErstellen.partyName = party.PartyName;
-            partyZuErstellen.partyDate = party.PartyDate.ToString("yyyy-MM-dd"+"T"+"HH:mm:ss.sss"+"Z");
-            partyZuErstellen.musicGenre = party.MusicGenre;
-            partyZuErstellen.countryName = "Deutschland";
-            partyZuErstellen.cityName = party.Location.CityName;
-            partyZuErstellen.streetName = party.Location.StreetName;
-            partyZuErstellen.houseNumber = party.Location.HouseNumber;
-            partyZuErstellen.zipcode = party.Location.ZipCode;
-            partyZuErstellen.partyType = party.PartyType;
-            partyZuErstellen.description = party.Description;
-            partyZuErstellen.price = party.Price;
+            partyZuErstellen.PartyName = party.PartyName;
+            partyZuErstellen.PartyDate = party.PartyDate;
+            partyZuErstellen.MusicGenre = party.MusicGenre;
+            partyZuErstellen.CountryName = "Deutschland";
+            partyZuErstellen.CityName = party.Location.CityName;
+            partyZuErstellen.StreetName = party.Location.StreetName;
+            partyZuErstellen.HouseNumber = party.Location.HouseNumber;
+            partyZuErstellen.Zipcode = party.Location.ZipCode;
+            partyZuErstellen.PartyType = party.PartyType;
+            partyZuErstellen.Description = party.Description;
+            partyZuErstellen.Price = party.Price;
 
             bool erfolg = await DatenVerarbeitung.aktuellerToken();
             Token tok = await DatenVerarbeitung.TokenAuslesen();
@@ -230,17 +230,17 @@ namespace App2Night.Logik
             bool erfolg = false;
             // Umspeichern der Daten für BackEnd
             CreateParty partyZuErstellen = new CreateParty();
-            partyZuErstellen.partyName = party.PartyName;
-            partyZuErstellen.partyDate = party.PartyDate.ToString("yyyy-MM-dd" + "T" + "HH:mm:ss.sss" + "Z");
-            partyZuErstellen.musicGenre = party.MusicGenre;
-            partyZuErstellen.countryName = "Deutschland";
-            partyZuErstellen.cityName = party.Location.CityName;
-            partyZuErstellen.streetName = party.Location.StreetName;
-            partyZuErstellen.houseNumber = party.Location.HouseNumber;
-            partyZuErstellen.zipcode = party.Location.ZipCode;
-            partyZuErstellen.partyType = party.PartyType;
-            partyZuErstellen.description = party.Description;
-            partyZuErstellen.price = party.Price;
+            partyZuErstellen.PartyName = party.PartyName;
+            partyZuErstellen.PartyDate = party.PartyDate;
+            partyZuErstellen.MusicGenre = party.MusicGenre;
+            partyZuErstellen.CountryName = "Deutschland";
+            partyZuErstellen.CityName = party.Location.CityName;
+            partyZuErstellen.StreetName = party.Location.StreetName;
+            partyZuErstellen.HouseNumber = party.Location.HouseNumber;
+            partyZuErstellen.Zipcode = party.Location.ZipCode;
+            partyZuErstellen.PartyType = party.PartyType;
+            partyZuErstellen.Description = party.Description;
+            partyZuErstellen.Price = party.Price;
 
             bool aktuellerToken = await DatenVerarbeitung.aktuellerToken();
             Token token = await DatenVerarbeitung.TokenAuslesen();

@@ -40,6 +40,7 @@ namespace App2Night.Ressources
             public static readonly string KeinePartysInDerNaehe = "Leider sind keine Partys in deiner Nähe. Erstelle eine eigene Party, vergrößere in den Einstellungen den Suchradius oder versuche es später erneut.";
             public static readonly string AnzeigePartyFehler = "Leider ist ein Fehler aufgetreten. Bitte versuche es erneut";
             public static readonly string FehlerZwischenSpeichern = "Leider hat das Zwischenspeichern der Veranstaltungen für die Offline-Nutzung nicht funktionier.";
+            public static readonly string FehlerGPSNoetig = "Für diese App wird GPS benötigt! Du kannst die Berechtigung in den Einstellungen anpassen.";
         }
 
         public static class UserEinstellungen
@@ -53,6 +54,7 @@ namespace App2Night.Ressources
                                                     // "- Verschlüsselung von Dritten\n" + 
                                                     "- Bibliotheken vom Microsoft";
             public static readonly string SpeicherFehler = "Leider ist ein Fehler beim Speichern der Daten aufgetreten.";
+            public static readonly string FehlerGPS = "Für diese App wird GPS benötigt!";
         }
 
         public static class Anzeige

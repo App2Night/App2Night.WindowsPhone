@@ -37,6 +37,10 @@ namespace App2Night.Views
         /// <param name="e"></param>
         private async void Bestaetigen_WechselZuHauptansicht(object sender, RoutedEventArgs e)
         {
+            bool status = false;
+            bool erfolg = false;
+            bool speichernErfolgreich = false;
+
             // Daten auslesen
             neuerNutzer.Username = textBoxRegNUTZERNAME.Text;
             neuerNutzer.Email = textBoxRegEMAIL.Text;
@@ -50,7 +54,7 @@ namespace App2Night.Views
                 // Speichern des Passworts
                 neuerNutzer.Password = pwBoxPASSWORTBEST.Password;
                 // Anlegen des neuen Nutzers
-                bool status = await BackEndComUserLogik.CreateUser(neuerNutzer);
+                status = await BackEndComUserLogik.CreateUser(neuerNutzer);
 
                 progRingReg.Visibility = Visibility.Collapsed;
 
@@ -61,9 +65,17 @@ namespace App2Night.Views
                     await message.ShowAsync();
 
                     // Speichern der Login-Daten
-                    bool erfolg = await DatenVerarbeitung.LoginSpeichern(neuerNutzer);
+                    erfolg = await DatenVerarbeitung.LoginSpeichern(neuerNutzer);
 
-                    if (erfolg == true)
+                    // UserEinstellungen auf Default zurücksetzen
+                    UserEinstellungen einst = new UserEinstellungen();
+                    einst.Radius = 50;
+                    einst.GPSErlaubt = false;
+
+                    // "Neue" Werte speichern
+                    speichernErfolgreich = await DatenVerarbeitung.UserEinstellungenSpeichern(einst);
+
+                    if (erfolg == true && speichernErfolgreich == true)
                     {
                         // Wechsel zur Hauptansicht
                         this.Frame.Navigate(typeof(FensterHauptansicht)); 

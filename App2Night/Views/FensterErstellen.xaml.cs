@@ -116,7 +116,7 @@ namespace App2Night.Views
                 if (textBoxErstellenPREIS.Text != "")
                 {
                     string preis = textBoxErstellenPREIS.Text;
-                    partyZuErstellen.Price = Double.Parse(preis); 
+                    partyZuErstellen.Price = Int32.Parse(preis); 
                 }
                 else
                 {

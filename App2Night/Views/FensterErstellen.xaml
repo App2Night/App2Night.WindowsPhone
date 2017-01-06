@@ -40,7 +40,7 @@
                 <ComboBox x:Name="comboBoxErstellenMUSIKRICHTUNG" Width="145" Height="35" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="168,379,10,328" BorderBrush="#FF002635"/>
                 <ComboBox x:Name="comboBoxErstellenTYP" Width="145" Margin="168,419,10,288" HorizontalAlignment="Center" VerticalAlignment="Center" Height="35" BorderBrush="#FF002635"/>
                 <TextBlock x:Name="textBlErstellenPreis" Height="35" TextWrapping="Wrap" Text="Preis (optional)" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,465,173,242" FontWeight="Bold" FontSize="20"/>
-                <TextBox x:Name="textBoxErstellenPREIS" TextWrapping="Wrap" Text="" Width="145" Height="35" Margin="168,464,10,243" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" PlaceholderText="Preis" SelectionHighlightColor="#FFD97925" BorderBrush="#FF002635"/>
+                <TextBox x:Name="textBoxErstellenPREIS" TextWrapping="Wrap" Text="" Width="145" Height="35" Margin="168,464,10,243" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" PlaceholderText="Preis" SelectionHighlightColor="#FFD97925" BorderBrush="#FF002635" InputScope="Digits"/>
                 <TextBlock x:Name="textBlErstellenInfos" TextWrapping="Wrap" Text="Weitere Informationen (opt.)" FontSize="20" FontWeight="Bold" Margin="0,513,20,194" Height="35"/>
                 <TextBox x:Name="textBoxErstellenINFOS" TextWrapping="Wrap" Text="" Width="313" Height="139" Margin="0,548,10,0" HorizontalAlignment="Center" VerticalAlignment="Top" PlaceholderText="Optionale zusätzliche Informationen (z.B. besondere Angebote oder Auftritte)." SelectionHighlightColor="#FFD97925" BorderBrush="#FF002635"/>
             </Grid>

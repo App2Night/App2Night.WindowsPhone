@@ -48,6 +48,7 @@ namespace App2Night.Views
             // UserEinstellungen auf Default zurücksetzen
             UserEinstellungen einst = new UserEinstellungen();
             einst.Radius = 50;
+            einst.GPSErlaubt = false;
 
             // "Neue" Werte speichern
             speichernErfolgreich = await DatenVerarbeitung.UserEinstellungenSpeichern(einst);

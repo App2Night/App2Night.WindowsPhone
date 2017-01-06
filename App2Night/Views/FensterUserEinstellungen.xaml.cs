@@ -6,6 +6,7 @@ using App2Night.ModelsEnums.Model;
 using Windows.UI.Popups;
 using App2Night.Ressources;
 using System.Collections.Generic;
+using Windows.Devices.Geolocation;
 
 namespace App2Night.Views
 {
@@ -20,13 +21,14 @@ namespace App2Night.Views
             progRingUserEinstellungen.Visibility = Visibility.Collapsed;
 
             // Zeigt den aktuellen, vom Nutzer gesetzten Radius an.
-            SuchRadiusEinstellen();
+            SuchRadiusUndGPSEinstellen();
+
         }
 
         /// <summary>
         /// Auslesen des vom Nutzer gesetzten Suchradius aus einer Datei und Anzeigen durch Slider.
         /// </summary>
-        private async void SuchRadiusEinstellen()
+        private async void SuchRadiusUndGPSEinstellen()
         {
             UserEinstellungen einst = await DatenVerarbeitung.UserEinstellungenAuslesen();
 
@@ -37,6 +39,15 @@ namespace App2Night.Views
             else
             {
                 sliderSuchradius.Value = 50;
+            }
+
+            if (einst.GPSErlaubt == true)
+            {
+                toggleSwitchGPSErlaubnis.IsOn = true;
+            }
+            else
+            {
+                toggleSwitchGPSErlaubnis.IsOn = false;
             }
         }
 
@@ -97,6 +108,7 @@ namespace App2Night.Views
             UserEinstellungen einst = new UserEinstellungen();
             // Aktueller Wert des Sliders für den Radius
             einst.Radius = (float)sliderSuchradius.Value;
+            einst.GPSErlaubt = toggleSwitchGPSErlaubnis.IsOn;
             // Weitere Einstellungen möglich
 
             // Speichern der Nutzereinstellungen in einer Datei
@@ -141,5 +153,45 @@ namespace App2Night.Views
             await message.ShowAsync();
         }
 
+        private async void toggleSwitchGPSErlaubnis_GPSEinstellen(object sender, RoutedEventArgs e)
+        {
+            UserEinstellungen einst = await DatenVerarbeitung.UserEinstellungenAuslesen();
+
+            // TODO: mehrmals abfragen
+            var accessStatus = await Geolocator.RequestAccessAsync();
+
+            if (accessStatus == GeolocationAccessStatus.Allowed && toggleSwitchGPSErlaubnis.IsOn == false)
+            {
+                toggleSwitchGPSErlaubnis.IsOn = true;
+                einst.GPSErlaubt = true;
+            }
+            else if (accessStatus == GeolocationAccessStatus.Allowed && toggleSwitchGPSErlaubnis.IsOn == true)
+            {
+                einst.GPSErlaubt = true;
+            }
+            else if (accessStatus == GeolocationAccessStatus.Denied && toggleSwitchGPSErlaubnis.IsOn == true)
+            {
+                toggleSwitchGPSErlaubnis.IsOn = false;
+                einst.GPSErlaubt = false;
+                var message = new MessageDialog(Meldungen.UserEinstellungen.FehlerGPS, "Achtung!");
+                await message.ShowAsync();
+            }
+            else if (accessStatus == GeolocationAccessStatus.Denied && toggleSwitchGPSErlaubnis.IsOn == false)
+            {
+                einst.GPSErlaubt = false;
+                var message = new MessageDialog(Meldungen.UserEinstellungen.FehlerGPS, "Achtung!");
+                await message.ShowAsync();
+            }
+            else
+            {
+                toggleSwitchGPSErlaubnis.IsOn = false;
+                einst.GPSErlaubt = false;
+                var message = new MessageDialog(Meldungen.UserEinstellungen.FehlerGPS, "Achtung!");
+                await message.ShowAsync();
+            }
+
+            // Neue Einstellungen speichern
+            await DatenVerarbeitung.UserEinstellungenSpeichern(einst);
+        }
     }
 }

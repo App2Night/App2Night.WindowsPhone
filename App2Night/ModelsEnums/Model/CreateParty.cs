@@ -1,4 +1,5 @@
 ﻿using App2Night.ModelsEnums.Enums;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +10,27 @@ namespace App2Night.ModelsEnums.Model
 {
     public class CreateParty
     {
-        public string partyName { get; set; }
-        public string partyDate { get; set; }
-        public MusicGenre musicGenre { get; set; }
-        public string countryName { get; set; }
-        public string cityName { get; set; }
-        public string streetName { get; set; }
-        public string houseNumber { get; set; }
-        public string zipcode { get; set; }
-        public PartyType partyType { get; set; }
-        public string description { get; set; }
-        public double price { get; set; }
+        [JsonProperty("PartyName")]
+        public string PartyName { get; set; }
+        [JsonProperty("PartyDate")]
+        public DateTime PartyDate { get; set; }
+        [JsonProperty("MusicGenre")]
+        public MusicGenre MusicGenre { get; set; }
+        [JsonProperty("CountryName")]
+        public string CountryName { get; set; }
+        [JsonProperty("CityName")]
+        public string CityName { get; set; }
+        [JsonProperty("StreetName")]
+        public string StreetName { get; set; }
+        [JsonProperty("HouseNumber")]
+        public string HouseNumber { get; set; }
+        [JsonProperty("Zipcode")]
+        public string Zipcode { get; set; }
+        [JsonProperty("PartyType")]
+        public PartyType PartyType { get; set; }
+        [JsonProperty("Description")]
+        public string Description { get; set; }
+        [JsonProperty("Price")]
+        public int Price { get; set; }
     }
 }

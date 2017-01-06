@@ -66,46 +66,51 @@ namespace App2Night.Views
 
             }
 
-            // Anzeigen der Partys in der "normalen" Liste und ggf. in der Liste für die vorgemerkten Partys.
-            if (partyListe != null && partyListe.Any() == true)
+            UserEinstellungen einst = await DatenVerarbeitung.UserEinstellungenAuslesen();
+
+            if (einst.GPSErlaubt == true)
             {
-                anzahlPartys = partyListe.Count();
-
-                for (int durchlauf = 0; durchlauf < anzahlPartys; durchlauf++)
+                // Anzeigen der Partys in der "normalen" Liste und ggf. in der Liste für die vorgemerkten Partys.
+                if (partyListe != null && partyListe.Any() == true)
                 {
-                    // Liste aller Partys in der Nähe werden in der "normalen" ListView angezeigt
-                    party = partyListe.ElementAt(durchlauf);
-                    listViewSuchErgebnis.Items.Add(party.PartyName);
+                    anzahlPartys = partyListe.Count();
 
-                    // Auf der Karte anzeigen
-                    PartyAufMapAnzeigen(party);
-
-                    // Liste der vorgemerkten Partys werden in einer separaten ListView angezeigt
-                    if (party.UserCommitmentState == EventCommitmentState.Noted)
+                    for (int durchlauf = 0; durchlauf < anzahlPartys; durchlauf++)
                     {
-                        listViewVorgemerkt.Items.Add(party.PartyName);
+                        // Liste aller Partys in der Nähe werden in der "normalen" ListView angezeigt
+                        party = partyListe.ElementAt(durchlauf);
+                        listViewSuchErgebnis.Items.Add(party.PartyName);
 
-                        anzahlVorgemerkt++;
-                    }
+                        // Auf der Karte anzeigen
+                        PartyAufMapAnzeigen(party);
 
-                    // Liste der Partys, bei denen der Nutzer teilnimmt, werden in einer separaten ListView angezeigt
-                    if (party.UserCommitmentState == EventCommitmentState.Accepted)
-                    {
-                        listViewTeilnahme.Items.Add(party.PartyName);
+                        // Liste der vorgemerkten Partys werden in einer separaten ListView angezeigt
+                        if (party.UserCommitmentState == EventCommitmentState.Noted)
+                        {
+                            listViewVorgemerkt.Items.Add(party.PartyName);
 
-                        anzahlTeilgenommen++;
+                            anzahlVorgemerkt++;
+                        }
+
+                        // Liste der Partys, bei denen der Nutzer teilnimmt, werden in einer separaten ListView angezeigt
+                        if (party.UserCommitmentState == EventCommitmentState.Accepted)
+                        {
+                            listViewTeilnahme.Items.Add(party.PartyName);
+
+                            anzahlTeilgenommen++;
+                        }
                     }
                 }
-            }
 
-            // Aktuelle Position ermitteln und dies als Kartenmittelpunkt setzen
-            var geoLocation = new GeolocationLogik();
-            Location location = await geoLocation.GetLocation();
-            BasicGeoposition basis = new BasicGeoposition() { Latitude = location.Latitude, Longitude = location.Longitude };
-            Geopoint point = new Geopoint(basis);
-            mapControlHauptansicht.Center = point;
-            mapControlHauptansicht.ZoomLevel = 15;
-            mapControlHauptansicht.LandmarksVisible = true;
+                // Aktuelle Position ermitteln und dies als Kartenmittelpunkt setzen
+                var geoLocation = new GeolocationLogik();
+                Location location = await geoLocation.GetLocation();
+                BasicGeoposition basis = new BasicGeoposition() { Latitude = location.Latitude, Longitude = location.Longitude };
+                Geopoint point = new Geopoint(basis);
+                mapControlHauptansicht.Center = point;
+                mapControlHauptansicht.ZoomLevel = 15;
+                mapControlHauptansicht.LandmarksVisible = true; 
+            }
 
             progressRingInDerNaehe.Visibility = Visibility.Collapsed;
             this.IsEnabled = true;
@@ -194,61 +199,61 @@ namespace App2Night.Views
             this.IsEnabled = false;
             progressRingInDerNaehe.Visibility = Visibility.Visible;
 
-            // Liste der Partys aus der Nähe 
-            partyListe = await btnInDerNaehePartysAbrufen();
+            // Listen leeren
+            listViewSuchErgebnis.Items.Clear();
+            listViewVorgemerkt.Items.Clear();
+            listViewTeilnahme.Items.Clear();
 
-            // Anzeigen der Partys in der "normalen" Liste und ggf. in der Liste für die vorgemerkten Partys.
-            if (partyListe.Any())
+            UserEinstellungen einst = await DatenVerarbeitung.UserEinstellungenAuslesen();
+
+            if (einst.GPSErlaubt == true)
             {
-                anzahlPartys = partyListe.Count();
+                // Liste der Partys aus der Nähe 
+                partyListe = await btnInDerNaehePartysAbrufen();
 
-                for (int durchlauf = 0; durchlauf < anzahlPartys; durchlauf++)
+                // Anzeigen der Partys in der "normalen" Liste und ggf. in der Liste für die vorgemerkten Partys.
+                if (partyListe.Any())
                 {
-                    // Liste aller Partys in der Nähe werden in der "normalen" ListView angezeigt
-                    party = partyListe.ElementAt(durchlauf);
-                    listViewSuchErgebnis.Items.Add(party.PartyName);
+                    anzahlPartys = partyListe.Count();
 
-                    // Auf der Karte anzeigen
-                    PartyAufMapAnzeigen(party);
-
-                    // Liste der vorgemerkten Partys werden in einer separaten ListView angezeigt
-                    if (party.UserCommitmentState == EventCommitmentState.Noted)
+                    for (int durchlauf = 0; durchlauf < anzahlPartys; durchlauf++)
                     {
-                        listViewVorgemerkt.Items.Add(party.PartyName);
+                        // Liste aller Partys in der Nähe werden in der "normalen" ListView angezeigt
+                        party = partyListe.ElementAt(durchlauf);
+                        listViewSuchErgebnis.Items.Add(party.PartyName);
 
-                        anzahlVorgemerkt++;
-                    }
+                        // Auf der Karte anzeigen
+                        PartyAufMapAnzeigen(party);
 
-                    // Liste der Partys, bei denen der Nutzer teilnimmt, werden in einer separaten ListView angezeigt
-                    if (party.UserCommitmentState == EventCommitmentState.Accepted)
-                    {
-                        listViewTeilnahme.Items.Add(party.PartyName);
+                        // Liste der vorgemerkten Partys werden in einer separaten ListView angezeigt
+                        if (party.UserCommitmentState == EventCommitmentState.Noted)
+                        {
+                            listViewVorgemerkt.Items.Add(party.PartyName);
 
-                        anzahlTeilgenommen++;
+                            anzahlVorgemerkt++;
+                        }
+
+                        // Liste der Partys, bei denen der Nutzer teilnimmt, werden in einer separaten ListView angezeigt
+                        if (party.UserCommitmentState == EventCommitmentState.Accepted)
+                        {
+                            listViewTeilnahme.Items.Add(party.PartyName);
+
+                            anzahlTeilgenommen++;
+                        }
                     }
                 }
+                else
+                {
+                    var message = new MessageDialog(Meldungen.Hauptansicht.KeinePartysInDerNaehe, "Schade!");
+                    await message.ShowAsync();
+                } 
             }
             else
             {
-                var message = new MessageDialog(Meldungen.Hauptansicht.KeinePartysInDerNaehe, "Schade!");
+                var message = new MessageDialog(Meldungen.Hauptansicht.FehlerGPSNoetig, "Achtung!");
                 await message.ShowAsync();
             }
-
-            // Benachrichtigung, wenn keine Party vorgemerkt.
-            if (anzahlVorgemerkt == 0)
-            {
-                // Box mit neuer Nachricht anzeigen
-                //textBlockVorgemerktLeereListe.Text = "Du hast noch keine Party vorgemerkt. Vormerken erfolgt über den Stern unten rechts in der Anzeige einer Party.";
-
-            }
-
-            // Benachrichtigung, wenn an keiner Party teilgenommen.
-            if (anzahlTeilgenommen == 0)
-            {
-                // Box mit neuer Nachricht anzeigen
-                //textBlockVorgemerktLeereListe.Text = "Du hast bei keiner Party zugesagt. Teilnehmen erfolgt über die Musiknoten unten mittig in der Anzeige einer Party.";
-            }
-
+           
             progressRingInDerNaehe.IsEnabled = false;
             progressRingInDerNaehe.Visibility = Visibility.Collapsed;
 
@@ -274,9 +279,18 @@ namespace App2Night.Views
             IEnumerable<Party> partyListe = null;
             Location pos;
 
-            // Aktuelle Position ermitteln
-            var geoLocation = new GeolocationLogik();
-            pos = await geoLocation.GetLocation();
+            try
+            {
+                // Aktuelle Position ermitteln
+                var geoLocation = new GeolocationLogik();
+                pos = await geoLocation.GetLocation();
+            }
+            catch (Exception)
+            {
+                var message = new MessageDialog(Meldungen.Hauptansicht.FehlerGPSNoetig, "Achtung!");
+                await message.ShowAsync();
+                return null;
+            }
 
             // Radius aus UserEinstellungen
             UserEinstellungen einst = await DatenVerarbeitung.UserEinstellungenAuslesen();
