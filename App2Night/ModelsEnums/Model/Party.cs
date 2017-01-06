@@ -1,34 +1,28 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Threading.Tasks;
-using App2Night.ModelsEnums.Model;
 using App2Night.ModelsEnums.Enums;
 
 
 namespace App2Night.ModelsEnums.Model
 {
+    /// <summary>
+    /// Model für eine Party.
+    /// </summary>
     public class Party
     {
         [JsonProperty("PartyId")]
         public Guid PartyId { get; set; }
         [JsonProperty("PartyName")]
-        [MaxLength(32)]
         public string PartyName { get; set; }
         [JsonProperty("CreationDate")]
         public DateTime CreationDate { get; set; }
         [JsonProperty("Price")]
         public int Price { get; set; }
-        [JsonProperty("Host")]
-        public User Host { get; set; }
+        [JsonProperty("HostedByUser")]
+        public bool HostedByUser { get; set; }
+        [JsonProperty("HostId")]
+        public int HostId { get; set; }
         [JsonProperty("PartyDate")]
         public DateTime PartyDate { get; set; }
         [JsonProperty("MusicGenre")]
@@ -40,8 +34,20 @@ namespace App2Night.ModelsEnums.Model
         public string Description { get; set; }
         [JsonProperty("Location")]
         public Location Location { get; set; }
-        [JsonProperty("HostedByUser")]
-        public bool HostedByUser { get; set; }
-        public EventCommitmentState CommitmentState { get; set; }
+
+        [JsonProperty("UserCommitmentState")]
+        public EventCommitmentState UserCommitmentState { get; set;}
+
+        // Voting
+        [JsonProperty("GeneralRating")]
+        public int GeneralRating { get; set; }
+        [JsonProperty("PriceRating")]
+        public int PriceRating { get; set; }
+        [JsonProperty("LocationRating")]
+        public int LocationRating { get; set; }
+        [JsonProperty("MoodRating")]
+        public int MoodRating { get; set; }
+
+
     }
 }

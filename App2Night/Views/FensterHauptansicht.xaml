@@ -1,10 +1,11 @@
-﻿<Page x:Name="Hauptansicht"
-    x:Class="App2Night.Views.FensterHauptansicht"
+﻿<Page
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:App2Night.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps" x:Name="Hauptansicht"
+    x:Class="App2Night.Views.FensterHauptansicht"
     mc:Ignorable="d">
     <Page.Resources>
         <ControlTemplate x:Key="ListViewPartyAnzeigen" TargetType="ListViewItem">
@@ -16,30 +17,42 @@
         </ControlTemplate>
     </Page.Resources>
     <Page.BottomAppBar>
-        <CommandBar>
+        <CommandBar Background="#FFD97925">
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
-            <AppBarButton x:Name="AppBarButtonHinzufuegen" Icon="Add" Label="Erstellen" Click="Hinzufuegen_wechselZuErstellen" Width="90"/>
-            <AppBarButton x:Name="AppBarButtonInDerNaehe" Icon="Zoom" Label="In der Nähe" Click="Suchen_abrufenPartys" Width="150"/>
-            <AppBarButton x:Name="AppBarButtonEinstelllungen" Icon="Setting" Label="Einstellungen" Click="Einstellungen_wechselZuMenu" Width="70"/>
+            <AppBarButton x:Name="AppBarButtonHinzufuegen" Icon="Add" Label="Erstellen" Click="Hinzufuegen_wechselZuErstellen" Width="80"/>
+            <AppBarButton x:Name="AppBarButtonInDerNaehe" Icon="Zoom" Label="Suchen/Aktualisieren" Click="Suchen_abrufenPartys" Width="150"/>
+            <AppBarButton x:Name="AppBarButtonEinstellungen" Icon="Setting" Label="Einstellungen" Click="Einstellungen_wechselZuMenu" Width="80"/>
 
         </CommandBar>
     </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <Pivot x:Name="registerHauptFenster" HorizontalAlignment="Left" Height="640" Margin="0,-4,0,0" Title="App2Night" VerticalAlignment="Top" Width="360">
+        <Pivot x:Name="registerHauptFenster" HorizontalAlignment="Left" Height="640" Margin="0,-4,0,0" Title="App2Night" VerticalAlignment="Top" Width="360" Foreground="#FFD97925" FontSize="15">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout/>
             </FlyoutBase.AttachedFlyout>
-            <PivotItem x:Name="pItemSuchErgebnisse" Header="Suchergebnisse" FontSize="18" Margin="10,0,0,200" HorizontalAlignment="Left" Width="340" Height="345" VerticalAlignment="Bottom">
-                <ListView x:Name="listViewSuchErgebnis" HorizontalAlignment="Center" Height="347" Width="340" Margin="0,0,0,200" ItemClick="listViewSuchErgebnisse_ItemClick" SelectionChanged="listView_ClickOnItem"/>
+            <PivotItem x:Name="pItemSuchErgebnisse" Header="Suchergebnisse" FontSize="18" Margin="10.145,0,0,100" HorizontalAlignment="Left" Width="340" Height="445" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto">
+                <PivotItem.RenderTransform>
+                    <CompositeTransform SkewX="0.208" TranslateX="0.663"/>
+                </PivotItem.RenderTransform>
+                <ListView x:Name="listViewSuchErgebnis" HorizontalAlignment="Center" Height="438" Width="340" SelectionChanged="listViewSuche_SelectParty"/>
             </PivotItem>
-            <PivotItem x:Name="pItemVorgemerkt" Header="Vorgemerkt" Margin="10,0,0,195" Width="340" HorizontalAlignment="Left">
-                <ListView x:Name="listViewVorgemerkt" Height="350" Margin="0" Width="340" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <PivotItem x:Name="pItemVorgemerkt" Header="Vorgemerkt" Margin="10,0,0,100" Width="340" HorizontalAlignment="Left">
+                <ListView x:Name="listViewVorgemerkt" Height="445" Margin="0" Width="340" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="listViewVorgemerkt_SelectParty"/>
+            </PivotItem>
+            <PivotItem x:Name="pItemTeilnahme" Header="Teilnahme">
+                <ListView x:Name="listViewTeilnahme" Height="445" Width="340" VerticalAlignment="Top" HorizontalAlignment="Center" SelectionChanged="listViewTeilnahme_SelectParty"/>
+            </PivotItem>
+            <PivotItem x:Name="pItemKartenansicht" Header="Kartenansicht">
+                <Grid Margin="0,0,0,66">
+                    <Maps:MapControl x:Name="mapControlHauptansicht" HorizontalAlignment="Left" VerticalAlignment="Top" Width="340" Height="460" ZoomInteractionMode="GestureAndControl" TiltInteractionMode="GestureAndControl" MapServiceToken="YGij1QSheJhf6PD1CMz5~S0uJKsfpcTtY0Q8ToTVh0w~ApwZzEogiNXUJ9Yl0lYAO4oOoPNaU8Zz_JBVETUZ5OC_nJJnVtvANylwLau-3Wdj" Margin="10,0,0,0"/>
+                </Grid>
             </PivotItem>
         </Pivot>
-        <ProgressRing x:Name="progressRingInDerNaehe" HorizontalAlignment="Center" Height="70" Margin="170,465,170,0" VerticalAlignment="Top" Width="70" IsActive="True"/>
+        <ProgressRing x:Name="progressRingInDerNaehe" HorizontalAlignment="Center" Height="70" Margin="170,465,170,0" VerticalAlignment="Top" Width="70" IsActive="True" Foreground="#FFD97925"/>
     </Grid>
 </Page>
+

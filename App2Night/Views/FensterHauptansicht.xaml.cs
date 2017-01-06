@@ -1,104 +1,159 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using App2Night.Controller;
-using Windows.Data.Json;
-using App2Night.ModelsEnums;
 using App2Night.ModelsEnums.Model;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
-using Newtonsoft.Json;
-using Plugin.Geolocator.Abstractions;
 using App2Night.Logik;
-
-// Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
+using App2Night.ModelsEnums.Enums;
+using Windows.UI.Xaml.Navigation;
+using App2Night.Ressources;
+using Windows.Devices.Geolocation;
+using Windows.UI.Xaml.Controls.Maps;
+using Windows.Storage.Streams;
+using Windows.Foundation;
 
 namespace App2Night.Views
 {
     /// <summary>
-    /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+    /// Die Hauptansicht ist der Mittelpunkt der App. Von hier aus kann der Nutzer: eine neue Party erstellen, Partys in der Nähe abrufen, 
+    /// eine Party anzeigen lassen, seine Vormerkungen einsehen und seine Einstellungen bearbeiten
     /// </summary>
     public sealed partial class FensterHauptansicht : Page
     {
         public Party party;
-        public IEnumerable<Party> partyListe;
+        public static IEnumerable<Party> partyListe;
+        static int anzahlPartys = 0;
+        int anzahlVorgemerkt = 0;
+        int anzahlTeilgenommen = 0;
 
         public FensterHauptansicht()
         {
             this.InitializeComponent();
-            progressRingInDerNaehe.Visibility = Visibility.Collapsed;          
+            progressRingInDerNaehe.Visibility = Visibility.Collapsed;
+            progressRingInDerNaehe.IsActive = false;
         }
 
-        //private void btnErstellen_wechselZuVeranstErstellen(object sender, RoutedEventArgs e)
-        //{
-        //    this.Frame.Navigate(typeof(FensterVeranstaltungErstellen));
-        //}
-
-        private void btnSuche_wechselZuVeranstSuchen(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Bei Wechsel auf diese Seite wird eine Hinweismeldung ausgegeben (falls man vom Anmelden oder Registrieren kommt).
+        /// Zusätzlich werden die eventuell schon zwischengespeicherten Partys wieder ausgelesen.
+        /// </summary>
+        /// <param name="e"></param>
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.Frame.Navigate(typeof(FensterVeranstaltungSuchen));
-        }
+            this.IsEnabled = false;
+            progressRingInDerNaehe.Visibility = Visibility.Visible;
+            progressRingInDerNaehe.IsActive = true;
 
-        //public async void btnVeranstInDerNaehe_GetPartys(object sender, RoutedEventArgs e)
-        //{
-        //    this.IsEnabled = false;
-        //    //Anzeige der Partys, die vom Server geschickt werden
-        //    progressRingInDerNaehe.IsEnabled = true;
-        //    progressRingInDerNaehe.Visibility = Visibility.Visible;
+            // Hinweis erscheint nur, wenn man vom Anmelden/Registrieren auf diese Haupansicht kommt
+            PageStackEntry vorherigeSeite = Frame.BackStack.Last();
+            Type vorherigeSeiteTyp = vorherigeSeite?.SourcePageType;
 
-        //    partyListe =  await FensterHauptansichtController.btnInDerNaehePartysAbrufen();
-
-        //    if (partyListe.Any())
-        //    {
-        //        int anzahl = partyListe.Count();
-
-        //        for (int i = 0; i < anzahl; i++)
-        //        {
-        //            party = partyListe.ElementAt(i);
-        //            listViewSuchErgebnis.Items.Add(party.PartyName);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        var message = new MessageDialog("Leider keine Partys in deiner Nähe.");
-        //        await message.ShowAsync();
-        //    }
-
-        //    progressRingInDerNaehe.IsEnabled = false;
-        //    progressRingInDerNaehe.Visibility = Visibility.Collapsed;
-
-        //    this.IsEnabled = true;
-
-        //}
-
-        private void listViewSuchErgebnisse_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            //Daten von der Party mitnehmen
+            if (vorherigeSeiteTyp == (typeof(FensterAnmelden)) || vorherigeSeiteTyp == (typeof(FensterReg)))
+            {
+                var message = new MessageDialog(Meldungen.Hauptansicht.Nutzungsbedingungen, "Hinweis");
+                await message.ShowAsync();
+            }
             
-            this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen));
+            try
+            {
+                // Anzeigen der zwischengespeicherten Partys (falls vorhanden)
+                partyListe = await DatenVerarbeitung.PartysAuslesen();
+            }
+            catch (Exception)
+            {
+
+            }
+
+            UserEinstellungen einst = await DatenVerarbeitung.UserEinstellungenAuslesen();
+
+            if (einst.GPSErlaubt == true)
+            {
+                // Anzeigen der Partys in der "normalen" Liste und ggf. in der Liste für die vorgemerkten Partys.
+                if (partyListe != null && partyListe.Any() == true)
+                {
+                    anzahlPartys = partyListe.Count();
+
+                    for (int durchlauf = 0; durchlauf < anzahlPartys; durchlauf++)
+                    {
+                        // Liste aller Partys in der Nähe werden in der "normalen" ListView angezeigt
+                        party = partyListe.ElementAt(durchlauf);
+                        listViewSuchErgebnis.Items.Add(party.PartyName);
+
+                        // Auf der Karte anzeigen
+                        PartyAufMapAnzeigen(party);
+
+                        // Liste der vorgemerkten Partys werden in einer separaten ListView angezeigt
+                        if (party.UserCommitmentState == EventCommitmentState.Noted)
+                        {
+                            listViewVorgemerkt.Items.Add(party.PartyName);
+
+                            anzahlVorgemerkt++;
+                        }
+
+                        // Liste der Partys, bei denen der Nutzer teilnimmt, werden in einer separaten ListView angezeigt
+                        if (party.UserCommitmentState == EventCommitmentState.Accepted)
+                        {
+                            listViewTeilnahme.Items.Add(party.PartyName);
+
+                            anzahlTeilgenommen++;
+                        }
+                    }
+                }
+
+                // Aktuelle Position ermitteln und dies als Kartenmittelpunkt setzen
+                var geoLocation = new GeolocationLogik();
+                Location location = await geoLocation.GetLocation();
+                BasicGeoposition basis = new BasicGeoposition() { Latitude = location.Latitude, Longitude = location.Longitude };
+                Geopoint point = new Geopoint(basis);
+                mapControlHauptansicht.Center = point;
+                mapControlHauptansicht.ZoomLevel = 15;
+                mapControlHauptansicht.LandmarksVisible = true; 
+            }
+
+            progressRingInDerNaehe.Visibility = Visibility.Collapsed;
+            progressRingInDerNaehe.IsActive = false;
+            this.IsEnabled = true;
         }
 
-        private void listView_ClickOnItem(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// Zeigt die übergebene Party auf der Karte an.
+        /// </summary>
+        /// <param name="party"></param>
+        private void PartyAufMapAnzeigen(Party party)
         {
-            // Seitenwechsel mit Übergabe der Daten aus der ausgewählten Party 
+            // Festlegen der Position
+            BasicGeoposition partyPosition = new BasicGeoposition() { Latitude = party.Location.Latitude, Longitude = party.Location.Longitude };
+            Geopoint partyZentrum = new Geopoint(partyPosition);
+
+            // Icon für Standort Party
+            MapIcon partyIcon = new MapIcon();
+
+            partyIcon.Image = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/Square44x44Logo.scale-100.png", UriKind.Absolute));
+            partyIcon.Location = partyZentrum;
+            partyIcon.NormalizedAnchorPoint = new Point(0.5, 1.0);
+            partyIcon.Title = party.PartyName;
+            partyIcon.ZIndex = 0;
+
+            mapControlHauptansicht.MapElements.Add(partyIcon);
+        }
+
+        /// <summary>
+        /// Wählt die angeklickte Party aus, wechselt zum FensterAnzeigen und übergibt dabei die Daten der gewählten Party.
+        /// </summary>
+        /// <param name="sender"></param>
+        private void AuswahlPartyUndAnzeige(object sender)
+        {
+            // Name des gewählten ListItems auslesen 
             string partyName = ((ListView)sender).SelectedItem.ToString();
             bool partygefunden = false;
             int suchDurchLauf = 0;
 
-
-            // TODO: geht da wirklich so?
-            while (partygefunden == false)
+            // Solange die Namen der Partys in der Liste mit dem Namen der gewählten Party vergleichen, bis die richtige Party gefunden ist.
+            // Begrent wird die Suche durch die Anzahl der Partys in der Liste
+            while (partygefunden == false && suchDurchLauf <= anzahlPartys)
             {
                 party = partyListe.ElementAt(suchDurchLauf);
 
@@ -112,60 +167,198 @@ namespace App2Night.Views
                 }
             }
 
-            party = partyListe.ElementAt(suchDurchLauf);
+            // Wenn die Party gefunden wurde, dann Wechsel zu FensterAnzeigen und übergabe der gewählten Party.
+            if (partygefunden == true)
+            {
+                party = partyListe.ElementAt(suchDurchLauf);
 
-            this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen), party);
-            
+                this.Frame.Navigate(typeof(FensterVeranstaltungAnzeigen), party);
+            }
+            else
+            {
+                var message = new MessageDialog(Meldungen.Hauptansicht.AnzeigePartyFehler, "Fehler");
+            }
         }
 
-        
-
+        /// <summary>
+        /// Einfacher Wechsel zu FensterErstellen.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Hinzufuegen_wechselZuErstellen(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(FensterErstellen));
         }
 
+        /// <summary>
+        /// Zeigt die Partys in der Umgebung an. Suchradius wird in UserEinstellungen geändert.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public async void Suchen_abrufenPartys(object sender, RoutedEventArgs e)
         {
+            // Sperren der Oberfläche
             this.IsEnabled = false;
-            //Anzeige der Partys, die vom Server geschickt werden
-            progressRingInDerNaehe.IsEnabled = true;
             progressRingInDerNaehe.Visibility = Visibility.Visible;
+            progressRingInDerNaehe.IsActive = true;
 
-            partyListe = await FensterHauptansichtController.btnInDerNaehePartysAbrufen();
+            // Listen leeren
+            listViewSuchErgebnis.Items.Clear();
+            listViewVorgemerkt.Items.Clear();
+            listViewTeilnahme.Items.Clear();
 
-            if (partyListe.Any())
+            UserEinstellungen einst = await DatenVerarbeitung.UserEinstellungenAuslesen();
+
+            if (einst.GPSErlaubt == true)
             {
-                int anzahl = partyListe.Count();
+                // Liste der Partys aus der Nähe 
+                partyListe = await btnInDerNaehePartysAbrufen();
 
-                for (int i = 0; i < anzahl; i++)
+                // Anzeigen der Partys in der "normalen" Liste und ggf. in der Liste für die vorgemerkten Partys.
+                if (partyListe.Any())
                 {
-                    party = partyListe.ElementAt(i);
-                    listViewSuchErgebnis.Items.Add(party.PartyName);
+                    anzahlPartys = partyListe.Count();
+
+                    for (int durchlauf = 0; durchlauf < anzahlPartys; durchlauf++)
+                    {
+                        // Liste aller Partys in der Nähe werden in der "normalen" ListView angezeigt
+                        party = partyListe.ElementAt(durchlauf);
+                        listViewSuchErgebnis.Items.Add(party.PartyName);
+
+                        // Auf der Karte anzeigen
+                        PartyAufMapAnzeigen(party);
+
+                        // Liste der vorgemerkten Partys werden in einer separaten ListView angezeigt
+                        if (party.UserCommitmentState == EventCommitmentState.Noted)
+                        {
+                            listViewVorgemerkt.Items.Add(party.PartyName);
+
+                            anzahlVorgemerkt++;
+                        }
+
+                        // Liste der Partys, bei denen der Nutzer teilnimmt, werden in einer separaten ListView angezeigt
+                        if (party.UserCommitmentState == EventCommitmentState.Accepted)
+                        {
+                            listViewTeilnahme.Items.Add(party.PartyName);
+
+                            anzahlTeilgenommen++;
+                        }
+                    }
                 }
+                else
+                {
+                    var message = new MessageDialog(Meldungen.Hauptansicht.KeinePartysInDerNaehe, "Schade!");
+                    await message.ShowAsync();
+                } 
             }
             else
             {
-                var message = new MessageDialog("Leider keine Partys in deiner Nähe.");
+                var message = new MessageDialog(Meldungen.Hauptansicht.FehlerGPSNoetig, "Achtung!");
                 await message.ShowAsync();
             }
-
+           
+            // Oberfläche entsperren
             progressRingInDerNaehe.IsEnabled = false;
             progressRingInDerNaehe.Visibility = Visibility.Collapsed;
+            progressRingInDerNaehe.IsActive = false;
 
             this.IsEnabled = true;
-
         }
 
+        /// <summary>
+        ///  Einfacher Wechsel zu FensterUserEinstellungen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Einstellungen_wechselZuMenu(object sender, RoutedEventArgs e)
         {
-            // TODO: Fenster mit Menü und Einstellungsmöglichkeiten (Radius)
             this.Frame.Navigate(typeof(FensterUserEinstellungen));
         }
 
-        private void listeEigeneVeranstFokus_zeigeVeranstaltungen(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Gibt die aktuellen Partys aus der Umgebung zurück.
+        /// </summary>
+        /// <returns></returns>
+        private static async Task<IEnumerable<Party>> btnInDerNaehePartysAbrufen()
         {
-            // TODO: BackEndKommunikation eigenePartysAnzeigen
+            IEnumerable<Party> partyListe = null;
+            Location pos;
+
+            try
+            {
+                // Aktuelle Position ermitteln
+                var geoLocation = new GeolocationLogik();
+                pos = await geoLocation.GetLocation();
+            }
+            catch (Exception)
+            {
+                var message = new MessageDialog(Meldungen.Hauptansicht.FehlerGPSNoetig, "Achtung!");
+                await message.ShowAsync();
+                return null;
+            }
+
+            // Radius aus UserEinstellungen
+            UserEinstellungen einst = await DatenVerarbeitung.UserEinstellungenAuslesen();
+            float radius = einst.Radius;
+
+            // Liste der Partys vom BackEnd erhalten
+            partyListe = await BackEndComPartyLogik.GetParties(pos, radius);
+
+            // Zwischenspeichern der aktuell angezeigten Partys
+            bool erfolg = await ListViewAuslesenUndZwischenspeichern(partyListe);
+
+            if (erfolg == false)
+            {
+                var message = new MessageDialog(Meldungen.Hauptansicht.FehlerZwischenSpeichern, "Fehler beim Speichern für Offline-Nutzung!");
+            }
+
+            return partyListe;
         }
+
+        /// <summary>
+        /// Wechselt bei Anklicken einer Party zur Anzeige dieser.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listViewTeilnahme_SelectParty(object sender, SelectionChangedEventArgs e)
+        {
+            AuswahlPartyUndAnzeige(sender);
+        }
+
+        /// <summary>
+        /// Wechselt bei Anklicken einer Party zur Anzeige dieser.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listViewVorgemerkt_SelectParty(object sender, SelectionChangedEventArgs e)
+        {
+            AuswahlPartyUndAnzeige(sender);
+        }
+
+        /// <summary>
+        /// Wechselt bei Anklicken einer Party zur Anzeige dieser.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listViewSuche_SelectParty(object sender, SelectionChangedEventArgs e)
+        {
+            AuswahlPartyUndAnzeige(sender);
+        }
+
+        /// <summary>
+        /// Speichert die Partys auf der ListView für die Offline-Nutzung.
+        /// </summary>
+        /// <param name="liste"></param>
+        /// <returns></returns>
+        private static async Task<bool> ListViewAuslesenUndZwischenspeichern(IEnumerable<Party> liste)
+        {
+            bool erfolg = false;
+
+            erfolg = await DatenVerarbeitung.PartysSpeichern(liste);
+            
+            return erfolg;
+        }
+
     }
 }
+

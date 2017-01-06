@@ -2,92 +2,123 @@
 using App2Night.ModelsEnums.Enums;
 using App2Night.ModelsEnums.Model;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Newtonsoft.Json;
-
-// Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
+using App2Night.Ressources;
+using System.Linq;
 
 namespace App2Night.Views
 {
     /// <summary>
-    /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+    /// Auf dieser Seite kann der Nutzer eine Party erstellen. Die Seite dient auch zum Bearbeiten bereits erstellter Partys.
     /// </summary>
     public sealed partial class FensterErstellen : Page
     {
+        public Party uebergebeneParty = new Party();
+        public bool ueberarbeiten = false;
+
         public FensterErstellen()
         {
             this.InitializeComponent();
             progressRingErstellen.Visibility = Visibility.Collapsed;
-            // MusicGenres in ComboBox anzeigen
+            progressRingErstellen.IsActive = false;
+
+            // MusicGenres und PartyTypen in ComboBox anzeigen
             comboBoxErstellenMUSIKRICHTUNG.ItemsSource = Enum.GetValues(typeof(MusicGenre));
             comboBoxErstellenTYP.ItemsSource = Enum.GetValues(typeof(PartyType));
         }
 
+        /// <summary>
+        ///  Abhängig von der Quellseite, von der aus man auf diese Seite gelangt, wird eine Party erstellt oder bearbeitet.
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            // Nimmt die beim Seitenwechsel übergebene Party an (falls vorhanden)
+            uebergebeneParty = e.Parameter as Party;
+
+            // Quellseite auslesen
+            PageStackEntry vorherigeSeite = Frame.BackStack.Last();
+            Type vorherigeSeiteTyp = vorherigeSeite?.SourcePageType;
+
+            if (vorherigeSeiteTyp == (typeof(FensterVeranstaltungAnzeigen)))
+            {
+                // Falls man von der Seite Anzeigen kommt, wird die Party hier zum Bearbeiten freigegeben und die Buttons dementsprechend angepasst.
+                ueberarbeiten = true;
+                AppBarButtonErstellen.Icon = new SymbolIcon(Symbol.Edit);
+                AppBarButtonErstellen.Label = "Änderungen speichern";
+
+                // Daten der uebergebenen Party anzeigen
+                TimeSpan uhrzeit = new TimeSpan(uebergebeneParty.PartyDate.Hour, uebergebeneParty.PartyDate.Minute, uebergebeneParty.PartyDate.Second);
+
+                textBoxErstellenNAME.Text = uebergebeneParty.PartyName;
+                DatePickerErstellenDATUM.Date = uebergebeneParty.PartyDate;
+                TimePickerErstellenUHRZEIT.Time = uhrzeit;
+                textBoxErstellenORT.Text = uebergebeneParty.Location.CityName;
+                textBoxErstellenSTRASSE.Text = uebergebeneParty.Location.StreetName;
+                textBoxErstellenHAUSNR.Text = uebergebeneParty.Location.HouseNumber;
+                textBoxErstellenPLZ.Text = uebergebeneParty.Location.ZipCode;
+                textBoxErstellenPREIS.Text = uebergebeneParty.Price.ToString();
+                comboBoxErstellenMUSIKRICHTUNG.SelectedItem = uebergebeneParty.MusicGenre;
+                comboBoxErstellenTYP.SelectedItem = uebergebeneParty.PartyType;
+                textBoxErstellenINFOS.Text = uebergebeneParty.Description;
+
+            }
+        }
+
+        /// <summary>
+        /// Einfacher Wechsel zur Hauptansicht, falls der Nutzer die Erstellung abbricht.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Abbrechen_wechselZuHauptansicht(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(FensterHauptansicht));
         }
 
+        /// <summary>
+        /// Hier werden die Daten, die der Nutzer eingegeben hat, ausgelesen und abhängig davon, ob diese Party neu erstellt oder bearbeitet wird,
+        /// die passende Backend-Methode aufgerufen.
+        /// Bei Fehleingaben wird der Nutzer darauf hingewiesen und die Erstellung/Bearbeitung kann fortgesetzt werden.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Erstellen_wechselPostUndZuAnzeige(object sender, RoutedEventArgs e)
         {
+            // Sperren der Oberfläche
             progressRingErstellen.Visibility = Visibility.Visible;
+            progressRingErstellen.IsActive = true;
             this.IsEnabled = false;
 
-            // Überprüfung und Post
-            CreatePartyModel partyZuErstellen = new CreatePartyModel();
+            Party partyZuErstellen = new Party();
+            bool status = false;
 
-            // Validieren der Ortsangabe
+            // Objekt zum Validieren der Ortsangabe
             Location zuValidieren = new Location();
             zuValidieren.CityName = textBoxErstellenORT.Text;
             zuValidieren.StreetName = textBoxErstellenSTRASSE.Text;
             zuValidieren.HouseNumber = textBoxErstellenHAUSNR.Text;
             zuValidieren.ZipCode = textBoxErstellenPLZ.Text;
 
-            Token tok = await DatenVerarbeitung.aktuellerToken();
+            // Gibt die korrekte Adresse zurück, falls Google sie finden kann
+            string adresseLautGoogle = await BackEndComPartyLogik.ValidateLocation(zuValidieren);
 
-            // Falls noch kein Token angelegt wurde, wird ein neuer erzeugt
-            if (tok.AccessToken == null)
+            if (adresseLautGoogle != "")
             {
-                Login nutzer = await DatenVerarbeitung.DatenAusDateiLesenLogin();
-                tok = await BackEndComUserLogik.GetToken(nutzer);
-                await DatenVerarbeitung.DatenInDateiSchreibenToken(tok);
-
-                if (tok.AccessToken == null)
-                {
-                    var message = new MessageDialog("Die Email wurde noch nicht bestätigt!");
-                    await message.ShowAsync();
-                    this.IsEnabled = true;
-                    return;
-                }
+                zuValidieren = JsonConvert.DeserializeObject<Location>(adresseLautGoogle); 
             }
 
-            // Gibt die korrekte Adresse zurück, falls Google sie finden kann
-            string adresseLautGoogle = await BackEndComPartyLogik.ValidateLocation(zuValidieren, tok);
-
-            zuValidieren = JsonConvert.DeserializeObject<Location>(adresseLautGoogle);
-
-            //TODO: Auf falsche Eingabe reagieren 
+            // Speichern der Eingaben des Nutzers. Falscheingaben werden abgefangen und es wird eine Fehlermeldung ausgegeben.
             try
             {
+                partyZuErstellen.PartyId = uebergebeneParty.PartyId;
+
                 partyZuErstellen.PartyName = textBoxErstellenNAME.Text;
 
-                partyZuErstellen.CityName = textBoxErstellenORT.Text;
-                partyZuErstellen.StreetName = textBoxErstellenSTRASSE.Text;
-                partyZuErstellen.HouseNumber = textBoxErstellenHAUSNR.Text;
-                partyZuErstellen.ZipCode = textBoxErstellenPLZ.Text;
+                partyZuErstellen.Location = zuValidieren;
 
                 DateTime zwischenSpeicherDate = new DateTime(DatePickerErstellenDATUM.Date.Year, DatePickerErstellenDATUM.Date.Month, DatePickerErstellenDATUM.Date.Day,
                                                                                         TimePickerErstellenUHRZEIT.Time.Hours, TimePickerErstellenUHRZEIT.Time.Minutes, TimePickerErstellenUHRZEIT.Time.Seconds);
@@ -95,40 +126,97 @@ namespace App2Night.Views
                 partyZuErstellen.PartyDate = zwischenSpeicherDate;
                 partyZuErstellen.MusicGenre = (MusicGenre)comboBoxErstellenMUSIKRICHTUNG.SelectedItem;
                 partyZuErstellen.PartyType = (PartyType)comboBoxErstellenTYP.SelectedItem;
-                partyZuErstellen.Description = textBoxErstellenINFOS.Text;
-                string preis = textBoxErstellenPREIS.Text;
-                partyZuErstellen.Price = Double.Parse(preis);
 
+                // Die Beschreibung und der Preis sind optional.
+                // Deshalb werden Standardwerte benötigt, falls die Felder vom Nutzer leergelassen wurden.
+                if (textBoxErstellenINFOS.Text != "")
+                {
+                    partyZuErstellen.Description = textBoxErstellenINFOS.Text; 
+                }
+                else
+                {
+                    // Standardwert
+                    partyZuErstellen.Description = "Keine Beschreibung vorhanden.";
+                }
+
+                if (textBoxErstellenPREIS.Text != "")
+                {
+                    string preis = textBoxErstellenPREIS.Text;
+                    partyZuErstellen.Price = Int32.Parse(preis); 
+                }
+                else
+                {
+                    // Standardwert
+                    partyZuErstellen.Price = 0;
+                }
+                
+                // Die zu erstellende/bearbeitende Party darf nicht in der Vergangenheit sein.
                 if (partyZuErstellen.PartyDate < DateTime.Today)
                 {
                     Exception FehlerhaftesDatum = new Exception();
                     throw FehlerhaftesDatum;
                 }
 
-                bool status = await BackEndComPartyLogik.CreateParty(partyZuErstellen);
+                // Party muss mindestens 2h in der Zukunft stattfinden
+                if (partyZuErstellen.PartyDate <= DateTime.Now.AddHours(2))
+                {
+                    Exception FehlerhaftesDatum = new Exception();
+                    throw FehlerhaftesDatum;
+                }
+
+                // Hier wird unterschieden, ob die Party bearbeitet oder neu erstellt wird.
+                if (ueberarbeiten == false)
+                {
+                    // Party neu erstellen
+                    status = await BackEndComPartyLogik.CreateParty(partyZuErstellen); 
+                }
+                else
+                {
+                    // Party bearbeiten
+                    status = await BackEndComPartyLogik.UpdatePartyByID(partyZuErstellen);
+                }
 
                 if (status == true)
                 {
-                    var message = new MessageDialog("Party erfolgreich erstellt!");
+                    var message = new MessageDialog(Meldungen.Erstellen.Erfolg, "Erfolg!");
                     await message.ShowAsync();
                     this.Frame.Navigate(typeof(FensterHauptansicht));
                 }
                 else
                 {
-                    var message = new MessageDialog("Es ist ein Fehler beim Erstellen aufgetreten. Bitte versuche es später erneut.");
-                    await message.ShowAsync();
+                    if (ueberarbeiten == false)
+                    {
+                        var message = new MessageDialog(Meldungen.Erstellen.FehlerSpeicher, "Fehler!");
+                        await message.ShowAsync();
+                        this.IsEnabled = true;
+                        progressRingErstellen.Visibility = Visibility.Collapsed;
+                        progressRingErstellen.IsActive = false;
+                    }
+                    else
+                    {
+                        var message = new MessageDialog(Meldungen.Erstellen.FehlerAktualisieren, "Fehler!");
+                        await message.ShowAsync();
+                        this.IsEnabled = true;
+                        progressRingErstellen.Visibility = Visibility.Collapsed;
+                        progressRingErstellen.IsActive = false;
+                    }
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                var message = new MessageDialog("Fehler! Ein oder mehrere Eingaben sind ungültig!\nBeispielsweise wird eine Party in der Vergangenheit angelegt oder die Adresse existiert nicht!");
+                var message = new MessageDialog(Meldungen.Erstellen.UngueltigeEingabe, "Fehler!");
                 await message.ShowAsync();
+                this.IsEnabled = true;
+                progressRingErstellen.Visibility = Visibility.Collapsed;
+                progressRingErstellen.IsActive = false;
                 return;
             }
 
+            // Oberfläche entsperren 
             this.IsEnabled = true;
             progressRingErstellen.Visibility = Visibility.Collapsed;
+            progressRingErstellen.IsActive = false;
 
         }
     }

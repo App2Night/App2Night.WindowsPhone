@@ -1,21 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-
+// Von Visual Studio automatisch generiert
 
 namespace App2Night
 {
@@ -23,10 +13,7 @@ namespace App2Night
     /// Stellt das anwendungsspezifische Verhalten bereit, um die Standardanwendungsklasse zu ergänzen.
     /// </summary>
     sealed partial class App : Application
-    {
-        public static string Token { get; set; } = "BEISPIEL";
-
-
+    { 
         /// <summary>
         /// Initialisiert das Singletonanwendungsobjekt. Dies ist die erste Zeile von erstelltem Code
         /// und daher das logische Äquivalent von main() bzw. WinMain().
@@ -63,7 +50,7 @@ namespace App2Night
                 rootFrame = new Frame();
 
                 // Ändern des erstes Fensters
-                rootFrame.Navigate(typeof(Views.FensterAnmelden), e.Arguments);
+                rootFrame.Navigate(typeof(Views.FensterAnmOdReg), e.Arguments);
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 

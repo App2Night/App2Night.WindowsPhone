@@ -1,27 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using App2Night.ModelsEnums.Model;
 using Windows.UI.Popups;
 using App2Night.Logik;
-
-// Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
+using App2Night.Ressources;
 
 namespace App2Night.Views
 {
     /// <summary>
-    /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+    /// Dies ist das Fenster zum Nutzer anlegen.
     /// </summary>
     public sealed partial class FensterReg : Page
     {
@@ -32,48 +20,87 @@ namespace App2Night.Views
             this.InitializeComponent();
         }
 
+        /// <summary>
+        /// Einfacher Wechsel zu FensterAnmOdReg (Zurück).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Zurueck_wechselnZuAnmOReg(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(FensterAnmOdReg));
         }
 
+        /// <summary>
+        /// Erstellen des neuen Nutzers und bei Erfolg wechseln zur Hauptansicht.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Bestaetigen_WechselZuHauptansicht(object sender, RoutedEventArgs e)
         {
+            bool status = false;
+            bool erfolg = false;
+            bool speichernErfolgreich = false;
+
+            // Daten auslesen
             neuerNutzer.Username = textBoxRegNUTZERNAME.Text;
             neuerNutzer.Email = textBoxRegEMAIL.Text;
 
+            // Oberfläche sperren
             progRingReg.Visibility = Visibility.Visible;
+            progRingReg.IsActive = true;
             this.IsEnabled = false;
 
             if (pwBoxPASSWORT.Password == pwBoxPASSWORTBEST.Password)
             {
+                // Speichern des Passworts
                 neuerNutzer.Password = pwBoxPASSWORTBEST.Password;
-                bool status = await BackEndComUserLogik.CreateUser(neuerNutzer);
+                // Anlegen des neuen Nutzers
+                status = await BackEndComUserLogik.CreateUser(neuerNutzer);
 
                 progRingReg.Visibility = Visibility.Collapsed;
+                progRingReg.IsActive = false;
 
+                // Abhängig vom Erfolg/Misserfolg beim Erstellen wird eine Nachricht angezeigt und ggf. die Ansicht gewechselt.
                 if (status == true)
                 {
-                    var message = new MessageDialog($"Eine E-Mail mit Aktivierungslink wurde an die angegebene E-Mailadresse({neuerNutzer.Email}) geschickt.", "Nutzer erfolgreich registriert!");
+                    var message = new MessageDialog(Meldungen.Registrierung.ErfolgEins + neuerNutzer.Email.ToString() + Meldungen.Registrierung.ErfolgZwei, "Nutzer erfolgreich registriert!");
                     await message.ShowAsync();
 
-                    // Speichert Login und Token in Textdatei
-                    await DatenVerarbeitung.DatenInDateiSchreibenLogin(neuerNutzer);
+                    // Speichern der Login-Daten
+                    erfolg = await DatenVerarbeitung.LoginSpeichern(neuerNutzer);
 
-                    this.Frame.Navigate(typeof(FensterHauptansicht));
+                    // UserEinstellungen auf Default zurücksetzen
+                    UserEinstellungen einst = new UserEinstellungen();
+                    einst.Radius = 50;
+                    einst.GPSErlaubt = false;
+
+                    // "Neue" Werte speichern
+                    speichernErfolgreich = await DatenVerarbeitung.UserEinstellungenSpeichern(einst);
+
+                    if (erfolg == true && speichernErfolgreich == true)
+                    {
+                        // Wechsel zur Hauptansicht
+                        this.Frame.Navigate(typeof(FensterHauptansicht)); 
+                    }
+                    else
+                    {
+                        message = new MessageDialog(Meldungen.Registrierung.SpeicherFehler, "Fehler beim Speichern!");
+                        await message.ShowAsync();
+                    }
                 }
                 else
                 {
-                    var message = new MessageDialog("Fehler bei Erstellen des Nutzers!");
+                    var message = new MessageDialog(Meldungen.Registrierung.ErstellenFehler, "Fehler beim Erstellen!");
                     await message.ShowAsync();
                 }
             }
             else
             {
-                var message = new MessageDialog("Fehler! Die Passwörter stimmen nicht überein!");
+                var message = new MessageDialog(Meldungen.Registrierung.PasswortFehler, "Passwörter sind nciht identisch!");
                 await message.ShowAsync();
             }
 
+            // Entsperren der Oberfläche
             this.IsEnabled = true;
         }
     }

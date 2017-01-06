@@ -92,22 +92,86 @@
     <!--<Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>-->
-    <Content Include="Ressources\A2N_Logo01_Variante01.png" />
-    <Content Include="Ressources\A2N_Logo01_Variante01_300x300.png" />
-    <Content Include="Ressources\A2N_Logo01_Variante02.png" />
-    <Content Include="Ressources\A2N_Logo01_Variante02_300x300.png" />
+    <Content Include="Assets\BadgeLogo.scale-100.png" />
+    <Content Include="Assets\BadgeLogo.scale-125.png" />
+    <Content Include="Assets\BadgeLogo.scale-150.png" />
+    <Content Include="Assets\BadgeLogo.scale-200.png" />
+    <Content Include="Assets\BadgeLogo.scale-400.png" />
+    <Content Include="Assets\SplashScreen.scale-100.png" />
+    <Content Include="Assets\SplashScreen.scale-125.png" />
+    <Content Include="Assets\SplashScreen.scale-150.png" />
+    <Content Include="Assets\SplashScreen.scale-400.png" />
+    <Content Include="Assets\Square150x150Logo.scale-100.png" />
+    <Content Include="Assets\Square150x150Logo.scale-125.png" />
+    <Content Include="Assets\Square150x150Logo.scale-150.png" />
+    <Content Include="Assets\Square150x150Logo.scale-400.png" />
+    <Content Include="Assets\Square310x310Logo.scale-100.png" />
+    <Content Include="Assets\Square310x310Logo.scale-125.png" />
+    <Content Include="Assets\Square310x310Logo.scale-150.png" />
+    <Content Include="Assets\Square310x310Logo.scale-200.png" />
+    <Content Include="Assets\Square310x310Logo.scale-400.png" />
+    <Content Include="Assets\Square44x44Logo.scale-100.png" />
+    <Content Include="Assets\Square44x44Logo.scale-125.png" />
+    <Content Include="Assets\Square44x44Logo.scale-150.png" />
+    <Content Include="Assets\Square44x44Logo.scale-400.png" />
+    <Content Include="Assets\Square71x71Logo.scale-100.png" />
+    <Content Include="Assets\Square71x71Logo.scale-125.png" />
+    <Content Include="Assets\Square71x71Logo.scale-150.png" />
+    <Content Include="Assets\Square71x71Logo.scale-200.png" />
+    <Content Include="Assets\Square71x71Logo.scale-400.png" />
+    <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="Assets\StoreLogo.scale-125.png" />
+    <Content Include="Assets\StoreLogo.scale-150.png" />
+    <Content Include="Assets\StoreLogo.scale-200.png" />
+    <Content Include="Assets\StoreLogo.scale-400.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-100.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-125.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-150.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="Ressources\A2NBanner310.scale-100.png" />
+    <Content Include="Ressources\A2NBanner310.scale-125.png" />
+    <Content Include="Ressources\A2NBanner310.scale-150.png" />
+    <Content Include="Ressources\A2NBanner310.scale-200.png" />
+    <Content Include="Ressources\A2NBanner310.scale-400.png" />
+    <Content Include="Ressources\a2nIconColor150.scale-100.png" />
+    <Content Include="Ressources\a2nIconColor150.scale-125.png" />
+    <Content Include="Ressources\a2nIconColor150.scale-150.png" />
+    <Content Include="Ressources\a2nIconColor150.scale-200.png" />
+    <Content Include="Ressources\a2nIconColor150.scale-400.png" />
+    <Content Include="Ressources\a2nIconColor200.scale-100.png" />
+    <Content Include="Ressources\a2nIconColor200.scale-125.png" />
+    <Content Include="Ressources\a2nIconColor200.scale-150.png" />
+    <Content Include="Ressources\a2nIconColor200.scale-200.png" />
+    <Content Include="Ressources\a2nIconColor200.scale-400.png" />
+    <Content Include="Ressources\a2nIconColor310.scale-100.png" />
+    <Content Include="Ressources\a2nIconColor310.scale-125.png" />
+    <Content Include="Ressources\a2nIconColor310.scale-150.png" />
+    <Content Include="Ressources\a2nIconColor310.scale-200.png" />
+    <Content Include="Ressources\a2nIconColor310.scale-400.png" />
+    <Content Include="Ressources\a2nIconColor71.scale-100.png" />
+    <Content Include="Ressources\a2nIconColor71.scale-125.png" />
+    <Content Include="Ressources\a2nIconColor71.scale-150.png" />
+    <Content Include="Ressources\a2nIconColor71.scale-200.png" />
+    <Content Include="Ressources\a2nIconColor71.scale-400.png" />
+    <Content Include="Ressources\a2nIconColor71.targetsize-16.png" />
+    <Content Include="Ressources\a2nIconColor71.targetsize-16_altform-unplated.png" />
+    <Content Include="Ressources\a2nIconColor71.targetsize-24.png" />
+    <Content Include="Ressources\a2nIconColor71.targetsize-24_altform-unplated.png" />
+    <Content Include="Ressources\a2nIconColor71.targetsize-256.png" />
+    <Content Include="Ressources\a2nIconColor71.targetsize-256_altform-unplated.png" />
+    <Content Include="Ressources\a2nIconColor71.targetsize-48.png" />
+    <Content Include="Ressources\a2nIconColor71.targetsize-48_altform-unplated.png" />
+    <Content Include="Ressources\Schluessel.xml" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\FensterRegistrierenController.cs" />
     <Compile Include="Logik\BackEndComUserLogik.cs" />
-    <Compile Include="Controller\SpeichereNutzerdaten.cs" />
     <Compile Include="Logik\DatenVerarbeitung.cs" />
     <Compile Include="ModelsEnums\Enums\EventCommitmentState.cs" />
-    <Compile Include="ModelsEnums\Enums\Gender.cs" />
     <Compile Include="ModelsEnums\Enums\MusicGenre.cs" />
     <Compile Include="ModelsEnums\Enums\PartyType.cs" />
-    <Compile Include="ModelsEnums\Model\CreatePartyModel.cs" />
+    <Compile Include="ModelsEnums\Model\CommitmentParty.cs" />
+    <Compile Include="ModelsEnums\Model\CreateParty.cs" />
     <Compile Include="ModelsEnums\Model\Location.cs" />
     <Compile Include="ModelsEnums\Model\Login.cs" />
     <Compile Include="ModelsEnums\Model\Party.cs" />
@@ -115,18 +179,15 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Logik\BackEndComPartyLogik.cs" />
-    <Compile Include="Controller\FensterHauptansichtController.cs" />
-    <Compile Include="Controller\FensterSucheController.cs" />
-    <Compile Include="Controller\FensterVeranstAnzeigenController.cs" />
     <Compile Include="Logik\GetGeoLocation.cs" />
-    <Compile Include="Controller\ZwischenController.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ModelsEnums\Model\ResultLogin.cs" />
+    <Compile Include="ModelsEnums\Model\PartyVoting.cs" />
     <Compile Include="ModelsEnums\Model\Token.cs" />
-    <Compile Include="ModelsEnums\Model\User.cs" />
+    <Compile Include="ModelsEnums\Model\UserEinstellungen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Ressources\Meldungen.cs" />
     <Compile Include="Views\FensterAnmelden.xaml.cs">
       <DependentUpon>FensterAnmelden.xaml</DependentUpon>
     </Compile>
@@ -139,12 +200,6 @@
     <Compile Include="Views\FensterHauptansicht.xaml.cs">
       <DependentUpon>FensterHauptansicht.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FensterKartenansicht.xaml.cs">
-      <DependentUpon>FensterKartenansicht.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FensterNeuesPW.xaml.cs">
-      <DependentUpon>FensterNeuesPW.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\FensterReg.xaml.cs">
       <DependentUpon>FensterReg.xaml</DependentUpon>
     </Compile>
@@ -153,15 +208,6 @@
     </Compile>
     <Compile Include="Views\FensterVeranstaltungAnzeigen.xaml.cs">
       <DependentUpon>FensterVeranstaltungAnzeigen.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FensterVeranstaltungErstellen02.xaml.cs">
-      <DependentUpon>FensterVeranstaltungErstellen02.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FensterVeranstaltungErstellen.xaml.cs">
-      <DependentUpon>FensterVeranstaltungErstellen.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FensterVeranstaltungSuchen.xaml.cs">
-      <DependentUpon>FensterVeranstaltungSuchen.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -177,7 +223,6 @@
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
@@ -205,14 +250,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\FensterKartenansicht.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\FensterNeuesPW.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\FensterReg.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -224,18 +261,6 @@
     <Page Include="Views\FensterVeranstaltungAnzeigen.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\FensterVeranstaltungErstellen02.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\FensterVeranstaltungErstellen.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\FensterVeranstaltungSuchen.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup />

@@ -1,14 +1,13 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace App2Night.ModelsEnums.Model
 {
+    /// <summary>
+    /// Model für die Login-Daten
+    /// </summary>
     public class Login
     {
+        [JsonProperty("sub")]
         public string userID { get; set; }
         [JsonProperty("username")]
         public string Username { get; set; }

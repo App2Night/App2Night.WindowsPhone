@@ -1,27 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using App2Night.ModelsEnums.Model;
 using App2Night.Logik;
 using Windows.UI.Popups;
-
-// Die Elementvorlage "Leere Seite" ist unter http://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
+using App2Night.Ressources;
+using System.Collections.Generic;
 
 namespace App2Night.Views
 {
     /// <summary>
-    /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
+    /// Dies ist die Seite für die Anmeldung. Hier werden die Daten vom Nutzer validiert. Falls diese korrekt sind, wird der Nutzer auf die Hauptansicht 
+    /// weitergeleitet.
     /// </summary>
     public sealed partial class FensterAnmelden : Page
     {
@@ -30,49 +20,87 @@ namespace App2Night.Views
         public FensterAnmelden()
         {
             this.InitializeComponent();
+            progressRingAnmeldung.Visibility = Visibility.Collapsed;
+            progressRingAnmeldung.IsActive = false;
         }
 
-        //private void btnZurueck_wechselZuAnmOderReg(object sender, RoutedEventArgs e)
-        //{
-        //    this.Frame.Navigate(typeof(FensterAnmOdReg));
-        //}        
-
-        //private void btnPwVergessen_wechselZuNeuesPW(object sender, RoutedEventArgs e)
-        //{
-        //    this.Frame.Navigate(typeof(FensterNeuesPW));
-        //}
-
-        private void Zurueck_wechselZuHauptansicht(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Einfacher Wechsel zu FensterAnmOdReg (Zurück).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Zurueck_wechselZuAnmOderReg(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(FensterAnmOdReg));
         }
 
-        private void PasswortVergessen_wechselZuNeuesPasswort(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(FensterNeuesPW));
-        }
-
+        /// <summary>
+        /// Hier werden die Daten vom Nutzer validiert. Entweder ändert sich die Anzeige (korrekte Daten) oder der Nutzer erhält eine Nachricht, 
+        /// dass die eingegeben Daten falsch sind. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Anmelden_WechselZuHauptansicht(object sender, RoutedEventArgs e)
         {
+            bool korrekteEingabe = false;
+            bool speichernErfolgreich = false;
+            bool einstellungenErfolgreich = false;
+
+            // UserEinstellungen auf Default zurücksetzen
+            UserEinstellungen einst = new UserEinstellungen();
+            einst.Radius = 50;
+            einst.GPSErlaubt = false;
+
+            // "Neue" Werte speichern
+            speichernErfolgreich = await DatenVerarbeitung.UserEinstellungenSpeichern(einst);
+
+            // Partyliste aus Zwischenspeichern löschen
+            IEnumerable<Party> liste = null;
+            speichernErfolgreich = await DatenVerarbeitung.PartysSpeichern(liste);
+
             anmeldung.Username = txtBoxAnmNUTZERNAME.Text;
             anmeldung.Email = txtBlAnmEMAIL.Text;
             anmeldung.Password = pwBoxPASSWORT.Password;
 
+            // Sperren der Ansicht
             this.IsEnabled = false;
+            progressRingAnmeldung.Visibility = Visibility.Visible;
+            progressRingAnmeldung.IsActive = true;       
 
-            // TODO: GetUserInfos damit überprüfen statt mit gespeicherten Daten, da eventuell nicht aktuell. Wenn vorhanden, dann in Datei schreiben.
-            bool korrekteEingabe = await DatenVerarbeitung.LoginUeberpruefen(anmeldung);
+            korrekteEingabe = await DatenVerarbeitung.LoginUeberpruefen(anmeldung);
 
             if (korrekteEingabe == true)
             {
-                this.Frame.Navigate(typeof(FensterHauptansicht));
+                // Speichern der Anmeldedaten in eine Textdatei
+                speichernErfolgreich = await DatenVerarbeitung.LoginSpeichern(anmeldung);
+
+                // Default-Radius für Suchumfeld in Datei speichern 
+                einstellungenErfolgreich = await DatenVerarbeitung.UserEinstellungenSpeichern(einst);
+
+                if (speichernErfolgreich == true && einstellungenErfolgreich == true)
+                {
+                    // Wenn alles erfolgreich gespeichert wurde
+                    progressRingAnmeldung.Visibility = Visibility.Collapsed;
+                    progressRingAnmeldung.IsActive = false;
+                    var message = new MessageDialog(Meldungen.Anmeldung.Erfolg, "Erfolg!");
+                    await message.ShowAsync();
+                    this.Frame.Navigate(typeof(FensterHauptansicht)); 
+                }
+                else
+                {
+                    var message = new MessageDialog(Meldungen.Anmeldung.UnbekannterFehler, "Unbekannter Fehler!");
+                    await message.ShowAsync();
+                }
             }
             else
             {
-                var message = new MessageDialog("Keine korrekten Nutzerdaten!");
+                var message = new MessageDialog(Meldungen.Anmeldung.Misserfolg, "Fehler bei der Anmeldung!");
                 await message.ShowAsync();
             }
 
+            // Oberfläche entsperren
+            progressRingAnmeldung.Visibility = Visibility.Collapsed;
+            progressRingAnmeldung.IsActive = false;
             this.IsEnabled = true;
 
         }
