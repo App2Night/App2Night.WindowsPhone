@@ -31,7 +31,7 @@ namespace App2Night.Ressources
         {
             public static readonly string Erfolg = "Party erfolgreich gespeichert!";
             public static readonly string SpeicherFehler = "Es ist ein Fehler beim Speichern aufgetreten. Bitte versuche es später erneut.";
-            public static readonly string UngueltigeEingabe = "Ein oder mehrere Eingaben sind ungültig!\nBeispielsweise wird eine Party in der Vergangenheit angelegt oder die Adresse existiert nicht!";
+            public static readonly string UngueltigeEingabe = "Eine oder mehrere Eingaben sind ungültig!\nBeispielsweise wird eine Party in der Vergangenheit angelegt oder die Adresse existiert nicht!";
         }
 
         public static class Hauptansicht
@@ -64,12 +64,12 @@ namespace App2Night.Ressources
             public static readonly string MisserfolgLoeschen = "Party nicht gelöscht.";
             public static readonly string AbbrechenLoeschen = "Aktion abgebrochen";
 
-            public static readonly string ErfolgTeilnahme = "Deine Teilnahme wurde berücksichtigt! Es kann etwas dauern, bis du die Änderungen siehst.";
-            public static readonly string ErfolgAbsage = "Deine Absage wurde berücksichtigt! Es kann etwas dauern, bis du die Änderungen siehst.";
+            public static readonly string ErfolgTeilnahme = "Deine Teilnahme wurde berücksichtigt! Es kann etwas dauern, bis du die Änderungen siehst. Zum Suchen oder Aktualisieren klicke bitte auf die Lupe unten im nächsten Fenster.";
+            public static readonly string ErfolgAbsage = "Deine Absage wurde berücksichtigt! Es kann etwas dauern, bis du die Änderungen siehst. Zum Suchen oder Aktualisieren klicke bitte auf die Lupe unten im nächsten Fenster.";
             public static readonly string FehlerTeilnahmeAbsage = "Es ist ein Fehler aufgetreten. Bitte versuche es später erneut.";
 
-            public static readonly string ErfolgVormerken = "Diese Party wurde für dich vorgemerkt! Es kann etwas dauern, bis du die Änderungen siehst.";
-            public static readonly string ErfolgVergessen = "Diese Party ist nicht mehr vorgemerkt! Es kann etwas dauern, bis du die Änderungen siehst.";
+            public static readonly string ErfolgVormerken = "Diese Party wurde für dich vorgemerkt! Es kann etwas dauern, bis du die Änderungen siehst. Zum Suchen oder Aktualisieren klicke bitte auf die Lupe unten im nächsten Fenster.";
+            public static readonly string ErfolgVergessen = "Diese Party ist nicht mehr vorgemerkt! Es kann etwas dauern, bis du die Änderungen siehst. Zum Suchen oder Aktualisieren klicke bitte auf die Lupe unten im nächsten Fenster.";
             public static readonly string FehlerVormerkenVergessen = "Es ist ein Fehler aufgetreten. Bitte versuche es später erneut!";
 
         }

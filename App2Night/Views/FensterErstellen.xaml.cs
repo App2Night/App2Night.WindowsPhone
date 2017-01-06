@@ -131,6 +131,13 @@ namespace App2Night.Views
                     throw FehlerhaftesDatum;
                 }
 
+                // Party muss mindestens 2h in der Zukunft stattfinden
+                if (partyZuErstellen.PartyDate <= DateTime.Now.AddHours(2))
+                {
+                    Exception FehlerhaftesDatum = new Exception();
+                    throw FehlerhaftesDatum;
+                }
+
                 // Hier wird unterschieden, ob die Party bearbeitet oder neu erstellt wird.
                 if (ueberarbeiten == false)
                 {
