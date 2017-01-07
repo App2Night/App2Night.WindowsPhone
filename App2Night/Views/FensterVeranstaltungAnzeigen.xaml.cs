@@ -53,6 +53,7 @@ namespace App2Night.Views
             textBoxAnzeigenMUSIKRICHTUNG.Text = uebergebeneParty.MusicGenre.ToString();
             textBoxAnzeigenWeitereINFOS.Text = uebergebeneParty.Description;
             textBoxAnzahlVOTES.Text = uebergebeneParty.GeneralRating.ToString();
+            //textBoxblabla = PartyType oder Preis bei Musikrichtung wie Typ, Preis wie Voting int; 2 Zeilen hinzufügen;
 
             // Farbliche Hervorhebung der Votes
             if (uebergebeneParty.GeneralRating > 0)
