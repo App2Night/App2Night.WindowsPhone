@@ -46,9 +46,7 @@ namespace App2Night.Views
             neuerNutzer.Email = textBoxRegEMAIL.Text;
 
             // Oberfläche sperren
-            progRingReg.Visibility = Visibility.Visible;
-            progRingReg.IsActive = true;
-            this.IsEnabled = false;
+            SperrenDerAnsicht();
 
             if (pwBoxPASSWORT.Password == pwBoxPASSWORTBEST.Password)
             {
@@ -101,7 +99,31 @@ namespace App2Night.Views
             }
 
             // Entsperren der Oberfläche
+            EntsperrenDerAnsicht();
+        }
+
+        /// <summary>
+        /// Sperrt die Oberfläche.
+        /// </summary>
+        private void SperrenDerAnsicht()
+        {
+            progRingReg.Visibility = Visibility.Visible;
+            progRingReg.IsActive = true;
+            this.AppBarButtonBestaetigen.IsEnabled = false;
+            this.AppBarButtonZurueck.IsEnabled = false;
+            this.IsEnabled = false;
+        }
+
+        /// <summary>
+        /// Entsperrt die Oberfläche.
+        /// </summary>
+        private void EntsperrenDerAnsicht()
+        {
             this.IsEnabled = true;
+            this.AppBarButtonZurueck.IsEnabled = true;
+            this.AppBarButtonBestaetigen.IsEnabled = true;
+            progRingReg.Visibility = Visibility.Collapsed;
+            progRingReg.IsActive = false;
         }
     }
 }

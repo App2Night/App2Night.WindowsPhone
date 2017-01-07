@@ -52,7 +52,7 @@
                 </Grid>
             </PivotItem>
         </Pivot>
-        <ProgressRing x:Name="progressRingInDerNaehe" HorizontalAlignment="Center" Height="70" Margin="170,465,170,0" VerticalAlignment="Top" Width="70" IsActive="True" Foreground="#FFD97925"/>
+        <ProgressRing x:Name="progressRingInDerNaehe" HorizontalAlignment="Center" Height="70" Margin="170,465,170,0" VerticalAlignment="Top" Width="70" IsActive="True" Foreground="#FFD97925" Canvas.ZIndex="100"/>
     </Grid>
 </Page>
 

@@ -45,7 +45,7 @@
                 <TextBox x:Name="textBoxErstellenINFOS" TextWrapping="Wrap" Text="" Width="313" Height="139" Margin="0,548,10,0" HorizontalAlignment="Center" VerticalAlignment="Top" PlaceholderText="Optionale zusätzliche Informationen (z.B. besondere Angebote oder Auftritte)." SelectionHighlightColor="#FFD97925" BorderBrush="#FF002635" FontSize="15" MaxLength="256"/>
             </Grid>
         </ScrollViewer>
-        <ProgressRing x:Name="progressRingErstellen" HorizontalAlignment="Center" Margin="145,485,145,85" VerticalAlignment="Center" Width="70" Height="70" Grid.ColumnSpan="2" Foreground="#FFD97925"/>
+        <ProgressRing x:Name="progressRingErstellen" HorizontalAlignment="Center" Margin="145,485,145,85" VerticalAlignment="Center" Width="70" Height="70" Grid.ColumnSpan="2" Foreground="#FFD97925" Canvas.ZIndex="100"/>
 
     </Grid>
 </Page>

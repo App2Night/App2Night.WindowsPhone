@@ -25,7 +25,7 @@
         <PasswordBox x:Name="pwBoxPASSWORT" HorizontalAlignment="Left" Height="40" Margin="10,232,0,0" VerticalAlignment="Top" Width="340" PlaceholderText="Passwort" FontSize="20" SelectionHighlightColor="#FFD97925" BorderBrush="#FF002635"/>
         <PasswordBox x:Name="pwBoxPASSWORTBEST" HorizontalAlignment="Left" Height="40" Margin="10,328,0,0" VerticalAlignment="Top" Width="340" PlaceholderText="Passwort wiederholen" FontSize="18" SelectionHighlightColor="#FFD97925" BorderBrush="#FF002635"/>
         <TextBlock x:Name="textBlEmailadresse" HorizontalAlignment="Left" Margin="10,101,0,0" TextWrapping="Wrap" Text="Email - Adresse" VerticalAlignment="Top" Height="40" Width="340" FontSize="20" FontWeight="Bold"/>
-        <ProgressRing x:Name="progRingReg" HorizontalAlignment="Center" Margin="170,465,170,0" VerticalAlignment="Top" Width="70" Height="70" Foreground="#FFD97925"/>
+        <ProgressRing x:Name="progRingReg" HorizontalAlignment="Center" Margin="170,465,170,0" VerticalAlignment="Top" Width="70" Height="70" Foreground="#FFD97925" Canvas.ZIndex="100"/>
 
     </Grid>
 </Page>

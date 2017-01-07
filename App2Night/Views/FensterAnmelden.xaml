@@ -24,6 +24,6 @@
         <TextBlock x:Name="txtBlAnmNutzername" HorizontalAlignment="Left" Margin="12,100,0,0" TextWrapping="Wrap" Text="Nutzername:" VerticalAlignment="Top" Height="40" Width="334" FontSize="20" FontWeight="Bold"/>
         <PasswordBox x:Name="pwBoxPASSWORT" HorizontalAlignment="Left" Height="40" Margin="10,450,0,0" VerticalAlignment="Top" Width="334" SelectionHighlightColor="#FFD97925" BorderBrush="#FF002635"/>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,-15,0,0" TextWrapping="Wrap" Text="Anmeldung" VerticalAlignment="Top" Height="50" Width="334" FontSize="36" FontWeight="Bold" TextAlignment="Center"/>
-        <ProgressRing x:Name="progressRingAnmeldung" HorizontalAlignment="Center" Margin="0,400,0,0" VerticalAlignment="Center" Width="70" Height="70" Foreground="#FFD97925"/>
+        <ProgressRing x:Name="progressRingAnmeldung" HorizontalAlignment="Center" Margin="0,400,0,0" VerticalAlignment="Center" Width="70" Height="70" Foreground="#FFD97925" Canvas.ZIndex="100"/>
     </Grid>
 </Page>

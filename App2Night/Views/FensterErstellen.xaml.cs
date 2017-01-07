@@ -89,9 +89,7 @@ namespace App2Night.Views
         private async void Erstellen_wechselPostUndZuAnzeige(object sender, RoutedEventArgs e)
         {
             // Sperren der Oberfläche
-            progressRingErstellen.Visibility = Visibility.Visible;
-            progressRingErstellen.IsActive = true;
-            this.IsEnabled = false;
+            SperrenDerAnsicht();
 
             Party partyZuErstellen = new Party();
             bool status = false;
@@ -188,17 +186,17 @@ namespace App2Night.Views
                     {
                         var message = new MessageDialog(Meldungen.Erstellen.FehlerSpeicher, "Fehler!");
                         await message.ShowAsync();
-                        this.IsEnabled = true;
-                        progressRingErstellen.Visibility = Visibility.Collapsed;
-                        progressRingErstellen.IsActive = false;
+
+                        // Entsperren der Oberfläche
+                        EntsperrenDerAnsicht();
                     }
                     else
                     {
                         var message = new MessageDialog(Meldungen.Erstellen.FehlerAktualisieren, "Fehler!");
                         await message.ShowAsync();
-                        this.IsEnabled = true;
-                        progressRingErstellen.Visibility = Visibility.Collapsed;
-                        progressRingErstellen.IsActive = false;
+
+                        // Entsperren der Oberfläche
+                        EntsperrenDerAnsicht();
                     }
                 }
 
@@ -207,17 +205,40 @@ namespace App2Night.Views
             {
                 var message = new MessageDialog(Meldungen.Erstellen.UngueltigeEingabe, "Fehler!");
                 await message.ShowAsync();
-                this.IsEnabled = true;
-                progressRingErstellen.Visibility = Visibility.Collapsed;
-                progressRingErstellen.IsActive = false;
+
+                // Entsperren der Oberfläche
+                EntsperrenDerAnsicht();
+
                 return;
             }
 
-            // Oberfläche entsperren 
+            // Entsperren der Oberfläche
+            EntsperrenDerAnsicht();
+
+        }
+
+        /// <summary>
+        /// Sperrt die Oberfläche.
+        /// </summary>
+        private void SperrenDerAnsicht()
+        {
+            progressRingErstellen.Visibility = Visibility.Visible;
+            progressRingErstellen.IsActive = true;
+            this.AppBarButtonAbbrechen.IsEnabled = false;
+            this.AppBarButtonErstellen.IsEnabled = false;
+            this.IsEnabled = false;
+        }
+
+        /// <summary>
+        /// Entsperrt die Oberfläche.
+        /// </summary>
+        private void EntsperrenDerAnsicht()
+        {
             this.IsEnabled = true;
+            this.AppBarButtonErstellen.IsEnabled = true;
+            this.AppBarButtonAbbrechen.IsEnabled = true;
             progressRingErstellen.Visibility = Visibility.Collapsed;
             progressRingErstellen.IsActive = false;
-
         }
     }
 }

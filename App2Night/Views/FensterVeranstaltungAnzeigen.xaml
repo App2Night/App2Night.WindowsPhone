@@ -49,6 +49,6 @@
                 <TextBlock x:Name="textBlockInfoVoting" HorizontalAlignment="Center" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Margin="0,870,0,0" Width="300" Grid.ColumnSpan="3" Height="80" SelectionHighlightColor="#FFD97925"/>
             </Grid>
         </ScrollViewer>
-        <ProgressRing x:Name="progRingAnzeigen" HorizontalAlignment="Center" Margin="0,399,0,0" VerticalAlignment="Center" Width="70" Height="70" Foreground="#FFD97925" Background="Transparent"/>
+        <ProgressRing x:Name="progRingAnzeigen" HorizontalAlignment="Center" Margin="0,399,0,0" VerticalAlignment="Center" Width="70" Height="70" Foreground="#FFD97925" Background="Transparent" Canvas.ZIndex="100"/>
     </Grid>
 </Page>

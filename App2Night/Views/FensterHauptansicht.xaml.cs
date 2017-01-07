@@ -43,7 +43,11 @@ namespace App2Night.Views
         /// <param name="e"></param>
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            // Sperren der Oberfläche
             this.IsEnabled = false;
+            this.AppBarButtonEinstellungen.IsEnabled = false;
+            this.AppBarButtonHinzufuegen.IsEnabled = false;
+            this.AppBarButtonInDerNaehe.IsEnabled = false;
             progressRingInDerNaehe.Visibility = Visibility.Visible;
             progressRingInDerNaehe.IsActive = true;
 
@@ -56,7 +60,7 @@ namespace App2Night.Views
                 var message = new MessageDialog(Meldungen.Hauptansicht.Nutzungsbedingungen, "Hinweis");
                 await message.ShowAsync();
             }
-            
+
             try
             {
                 // Anzeigen der zwischengespeicherten Partys (falls vorhanden)
@@ -110,11 +114,15 @@ namespace App2Night.Views
                 Geopoint point = new Geopoint(basis);
                 mapControlHauptansicht.Center = point;
                 mapControlHauptansicht.ZoomLevel = 15;
-                mapControlHauptansicht.LandmarksVisible = true; 
+                mapControlHauptansicht.LandmarksVisible = true;
             }
 
+            // Entsperren der Oberfläche
             progressRingInDerNaehe.Visibility = Visibility.Collapsed;
             progressRingInDerNaehe.IsActive = false;
+            this.AppBarButtonEinstellungen.IsEnabled = true;
+            this.AppBarButtonHinzufuegen.IsEnabled = true;
+            this.AppBarButtonInDerNaehe.IsEnabled = true;
             this.IsEnabled = true;
         }
 
@@ -198,9 +206,7 @@ namespace App2Night.Views
         public async void Suchen_abrufenPartys(object sender, RoutedEventArgs e)
         {
             // Sperren der Oberfläche
-            this.IsEnabled = false;
-            progressRingInDerNaehe.Visibility = Visibility.Visible;
-            progressRingInDerNaehe.IsActive = true;
+            SperrenDerAnsicht();
 
             // Listen leeren
             listViewSuchErgebnis.Items.Clear();
@@ -249,20 +255,16 @@ namespace App2Night.Views
                 {
                     var message = new MessageDialog(Meldungen.Hauptansicht.KeinePartysInDerNaehe, "Schade!");
                     await message.ShowAsync();
-                } 
+                }
             }
             else
             {
                 var message = new MessageDialog(Meldungen.Hauptansicht.FehlerGPSNoetig, "Achtung!");
                 await message.ShowAsync();
             }
-           
-            // Oberfläche entsperren
-            progressRingInDerNaehe.IsEnabled = false;
-            progressRingInDerNaehe.Visibility = Visibility.Collapsed;
-            progressRingInDerNaehe.IsActive = false;
 
-            this.IsEnabled = true;
+            // Oberfläche entsperren
+            EntsperrenDerAnsicht();
         }
 
         /// <summary>
@@ -355,10 +357,36 @@ namespace App2Night.Views
             bool erfolg = false;
 
             erfolg = await DatenVerarbeitung.PartysSpeichern(liste);
-            
+
             return erfolg;
         }
 
+        /// <summary>
+        /// Sperrt die Oberfläche.
+        /// </summary>
+        private void SperrenDerAnsicht()
+        {
+            this.IsEnabled = false;
+            this.AppBarButtonEinstellungen.IsEnabled = false;
+            this.AppBarButtonHinzufuegen.IsEnabled = false;
+            this.AppBarButtonInDerNaehe.IsEnabled = false;
+            progressRingInDerNaehe.Visibility = Visibility.Visible;
+            progressRingInDerNaehe.IsActive = true;
+        }
+
+        /// <summary>
+        /// Entsperrt die Oberfläche.
+        /// </summary>
+        private void EntsperrenDerAnsicht()
+        {
+            progressRingInDerNaehe.IsEnabled = false;
+            progressRingInDerNaehe.Visibility = Visibility.Collapsed;
+            progressRingInDerNaehe.IsActive = false;
+            this.AppBarButtonInDerNaehe.IsEnabled = true;
+            this.AppBarButtonHinzufuegen.IsEnabled = true;
+            this.AppBarButtonEinstellungen.IsEnabled = true;
+            this.IsEnabled = true;
+        }
     }
 }
 
