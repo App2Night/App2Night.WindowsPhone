@@ -25,7 +25,7 @@
         <Button x:Name="btnAbmelden" Content="Abmelden" HorizontalAlignment="Left" Margin="10,286,0,0" VerticalAlignment="Top" Height="40" Width="180" FontSize="20" Click="btnAbmelden_wechselZuFensterAnmelden" Foreground="Black" Background="#FFD97925"/>
         <ProgressRing x:Name="progRingUserEinstellungen" HorizontalAlignment="Center" Margin="0,400,0,0" VerticalAlignment="Center" Width="70" Height="70" Foreground="#FFD97925" Canvas.ZIndex="100"/>
         <ToggleSwitch x:Name="toggleSwitchGPSErlaubnis" Header="GPS-Nutzung" HorizontalAlignment="Left" Margin="10,184,0,0" VerticalAlignment="Top" OffContent="Nicht erlaubt" OnContent="Erlaubt" FontSize="20" Toggled="toggleSwitchGPSErlaubnis_GPSEinstellen"/>
-        <TextBlock x:Name="textBlockSpeichernErinnerung" HorizontalAlignment="Center" Margin="0,480,0,0" TextWrapping="Wrap" Text="Vergiss nicht zu speichern." VerticalAlignment="Top" TextAlignment="Center" Width="300" FontSize="18" Height="34"/>
+        <TextBlock x:Name="textBlockSpeichernErinnerung" HorizontalAlignment="Center" Margin="0,400,0,0" TextWrapping="Wrap" Text="Vergiss nicht zu speichern." VerticalAlignment="Top" TextAlignment="Center" Width="300" FontSize="18" Height="34"/>
 
     </Grid>
 </Page>
