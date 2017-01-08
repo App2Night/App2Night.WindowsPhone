@@ -70,9 +70,7 @@ namespace App2Night.Views
         private async void btnAbmelden_wechselZuFensterAnmelden(object sender, RoutedEventArgs e)
         {
             // Sperren der Oberfläche
-            progRingUserEinstellungen.Visibility = Visibility.Visible;
-            progRingUserEinstellungen.IsActive = true;
-            this.IsEnabled = false;
+            SperrenDerAnsicht();
 
             // UserEinstellungen auf Default zurücksetzen
             bool speichernErfolgreich = false;
@@ -87,9 +85,7 @@ namespace App2Night.Views
             speichernErfolgreich = await DatenVerarbeitung.PartysSpeichern(liste);
 
             // Oberfläche entsperren
-            this.IsEnabled = true;
-            progRingUserEinstellungen.Visibility = Visibility.Collapsed;
-            progRingUserEinstellungen.IsActive = false;
+            EntsperrenDerAnsicht();
 
             // Wechsel zum Start
             this.Frame.Navigate(typeof(FensterAnmOdReg));
@@ -103,9 +99,7 @@ namespace App2Night.Views
         private async void Speichern_DatenSichernUndWechselZuHauptansicht(object sender, RoutedEventArgs e)
         {
             // Sperren der Oberfläche
-            progRingUserEinstellungen.Visibility = Visibility.Visible;
-            progRingUserEinstellungen.IsActive = true;
-            this.IsEnabled = false;
+            SperrenDerAnsicht();
 
             bool speichernErfolgreich = false;
 
@@ -130,10 +124,8 @@ namespace App2Night.Views
                 this.Frame.Navigate(typeof(FensterHauptansicht));
             }
 
-            // Entsperren der Oberfläche
-            this.IsEnabled = true;
-            progRingUserEinstellungen.Visibility = Visibility.Collapsed;
-            progRingUserEinstellungen.IsActive = false;
+            // Oberfläche entsperren
+            EntsperrenDerAnsicht();
         }
 
         /// <summary>
@@ -165,43 +157,66 @@ namespace App2Night.Views
         /// <param name="e"></param>
         private async void toggleSwitchGPSErlaubnis_GPSEinstellen(object sender, RoutedEventArgs e)
         {
+            // Oberfläche sperren
+            SperrenDerAnsicht();
+
             UserEinstellungen einst = await DatenVerarbeitung.UserEinstellungenAuslesen();
 
-            // TODO: null?
             var accessStatus = await Geolocator.RequestAccessAsync();
 
-            if (toggleSwitchGPSErlaubnis.IsOn == false && accessStatus == GeolocationAccessStatus.Allowed)
+            if (accessStatus == GeolocationAccessStatus.Allowed)
             {
-                toggleSwitchGPSErlaubnis.IsOn = true;
-                einst.GPSErlaubt = true;
-            }
-            else if (toggleSwitchGPSErlaubnis.IsOn == true && accessStatus == GeolocationAccessStatus.Allowed)
-            {
-                einst.GPSErlaubt = true;
-            }
-            else if (toggleSwitchGPSErlaubnis.IsOn == true && accessStatus == GeolocationAccessStatus.Denied)
-            {
-                toggleSwitchGPSErlaubnis.IsOn = false;
-                einst.GPSErlaubt = false;
-                var message = new MessageDialog(Meldungen.UserEinstellungen.FehlerGPS, "Achtung!");
-                await message.ShowAsync();
-            }
-            else if (toggleSwitchGPSErlaubnis.IsOn == false && accessStatus == GeolocationAccessStatus.Denied)
-            {
-                einst.GPSErlaubt = false;
-                var message = new MessageDialog(Meldungen.UserEinstellungen.FehlerGPS, "Achtung!");
-                await message.ShowAsync();
+                // Status des ToggleSwitches NACH dem Antippen
+                if (toggleSwitchGPSErlaubnis.IsOn == true)
+                {
+                    einst.GPSErlaubt = true;
+                }
+                else
+                {
+                    einst.GPSErlaubt = false;
+                }
             }
             else
             {
-                toggleSwitchGPSErlaubnis.IsOn = false;
                 einst.GPSErlaubt = false;
+                toggleSwitchGPSErlaubnis.IsOn = false; // Da GPS nicht erlaubt
                 var message = new MessageDialog(Meldungen.UserEinstellungen.FehlerGPS, "Achtung!");
                 await message.ShowAsync();
             }
 
             // Neue Einstellungen speichern
             await DatenVerarbeitung.UserEinstellungenSpeichern(einst);
+
+            // Oberfläche entsperren
+            EntsperrenDerAnsicht();
+        }
+
+        /// <summary>
+        /// Sperrt die Oberfläche.
+        /// </summary>
+        private void SperrenDerAnsicht()
+        {
+            progRingUserEinstellungen.Visibility = Visibility.Visible;
+            progRingUserEinstellungen.IsActive = true;
+            this.AppBarButtonAbout.IsEnabled = false;
+            this.AppBarButtonEmail.IsEnabled = false;
+            this.AppBarButtonUserInfoSpeichern.IsEnabled = false;
+            this.AppBarButtonUserInfoZurueck.IsEnabled = false;
+            this.IsEnabled = false;
+        }
+
+        /// <summary>
+        /// Entsperrt die Oberfläche.
+        /// </summary>
+        private void EntsperrenDerAnsicht()
+        {
+            this.IsEnabled = true;
+            this.AppBarButtonAbout.IsEnabled = true;
+            this.AppBarButtonEmail.IsEnabled = true;
+            this.AppBarButtonUserInfoSpeichern.IsEnabled = true;
+            this.AppBarButtonUserInfoZurueck.IsEnabled = true;
+            progRingUserEinstellungen.Visibility = Visibility.Collapsed;
+            progRingUserEinstellungen.IsActive = false;
         }
     }
 }

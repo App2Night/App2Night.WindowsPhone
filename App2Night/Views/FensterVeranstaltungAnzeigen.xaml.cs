@@ -53,6 +53,9 @@ namespace App2Night.Views
             textBoxAnzeigenMUSIKRICHTUNG.Text = uebergebeneParty.MusicGenre.ToString();
             textBoxAnzeigenWeitereINFOS.Text = uebergebeneParty.Description;
             textBoxAnzahlVOTES.Text = uebergebeneParty.GeneralRating.ToString();
+            textBoxPREIS.Text = uebergebeneParty.Price.ToString();
+            textBoxTYP.Text = uebergebeneParty.PartyType.ToString();
+            //textBoxblabla = PartyType oder Preis bei Musikrichtung wie Typ, Preis wie Voting int; 2 Zeilen hinzufügen;
 
             // Farbliche Hervorhebung der Votes
             if (uebergebeneParty.GeneralRating > 0)
@@ -145,7 +148,7 @@ namespace App2Night.Views
             // Icon für Standort Party
             MapIcon partyIcon = new MapIcon();
 
-            partyIcon.Image = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/Square44x44Logo.scale-100.png", UriKind.Absolute));
+            partyIcon.Image = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/Square150x150Logo.scale-100.png", UriKind.Absolute));
             partyIcon.Location = partyZentrum;
             partyIcon.NormalizedAnchorPoint = new Point(0.5, 1.0);
             partyIcon.Title = uebergebeneParty.PartyName;
@@ -175,9 +178,7 @@ namespace App2Night.Views
             bool notiert = false;
 
             // Sperren der Oberfläche
-            this.IsEnabled = false;
-            progRingAnzeigen.Visibility = Visibility.Visible;
-            progRingAnzeigen.IsActive = true;
+            SperrenDerAnsicht();
 
             // Hier wird der Status der Vormerkung notiert
             if (uebergebeneParty.UserCommitmentState != EventCommitmentState.Noted)
@@ -197,9 +198,7 @@ namespace App2Night.Views
             bool antwort = await BackEndComPartyLogik.PutPartyCommitmentState(uebergebeneParty, commitment);
 
             // Entsperrung der Oberfläche
-            progRingAnzeigen.Visibility = Visibility.Collapsed;
-            progRingAnzeigen.IsActive = false;
-            this.IsEnabled = true;
+            EntsperrenDerAnsicht();
 
 
             if (antwort == true)
@@ -263,9 +262,7 @@ namespace App2Night.Views
             }
 
             // Sperren der Oberfläche
-            this.IsEnabled = false;
-            progRingAnzeigen.Visibility = Visibility.Visible;
-            progRingAnzeigen.IsActive = true;
+            SperrenDerAnsicht();
 
             // Teilnahme/Absage ans BackEnd schicken
             bool teilnahme = await BackEndComPartyLogik.PutPartyCommitmentState(uebergebeneParty, teilnehmen);
@@ -294,10 +291,8 @@ namespace App2Night.Views
 
             }
 
-            // Entsperren der Oberfläche
-            progRingAnzeigen.Visibility = Visibility.Collapsed;
-            progRingAnzeigen.IsActive = false;
-            this.IsEnabled = true;
+            // Entsperrung der Oberfläche
+            EntsperrenDerAnsicht();
 
             // Wechsel zur Hauptansicht
             this.Frame.Navigate(typeof(FensterHauptansicht));
@@ -325,15 +320,13 @@ namespace App2Night.Views
             // Falls der Nutzer bestätigt, dass er die Party löschen will
             if (id == 1)
             {
-                this.IsEnabled = false;
-                progRingAnzeigen.Visibility = Visibility.Visible;
-                progRingAnzeigen.IsActive = true;
+                // Sperren der Oberfläche
+                SperrenDerAnsicht();
 
                 bool erfolg = await BackEndComPartyLogik.DeletePartyByID(uebergebeneParty);
 
-                progRingAnzeigen.Visibility = Visibility.Collapsed;
-                progRingAnzeigen.IsActive = false;
-                this.IsEnabled = true;
+                // Entsperrung der Oberfläche
+                EntsperrenDerAnsicht();
 
                 if (erfolg == true)
                 {
@@ -413,6 +406,9 @@ namespace App2Night.Views
             bool erfolg = false;
             PartyVoting voting = new PartyVoting();
 
+            // Sperren der Oberfläche
+            SperrenDerAnsicht();
+
             // Da wir diese Bewertung nicht abfragen, setzen wir diese Werte auf 0 (= nicht bewertet)
             voting.LocationRating = 0;
             voting.MoodRating = 0;
@@ -431,7 +427,46 @@ namespace App2Night.Views
                 erfolg = await BackEndComPartyLogik.PutPartyRating(uebergebeneParty, voting);
             }
 
+            // Entsperren der Ansicht
+            EntsperrenDerAnsicht();
+
             return erfolg;
+        }
+
+        /// <summary>
+        /// Sperrt die Oberfläche.
+        /// </summary>
+        private void SperrenDerAnsicht()
+        {
+            this.IsEnabled = false;
+            this.appBarButtonBearbeiten.IsEnabled = false;
+            this.appBarButtonLiken.IsEnabled = false;
+            this.appBarButtonLoeschen.IsEnabled = false;
+            this.appBarButtonNichtLiken.IsEnabled = false;
+            this.appBarButtonTeilnehmen.IsEnabled = false;
+            this.AppBarButtonVormerken.IsEnabled = false;
+            this.AppBarButtonZurueck.IsEnabled = false;
+            mapControlKarte.IsEnabled = false;
+            progRingAnzeigen.Visibility = Visibility.Visible;
+            progRingAnzeigen.IsActive = true;
+        }
+
+        /// <summary>
+        /// Entsperrt die Oberfläche.
+        /// </summary>
+        private void EntsperrenDerAnsicht()
+        {
+            progRingAnzeigen.Visibility = Visibility.Collapsed;
+            progRingAnzeigen.IsActive = false;
+            mapControlKarte.IsEnabled = true;
+            this.appBarButtonBearbeiten.IsEnabled = true;
+            this.appBarButtonLiken.IsEnabled = true;
+            this.appBarButtonLoeschen.IsEnabled = true;
+            this.appBarButtonNichtLiken.IsEnabled = true;
+            this.appBarButtonTeilnehmen.IsEnabled = true;
+            this.AppBarButtonVormerken.IsEnabled = true;
+            this.AppBarButtonZurueck.IsEnabled = true;
+            this.IsEnabled = true;
         }
     }
 }
