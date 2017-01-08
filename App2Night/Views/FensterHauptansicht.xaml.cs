@@ -139,7 +139,7 @@ namespace App2Night.Views
             // Icon für Standort Party
             MapIcon partyIcon = new MapIcon();
 
-            partyIcon.Image = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/Square44x44Logo.scale-100.png", UriKind.Absolute));
+            partyIcon.Image = RandomAccessStreamReference.CreateFromUri(new Uri("ms-appx:///Assets/Square150x150Logo.scale-100.png", UriKind.Absolute));
             partyIcon.Location = partyZentrum;
             partyIcon.NormalizedAnchorPoint = new Point(0.5, 1.0);
             partyIcon.Title = party.PartyName;

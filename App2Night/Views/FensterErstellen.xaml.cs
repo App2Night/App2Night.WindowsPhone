@@ -112,7 +112,18 @@ namespace App2Night.Views
             // Speichern der Eingaben des Nutzers. Falscheingaben werden abgefangen und es wird eine Fehlermeldung ausgegeben.
             try
             {
-                partyZuErstellen.PartyId = uebergebeneParty.PartyId;
+                // Beim Bearbeiten wird die Id der vorhandenen Party benötigt
+                try
+                {
+                    if (uebergebeneParty.PartyId != null)
+                    {
+                        partyZuErstellen.PartyId = uebergebeneParty.PartyId;
+                    }
+                }
+                catch (Exception)
+                {
+                    // Zur Kenntnis genommen
+                }
 
                 partyZuErstellen.PartyName = textBoxErstellenNAME.Text;
 
@@ -149,7 +160,7 @@ namespace App2Night.Views
                 }
                 
                 // Die zu erstellende/bearbeitende Party darf nicht in der Vergangenheit sein.
-                if (partyZuErstellen.PartyDate < DateTime.Today)
+                if (partyZuErstellen.PartyDate.Date < DateTime.Today)
                 {
                     Exception FehlerhaftesDatum = new Exception();
                     throw FehlerhaftesDatum;
